@@ -40,12 +40,47 @@ public class Login {
 		estado = false;
 		usuario = null;
 	}
+
 	
+	//Metodos Datos
+	
+	public String getEmail() {
+		return usuario.getEmail();
+	}
+	
+	public void setEmail(String e) {
+		usuario.setEmail(e);
+	}
+	
+	public void setPass(String p) {
+		usuario.setPass(p);
+	}
+	
+	public String getEstadoCivil() {
+		return usuario.getEstadoCivil();
+	}
+	
+	public void setEstadoCivil(String e) {
+		usuario.setEstadoCivil(e);
+	}
+	
+	public String getName() {
+		return usuario.getName();
+	}
+
+	public void setName(String name) {
+		usuario.setName(name);
+	}
+
 	public String getApellidos() {
 		return usuario.getApellidos();
 	}
-	
+
 	public void setApellidos(String a) {
 		usuario.setApellidos(a);
 	}
+	
+	public String toString(){
+		return usuario.toString();
+	}	
 }
