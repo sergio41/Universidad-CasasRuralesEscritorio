@@ -6,7 +6,7 @@ import domain.UserAplication;
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
 	private static UserAplication usuario;
-	
+	//prueba2
 	public static boolean estadoLogin (){
 		return estado;
 	}
