@@ -1,0 +1,66 @@
+package domain;
+
+import java.util.Vector;
+
+public class UserAplication {
+	private String email;
+	private String pass;
+	private String estadoCivil;
+	private String nombre;
+	private String apellidos;
+	private String telefono;
+	private String pais;
+	private String edad;
+	private Owner propietario;
+
+	public UserAplication(String e, String p, String eC, String nom, String ape, String tel, String ps, String edd){
+		email=e;
+		pass=p;
+		estadoCivil=eC;
+		nombre=nom;
+		apellidos=ape;
+		telefono=tel;
+		pais=ps;
+		edad=edd;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String e) {
+		email = e;
+	}
+	
+	public void setPass(String p) {
+		pass = p;
+	}
+	
+	public String getEstadoCivil() {
+		return estadoCivil;
+	}
+	
+	public void setEstadoCivil(String e) {
+		estadoCivil = e;
+	}
+	
+	public String getName() {
+		return nombre;
+	}
+
+	public void setName(String name) {
+		nombre = name;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String a) {
+		apellidos= a;
+	}
+	
+	public String toString(){
+		return nombre;
+	}	
+}
