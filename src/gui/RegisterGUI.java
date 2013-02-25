@@ -30,6 +30,7 @@ public class RegisterGUI extends JFrame {
 	private JTextField textEmail;
 	private JComboBox<String> comboEC;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private JButton buttonRegister;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -55,7 +56,7 @@ public class RegisterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton buttonRegister = new JButton("Register");
+		buttonRegister = new JButton("Register");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String email = textEmail.getText();
@@ -67,15 +68,27 @@ public class RegisterGUI extends JFrame {
 				String apellidos = textApellido.getText();
 				String telefono = textTelefono.getText();
 				String pais = textPais.getText();
-				try {
-					Login.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
-					javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-					StartWindow.actualizarLogin();
-					setVisible(false);
-				} catch (Exception e) {
-					javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+				if(Login.estadoLogin()){
+					try {
+						Login.modificarPerfil(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+						javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+						StartWindow.actualizarLogin();
+						setVisible(false);
+					} catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
+				}else{ 
+					try {
+						Login.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+						javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+						StartWindow.actualizarLogin();
+						setVisible(false);
+					} catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
+			
 				}
-			}
+			}	
 		});
 		buttonRegister.setForeground(Color.BLUE);
 		buttonRegister.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
@@ -194,6 +207,7 @@ public class RegisterGUI extends JFrame {
 			textTelefono.setText(Login.getTelefono());
 			textPais.setText(Login.getPais());
 			comboEC.setSelectedItem(Login.getEstadoCivil());
+			buttonRegister.setText("Guardar");
 		} else {
 			textEmail.enable(true);
 			textEmail.setText("");
@@ -204,6 +218,7 @@ public class RegisterGUI extends JFrame {
 			textTelefono.setText("");
 			textPais.setText("");
 			comboEC.setSelectedIndex(0);
+			buttonRegister.setText("Registrar");
 		}
 	}
 	
