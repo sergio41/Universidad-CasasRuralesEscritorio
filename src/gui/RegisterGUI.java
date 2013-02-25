@@ -187,6 +187,7 @@ public class RegisterGUI extends JFrame {
 	private void inicializarCampos(){
 		if (Login.estadoLogin()){
 			textEmail.enable(false);
+			
 		} else {
 			textEmail.enable(true);
 			textEmail.setText("");
@@ -199,4 +200,5 @@ public class RegisterGUI extends JFrame {
 			comboEC.setSelectedIndex(0);
 		}
 	}
+	
 }
