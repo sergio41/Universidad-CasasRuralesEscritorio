@@ -60,6 +60,30 @@ public class UserAplication {
 		apellidos= a;
 	}
 	
+	public String getEdad(){
+		return edad;
+	}
+	
+	public void setEdad(String e){
+		edad= e;
+	}
+	
+	public String getTelefono(){
+		return telefono;
+	}
+	
+	public void setTelefono(String t){
+		telefono= t;
+	}
+	
+	public String getPais(){
+		return pais;
+	}
+	
+	public void setPais(String p){
+		pais= p;
+	}
+	
 	public String toString(){
 		return nombre;
 	}	

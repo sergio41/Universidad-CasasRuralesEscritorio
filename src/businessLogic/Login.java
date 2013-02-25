@@ -21,7 +21,7 @@ public class Login {
 	}
 	
 	public static void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
-		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 ) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
 			if (apellidos.compareTo("")==0) apellidos = null;
@@ -77,6 +77,30 @@ public class Login {
 
 	public static void setApellidos(String a) {
 		usuario.setApellidos(a);
+	}
+	
+	public static String getEdad(){
+		return usuario.getEdad();
+	}
+	
+	public static void setEdad(String e) {
+		usuario.setEdad(e);
+	}
+	
+	public static String getTelefono(){
+		return usuario.getTelefono();
+	}
+	
+	public static void setTelefono(String t) {
+		usuario.setTelefono(t);
+	}
+	
+	public static String getPais(){
+		return usuario.getEdad();
+	}
+	
+	public static void setPais(String p) {
+		usuario.setPais(p);
 	}
 	
 	public String toString(){
