@@ -21,7 +21,7 @@ public class Login {
 	}
 	
 	public static void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
-		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 ) throw new Exception("Algunos datos obligatorios faltan.");
+		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
 			if (apellidos.compareTo("")==0) apellidos = null;
@@ -41,7 +41,7 @@ public class Login {
 	}
 
 	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
-		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 ) throw new Exception("Algunos datos obligatorios faltan.");
+		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			usuario.setEstadoCivil(estadoCivil);
 			usuario.setName(nombre);
