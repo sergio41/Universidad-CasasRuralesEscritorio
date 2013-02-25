@@ -257,8 +257,7 @@ public class StartWindow extends JFrame {
 	public static void actualizarLogin(){
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
-			//buttonRegister.setText("Perfil");
-			buttonRegister.setVisible(false);
+			buttonRegister.setText("Perfil");
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
