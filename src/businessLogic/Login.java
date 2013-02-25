@@ -109,7 +109,7 @@ public class Login {
 	}
 	
 	public static String getPais(){
-		return usuario.getEdad();
+		return usuario.getPais();
 	}
 	
 	public static void setPais(String p) {
