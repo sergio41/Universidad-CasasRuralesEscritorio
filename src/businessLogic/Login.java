@@ -34,12 +34,25 @@ public class Login {
 		}
 	}
 	
-	public static void logout () throws Exception{
+	public static void logout() throws Exception{
 		if (!estado) throw new Exception("No estas logueado.");
 		estado = false;
 		usuario = null;
 	}
 
+	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
+		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 ) throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+			usuario.setEstadoCivil(estadoCivil);
+			usuario.setName(nombre);
+			usuario.setApellidos(apellidos);
+			usuario.setTelefono(telefono);
+			usuario.setPais(pais);
+			usuario.setEdad(edad);
+			if(pass.compareTo("")!=0) usuario.setPass(pass);	
+			DB4oManager.storeUser(usuario);
+		}
+	}
 	
 	//Metodos Datos
 	
