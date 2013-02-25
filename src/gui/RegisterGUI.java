@@ -187,7 +187,13 @@ public class RegisterGUI extends JFrame {
 	private void inicializarCampos(){
 		if (Login.estadoLogin()){
 			textEmail.enable(false);
-			
+			textEmail.setText(Login.getEmail());
+			textEdad.setText(Login.getEdad());
+			textNombre.setText(Login.getName());
+			textApellido.setText(Login.getApellidos());
+			textTelefono.setText(Login.getTelefono());
+			textPais.setText(Login.getPais());
+			comboEC.setSelectedItem(Login.getEstadoCivil());
 		} else {
 			textEmail.enable(true);
 			textEmail.setText("");
