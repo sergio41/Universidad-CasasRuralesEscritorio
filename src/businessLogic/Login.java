@@ -2,11 +2,10 @@ package businessLogic;
 
 import dataAccess.DB4oManager;
 import domain.UserAplication;
-//pruebas y mas pruebas
+
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
 	private static UserAplication usuario;
-	//prueba2
 	public static boolean estadoLogin (){
 		return estado;
 	}
@@ -44,39 +43,39 @@ public class Login {
 	
 	//Metodos Datos
 	
-	public String getEmail() {
+	public static String getEmail() {
 		return usuario.getEmail();
 	}
 	
-	public void setEmail(String e) {
+	public static void setEmail(String e) {
 		usuario.setEmail(e);
 	}
 	
-	public void setPass(String p) {
+	public static void setPass(String p) {
 		usuario.setPass(p);
 	}
 	
-	public String getEstadoCivil() {
+	public static String getEstadoCivil() {
 		return usuario.getEstadoCivil();
 	}
 	
-	public void setEstadoCivil(String e) {
+	public static void setEstadoCivil(String e) {
 		usuario.setEstadoCivil(e);
 	}
 	
-	public String getName() {
+	public static String getName() {
 		return usuario.getName();
 	}
 
-	public void setName(String name) {
+	public static void setName(String name) {
 		usuario.setName(name);
 	}
 
-	public String getApellidos() {
+	public static String getApellidos() {
 		return usuario.getApellidos();
 	}
 
-	public void setApellidos(String a) {
+	public static void setApellidos(String a) {
 		usuario.setApellidos(a);
 	}
 	
