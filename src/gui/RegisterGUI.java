@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -26,6 +28,8 @@ public class RegisterGUI extends JFrame {
 	private JTextField textEdad;
 	private JPasswordField passPass;
 	private JTextField textEmail;
+	private JComboBox<String> comboEC;
+	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -58,7 +62,7 @@ public class RegisterGUI extends JFrame {
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
 				String edad = textEdad.getText();
-				String estadoCivil = null;
+				String estadoCivil = (String) comboEC.getSelectedItem();
 				String nombre = textNombre.getText();
 				String apellidos = textApellido.getText();
 				String telefono = textTelefono.getText();
@@ -117,8 +121,13 @@ public class RegisterGUI extends JFrame {
 		lblEstadoCivil.setBounds(12, 121, 124, 34);
 		contentPane.add(lblEstadoCivil);
 		
-		JComboBox comboEC = new JComboBox();
+		comboEC = new JComboBox<String>();
 		comboEC.setBounds(148, 121, 75, 34);
+		comboEC.setModel(modeloEC);
+		modeloEC.addElement("");
+		modeloEC.addElement("Sr.");
+		modeloEC.addElement("Sra.");
+		modeloEC.addElement("Srta.");
 		contentPane.add(comboEC);
 		
 		JLabel lblNombre = new JLabel("Nombre*");
@@ -169,7 +178,8 @@ public class RegisterGUI extends JFrame {
 		lblLosCamposMarcados.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblLosCamposMarcados.setFont(new Font("Tekton Pro", Font.PLAIN, 18));
 		lblLosCamposMarcados.setBounds(12, 290, 366, 34);
-		contentPane.add(lblLosCamposMarcados);
+		contentPane.add(lblLosCamposMarcados);	
+		
 		inicializarCampos();
 	}
 	
@@ -186,6 +196,7 @@ public class RegisterGUI extends JFrame {
 			textApellido.setText("");
 			textTelefono.setText("");
 			textPais.setText("");
+			comboEC.setSelectedIndex(0);
 		}
 	}
 }
