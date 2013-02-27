@@ -15,6 +15,12 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import domain.Owner;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.Vector;
+
 public class OwnerGUI extends JFrame {
 
 	
@@ -74,12 +80,12 @@ public class OwnerGUI extends JFrame {
 		lblUstedEs.setBounds(32, 77, 161, 34);
 		contentPane.add(lblUstedEs);
 		
-		JRadioButton rdbtnParticular = new JRadioButton("Particular");
+		final JRadioButton rdbtnParticular = new JRadioButton("Particular");
 		rdbtnParticular.setBackground(new Color(178,238,238));
 		rdbtnParticular.setBounds(248, 77, 127, 34);
 		contentPane.add(rdbtnParticular);
 		
-		JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
+		final JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
 		rdbtnProfesional.setBackground(new Color(178,238,238));
 		rdbtnProfesional.setBounds(453, 77, 127, 34);
 		contentPane.add(rdbtnProfesional);
@@ -127,7 +133,7 @@ public class OwnerGUI extends JFrame {
 		lblMoneda.setBounds(32, 261, 161, 34);
 		contentPane.add(lblMoneda);
 		
-		JComboBox comboMoneda = new JComboBox();
+		final JComboBox comboMoneda = new JComboBox();
 		comboMoneda.setBounds(248, 261, 109, 34);
 		contentPane.add(comboMoneda);
 		
@@ -139,6 +145,26 @@ public class OwnerGUI extends JFrame {
 		contentPane.add(label);
 		
 		JButton buttonGuardar = new JButton("Guardar");
+		buttonGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String cuenta= "";
+				String tipo = "";
+				String profes= "";
+				String mon="";
+				Vector<String> idiom = new Vector<String>();
+				
+				cuenta= textCuentaBancaria.getText();
+				if(rdbtnParticular.isSelected()) tipo= "Particular";				
+				else if(rdbtnProfesional.isSelected()) tipo= "Profesional";	
+				idiom.add(textIdioma1.getText());
+				idiom.add(textIdioma2.getText());
+				idiom.add(textIdioma3.getText());
+				idiom.add(textIdioma4.getText());
+				profes = textProfesion.getText();
+				mon= (String) comboMoneda.getSelectedItem();
+
+			}
+		});
 		buttonGuardar.setForeground(Color.BLUE);
 		buttonGuardar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		buttonGuardar.setBounds(504, 291, 124, 45);
