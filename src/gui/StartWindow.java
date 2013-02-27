@@ -209,7 +209,7 @@ public class StartWindow extends JFrame {
 		//System.out.println(e.toString());
 			e.printStackTrace();
 		}
-		int x=0;
+
 		JFrame a = new StartWindow();
 		a.setVisible(true);
 	}
@@ -264,5 +264,4 @@ public class StartWindow extends JFrame {
 			buttonRegister.setVisible(true);
 		}
 	}
-	
 } // @jve:decl-index=0:visual-constraint="0,0"

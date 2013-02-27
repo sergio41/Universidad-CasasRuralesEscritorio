@@ -83,6 +83,11 @@ public class RegisterGUI extends JFrame {
 						javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 						StartWindow.actualizarLogin();
 						setVisible(false);
+						int x=javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
+						if (x==0){
+							JFrame a = new OwnerGUI();
+							a.setVisible(true);
+						}
 					} catch (Exception e) {
 						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 					}
