@@ -209,7 +209,7 @@ public class StartWindow extends JFrame {
 		//System.out.println(e.toString());
 			e.printStackTrace();
 		}
-		int x=0;
+
 		JFrame a = new StartWindow();
 		a.setVisible(true);
 	}
@@ -257,13 +257,11 @@ public class StartWindow extends JFrame {
 	public static void actualizarLogin(){
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
-			//buttonRegister.setText("Perfil");
-			buttonRegister.setVisible(false);
+			buttonRegister.setText("Perfil");
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
 			buttonRegister.setVisible(true);
 		}
 	}
-	
 } // @jve:decl-index=0:visual-constraint="0,0"

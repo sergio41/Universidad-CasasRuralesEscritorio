@@ -2,11 +2,10 @@ package businessLogic;
 
 import dataAccess.DB4oManager;
 import domain.UserAplication;
-//pruebas y mas pruebas
+
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
 	private static UserAplication usuario;
-	//prueba2
 	public static boolean estadoLogin (){
 		return estado;
 	}
@@ -22,7 +21,7 @@ public class Login {
 	}
 	
 	public static void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
-		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
 			if (apellidos.compareTo("")==0) apellidos = null;
@@ -35,49 +34,86 @@ public class Login {
 		}
 	}
 	
-	public static void logout () throws Exception{
+	public static void logout() throws Exception{
 		if (!estado) throw new Exception("No estas logueado.");
 		estado = false;
 		usuario = null;
 	}
 
+	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
+		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+			usuario.setEstadoCivil(estadoCivil);
+			usuario.setName(nombre);
+			usuario.setApellidos(apellidos);
+			usuario.setTelefono(telefono);
+			usuario.setPais(pais);
+			usuario.setEdad(edad);
+			if(pass.compareTo("")!=0) usuario.setPass(pass);	
+			DB4oManager.storeUser(usuario);
+		}
+	}
 	
 	//Metodos Datos
 	
-	public String getEmail() {
+	public static String getEmail() {
 		return usuario.getEmail();
 	}
 	
-	public void setEmail(String e) {
+	public static void setEmail(String e) {
 		usuario.setEmail(e);
 	}
 	
-	public void setPass(String p) {
+	public static void setPass(String p) {
 		usuario.setPass(p);
 	}
 	
-	public String getEstadoCivil() {
+	public static String getEstadoCivil() {
 		return usuario.getEstadoCivil();
 	}
 	
-	public void setEstadoCivil(String e) {
+	public static void setEstadoCivil(String e) {
 		usuario.setEstadoCivil(e);
 	}
 	
-	public String getName() {
+	public static String getName() {
 		return usuario.getName();
 	}
 
-	public void setName(String name) {
+	public static void setName(String name) {
 		usuario.setName(name);
 	}
 
-	public String getApellidos() {
+	public static String getApellidos() {
 		return usuario.getApellidos();
 	}
 
-	public void setApellidos(String a) {
+	public static void setApellidos(String a) {
 		usuario.setApellidos(a);
+	}
+	
+	public static String getEdad(){
+		return usuario.getEdad();
+	}
+	
+	public static void setEdad(String e) {
+		usuario.setEdad(e);
+	}
+	
+	public static String getTelefono(){
+		return usuario.getTelefono();
+	}
+	
+	public static void setTelefono(String t) {
+		usuario.setTelefono(t);
+	}
+	
+	public static String getPais(){
+		return usuario.getPais();
+	}
+	
+	public static void setPais(String p) {
+		usuario.setPais(p);
 	}
 	
 	public String toString(){

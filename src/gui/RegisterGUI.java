@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -26,6 +28,9 @@ public class RegisterGUI extends JFrame {
 	private JTextField textEdad;
 	private JPasswordField passPass;
 	private JTextField textEmail;
+	private JComboBox<String> comboEC;
+	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private JButton buttonRegister;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -51,27 +56,44 @@ public class RegisterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton buttonRegister = new JButton("Register");
+		buttonRegister = new JButton("Register");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
 				String edad = textEdad.getText();
-				String estadoCivil = null;
+				String estadoCivil = (String) comboEC.getSelectedItem();
 				String nombre = textNombre.getText();
 				String apellidos = textApellido.getText();
 				String telefono = textTelefono.getText();
 				String pais = textPais.getText();
-				try {
-					Login.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
-					javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-					StartWindow.actualizarLogin();
-					setVisible(false);
-				} catch (Exception e) {
-					javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+				if(Login.estadoLogin()){
+					try {
+						Login.modificarPerfil(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+						javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+						StartWindow.actualizarLogin();
+						setVisible(false);
+					} catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
+				}else{ 
+					try {
+						Login.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+						javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+						StartWindow.actualizarLogin();
+						setVisible(false);
+						int x=javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
+						if (x==0){
+							JFrame a = new OwnerGUI();
+							a.setVisible(true);
+						}
+					} catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
+			
 				}
-			}
+			}	
 		});
 		buttonRegister.setForeground(Color.BLUE);
 		buttonRegister.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
@@ -117,8 +139,13 @@ public class RegisterGUI extends JFrame {
 		lblEstadoCivil.setBounds(12, 121, 124, 34);
 		contentPane.add(lblEstadoCivil);
 		
-		JComboBox comboEC = new JComboBox();
+		comboEC = new JComboBox<String>();
 		comboEC.setBounds(148, 121, 75, 34);
+		comboEC.setModel(modeloEC);
+		modeloEC.addElement("");
+		modeloEC.addElement("Sr.");
+		modeloEC.addElement("Sra.");
+		modeloEC.addElement("Srta.");
 		contentPane.add(comboEC);
 		
 		JLabel lblNombre = new JLabel("Nombre*");
@@ -169,7 +196,8 @@ public class RegisterGUI extends JFrame {
 		lblLosCamposMarcados.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblLosCamposMarcados.setFont(new Font("Tekton Pro", Font.PLAIN, 18));
 		lblLosCamposMarcados.setBounds(12, 290, 366, 34);
-		contentPane.add(lblLosCamposMarcados);
+		contentPane.add(lblLosCamposMarcados);	
+		
 		inicializarCampos();
 	}
 	
@@ -177,6 +205,14 @@ public class RegisterGUI extends JFrame {
 	private void inicializarCampos(){
 		if (Login.estadoLogin()){
 			textEmail.enable(false);
+			textEmail.setText(Login.getEmail());
+			textEdad.setText(Login.getEdad());
+			textNombre.setText(Login.getName());
+			textApellido.setText(Login.getApellidos());
+			textTelefono.setText(Login.getTelefono());
+			textPais.setText(Login.getPais());
+			comboEC.setSelectedItem(Login.getEstadoCivil());
+			buttonRegister.setText("Guardar");
 		} else {
 			textEmail.enable(true);
 			textEmail.setText("");
@@ -186,6 +222,9 @@ public class RegisterGUI extends JFrame {
 			textApellido.setText("");
 			textTelefono.setText("");
 			textPais.setText("");
+			comboEC.setSelectedIndex(0);
+			buttonRegister.setText("Registrar");
 		}
 	}
+	
 }

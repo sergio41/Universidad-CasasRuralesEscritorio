@@ -134,7 +134,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		ObjectContainer db=DB4oManager.getContainer();
 
 		 try {
-			 Owner proto = new Owner(null);
+			 Owner proto = new Owner(null, null, null, null, null);
 			 ObjectSet result = db.queryByExample(proto);
 			 Vector<Owner> owners=new Vector<Owner>();
 			 while(result.hasNext())				 
