@@ -22,6 +22,7 @@ public class UserAplication {
 		telefono=tel;
 		pais=ps;
 		edad=edd;
+		propietario=null;
 	}
 	
 	public String getEmail() {
@@ -87,4 +88,12 @@ public class UserAplication {
 	public String toString(){
 		return nombre;
 	}	
+
+	public void setPropietario(Owner own){
+		propietario=own;
+	}
+	
+	public Owner getPropietario(){
+		return propietario;
+	}
 }
