@@ -16,6 +16,7 @@ import configuration.Config;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.font.TextLayout;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -34,7 +35,7 @@ public class StartWindow extends JFrame {
 	public static ApplicationFacadeInterface facadeInterface;
 	private static JButton buttonLogin;
 	private static JButton buttonRegister;
-	
+	private static JLabel textLogin;
 	
 
 	/**
@@ -258,6 +259,11 @@ public class StartWindow extends JFrame {
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
 			buttonRegister.setText("Perfil");
+			if(Login.getPropietario() != null){
+				textLogin.setText("Estás logueado como propietario");
+			}else{
+				textLogin.setText("Estás logueado como propietario");
+			}
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
