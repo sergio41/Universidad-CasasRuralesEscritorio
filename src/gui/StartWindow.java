@@ -35,7 +35,7 @@ public class StartWindow extends JFrame {
 	public static ApplicationFacadeInterface facadeInterface;
 	private static JButton buttonLogin;
 	private static JButton buttonRegister;
-	private static JLabel textLogin;
+	private static JLabel textLogin = new JLabel("No estas logueado");
 	
 
 	/**
@@ -79,8 +79,8 @@ public class StartWindow extends JFrame {
 
 			jContentPane.add(boton4, null);
 			
-			JLabel textLogin = new JLabel("No estas logueado");
-			textLogin.setBounds(349, 13, 134, 29);
+			//JLabel textLogin = new JLabel("No estas logueado");
+			textLogin.setBounds(238, 14, 229, 29);
 			jContentPane.add(textLogin);
 			jContentPane.add(getButtonLogin());
 			jContentPane.add(getButtonRegister());
@@ -262,12 +262,13 @@ public class StartWindow extends JFrame {
 			if(Login.getPropietario() != null){
 				textLogin.setText("Estás logueado como propietario");
 			}else{
-				textLogin.setText("Estás logueado como propietario");
+				textLogin.setText("Estás logueado");
 			}
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
 			buttonRegister.setVisible(true);
+			textLogin.setText("No estás logueado");
 		}
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"

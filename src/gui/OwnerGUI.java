@@ -166,7 +166,8 @@ public class OwnerGUI extends JFrame {
 				mon= (String) comboMoneda.getSelectedItem();
 				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
 				Login.setPropietario(own);
-
+				StartWindow.actualizarLogin();
+				setVisible(false);
 			}
 		});
 		buttonGuardar.setForeground(Color.BLUE);
