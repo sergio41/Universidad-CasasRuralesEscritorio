@@ -123,6 +123,7 @@ public class Login {
 
 	public static void setPropietario(Owner own){
 		usuario.setPropietario(own);
+		DB4oManager.storeUser(usuario);
 	}
 	
 	public static Owner getPropietario(Owner own){
