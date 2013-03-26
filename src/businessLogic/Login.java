@@ -126,7 +126,7 @@ public class Login {
 		DB4oManager.storeUser(usuario);
 	}
 	
-	public static Owner getPropietario(Owner own){
+	public static Owner getPropietario(){
 		return usuario.getPropietario();
 	}
 }
