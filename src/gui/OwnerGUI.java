@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import businessLogic.Login;
+
 import domain.Owner;
 
 import java.awt.event.ActionListener;
@@ -162,6 +164,8 @@ public class OwnerGUI extends JFrame {
 				idiom.add(textIdioma4.getText());
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
+				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
+				Login.setPropietario(own);
 
 			}
 		});
