@@ -1,6 +1,7 @@
 package businessLogic;
 
 import dataAccess.DB4oManager;
+import domain.Owner;
 import domain.UserAplication;
 
 public class Login {
@@ -119,4 +120,12 @@ public class Login {
 	public String toString(){
 		return usuario.toString();
 	}	
+
+	public static void setPropietario(Owner own){
+		usuario.setPropietario(own);
+	}
+	
+	public static Owner getPropietario(Owner own){
+		return usuario.getPropietario();
+	}
 }
