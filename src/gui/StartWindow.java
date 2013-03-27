@@ -17,6 +17,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.font.TextLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -35,6 +36,7 @@ public class StartWindow extends JFrame {
 	public static ApplicationFacadeInterface facadeInterface;
 	private static JButton buttonLogin;
 	private static JButton buttonRegister;
+	private static JButton OwnerButton;
 	private static JLabel textLogin = new JLabel("No estas logueado");
 	
 
@@ -84,13 +86,11 @@ public class StartWindow extends JFrame {
 			jContentPane.add(textLogin);
 			jContentPane.add(getButtonLogin());
 			jContentPane.add(getButtonRegister());
-			
-			JTextPane textPane = new JTextPane();
-			textPane.setBounds(378, 91, 6, 22);
-			jContentPane.add(textPane);
+			jContentPane.add(getOwnerButton());
 		}
 		return jContentPane;
 	}
+
 
 	/**
 	 * This method initializes boton1
@@ -255,20 +255,41 @@ public class StartWindow extends JFrame {
 		return buttonRegister;
 	}
 	
+	private Component getOwnerButton() {
+		if (OwnerButton == null) {
+			OwnerButton = new JButton("Ser Propietario");
+			OwnerButton.setVisible(false);
+			OwnerButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					JFrame a = new OwnerGUI();
+					a.setVisible(true);
+				}
+			});
+			OwnerButton.setForeground(Color.BLUE);
+			OwnerButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
+			OwnerButton.setBounds(432, 96, 185, 29);
+		}
+		return OwnerButton;
+	}
+	
 	public static void actualizarLogin(){
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
 			buttonRegister.setText("Perfil");
+			OwnerButton.setVisible(true);
 			if(Login.getPropietario() != null){
 				textLogin.setText("Estás logueado como propietario");
+				OwnerButton.setText("Editar Propietario");
 			}else{
 				textLogin.setText("Estás logueado");
+				OwnerButton.setText("Ser Propietario");
 			}
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
 			buttonRegister.setVisible(true);
 			textLogin.setText("No estás logueado");
+			OwnerButton.setVisible(false);
 		}
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
