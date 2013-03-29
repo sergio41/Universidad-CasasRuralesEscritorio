@@ -67,7 +67,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception {
 		ObjectContainer db=DB4oManager.getContainer();
-		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity());
+		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
+				ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
 		 ObjectSet result = db.queryByExample(proto);
 		 RuralHouse rh=(RuralHouse)result.next();
 		Offer o=rh.createOffer(firstDay, lastDay, price);
@@ -89,7 +90,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 		try {
 			ObjectContainer db=DB4oManager.getContainer();
-			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity());
+			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
+					ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
 			 ObjectSet result = db.queryByExample(proto);
 			 RuralHouse rh=(RuralHouse)result.next();
 			Book b=null;
@@ -149,7 +151,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		ObjectContainer db=DB4oManager.getContainer();
 
 		 try {
-			 RuralHouse proto = new RuralHouse(0,null,null,null);
+			 RuralHouse proto = new RuralHouse(0,null,null,null,0,0,0,0,0);
 			 ObjectSet result = db.queryByExample(proto);
 			 Vector<RuralHouse> ruralHouses=new Vector<RuralHouse>();
 			 while(result.hasNext()) 

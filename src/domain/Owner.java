@@ -68,9 +68,9 @@ public class Owner implements Serializable {
 		return ruralHouses;
 	}
 	
-	public RuralHouse addRuralHouse(int houseNumber, String description, String city) {
+	public RuralHouse addRuralHouse(int h, String d, String c, int r, int k, int b, int l, int p) {
 
-     RuralHouse rh=new RuralHouse( houseNumber,  this,  description,  city);
+     RuralHouse rh=new RuralHouse(h, this, d, c, r, k, b, l, p);
 	 ruralHouses.add(rh);
 	 return rh;
 	 

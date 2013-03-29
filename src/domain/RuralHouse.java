@@ -18,6 +18,11 @@ public class RuralHouse implements Serializable {
 	private String description;
 	private Owner owner;
 	private String city; 
+	private int nRooms;
+	private int nKitchen;
+	private int nBaths;
+	private int nLiving;
+	private int nPark;
 	public Vector<Offer> offers;
 	
 
@@ -27,11 +32,16 @@ public class RuralHouse implements Serializable {
 		super();
 	}
 
-	public RuralHouse(int houseNumber, Owner owner, String description, String city) {
-		this.houseNumber = houseNumber;
-		this.description = description;
-		this.owner = owner;
-		this.city = city;
+	public RuralHouse(int h, Owner o, String d, String c, int r, int k, int b, int l, int p) {
+		houseNumber = h;
+		description = d;
+		owner = o;
+		city = c;
+		nRooms = r;
+		nKitchen = k;
+		nBaths = b;
+		nLiving = l;
+		nPark = p;
 		offers=new Vector<Offer>();
 	}
 
@@ -67,6 +77,45 @@ public class RuralHouse implements Serializable {
 		this.city=city;
 	}
 
+	public int getRooms() {
+		return nRooms;
+	}
+	
+	public void setRooms(int r) {
+		nRooms = r;
+	}
+
+	public int getKitchen() {
+		return nKitchen;
+	}
+	
+	public void setKitchen(int k) {
+		nKitchen = k;
+	}
+	
+	public int getBaths() {
+		return nBaths;
+	}
+	
+	public void setBaths(int b) {
+		nBaths = b;
+	}
+	
+	public int getLiving() {
+		return nLiving;
+	}
+	
+	public void setLiving(int l) {
+		nLiving = l;
+	}
+	
+	public int getPark() {
+		return nPark;
+	}
+	
+	public void setPark(int p) {
+		nPark = p;
+	}
 	
 	public String toString() {
 		return this.houseNumber + ": " + this.city;

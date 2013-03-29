@@ -65,5 +65,9 @@ public class DB4oManager {
 	public static void storeUser(UserAplication uA){
 		db.store(uA);
 	}
+	
+	public static void storeRuralHouse(RuralHouse rh){
+		db.store(rh);
+	}
 }
 	
