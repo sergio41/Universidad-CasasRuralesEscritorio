@@ -30,7 +30,9 @@ public class AddRuralHouse {
 					RuralHouse rh = new RuralHouse(1, Login.getPropietario(),
 							description, city, r, k, b, l, p);
 					DB4oManager.storeRuralHouse(rh);
-					Login.getPropietario().addRuralHouse(rh);
+					Owner own =Login.getPropietario();
+					own.addRuralHouse(rh);
+					Login.setPropietario(own);
 					javax.swing.JOptionPane.showMessageDialog(null,
 							"Casa añadida correctamente.", "Bien....",
 							javax.swing.JOptionPane.NO_OPTION);

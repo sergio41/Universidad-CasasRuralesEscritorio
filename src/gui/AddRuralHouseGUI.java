@@ -75,7 +75,7 @@ public class AddRuralHouseGUI extends JFrame {
 						AddRuralHouse.newRuralHouse(owner,
 								description, city, nRooms, nKitchen, nBaths,
 								nLiving, nPark);
-
+						
 						StartWindow.actualizarLogin();
 						setVisible(false);
 					} catch (Exception e) {
