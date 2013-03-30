@@ -49,32 +49,32 @@ public class RuralHouse implements Serializable {
 		return houseNumber;
 	}
 
-	public void setHouseNumber(int houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setHouseNumber(int h) {
+		houseNumber = h;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 	
-	public void setDescription(String description) {
-		this.description=description;
+	public void setDescription(String d) {
+		description=d;
 	}
 
 	public Owner getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Owner owner) {
-		this.owner=owner;
+	public void setOwner(Owner o) {
+		owner=o;
 	}
 	
 	public String getCity() {
 		return city;
 	}
 	
-	public void setCity(String city) {
-		this.city=city;
+	public void setCity(String c) {
+		city=c;
 	}
 
 	public int getRooms() {

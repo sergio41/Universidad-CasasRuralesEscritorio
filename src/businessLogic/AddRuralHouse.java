@@ -19,6 +19,7 @@ public class AddRuralHouse {
 				|| nKitchen.compareTo("") == 0 || nBaths.compareTo("") == 0
 				|| nLiving.compareTo("") == 0 || nPark.compareTo("") == 0)
 			throw new Exception("Algunos datos obligatorios faltan.");
+		
 		else {
 				try {
 					int r = Integer.parseInt(nRooms);
@@ -26,7 +27,11 @@ public class AddRuralHouse {
 					int b = Integer.parseInt(nBaths);
 					int l = Integer.parseInt(nLiving);
 					int p = Integer.parseInt(nPark);
-
+					
+					if (r<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
+					if (k<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
+					if (b<2) throw new Exception("La casa debe tener mínimo 2 baños.");
+					
 					RuralHouse rh = new RuralHouse(1, Login.getPropietario(),
 							description, city, r, k, b, l, p);
 					DB4oManager.storeRuralHouse(rh);
