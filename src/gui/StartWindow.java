@@ -37,6 +37,7 @@ public class StartWindow extends JFrame {
 	private static JButton buttonLogin;
 	private static JButton buttonRegister;
 	private static JButton OwnerButton;
+	private static JButton AddRuralHouseButton;
 	private static JLabel textLogin = new JLabel("No estas logueado");
 	
 
@@ -87,6 +88,7 @@ public class StartWindow extends JFrame {
 			jContentPane.add(getButtonLogin());
 			jContentPane.add(getButtonRegister());
 			jContentPane.add(getOwnerButton());
+			jContentPane.add(getAddRuralHouseButton());
 		}
 		return jContentPane;
 	}
@@ -272,6 +274,23 @@ public class StartWindow extends JFrame {
 		return OwnerButton;
 	}
 	
+	private Component getAddRuralHouseButton(){
+		if (AddRuralHouseButton == null){
+			AddRuralHouseButton = new JButton("A\u00F1adir Casa Rural");
+			AddRuralHouseButton.setVisible(false);
+			AddRuralHouseButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					JFrame a = new AddRuralHouseGUI();
+					a.setVisible(true);
+				}
+			});
+			AddRuralHouseButton.setForeground(Color.BLUE);
+			AddRuralHouseButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
+			AddRuralHouseButton.setBounds(432, 136, 185, 29);
+		}
+		return AddRuralHouseButton;
+	}
+	
 	public static void actualizarLogin(){
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
@@ -280,6 +299,7 @@ public class StartWindow extends JFrame {
 			if(Login.getPropietario() != null){
 				textLogin.setText("Estás logueado como propietario");
 				OwnerButton.setText("Editar Propietario");
+				AddRuralHouseButton.setVisible(true);
 			}else{
 				textLogin.setText("Estás logueado");
 				OwnerButton.setText("Ser Propietario");
@@ -290,6 +310,7 @@ public class StartWindow extends JFrame {
 			buttonRegister.setVisible(true);
 			textLogin.setText("No estás logueado");
 			OwnerButton.setVisible(false);
+			AddRuralHouseButton.setVisible(false);
 		}
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"

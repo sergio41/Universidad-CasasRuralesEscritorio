@@ -19,14 +19,6 @@ public class DB4oManager {
 			new File(db4oFileName).delete();
 			db=Db4o.openFile(Db4o.newConfiguration(), db4oFileName);
 			db.ext().configure().updateDepth(5);
-			//Owner jon = new Owner("Jon", "Jonlog", "passJon");
-			//Owner alfredo = new Owner("Alfredo","AlfredoLog", "passAlfredo");
-		    //jon.addRuralHouse(1, "Ezkioko etxea","Ezkio");
-			//jon.addRuralHouse(2, "Eskiatzeko etxea","Jaca");
-			//jon.setBankAccount("12345677");
-			//db.store(jon);
-			//db.store(alfredo);
-			//
 			db.commit();
 			System.out.println("DataBase Initialized");
 		}
@@ -66,6 +58,12 @@ public class DB4oManager {
 		db.store(uA);
 	}
 	
+	public static RuralHouse getRuralHouse(int houseNumber){
+		RuralHouse rh = new RuralHouse(houseNumber, null,null,null,0,0,0,0,0);
+		ObjectSet ruralHouseConcretos = db.queryByExample(rh);
+		while (ruralHouseConcretos.hasNext()) return (RuralHouse) ruralHouseConcretos.next();
+		return null;
+	}
 	public static void storeRuralHouse(RuralHouse rh){
 		db.store(rh);
 	}
