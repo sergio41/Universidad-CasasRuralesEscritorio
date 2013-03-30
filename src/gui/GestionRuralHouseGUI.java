@@ -28,6 +28,8 @@ import domain.RuralHouse;
 
 import javax.swing.JComboBox;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.util.*;
 
 public class GestionRuralHouseGUI extends JFrame {
@@ -35,12 +37,13 @@ public class GestionRuralHouseGUI extends JFrame {
 	private JPanel contentPane;
 	private JTextPane textPaneDescription;
 	private JTextField textCity;
-	private JButton buttonAddRuralHouse;
+	private JButton btnSalvar;
 	private JTextField textBath;
 	private JTextField textKitchen;
 	private JTextField textRooms;
 	private JTextField textLiving;
 	private JTextField textPark;
+	private JButton btnEliminar;
 	private JComboBox comBoxCasas;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 
@@ -67,9 +70,9 @@ public class GestionRuralHouseGUI extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		buttonAddRuralHouse = new JButton("Salvar");
-		buttonAddRuralHouse.setBounds(428, 376, 124, 45);
-		buttonAddRuralHouse.addActionListener(new ActionListener() {
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.setBounds(428, 376, 124, 45);
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (Login.estadoLogin() && Login.getPropietario() != null) {
@@ -109,9 +112,9 @@ public class GestionRuralHouseGUI extends JFrame {
 		});
 		contentPane.setLayout(null);
 		
-		buttonAddRuralHouse.setForeground(Color.BLUE);
-		buttonAddRuralHouse.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-		contentPane.add(buttonAddRuralHouse);
+		btnSalvar.setForeground(Color.BLUE);
+		btnSalvar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
+		contentPane.add(btnSalvar);
 
 		JLabel lblPark = new JLabel("N\u00BA Aparcamientos*:");
 		lblPark.setBounds(294, 300, 178, 33);
@@ -202,8 +205,24 @@ public class GestionRuralHouseGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() != -1){
 					enaDis(true);
+					btnEliminar.setEnabled(false);
 					if (comBoxCasas.getSelectedIndex() != 0){
-						Login.getPropietario().getRuralHouses();
+						RuralHouse rh;
+						java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
+						while (i.hasNext()){
+							rh = i.next();
+							if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+								btnEliminar.setEnabled(true);
+								textPaneDescription.setText(rh.getDescription());
+								textCity.setText(rh.getCity());
+								textRooms.setText(Integer.toString(rh.getRooms()));
+								textKitchen.setText(Integer.toString(rh.getKitchen()));
+								textBath.setText(Integer.toString(rh.getBaths()));
+								textLiving.setText(Integer.toString(rh.getLiving()));
+								textPark.setText(Integer.toString(rh.getPark()));
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -212,7 +231,7 @@ public class GestionRuralHouseGUI extends JFrame {
 		comBoxCasas.setModel(modeloEC);
 		contentPane.add(comBoxCasas);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(418, 13, 134, 33);
 		contentPane.add(btnEliminar);
 
@@ -224,13 +243,15 @@ public class GestionRuralHouseGUI extends JFrame {
 		modeloEC.addElement("Nueva Casa Rural");
 		java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
 		while (i.hasNext()){
-			modeloEC.addElement(i.next().toString());
+			modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 		}
 		enaDis(false);
 		comBoxCasas.setSelectedIndex(-1);
 	}
 	
 	private void enaDis(boolean b){
+		btnSalvar.setEnabled(b);
+		btnEliminar.setEnabled(b);
 		textBath.setEnabled(b);
 		textCity.setEnabled(b);
 		textKitchen.setEnabled(b);
