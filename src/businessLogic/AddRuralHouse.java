@@ -1,5 +1,9 @@
 package businessLogic;
 
+import java.util.Vector;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import dataAccess.DB4oManager;
 import domain.Owner;
 import domain.RuralHouse;
@@ -8,18 +12,14 @@ import businessLogic.Login;
 public class AddRuralHouse {
 	private static RuralHouse ruralHouse;
 
-	public static int generarhouseNumber() {
-		return 0;
-	}
 
-	public static void newRuralHouse(Owner o,
+	public static void newRuralHouse(
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception {
 		if (city.compareTo("") == 0 || nRooms.compareTo("") == 0
 				|| nKitchen.compareTo("") == 0 || nBaths.compareTo("") == 0
 				|| nLiving.compareTo("") == 0 || nPark.compareTo("") == 0)
 			throw new Exception("Algunos datos obligatorios faltan.");
-		
 		else {
 				try {
 					int r = Integer.parseInt(nRooms);
@@ -32,26 +32,30 @@ public class AddRuralHouse {
 					if (k<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
 					if (b<2) throw new Exception("La casa debe tener mínimo 2 baños.");
 					
-					RuralHouse rh = new RuralHouse(1, Login.getPropietario(),
+					RuralHouse rh = new RuralHouse(getNumeroCR(), Login.getPropietario(),
 							description, city, r, k, b, l, p);
-					DB4oManager.storeRuralHouse(rh);
 					Owner own =Login.getPropietario();
 					own.addRuralHouse(rh);
 					Login.setPropietario(own);
-					javax.swing.JOptionPane.showMessageDialog(null,
-							"Casa añadida correctamente.", "Bien....",
-							javax.swing.JOptionPane.NO_OPTION);
+					javax.swing.JOptionPane.showMessageDialog(null,"Casa añadida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
-					javax.swing.JOptionPane
-							.showMessageDialog(
-									null,
-									e.toString(),
-									"Alguna casilla ha sido mal rellenada.",
-									javax.swing.JOptionPane.ERROR_MESSAGE);
+					javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 			}
 	}
 
+	public static int getNumeroCR(){
+		Vector<RuralHouse> vector = new Vector<RuralHouse>();
+		vector = DB4oManager.getCR();
+		int max = 0;
+		java.util.Iterator<RuralHouse> i = vector.iterator();
+		while (i.hasNext()) {
+			int aux = i.next().getHouseNumber();
+			if( max < aux) max = aux;
+		}
+		max++;
+		return max;
+	}
 	// Metodos Datos
 
 	public int getHouseNumber() {

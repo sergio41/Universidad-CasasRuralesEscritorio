@@ -1,6 +1,8 @@
 package dataAccess;
 
 import java.io.File;
+import java.util.Vector;
+
 import com.db4o.*;
 import configuration.Config;
 import domain.*;
@@ -63,6 +65,16 @@ public class DB4oManager {
 		ObjectSet ruralHouseConcretos = db.queryByExample(rh);
 		while (ruralHouseConcretos.hasNext()) return (RuralHouse) ruralHouseConcretos.next();
 		return null;
+	}
+
+	public static Vector<RuralHouse> getCR(){
+		Vector<RuralHouse> vector = new Vector<RuralHouse>();
+		RuralHouse rh = new RuralHouse(0, null,null,null,0,0,0,0,0);
+		ObjectSet ruralHouseConcretos = db.queryByExample(rh);
+		while (ruralHouseConcretos.hasNext()){
+			vector.add( (RuralHouse) ruralHouseConcretos.next());
+		}
+		return vector;
 	}
 	public static void storeRuralHouse(RuralHouse rh){
 		db.store(rh);
