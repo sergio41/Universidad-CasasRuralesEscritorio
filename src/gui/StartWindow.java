@@ -280,7 +280,7 @@ public class StartWindow extends JFrame {
 			AddRuralHouseButton.setVisible(false);
 			AddRuralHouseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					JFrame a = new AddRuralHouseGUI();
+					JFrame a = new GestionRuralHouseGUI();
 					a.setVisible(true);
 				}
 			});
