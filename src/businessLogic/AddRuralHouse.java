@@ -52,8 +52,10 @@ public class AddRuralHouse {
 		}
 	}
 
-	public static void eliminarCasaRural (RuralHouse cr){
-		
+	public static void eliminarCasaRural (RuralHouse rh){
+		DB4oManager.getContainer().delete(rh);
+		Login.getPropietario().getRuralHouses().remove(rh);
+		Login.setPropietario(Login.getPropietario());
 	}
 
 	public static int getNumeroCR(){

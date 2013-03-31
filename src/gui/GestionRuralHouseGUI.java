@@ -20,6 +20,7 @@ import java.util.Vector;
 import javax.swing.JTextPane;
 
 
+import EDU.purdue.cs.bloat.tree.EliminationInformation;
 import businessLogic.Login;
 import businessLogic.AddRuralHouse;
 
@@ -233,8 +234,7 @@ public class GestionRuralHouseGUI extends JFrame {
 					while (i.hasNext()){
 						rh = i.next();
 						if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
-							Login.getPropietario().getRuralHouses().remove(rh);
-							Login.setPropietario(Login.getPropietario());
+							AddRuralHouse.eliminarCasaRural(rh);
 							javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 							StartWindow.actualizarLogin();
 							setVisible(false);

@@ -46,6 +46,7 @@ public class StartWindow extends JFrame {
 	 */
 	public StartWindow() {
 		super();
+		PantallaCargandoMain a = new PantallaCargandoMain();
 		initialize();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -297,18 +298,18 @@ public class StartWindow extends JFrame {
 			buttonRegister.setText("Perfil");
 			OwnerButton.setVisible(true);
 			if(Login.getPropietario() != null){
-				textLogin.setText("Estás logueado como propietario");
+				textLogin.setText("Estï¿½s logueado como propietario");
 				OwnerButton.setText("Editar Propietario");
 				AddRuralHouseButton.setVisible(true);
 			}else{
-				textLogin.setText("Estás logueado");
+				textLogin.setText("Estï¿½s logueado");
 				OwnerButton.setText("Ser Propietario");
 			}
 		} else {
 			buttonLogin.setText("Login");
 			buttonRegister.setText("Nuevo user");
 			buttonRegister.setVisible(true);
-			textLogin.setText("No estás logueado");
+			textLogin.setText("No estï¿½s logueado");
 			OwnerButton.setVisible(false);
 			AddRuralHouseButton.setVisible(false);
 		}
