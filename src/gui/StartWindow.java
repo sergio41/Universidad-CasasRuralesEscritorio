@@ -11,6 +11,9 @@ import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 import businessLogic.GestionTwitter;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.rmi.*;
 import java.util.List;
@@ -22,9 +25,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.font.TextLayout;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class StartWindow extends JFrame {
@@ -92,9 +98,12 @@ public class StartWindow extends JFrame {
 			jContentPane.add(getBoton1());
 			jContentPane.setBackground(new Color(178, 238, 238));
 			jContentPane.add(boton4, null);
+			textLogin.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+			textLogin.setForeground(Color.RED);
+			textLogin.setHorizontalAlignment(SwingConstants.RIGHT);
 			
 			//JLabel textLogin = new JLabel("No estas logueado");
-			textLogin.setBounds(23, 327, 229, 29);
+			textLogin.setBounds(417, 0, 229, 29);
 			jContentPane.add(textLogin);
 			jContentPane.add(getButtonLogin());
 			jContentPane.add(getButtonRegister());
@@ -109,12 +118,35 @@ public class StartWindow extends JFrame {
 			jContentPane.add(textTwitter);
 			
 			JLabel lblNewLabel = new JLabel("New label");
+			lblNewLabel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						Desktop.getDesktop().browse(new URI("www.twitter.com/CasasVillaArrib"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (URISyntaxException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			ImageIcon myImage = new ImageIcon("imagen/twitter.png");
 			lblNewLabel.setIcon(myImage);
 			lblNewLabel.setBounds(23, 524, 55, 54);
 			jContentPane.add(lblNewLabel);
 			
 			jContentPane.add(getLblNewLabel_1());
+			
+			JTextPane txtpnHazClickEn = new JTextPane();
+			txtpnHazClickEn.setForeground(new Color(0, 128, 0));
+			txtpnHazClickEn.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+			txtpnHazClickEn.setText("Haz click en el pajaro para acceder a twitter");
+			txtpnHazClickEn.setBackground(new Color(178, 238, 238));
+			txtpnHazClickEn.setEditable(false);
+			txtpnHazClickEn.setBounds(23, 489, 397, 34);
+			jContentPane.add(txtpnHazClickEn);
 		}
 		return jContentPane;
 	}
