@@ -16,7 +16,7 @@ public class RuralHouse implements Serializable {
 	 */
 	private int houseNumber;
 	private String description;
-	private Owner owner;
+	private UserAplication user;
 	private String city; 
 	private int nRooms;
 	private int nKitchen;
@@ -32,10 +32,10 @@ public class RuralHouse implements Serializable {
 		super();
 	}
 
-	public RuralHouse(int h, Owner o, String d, String c, int r, int k, int b, int l, int p) {
+	public RuralHouse(int h, UserAplication o, String d, String c, int r, int k, int b, int l, int p) {
 		houseNumber = h;
 		description = d;
-		owner = o;
+		user = o;
 		city = c;
 		nRooms = r;
 		nKitchen = k;
@@ -61,12 +61,12 @@ public class RuralHouse implements Serializable {
 		description=d;
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public UserAplication getOwner() {
+		return user;
 	}
 
-	public void setOwner(Owner o) {
-		owner=o;
+	public void setOwner(UserAplication o) {
+		user =o;
 	}
 	
 	public String getCity() {
