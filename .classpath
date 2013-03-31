@@ -14,5 +14,8 @@
 	<classpathentry kind="lib" path="Librerias/objectmanager.jar"/>
 	<classpathentry kind="lib" path="Librerias/xpp3_min-1.1.3.4.O.jar"/>
 	<classpathentry kind="lib" path="Librerias/xstream-1.2.1.jar"/>
+	<classpathentry kind="lib" path="twitter4j-core-3.0.3.jar"/>
+	<classpathentry kind="lib" path="activation.jar"/>
+	<classpathentry kind="lib" path="mail.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
