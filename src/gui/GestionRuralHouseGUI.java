@@ -225,6 +225,25 @@ public class GestionRuralHouseGUI extends JFrame {
 		contentPane.add(comBoxCasas);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (comBoxCasas.getSelectedIndex() > 0) {
+					RuralHouse rh;
+					java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
+					while (i.hasNext()){
+						rh = i.next();
+						if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+							Login.getPropietario().getRuralHouses().remove(rh);
+							Login.setPropietario(Login.getPropietario());
+							javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+							StartWindow.actualizarLogin();
+							setVisible(false);
+							break;
+						}
+					}
+				}
+			}
+		});
 		btnEliminar.setBounds(418, 13, 134, 33);
 		contentPane.add(btnEliminar);
 

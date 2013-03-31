@@ -53,6 +53,7 @@ public class AddRuralHouse {
 	}
 
 
+
 	public static int getNumeroCR(){
 		Vector<RuralHouse> vector = new Vector<RuralHouse>();
 		vector = DB4oManager.getCR();
@@ -65,79 +66,4 @@ public class AddRuralHouse {
 		max++;
 		return max;
 	}
-	
-	
-	// Metodos Datos
-
-	/*public int getHouseNumber() {
-		return ruralHouse.getHouseNumber();
-	}
-
-	public void setHouseNumber(int houseNumber) {
-		ruralHouse.setHouseNumber(houseNumber);
-	}
-
-	public String getDescription() {
-		return ruralHouse.getDescription();
-	}
-
-	public void setDescription(String description) {
-		ruralHouse.setDescription(description);
-	}
-
-	public Owner getOwner() {
-		return ruralHouse.getOwner();
-	}
-
-	public void setOwner(Owner owner) {
-		ruralHouse.setOwner(owner);
-	}
-
-	public String getCity() {
-		return ruralHouse.getCity();
-	}
-
-	public void setCity(String city) {
-		ruralHouse.setCity(city);
-	}
-
-	public int getRooms() {
-		return ruralHouse.getRooms();
-	}
-
-	public void setRooms(int r) {
-		ruralHouse.setRooms(r);
-	}
-
-	public int getKitchen() {
-		return ruralHouse.getKitchen();
-	}
-
-	public void setKitchen(int k) {
-		ruralHouse.setKitchen(k);
-	}
-
-	public int getBaths() {
-		return ruralHouse.getBaths();
-	}
-
-	public void setBaths(int b) {
-		ruralHouse.setBaths(b);
-	}
-
-	public int getLiving() {
-		return ruralHouse.getLiving();
-	}
-
-	public void setLiving(int l) {
-		ruralHouse.setLiving(l);
-	}
-
-	public int getPark() {
-		return ruralHouse.getPark();
-	}
-
-	public void setPark(int p) {
-		ruralHouse.setPark(p);
-	}*/
 }
