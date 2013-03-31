@@ -63,6 +63,15 @@ public class Login {
 		}
 	}
 	
+	public static void recuperarContraseña(String email) throws Exception{
+		UserAplication user = DB4oManager.getUser(email, null);
+		try {
+			EnviarCorreo.enviarCorreos(user.getEmail(), "Contraseña", "Tu contraseña es " + user.getPass());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.toString());
+		}
+	}
 	//Metodos Datos
 	
 	public static String getEmail() {

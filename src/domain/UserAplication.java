@@ -37,6 +37,10 @@ public class UserAplication {
 		pass = p;
 	}
 	
+	public String getPass() {
+		return pass;
+	}
+	
 	public String getEstadoCivil() {
 		return estadoCivil;
 	}

@@ -104,6 +104,22 @@ public class LoginGUI extends JFrame {
 		label_2.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		label_2.setBounds(12, 13, 362, 40);
 		contentPane.add(label_2);
+		
+		JButton btnRecuperar = new JButton("Recuperar");
+		btnRecuperar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Login.recuperarContraseña(textEmail.getText());
+					javax.swing.JOptionPane.showMessageDialog(null, "Se te ha enviado un email con la contraseña", "Bien.", javax.swing.JOptionPane.NO_OPTION);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnRecuperar.setForeground(Color.BLUE);
+		btnRecuperar.setFont(new Font("Dialog", Font.PLAIN, 21));
+		btnRecuperar.setBounds(22, 160, 124, 45);
+		contentPane.add(btnRecuperar);
 	}
-
 }
