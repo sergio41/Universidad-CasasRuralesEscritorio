@@ -61,11 +61,11 @@ public class RuralHouse implements Serializable {
 		description=d;
 	}
 
-	public UserAplication getOwner() {
+	public UserAplication getUserAplication() {
 		return user;
 	}
 
-	public void setOwner(UserAplication o) {
+	public void setUser(UserAplication o) {
 		user =o;
 	}
 	

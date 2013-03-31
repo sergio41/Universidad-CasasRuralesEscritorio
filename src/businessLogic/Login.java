@@ -41,6 +41,10 @@ public class Login {
 		usuario = null;
 	}
 
+	public static UserAplication getUser() throws Exception {
+		if (!estado) throw new Exception("No estas logueado.");
+		return usuario;
+	}
 	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
 		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {

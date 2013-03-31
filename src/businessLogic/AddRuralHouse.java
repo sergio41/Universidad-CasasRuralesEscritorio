@@ -32,7 +32,7 @@ public class AddRuralHouse {
 					if (b<2) throw new Exception("La casa debe tener m�nimo 2 ba�os.");
 					Owner own =Login.getPropietario();
 					if (rh == null){
-						rh = new RuralHouse(getNumeroCR(), Login.getPropietario(),
+						rh = new RuralHouse(getNumeroCR(), Login.getUser(),
 							description, city, r, k, b, l, p);
 						own.addRuralHouse(rh);
 					} else {
@@ -52,7 +52,9 @@ public class AddRuralHouse {
 		}
 	}
 
-
+	public static void eliminarCasaRural (RuralHouse cr){
+		
+	}
 
 	public static int getNumeroCR(){
 		Vector<RuralHouse> vector = new Vector<RuralHouse>();
