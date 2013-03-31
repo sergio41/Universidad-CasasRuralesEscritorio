@@ -11,6 +11,7 @@ import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 import businessLogic.GestionTwitter;
 
+import java.net.URL;
 import java.rmi.*;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.awt.font.TextLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 
 public class StartWindow extends JFrame {
@@ -43,6 +45,7 @@ public class StartWindow extends JFrame {
 	private static JButton AddRuralHouseButton;
 	private static JLabel textLogin = new JLabel("No estas logueado");
 	private static JTextPane textTwitter;
+	private JLabel lblNewLabel_1;
 	
 
 	/**
@@ -87,11 +90,11 @@ public class StartWindow extends JFrame {
 			jContentPane.add(getBoton3());
 			jContentPane.add(getBoton2());
 			jContentPane.add(getBoton1());
-
+			jContentPane.setBackground(new Color(178, 238, 238));
 			jContentPane.add(boton4, null);
 			
 			//JLabel textLogin = new JLabel("No estas logueado");
-			textLogin.setBounds(238, 14, 229, 29);
+			textLogin.setBounds(23, 327, 229, 29);
 			jContentPane.add(textLogin);
 			jContentPane.add(getButtonLogin());
 			jContentPane.add(getButtonRegister());
@@ -99,9 +102,19 @@ public class StartWindow extends JFrame {
 			jContentPane.add(getAddRuralHouseButton());
 			
 			textTwitter = new JTextPane();
+			textTwitter.setText("Twitter");
+			textTwitter.setFont(new Font("Comic Sans MS", Font.BOLD | Font.ITALIC, 14));
 			textTwitter.setEditable(false);
-			textTwitter.setBounds(127, 232, 329, 62);
+			textTwitter.setBounds(96, 524, 511, 54);
 			jContentPane.add(textTwitter);
+			
+			JLabel lblNewLabel = new JLabel("New label");
+			ImageIcon myImage = new ImageIcon("imagen/twitter.png");
+			lblNewLabel.setIcon(myImage);
+			lblNewLabel.setBounds(23, 524, 55, 54);
+			jContentPane.add(lblNewLabel);
+			
+			jContentPane.add(getLblNewLabel_1());
 		}
 		return jContentPane;
 	}
@@ -115,7 +128,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton1() {
 		if (boton1 == null) {
 			boton1 = new JButton();
-			boton1.setBounds(59, 473, 190, 29);
+			boton1.setBounds(417, 382, 190, 29);
 			boton1.setText("Book rural house");
 			boton1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -136,7 +149,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton2() {
 		if (boton2 == null) {
 			boton2 = new JButton();
-			boton2.setBounds(94, 344, 166, 29);
+			boton2.setBounds(451, 275, 166, 29);
 			boton2.setText("Set availability");
 			boton2.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -157,7 +170,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton3() {
 		if (boton3 == null) {
 			boton3 = new JButton();
-			boton3.setBounds(190, 306, 173, 29);
+			boton3.setBounds(444, 252, 173, 29);
 			boton3.setText("Query availability");
 			boton3.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -180,7 +193,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton4() {
 		if (boton4 == null) {
 			boton4 = new JButton();
-			boton4.setBounds(211, 414, 173, 29);
+			boton4.setBounds(444, 327, 173, 29);
 			boton4.setText("Close");
 			boton4.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -251,7 +264,7 @@ public class StartWindow extends JFrame {
 			});
 			buttonLogin.setForeground(Color.BLUE);
 			buttonLogin.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			buttonLogin.setBounds(477, 13, 140, 29);
+			buttonLogin.setBounds(42, 239, 140, 29);
 		}
 		return buttonLogin;
 	}
@@ -266,7 +279,7 @@ public class StartWindow extends JFrame {
 			});
 			buttonRegister.setForeground(Color.BLUE);
 			buttonRegister.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			buttonRegister.setBounds(477, 55, 140, 29);
+			buttonRegister.setBounds(280, 239, 140, 29);
 		}
 		return buttonRegister;
 	}
@@ -283,7 +296,7 @@ public class StartWindow extends JFrame {
 			});
 			OwnerButton.setForeground(Color.BLUE);
 			OwnerButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			OwnerButton.setBounds(432, 96, 185, 29);
+			OwnerButton.setBounds(231, 312, 185, 29);
 		}
 		return OwnerButton;
 	}
@@ -300,7 +313,7 @@ public class StartWindow extends JFrame {
 			});
 			AddRuralHouseButton.setForeground(Color.BLUE);
 			AddRuralHouseButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			AddRuralHouseButton.setBounds(432, 136, 185, 29);
+			AddRuralHouseButton.setBounds(250, 424, 185, 29);
 		}
 		return AddRuralHouseButton;
 	}
@@ -327,5 +340,17 @@ public class StartWindow extends JFrame {
 			OwnerButton.setVisible(false);
 			AddRuralHouseButton.setVisible(false);
 		}
+	}
+	private JLabel getLblNewLabel_1() {
+		if (lblNewLabel_1 == null) {
+			lblNewLabel_1 = new JLabel("");
+			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_1.setForeground(SystemColor.controlText);
+			lblNewLabel_1.setBackground(SystemColor.inactiveCaptionBorder);
+			ImageIcon myImage1 = new ImageIcon("imagen/Logo.jpg");
+			lblNewLabel_1.setIcon(myImage1);
+			lblNewLabel_1.setBounds(80, 12, 487, 218);
+		}
+		return lblNewLabel_1;
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"

@@ -13,15 +13,15 @@ import javax.mail.internet.MimeMessage;
 public class EnviarCorreo {
 
 	//public static void main(String[] args) {
-	public static void enviarCorreos( String dest, String asu, String mensa){
+	public static void enviarCorreos( String dest, String asu, String mensa) throws Exception{
 		String servidorSMTP = "smtp.gmail.com";
 		String puerto = "587";
 		String usuario = "villatripasdearribacr@gmail.com";
 		String password = "villavilla";
 
-		String destino = dest;//"urko.larm@gmail.com";
-		String asunto = asu;//"Prueba!";
-		String mensaje = mensa;//"Este es un mensaje de prueba.";
+		String destino = dest;
+		String asunto = asu;
+		String mensaje = mensa;
 
 		Properties props = new Properties();
 
@@ -45,7 +45,7 @@ public class EnviarCorreo {
 			tr.sendMessage(message, message.getAllRecipients());
 			tr.close();
 		} catch (MessagingException e) {
-			e.printStackTrace();
+			throw new Exception(e.toString());
 		}
 	}
 }
