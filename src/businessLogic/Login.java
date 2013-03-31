@@ -1,5 +1,7 @@
 package businessLogic;
 
+import java.util.Calendar;
+
 import dataAccess.DB4oManager;
 import domain.Owner;
 import domain.UserAplication;
@@ -30,6 +32,7 @@ public class Login {
 			if (DB4oManager.comprobarEmail(email)) throw new Exception("Email ya usado. Logueate");
 			else{
 				EnviarCorreo.enviarCorreos(email, "Registro en Villatripas de Arriba", "Te has registrado en villatripas de arribacon el email" + email);
+				GestionTwitter.enviarTweet("Bienvenid@: " + nombre + " " + Calendar.getInstance().getTime().toString());
 				DB4oManager.storeUser(new UserAplication(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad));
 				hacerLogin(email, pass);
 			}

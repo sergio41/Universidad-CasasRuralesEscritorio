@@ -5,11 +5,14 @@ package gui;
  */
 import javax.swing.*;
 
+
 import businessLogic.FacadeImplementation;
 import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
+import businessLogic.GestionTwitter;
 
 import java.rmi.*;
+import java.util.List;
 
 import configuration.Config;
 
@@ -39,6 +42,7 @@ public class StartWindow extends JFrame {
 	private static JButton OwnerButton;
 	private static JButton AddRuralHouseButton;
 	private static JLabel textLogin = new JLabel("No estas logueado");
+	private static JTextPane textTwitter;
 	
 
 	/**
@@ -46,8 +50,11 @@ public class StartWindow extends JFrame {
 	 */
 	public StartWindow() {
 		super();
+		setResizable(false);
 		PantallaCargandoMain a = new PantallaCargandoMain();
 		initialize();
+
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public static ApplicationFacadeInterface getBusinessLogic(){
@@ -90,6 +97,11 @@ public class StartWindow extends JFrame {
 			jContentPane.add(getButtonRegister());
 			jContentPane.add(getOwnerButton());
 			jContentPane.add(getAddRuralHouseButton());
+			
+			textTwitter = new JTextPane();
+			textTwitter.setEditable(false);
+			textTwitter.setBounds(127, 232, 329, 62);
+			jContentPane.add(textTwitter);
 		}
 		return jContentPane;
 	}
@@ -216,6 +228,7 @@ public class StartWindow extends JFrame {
 
 		JFrame a = new StartWindow();
 		a.setVisible(true);
+		textTwitter.setText(GestionTwitter.getUltimoTweet());
 	}
 	private JButton getButtonLogin() {
 		if (buttonLogin == null) {
@@ -293,6 +306,7 @@ public class StartWindow extends JFrame {
 	}
 	
 	public static void actualizarLogin(){
+		textTwitter.setText(GestionTwitter.getUltimoTweet());
 		if (Login.estadoLogin()){
 			buttonLogin.setText("Logout");
 			buttonRegister.setText("Perfil");
