@@ -61,6 +61,7 @@ public class GestionRuralHouseGUI extends JFrame {
 	}
 
 	public GestionRuralHouseGUI() {
+		setResizable(false);
 		setTitle("Gesti\u00F3n de las Casas Rurales");
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 579, 476);
@@ -74,39 +75,31 @@ public class GestionRuralHouseGUI extends JFrame {
 		btnSalvar.setBounds(428, 376, 124, 45);
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
-				if (Login.estadoLogin() && Login.getPropietario() != null) {
-					try {
-						//Owner owner = Login.getPropietario();
-						String description = textPaneDescription.getText();
-						String city = textCity.getText();
-						String nRooms = textRooms.getText();
-						String nKitchen = textKitchen.getText();
-						String nBaths = textBath.getText();
-						String nLiving = textLiving.getText();
-						String nPark = textPark.getText();
-
-						AddRuralHouse.newRuralHouse(
-								description, city, nRooms, nKitchen, nBaths,
-								nLiving, nPark);
-						
-						StartWindow.actualizarLogin();
-						setVisible(false);
-					} catch (Exception e) {
-						javax.swing.JOptionPane.showMessageDialog(null,
-								e.toString(), "Mal....",
-								javax.swing.JOptionPane.ERROR_MESSAGE);
+				try {
+					String description = textPaneDescription.getText();
+					String city = textCity.getText();
+					String nRooms = textRooms.getText();
+					String nKitchen = textKitchen.getText();
+					String nBaths = textBath.getText();
+					String nLiving = textLiving.getText();
+					String nPark = textPark.getText();
+					if (comBoxCasas.getSelectedIndex() == 0){
+						AddRuralHouse.gestionRuralHouse(null, description, city, nRooms, nKitchen, nBaths,nLiving, nPark);
+					} else if (comBoxCasas.getSelectedIndex() > 0) {
+						RuralHouse rh;
+						java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
+						while (i.hasNext()){
+							rh = i.next();
+							if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+								AddRuralHouse.gestionRuralHouse(rh, description, city, nRooms, nKitchen, nBaths,nLiving, nPark);
+								break;
+							}
+						}
 					}
-
-				} else {
-						javax.swing.JOptionPane
-								.showMessageDialog(
-										null,
-										"No eres propietario.\n",
-										"Mal....",
-										javax.swing.JOptionPane.NO_OPTION);
-						StartWindow.actualizarLogin();
-						setVisible(false);
+					StartWindow.actualizarLogin();
+					setVisible(false);
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

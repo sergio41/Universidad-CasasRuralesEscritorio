@@ -10,10 +10,9 @@ import domain.RuralHouse;
 import businessLogic.Login;
 
 public class AddRuralHouse {
-	private static RuralHouse ruralHouse;
+	private AddRuralHouse() {}
 
-
-	public static void newRuralHouse(
+	public static void gestionRuralHouse( RuralHouse rh,
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception {
 		if (city.compareTo("") == 0 || nRooms.compareTo("") == 0
@@ -28,21 +27,31 @@ public class AddRuralHouse {
 					int l = Integer.parseInt(nLiving);
 					int p = Integer.parseInt(nPark);
 					
-					if (r<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
-					if (k<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
-					if (b<2) throw new Exception("La casa debe tener mínimo 2 baños.");
-					
-					RuralHouse rh = new RuralHouse(getNumeroCR(), Login.getPropietario(),
-							description, city, r, k, b, l, p);
+					if (r<3) throw new Exception("La casa debe tener mï¿½nimo 3 habitaciones.");
+					if (k<1) throw new Exception("La casa debe tener mï¿½nimo 1 cocina.");
+					if (b<2) throw new Exception("La casa debe tener mï¿½nimo 2 baï¿½os.");
 					Owner own =Login.getPropietario();
-					own.addRuralHouse(rh);
+					if (rh == null){
+						rh = new RuralHouse(getNumeroCR(), Login.getPropietario(),
+							description, city, r, k, b, l, p);
+						own.addRuralHouse(rh);
+					} else {
+						rh.setBaths(b);
+						rh.setCity(city);
+						rh.setDescription(description);
+						rh.setKitchen(k);
+						rh.setLiving(l);
+						rh.setPark(p);
+						rh.setRooms(r);					
+					}
 					Login.setPropietario(own);
-					javax.swing.JOptionPane.showMessageDialog(null,"Casa añadida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
+					javax.swing.JOptionPane.showMessageDialog(null,"Casa aï¿½adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
-			}
+		}
 	}
+
 
 	public static int getNumeroCR(){
 		Vector<RuralHouse> vector = new Vector<RuralHouse>();
@@ -56,9 +65,11 @@ public class AddRuralHouse {
 		max++;
 		return max;
 	}
+	
+	
 	// Metodos Datos
 
-	public int getHouseNumber() {
+	/*public int getHouseNumber() {
 		return ruralHouse.getHouseNumber();
 	}
 
@@ -128,5 +139,5 @@ public class AddRuralHouse {
 
 	public void setPark(int p) {
 		ruralHouse.setPark(p);
-	}
+	}*/
 }
