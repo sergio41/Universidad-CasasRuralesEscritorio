@@ -55,8 +55,8 @@ public class QueryAvailabilityGUI extends JFrame {
 		this.setSize(new Dimension(433, 548));
 		this.setTitle("Query availability");
 		jLabel1.setText("Rural house code:");
-		jComboBox1.setBounds(new Rectangle(10, 10, 115, 25));
-		jLabel1.setBounds(new Rectangle(40, 20, 105, 25));
+		jComboBox1.setBounds(new Rectangle(135, 21, 115, 20));
+		jLabel1.setBounds(new Rectangle(50, 19, 105, 25));
 		jComboBox1.setBounds(new Rectangle(115, 30, 115, 20));
 		jLabel2.setText("First day:");
 		jLabel2.setBounds(new Rectangle(40, 55, 75, 25));
@@ -95,7 +95,7 @@ public class QueryAvailabilityGUI extends JFrame {
 		jCalendar1.setBounds(new Rectangle(190, 60, 225, 150));
 		scrollPane.setBounds(new Rectangle(45, 305, 320, 135));
 		jTextArea1.setText("");
-		scrollPane.getViewport().add(jTextArea1, null);
+		scrollPane.setViewportView(jTextArea1);
 
 		this.getContentPane().add(scrollPane, null);
 		this.getContentPane().add(jCalendar1, null);

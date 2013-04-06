@@ -109,7 +109,7 @@ public class LoginGUI extends JFrame {
 		btnRecuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Login.recuperarContraseña(textEmail.getText());
+					Login.recuperarContrase�a(textEmail.getText());
 					javax.swing.JOptionPane.showMessageDialog(null, "Se te ha enviado un email con la contraseña", "Bien.", javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

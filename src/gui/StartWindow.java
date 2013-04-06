@@ -335,7 +335,7 @@ public class StartWindow extends JFrame {
 	
 	private Component getAddRuralHouseButton(){
 		if (AddRuralHouseButton == null){
-			AddRuralHouseButton = new JButton("A\u00F1adir Casa Rural");
+			AddRuralHouseButton = new JButton("Gestionar Casa Rural");
 			AddRuralHouseButton.setVisible(false);
 			AddRuralHouseButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -345,7 +345,7 @@ public class StartWindow extends JFrame {
 			});
 			AddRuralHouseButton.setForeground(Color.BLUE);
 			AddRuralHouseButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			AddRuralHouseButton.setBounds(250, 424, 185, 29);
+			AddRuralHouseButton.setBounds(250, 424, 217, 29);
 		}
 		return AddRuralHouseButton;
 	}

@@ -164,6 +164,7 @@ public class RuralHouse implements Serializable {
 	 *            Number of the house
 	 * @return Owner account number of the house
 	 */
+	
 	public String getAccountNumber(int houseNumber) {
 		/*try {
 			dbMngr=DBManager.getInstance();
