@@ -1,4 +1,4 @@
-package businessLogic;
+package externalDataSend;
 
 import java.util.List;
 import java.util.Vector;

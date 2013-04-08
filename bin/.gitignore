@@ -1,4 +1,7 @@
-/Logo.jpg
-/twitter.png
-/gui
 /businessLogic
+/configuration
+/dataAccess
+/domain
+/exceptions
+/gui
+/externalDataSend

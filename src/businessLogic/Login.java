@@ -5,6 +5,8 @@ import java.util.Calendar;
 import dataAccess.DB4oManager;
 import domain.Owner;
 import domain.UserAplication;
+import externalDataSend.EnviarCorreo;
+import externalDataSend.GestionTwitter;
 
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1

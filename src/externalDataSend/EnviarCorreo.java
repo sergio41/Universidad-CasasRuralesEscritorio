@@ -1,4 +1,4 @@
-package businessLogic;
+package externalDataSend;
 
 import java.util.Date;
 import java.util.Properties;

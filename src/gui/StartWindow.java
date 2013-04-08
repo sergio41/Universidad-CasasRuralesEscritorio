@@ -9,7 +9,6 @@ import javax.swing.*;
 import businessLogic.FacadeImplementation;
 import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
-import businessLogic.GestionTwitter;
 
 import java.io.IOException;
 import java.net.URI;
@@ -19,6 +18,7 @@ import java.rmi.*;
 import java.util.List;
 
 import configuration.Config;
+import externalDataSend.GestionTwitter;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
@@ -186,7 +186,8 @@ public class StartWindow extends JFrame {
 			boton2.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					// C?digo cedido por la universidad
-					JFrame a = new SetAvailabilityGUI();
+					//JFrame a = new SetAvailabilityGUI();
+					JFrame a = new CrearOfertaGUI();
 					a.setVisible(true);
 				}
 			});

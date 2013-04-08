@@ -3,6 +3,7 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,10 +11,18 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JComboBox;
+
+import businessLogic.ApplicationFacadeInterface;
+import businessLogic.Login;
+
 import com.toedter.calendar.JCalendar;
+
+import domain.RuralHouse;
+
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -21,6 +30,8 @@ import java.util.Locale;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearOfertaGUI extends JFrame {
 
@@ -31,6 +42,18 @@ public class CrearOfertaGUI extends JFrame {
 	private Calendar calendar2 = null;
 	private JTextField firstdayTextField = new JTextField();
 	private JTextField lastdayTextField = new JTextField();
+	private JComboBox comBoxCasas;
+	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	
+	
+	  // Code for JCalendar
+	  private JCalendar jCalendar1 = new JCalendar();
+	  private JCalendar jCalendar2 = new JCalendar();
+	  private Calendar calendarInicio = null;
+	  private Calendar calendarFin = null;
+	  private JButton jButton2 = new JButton();
+	  private JLabel jLabel5 = new JLabel();
+	  private JTextField jTextField3;
 	/**
 	 * Launch the application.
 	 */
@@ -68,9 +91,10 @@ public class CrearOfertaGUI extends JFrame {
 		ruralhouselbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		contentPane.add(ruralhouselbl);
 		
-		JComboBox housecomboBox = new JComboBox();
-		housecomboBox.setBounds(125, 32, 149, 23);
-		contentPane.add(housecomboBox);
+		comBoxCasas = new JComboBox();
+		comBoxCasas.setBounds(125, 32, 149, 23);
+		comBoxCasas.setModel(modeloEC);
+		contentPane.add(comBoxCasas);
 		
 		
 		firstdayTextField.setBounds(125, 99, 149, 28);
@@ -135,6 +159,30 @@ public class CrearOfertaGUI extends JFrame {
 					}
 				});
 		JButton OfferButton = new JButton("Salvar");
+		OfferButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  	RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
+				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
+				    //Remove the hour:minute:second:ms from the date 
+				  	firstDay=Date.valueOf(firstDay.toString());
+				  	Date lastDay=new Date(jCalendar2.getCalendar().getTime().getTime());
+				    //Remove the hour:minute:second:ms from the date 
+				  	lastDay=Date.valueOf(lastDay.toString());
+				  	//It could be to trigger an exception if the introduced string is not a number
+				  	float price= Float.parseFloat(jTextField3.getText());
+				  	try {
+				  	    //Obtain the business logic from a StartWindow class (local or remote)
+						ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
+						
+				  		facade.createOffer(ruralHouse, firstDay, lastDay, price); 
+				  		  		
+						setVisible(false);
+					} catch (Exception e1) {
+
+						e1.printStackTrace();
+					}
+			}
+		});
 		OfferButton.setEnabled(false);
 		OfferButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		OfferButton.setForeground(Color.BLUE);
@@ -153,6 +201,26 @@ public class CrearOfertaGUI extends JFrame {
 		lastdaylbl.setBounds(23, 255, 110, 22);
 		contentPane.add(lastdaylbl);
 		
+		JLabel lblPrecio = new JLabel("Precio:");
+		lblPrecio.setForeground(Color.BLUE);
+		lblPrecio.setFont(new Font("Dialog", Font.PLAIN, 21));
+		lblPrecio.setBounds(23, 371, 110, 22);
+		contentPane.add(lblPrecio);
 		
+		jTextField3 = new JTextField();
+		jTextField3.setColumns(10);
+		jTextField3.setBounds(125, 365, 149, 28);
+		contentPane.add(jTextField3);
+		
+		inicializarCampos();
+	}
+	
+	private void inicializarCampos() {
+		java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
+		while (i.hasNext()){
+			modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+		}
+		//enaDis(false);
+		comBoxCasas.setSelectedIndex(-1);
 	}
 }
