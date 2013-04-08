@@ -160,7 +160,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton1() {
 		if (boton1 == null) {
 			boton1 = new JButton();
-			boton1.setBounds(417, 382, 190, 29);
+			boton1.setBounds(308, 424, 190, 29);
 			boton1.setText("Book rural house");
 			boton1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -181,7 +181,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton2() {
 		if (boton2 == null) {
 			boton2 = new JButton();
-			boton2.setBounds(451, 275, 166, 29);
+			boton2.setBounds(171, 358, 166, 29);
 			boton2.setText("Set availability");
 			boton2.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -202,7 +202,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton3() {
 		if (boton3 == null) {
 			boton3 = new JButton();
-			boton3.setBounds(444, 252, 173, 29);
+			boton3.setBounds(42, 297, 173, 29);
 			boton3.setText("Query availability");
 			boton3.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -225,7 +225,7 @@ public class StartWindow extends JFrame {
 	private JButton getBoton4() {
 		if (boton4 == null) {
 			boton4 = new JButton();
-			boton4.setBounds(444, 327, 173, 29);
+			boton4.setBounds(434, 483, 173, 29);
 			boton4.setText("Close");
 			boton4.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -296,7 +296,7 @@ public class StartWindow extends JFrame {
 			});
 			buttonLogin.setForeground(Color.BLUE);
 			buttonLogin.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			buttonLogin.setBounds(42, 239, 140, 29);
+			buttonLogin.setBounds(12, 239, 92, 29);
 		}
 		return buttonLogin;
 	}
@@ -311,7 +311,7 @@ public class StartWindow extends JFrame {
 			});
 			buttonRegister.setForeground(Color.BLUE);
 			buttonRegister.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			buttonRegister.setBounds(280, 239, 140, 29);
+			buttonRegister.setBounds(116, 239, 140, 29);
 		}
 		return buttonRegister;
 	}
@@ -328,7 +328,7 @@ public class StartWindow extends JFrame {
 			});
 			OwnerButton.setForeground(Color.BLUE);
 			OwnerButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			OwnerButton.setBounds(231, 312, 185, 29);
+			OwnerButton.setBounds(268, 239, 166, 29);
 		}
 		return OwnerButton;
 	}
@@ -345,7 +345,7 @@ public class StartWindow extends JFrame {
 			});
 			AddRuralHouseButton.setForeground(Color.BLUE);
 			AddRuralHouseButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-			AddRuralHouseButton.setBounds(250, 424, 217, 29);
+			AddRuralHouseButton.setBounds(442, 239, 193, 29);
 		}
 		return AddRuralHouseButton;
 	}
