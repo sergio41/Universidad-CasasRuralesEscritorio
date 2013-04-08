@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class CrearOferta extends JFrame {
+public class CrearOfertaGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JCalendar firstdaycalendar = new JCalendar();
@@ -38,7 +38,7 @@ public class CrearOferta extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CrearOferta frame = new CrearOferta();
+					CrearOfertaGUI frame = new CrearOfertaGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +50,7 @@ public class CrearOferta extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CrearOferta() {
+	public CrearOfertaGUI() {
 		setResizable(false);
 		setTitle("Crear ofertas");
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
