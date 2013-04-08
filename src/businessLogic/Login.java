@@ -63,7 +63,7 @@ public class Login {
 		}
 	}
 	
-	public static void recuperarContrase�a(String email) throws Exception{
+	public static void recuperarContrasena(String email) throws Exception{
 		UserAplication user = DB4oManager.getUser(email, null);
 		try {
 			EnviarCorreo.enviarCorreos(user.getEmail(), "Contraseña", "Tu contraseña es " + user.getPass());
