@@ -1,9 +1,11 @@
 package businessLogic;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import dataAccess.DB4oManager;
 import domain.Owner;
+import domain.RuralHouse;
 import domain.UserAplication;
 import externalDataSend.EnviarCorreo;
 import externalDataSend.GestionTwitter;
@@ -54,6 +56,7 @@ public class Login {
 	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
 		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
+			//DB4oManager.deleteUser(usuario);
 			usuario.setEstadoCivil(estadoCivil);
 			usuario.setName(nombre);
 			usuario.setApellidos(apellidos);
@@ -141,6 +144,7 @@ public class Login {
 	}	
 
 	public static void setPropietario(Owner own){
+		//DB4oManager.deleteUser(usuario);
 		usuario.setPropietario(own);
 		DB4oManager.storeUser(usuario);
 	}

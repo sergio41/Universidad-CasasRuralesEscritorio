@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import businessLogic.Login;
 
 import domain.Owner;
+import domain.RuralHouse;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -182,6 +183,12 @@ public class OwnerGUI extends JFrame {
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
 				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
+				if(Login.getPropietario()!=null){
+					java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
+						while (i.hasNext()){
+							own.addRuralHouse(i.next());
+						}
+				}
 				Login.setPropietario(own);
 				StartWindow.actualizarLogin();
 				setVisible(false);

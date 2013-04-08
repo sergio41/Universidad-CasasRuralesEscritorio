@@ -79,5 +79,10 @@ public class DB4oManager {
 	public static void storeRuralHouse(RuralHouse rh){
 		db.store(rh);
 	}
+
+	public static void deleteUser(UserAplication usuario) {
+		db.delete(usuario);
+		
+	}
 }
 	
