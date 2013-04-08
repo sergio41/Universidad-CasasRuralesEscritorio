@@ -11,7 +11,7 @@ import businessLogic.Login;
 
 public class AddRuralHouse {
 	private AddRuralHouse() {}
-
+/*
 	public static void gestionRuralHouse( RuralHouse rh,
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception {
@@ -69,5 +69,5 @@ public class AddRuralHouse {
 		}
 		max++;
 		return max;
-	}
+	}*/
 }

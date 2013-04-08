@@ -21,6 +21,7 @@ import javax.swing.JTextPane;
 
 
 import EDU.purdue.cs.bloat.tree.EliminationInformation;
+import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 import businessLogic.AddRuralHouse;
 
@@ -84,10 +85,13 @@ public class GestionRuralHouseGUI extends JFrame {
 					String nBaths = textBath.getText();
 					String nLiving = textLiving.getText();
 					String nPark = textPark.getText();
+					ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						AddRuralHouse.gestionRuralHouse(null, description, city, nRooms, nKitchen, nBaths,nLiving, nPark);
+						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						//AddRuralHouse.gestionRuralHouse(null, description, city, nRooms, nKitchen, nBaths,nLiving, nPark);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						RuralHouse rh;
+						facade.modficarRuralHouse(comBoxCasas.getSelectedIndex(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						/*RuralHouse rh;
 						java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
 						while (i.hasNext()){
 							rh = i.next();
@@ -95,7 +99,7 @@ public class GestionRuralHouseGUI extends JFrame {
 								AddRuralHouse.gestionRuralHouse(rh, description, city, nRooms, nKitchen, nBaths,nLiving, nPark);
 								break;
 							}
-						}
+						}*/
 					}
 					StartWindow.actualizarLogin();
 					setVisible(false);
@@ -229,18 +233,22 @@ public class GestionRuralHouseGUI extends JFrame {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() > 0) {
-					RuralHouse rh;
+					ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
+					facade.eliminarCasaRural(comBoxCasas.getSelectedIndex());
+					javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+					StartWindow.actualizarLogin();
+					setVisible(false);
+					/*RuralHouse rh;
 					java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
 					while (i.hasNext()){
 						rh = i.next();
 						if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+							
 							AddRuralHouse.eliminarCasaRural(rh);
-							javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-							StartWindow.actualizarLogin();
-							setVisible(false);
+							
 							break;
 						}
-					}
+					}*/
 				}
 			}
 		});
