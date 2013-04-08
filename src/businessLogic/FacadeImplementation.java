@@ -238,9 +238,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 	}
 
-	@Override
 	public void eliminarCasaRural(int numero) {
-		ObjectContainer db=DB4oManager.getContainer();
+		/*ObjectContainer db=DB4oManager.getContainer();
 		RuralHouse proto = new RuralHouse(numero,null,null,null,0,0,0,0,0);
 		ObjectSet result = db.queryByExample(proto);
 		
@@ -248,11 +247,11 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 		DB4oManager.getContainer().delete(rh);
 		Login.getPropietario().getRuralHouses().remove(rh);
-		Login.setPropietario(Login.getPropietario());
+		Login.setPropietario(Login.getPropietario());*/
 		
 	}
 	
-	public static int getNumeroCR(){
+	private int getNumeroCR(){
 		Vector<RuralHouse> vector = new Vector<RuralHouse>();
 		vector = DB4oManager.getCR();
 		int max = 0;

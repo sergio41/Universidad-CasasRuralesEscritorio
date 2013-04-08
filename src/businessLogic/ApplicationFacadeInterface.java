@@ -78,12 +78,13 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void anadirRuralHouse(
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception;
-	
 	public void modficarRuralHouse( int numero,
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception;
+
+	public void eliminarCasaRural (int numero) throws Exception;
 	
-	public void eliminarCasaRural (int numero);
+	//
 	
 	
 }

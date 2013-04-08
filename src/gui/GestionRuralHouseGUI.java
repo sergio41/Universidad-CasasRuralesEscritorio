@@ -223,10 +223,16 @@ public class GestionRuralHouseGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() > 0) {
 					ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
-					facade.eliminarCasaRural(comBoxCasas.getSelectedIndex());
-					javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-					StartWindow.actualizarLogin();
-					setVisible(false);
+					try {
+						facade.eliminarCasaRural(Integer.parseInt(comBoxCasas.getSelectedItem().toString()));
+						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+						StartWindow.actualizarLogin();
+						setVisible(false);
+					}catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					
 				}
 			}
 		});
