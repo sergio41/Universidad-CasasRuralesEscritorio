@@ -144,7 +144,7 @@ public class Login {
 	}	
 
 	public static void setPropietario(Owner own){
-		//DB4oManager.deleteUser(usuario);
+		DB4oManager.deleteUser(usuario);
 		usuario.setPropietario(own);
 		DB4oManager.storeUser(usuario);
 	}
