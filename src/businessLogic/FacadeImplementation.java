@@ -23,10 +23,6 @@ import exceptions.OfferCanNotBeBooked;
 
 
 public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	BookManager theBookMngr;
 	
