@@ -36,14 +36,15 @@ import java.awt.event.ActionEvent;
 public class CrearOfertaGUI extends JFrame {
 
 	private JPanel contentPane;
-	private JCalendar firstdaycalendar = new JCalendar();
-	private JCalendar lastdaycalendar = new JCalendar();
+	private JCalendar calendarFirstday = new JCalendar();
+	private JCalendar calendarLastday = new JCalendar();
 	private Calendar calendar1 = null;
 	private Calendar calendar2 = null;
-	private JTextField firstdayTextField = new JTextField();
-	private JTextField lastdayTextField = new JTextField();
+	private JTextField textFirstday = new JTextField();
+	private JTextField textLastday = new JTextField();
 	private JComboBox comBoxCasas;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private JButton bttnSalvar;
 	
 	
 	  // Code for JCalendar
@@ -53,7 +54,7 @@ public class CrearOfertaGUI extends JFrame {
 	  private Calendar calendarFin = null;
 	  private JButton jButton2 = new JButton();
 	  private JLabel jLabel5 = new JLabel();
-	  private JTextField jTextField3;
+	  private JTextField textPrecio;
 	/**
 	 * Launch the application.
 	 */
@@ -94,74 +95,90 @@ public class CrearOfertaGUI extends JFrame {
 		comBoxCasas = new JComboBox();
 		comBoxCasas.setBounds(125, 32, 149, 23);
 		comBoxCasas.setModel(modeloEC);
+		comBoxCasas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (comBoxCasas.getSelectedIndex() != -1){
+					enaDis(true);
+				}
+			}
+		});
 		contentPane.add(comBoxCasas);
 		
 		
-		firstdayTextField.setBounds(125, 99, 149, 28);
-		contentPane.add(firstdayTextField);
-		firstdayTextField.setColumns(10);
+		textFirstday.setBounds(125, 99, 149, 28);
+		contentPane.add(textFirstday);
+		textFirstday.setColumns(10);
 		
-		firstdaycalendar.setBounds(284, 76, 268, 138);
-		firstdaycalendar.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
-		firstdaycalendar.getDayChooser().setBackground(Color.CYAN);
-		firstdaycalendar.setBackground(new Color(178, 238, 238));
-		contentPane.add(firstdaycalendar);
+		calendarFirstday.setBounds(284, 76, 268, 138);
+		calendarFirstday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		calendarFirstday.getDayChooser().setBackground(Color.CYAN);
+		calendarFirstday.setBackground(new Color(178, 238, 238));
+		contentPane.add(calendarFirstday);
 		
 		// Codigo para el FirstDayCalendar
-		firstdaycalendar.addPropertyChangeListener(new PropertyChangeListener() {
+		calendarFirstday.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent propertychangeevent) {
 				if (propertychangeevent.getPropertyName().equals("locale")) {
-					firstdaycalendar.setLocale((Locale) propertychangeevent
+					calendarFirstday.setLocale((Locale) propertychangeevent
 							.getNewValue());
 					DateFormat dateformat = DateFormat.getDateInstance(1,
-							firstdaycalendar.getLocale());
-					firstdayTextField.setText(dateformat.format(calendar1.getTime()));
+							calendarFirstday.getLocale());
+					textFirstday.setText(dateformat.format(calendar1.getTime()));
 				} else if (propertychangeevent.getPropertyName().equals(
 						"calendar")) {
 					calendar1 = (Calendar) propertychangeevent.getNewValue();
 					DateFormat dateformat1 = DateFormat.getDateInstance(1,
-							firstdaycalendar.getLocale());
-					firstdayTextField.setText(dateformat1.format(calendar1
+							calendarFirstday.getLocale());
+					textFirstday.setText(dateformat1.format(calendar1
 							.getTime()));
-					firstdaycalendar.setCalendar(calendar1);
+					calendarFirstday.setCalendar(calendar1);
 				}
 			}
 		});
 		
-		lastdayTextField.setBounds(125, 253, 149, 28);
-		contentPane.add(lastdayTextField);
-		lastdayTextField.setColumns(10);
+		textLastday.setBounds(125, 253, 149, 28);
+		contentPane.add(textLastday);
+		textLastday.setColumns(10);
 		
-		lastdaycalendar.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
-		lastdaycalendar.getDayChooser().setBackground(Color.CYAN);
-		lastdaycalendar.setBackground(new Color(178, 238, 238));
-		lastdaycalendar.setBounds(284, 225, 268, 138);
-		contentPane.add(lastdaycalendar);
+		calendarLastday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		calendarLastday.getDayChooser().setBackground(Color.CYAN);
+		calendarLastday.setBackground(new Color(178, 238, 238));
+		calendarLastday.setBounds(284, 225, 268, 138);
+		contentPane.add(calendarLastday);
 		
 		// Codigo para el LastDayCalendar
-				lastdaycalendar.addPropertyChangeListener(new PropertyChangeListener() {
+				calendarLastday.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent propertychangeevent) {
 						if (propertychangeevent.getPropertyName().equals("locale")) {
-							lastdaycalendar.setLocale((Locale) propertychangeevent
+							calendarLastday.setLocale((Locale) propertychangeevent
 									.getNewValue());
 							DateFormat dateformat = DateFormat.getDateInstance(1,
-									lastdaycalendar.getLocale());
-							lastdayTextField.setText(dateformat.format(calendar2.getTime()));
+									calendarLastday.getLocale());
+							textLastday.setText(dateformat.format(calendar2.getTime()));
 						} else if (propertychangeevent.getPropertyName().equals(
 								"calendar")) {
 							calendar2 = (Calendar) propertychangeevent.getNewValue();
 							DateFormat dateformat1 = DateFormat.getDateInstance(1,
-									lastdaycalendar.getLocale());
-							lastdayTextField.setText(dateformat1.format(calendar2
+									calendarLastday.getLocale());
+							textLastday.setText(dateformat1.format(calendar2
 									.getTime()));
-							lastdaycalendar.setCalendar(calendar2);
+							calendarLastday.setCalendar(calendar2);
 						}
 					}
 				});
-		JButton OfferButton = new JButton("Salvar");
-		OfferButton.addActionListener(new ActionListener() {
+		bttnSalvar = new JButton("Salvar");
+		bttnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  	RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
+					RuralHouse ruralHouse = null;
+					java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
+					while (i.hasNext()){
+						ruralHouse = i.next();
+						if (ruralHouse.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+							break;
+						}
+					}
+				
+				  	//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
 				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
 				    //Remove the hour:minute:second:ms from the date 
 				  	firstDay=Date.valueOf(firstDay.toString());
@@ -169,7 +186,7 @@ public class CrearOfertaGUI extends JFrame {
 				    //Remove the hour:minute:second:ms from the date 
 				  	lastDay=Date.valueOf(lastDay.toString());
 				  	//It could be to trigger an exception if the introduced string is not a number
-				  	float price= Float.parseFloat(jTextField3.getText());
+				  	float price= Float.parseFloat(textPrecio.getText());
 				  	try {
 				  	    //Obtain the business logic from a StartWindow class (local or remote)
 						ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
@@ -183,11 +200,10 @@ public class CrearOfertaGUI extends JFrame {
 					}
 			}
 		});
-		OfferButton.setEnabled(false);
-		OfferButton.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-		OfferButton.setForeground(Color.BLUE);
-		OfferButton.setBounds(403, 391, 149, 46);
-		contentPane.add(OfferButton);
+		bttnSalvar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
+		bttnSalvar.setForeground(Color.BLUE);
+		bttnSalvar.setBounds(403, 391, 149, 46);
+		contentPane.add(bttnSalvar);
 		
 		JLabel firstdaylbl = new JLabel("Primer d\u00EDa:");
 		firstdaylbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
@@ -207,10 +223,10 @@ public class CrearOfertaGUI extends JFrame {
 		lblPrecio.setBounds(23, 371, 110, 22);
 		contentPane.add(lblPrecio);
 		
-		jTextField3 = new JTextField();
-		jTextField3.setColumns(10);
-		jTextField3.setBounds(125, 365, 149, 28);
-		contentPane.add(jTextField3);
+		textPrecio = new JTextField();
+		textPrecio.setColumns(10);
+		textPrecio.setBounds(125, 365, 149, 28);
+		contentPane.add(textPrecio);
 		
 		inicializarCampos();
 	}
@@ -220,7 +236,16 @@ public class CrearOfertaGUI extends JFrame {
 		while (i.hasNext()){
 			modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 		}
-		//enaDis(false);
+		enaDis(false);
 		comBoxCasas.setSelectedIndex(-1);
+	}
+	
+	private void enaDis(boolean b){
+		textFirstday.setEnabled(b);
+		textLastday.setEnabled(b);
+		textPrecio.setEnabled(b);
+		calendarFirstday.setEnabled(b);
+		calendarLastday.setEnabled(b);
+		bttnSalvar.setEnabled(b);
 	}
 }
