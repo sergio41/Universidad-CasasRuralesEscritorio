@@ -1,7 +1,14 @@
 package businessLogic;
 
+import java.util.Calendar;
+import java.util.Vector;
+
 import dataAccess.DB4oManager;
+import domain.Owner;
+import domain.RuralHouse;
 import domain.UserAplication;
+import externalDataSend.EnviarCorreo;
+import externalDataSend.GestionTwitter;
 
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
@@ -28,6 +35,8 @@ public class Login {
 			if (telefono.compareTo("")==0) telefono = null;
 			if (DB4oManager.comprobarEmail(email)) throw new Exception("Email ya usado. Logueate");
 			else{
+				EnviarCorreo.enviarCorreos(email, "Registro en Villatripas de Arriba", "Te has registrado en villatripas de arribacon el email " + email);
+				GestionTwitter.enviarTweet("Bienvenid@: " + nombre + " " + Calendar.getInstance().getTime().toString());
 				DB4oManager.storeUser(new UserAplication(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad));
 				hacerLogin(email, pass);
 			}
@@ -40,9 +49,14 @@ public class Login {
 		usuario = null;
 	}
 
+	public static UserAplication getUser() throws Exception {
+		if (!estado) throw new Exception("No estas logueado.");
+		return usuario;
+	}
 	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
 		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
+			//DB4oManager.deleteUser(usuario);
 			usuario.setEstadoCivil(estadoCivil);
 			usuario.setName(nombre);
 			usuario.setApellidos(apellidos);
@@ -54,6 +68,15 @@ public class Login {
 		}
 	}
 	
+	public static void recuperarContrasena(String email) throws Exception{
+		UserAplication user = DB4oManager.getUser(email, null);
+		try {
+			EnviarCorreo.enviarCorreos(user.getEmail(), "Contraseña", "Tu contraseña es " + user.getPass());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.toString());
+		}
+	}
 	//Metodos Datos
 	
 	public static String getEmail() {
@@ -119,4 +142,14 @@ public class Login {
 	public String toString(){
 		return usuario.toString();
 	}	
+
+	public static void setPropietario(Owner own){
+		DB4oManager.deleteUser(usuario);
+		usuario.setPropietario(own);
+		DB4oManager.storeUser(usuario);
+	}
+	
+	public static Owner getPropietario(){
+		return usuario.getPropietario();
+	}
 }

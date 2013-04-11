@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -15,7 +18,10 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import businessLogic.Login;
+
 import domain.Owner;
+import domain.RuralHouse;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,7 +39,13 @@ public class OwnerGUI extends JFrame {
 	private JTextField textIdioma4;
 	private JLabel lblMoneda;
 	private JLabel label;
+	private static JButton buttonGuardar;
+	private static JComboBox comboMoneda = new JComboBox();
+	private static JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
+	private static JRadioButton rdbtnParticular = new JRadioButton("Particular");
+	private DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -80,12 +92,11 @@ public class OwnerGUI extends JFrame {
 		lblUstedEs.setBounds(32, 77, 161, 34);
 		contentPane.add(lblUstedEs);
 		
-		final JRadioButton rdbtnParticular = new JRadioButton("Particular");
 		rdbtnParticular.setBackground(new Color(178,238,238));
 		rdbtnParticular.setBounds(248, 77, 127, 34);
 		contentPane.add(rdbtnParticular);
 		
-		final JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
+		
 		rdbtnProfesional.setBackground(new Color(178,238,238));
 		rdbtnProfesional.setBounds(453, 77, 127, 34);
 		contentPane.add(rdbtnProfesional);
@@ -133,8 +144,12 @@ public class OwnerGUI extends JFrame {
 		lblMoneda.setBounds(32, 261, 161, 34);
 		contentPane.add(lblMoneda);
 		
-		final JComboBox comboMoneda = new JComboBox();
+		
 		comboMoneda.setBounds(248, 261, 109, 34);
+		comboMoneda.setModel(modeloMon);
+		modeloMon.addElement("");
+		modeloMon.addElement("€");
+		modeloMon.addElement("$");
 		contentPane.add(comboMoneda);
 		
 		label = new JLabel("Los campos marcados con * son obligatorios");
@@ -143,8 +158,13 @@ public class OwnerGUI extends JFrame {
 		label.setFont(new Font("Tekton Pro", Font.PLAIN, 18));
 		label.setBounds(126, 302, 366, 34);
 		contentPane.add(label);
+		contentPane.add(getSaveButton());
+
+		inicializarCampos();
 		
-		JButton buttonGuardar = new JButton("Guardar");
+	}
+	private JButton getSaveButton() {
+		buttonGuardar=new JButton("Registrar");
 		buttonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String cuenta= "";
@@ -162,13 +182,56 @@ public class OwnerGUI extends JFrame {
 				idiom.add(textIdioma4.getText());
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
-
+				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
+				if(Login.getPropietario()!=null){
+					java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
+						while (i.hasNext()){
+							own.addRuralHouse(i.next());
+						}
+				}
+				Login.setPropietario(own);
+				StartWindow.actualizarLogin();
+				setVisible(false);
 			}
 		});
 		buttonGuardar.setForeground(Color.BLUE);
 		buttonGuardar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		buttonGuardar.setBounds(504, 291, 124, 45);
-		contentPane.add(buttonGuardar);
+		return buttonGuardar;
+	}
+
+	@SuppressWarnings("deprecation")
+	private void inicializarCampos(){
+		if (Login.getPropietario()!=null){
+			textCuentaBancaria.enable(false);
+			textCuentaBancaria.setText(Login.getPropietario().getBankAccount());
+			if(Login.getPropietario().getTipo()=="Particular"){
+				rdbtnProfesional.setSelected(false);
+				rdbtnParticular.setSelected(true);
+			}else if(Login.getPropietario().getTipo()=="Profesional"){
+				rdbtnProfesional.setSelected(true);
+				rdbtnParticular.setSelected(false);
+			}
+			textIdioma1.setText(Login.getPropietario().getIdiomas().elementAt(0));
+			textIdioma2.setText(Login.getPropietario().getIdiomas().elementAt(1));
+			textIdioma3.setText(Login.getPropietario().getIdiomas().elementAt(2));
+			textIdioma4.setText(Login.getPropietario().getIdiomas().elementAt(3));
+			textProfesion.setText(Login.getPropietario().getProfesion());
+			comboMoneda.setSelectedItem(Login.getPropietario().getMoneda());
+			buttonGuardar.setText("Guardar");
+		} else {
+			textCuentaBancaria.enable(true);
+			textCuentaBancaria.setText("");
+			rdbtnProfesional.setSelected(false);
+			rdbtnParticular.setSelected(false);
+			textIdioma1.setText("");
+			textIdioma2.setText("");
+			textIdioma3.setText("");
+			textIdioma4.setText("");
+			textProfesion.setText("");
+			comboMoneda.setSelectedIndex(0);
+			buttonGuardar.setText("Registrar");
+		}
 	}
 }
 

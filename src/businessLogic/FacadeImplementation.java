@@ -23,10 +23,6 @@ import exceptions.OfferCanNotBeBooked;
 
 
 public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	BookManager theBookMngr;
 	
@@ -67,7 +63,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception {
 		ObjectContainer db=DB4oManager.getContainer();
-		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity());
+		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
+				ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
 		 ObjectSet result = db.queryByExample(proto);
 		 RuralHouse rh=(RuralHouse)result.next();
 		Offer o=rh.createOffer(firstDay, lastDay, price);
@@ -89,7 +86,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 		try {
 			ObjectContainer db=DB4oManager.getContainer();
-			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity());
+			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
+					ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
 			 ObjectSet result = db.queryByExample(proto);
 			 RuralHouse rh=(RuralHouse)result.next();
 			Book b=null;
@@ -149,7 +147,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		ObjectContainer db=DB4oManager.getContainer();
 
 		 try {
-			 RuralHouse proto = new RuralHouse(0,null,null,null);
+			 RuralHouse proto = new RuralHouse(0,null,null,null,0,0,0,0,0);
 			 ObjectSet result = db.queryByExample(proto);
 			 Vector<RuralHouse> ruralHouses=new Vector<RuralHouse>();
 			 while(result.hasNext()) 
@@ -162,6 +160,108 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public void close() throws RemoteException{
 		DB4oManager.close();
 
+	}
+
+	@Override
+	public void anadirRuralHouse(String description, String city,
+			String nRooms, String nKitchen, String nBaths, String nLiving,
+			String nPark) throws Exception {
+	if (city.compareTo("") == 0 || nRooms.compareTo("") == 0
+			|| nKitchen.compareTo("") == 0 || nBaths.compareTo("") == 0
+			|| nLiving.compareTo("") == 0 || nPark.compareTo("") == 0)
+		throw new Exception("Algunos datos obligatorios faltan.");
+	else {
+			try {
+				int r = Integer.parseInt(nRooms);
+				int k = Integer.parseInt(nKitchen);
+				int b = Integer.parseInt(nBaths);
+				int l = Integer.parseInt(nLiving);
+				int p = Integer.parseInt(nPark);
+				
+				if (r<3) throw new Exception("La casa debe tener m�nimo 3 habitaciones.");
+				if (k<1) throw new Exception("La casa debe tener m�nimo 1 cocina.");
+				if (b<2) throw new Exception("La casa debe tener m�nimo 2 ba�os.");
+				Owner own =Login.getPropietario();
+				RuralHouse rh = new RuralHouse(getNumeroCR(), Login.getUser(),
+						description, city, r, k, b, l, p);
+				own.addRuralHouse(rh);
+				Login.setPropietario(own);
+				javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
+			} catch (Exception e) {
+				javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
+			}
+	}
+		
+	}
+
+	@Override
+	public void modficarRuralHouse(int numero, String description,
+			String city, String nRooms, String nKitchen, String nBaths,
+			String nLiving, String nPark) throws Exception {
+		if (city.compareTo("") == 0 || nRooms.compareTo("") == 0
+				|| nKitchen.compareTo("") == 0 || nBaths.compareTo("") == 0
+				|| nLiving.compareTo("") == 0 || nPark.compareTo("") == 0)
+			throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+				try {
+					int r = Integer.parseInt(nRooms);
+					int k = Integer.parseInt(nKitchen);
+					int b = Integer.parseInt(nBaths);
+					int l = Integer.parseInt(nLiving);
+					int p = Integer.parseInt(nPark);
+					
+					if (r<3) throw new Exception("La casa debe tener m�nimo 3 habitaciones.");
+					if (k<1) throw new Exception("La casa debe tener m�nimo 1 cocina.");
+					if (b<2) throw new Exception("La casa debe tener m�nimo 2 ba�os.");
+					Owner own =Login.getPropietario();
+					
+
+					
+					ObjectContainer db=DB4oManager.getContainer();
+					RuralHouse proto = new RuralHouse(numero,null,null,null,0,0,0,0,0);
+					ObjectSet result = db.queryByExample(proto);
+					
+					RuralHouse rh = (RuralHouse) result.next();
+					rh.setBaths(b);
+					rh.setCity(city);
+					rh.setDescription(description);
+					rh.setKitchen(k);
+					rh.setLiving(l);
+					rh.setPark(p);
+					rh.setRooms(r);					
+					Login.setPropietario(own);
+					javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+		}
+		
+	}
+
+	public void eliminarCasaRural(int numero) {
+		ObjectContainer db=DB4oManager.getContainer();
+		RuralHouse proto = new RuralHouse(numero,null,null,null,0,0,0,0,0);
+		ObjectSet result = db.queryByExample(proto);
+		
+		RuralHouse rh = (RuralHouse) result.next();
+		
+		DB4oManager.getContainer().delete(rh);
+		Login.getPropietario().getRuralHouses().remove(rh);
+		Login.setPropietario(Login.getPropietario());
+		
+	}
+	
+	private int getNumeroCR(){
+		Vector<RuralHouse> vector = new Vector<RuralHouse>();
+		vector = DB4oManager.getCR();
+		int max = 0;
+		java.util.Iterator<RuralHouse> i = vector.iterator();
+		while (i.hasNext()) {
+			int aux = i.next().getHouseNumber();
+			if( max < aux) max = aux;
+		}
+		max++;
+		return max;
 	}
 
 	}

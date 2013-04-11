@@ -16,8 +16,13 @@ public class RuralHouse implements Serializable {
 	 */
 	private int houseNumber;
 	private String description;
-	private Owner owner;
+	private UserAplication user;
 	private String city; 
+	private int nRooms;
+	private int nKitchen;
+	private int nBaths;
+	private int nLiving;
+	private int nPark;
 	public Vector<Offer> offers;
 	
 
@@ -27,11 +32,16 @@ public class RuralHouse implements Serializable {
 		super();
 	}
 
-	public RuralHouse(int houseNumber, Owner owner, String description, String city) {
-		this.houseNumber = houseNumber;
-		this.description = description;
-		this.owner = owner;
-		this.city = city;
+	public RuralHouse(int h, UserAplication o, String d, String c, int r, int k, int b, int l, int p) {
+		houseNumber = h;
+		description = d;
+		user = o;
+		city = c;
+		nRooms = r;
+		nKitchen = k;
+		nBaths = b;
+		nLiving = l;
+		nPark = p;
 		offers=new Vector<Offer>();
 	}
 
@@ -39,34 +49,73 @@ public class RuralHouse implements Serializable {
 		return houseNumber;
 	}
 
-	public void setHouseNumber(int houseNumber) {
-		this.houseNumber = houseNumber;
+	public void setHouseNumber(int h) {
+		houseNumber = h;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 	
-	public void setDescription(String description) {
-		this.description=description;
+	public void setDescription(String d) {
+		description=d;
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public UserAplication getUserAplication() {
+		return user;
 	}
 
-	public void setOwner(Owner owner) {
-		this.owner=owner;
+	public void setUser(UserAplication o) {
+		user =o;
 	}
 	
 	public String getCity() {
 		return city;
 	}
 	
-	public void setCity(String city) {
-		this.city=city;
+	public void setCity(String c) {
+		city=c;
 	}
 
+	public int getRooms() {
+		return nRooms;
+	}
+	
+	public void setRooms(int r) {
+		nRooms = r;
+	}
+
+	public int getKitchen() {
+		return nKitchen;
+	}
+	
+	public void setKitchen(int k) {
+		nKitchen = k;
+	}
+	
+	public int getBaths() {
+		return nBaths;
+	}
+	
+	public void setBaths(int b) {
+		nBaths = b;
+	}
+	
+	public int getLiving() {
+		return nLiving;
+	}
+	
+	public void setLiving(int l) {
+		nLiving = l;
+	}
+	
+	public int getPark() {
+		return nPark;
+	}
+	
+	public void setPark(int p) {
+		nPark = p;
+	}
 	
 	public String toString() {
 		return this.houseNumber + ": " + this.city;
@@ -115,6 +164,7 @@ public class RuralHouse implements Serializable {
 	 *            Number of the house
 	 * @return Owner account number of the house
 	 */
+	
 	public String getAccountNumber(int houseNumber) {
 		/*try {
 			dbMngr=DBManager.getInstance();

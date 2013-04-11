@@ -23,12 +23,12 @@ public class Offer implements Serializable {
 	private RuralHouse ruralHouse;
 
 	
-	public Offer(RuralHouse ruralHouse, Date firstDay, Date lastDay, float price){
-		  this.firstDay=firstDay;
-		  this.lastDay=lastDay;
-		  this.price=price;
-		  this.ruralHouse=ruralHouse;
-		  this.offerNumber=OfferManager.getNumber();
+	public Offer(RuralHouse rh, Date fd, Date ld, float p){
+		  firstDay=fd;
+		  lastDay=ld;
+		  price=p;
+		  ruralHouse=rh;
+		  offerNumber=OfferManager.getNumber();
 	}
 	/**
 	 * Get the house number of the offer
@@ -36,7 +36,7 @@ public class Offer implements Serializable {
 	 * @return the house number
 	 */
 	public RuralHouse getRuralHouse() {
-		return this.ruralHouse;
+		return ruralHouse;
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class Offer implements Serializable {
 	 * 
 	 * @param house number
 	 */
-	public void setRuralHouse(RuralHouse ruralHouse) {
-		this.ruralHouse = ruralHouse;
+	public void setRuralHouse(RuralHouse rh) {
+		ruralHouse = rh;
 	}
 
 
@@ -55,7 +55,7 @@ public class Offer implements Serializable {
 	 * @return offer number
 	 */
 	public int getOfferNumber() {
-		return this.offerNumber;
+		return offerNumber;
 	}
 
 	
@@ -66,7 +66,7 @@ public class Offer implements Serializable {
 	 * @return the first day
 	 */
 	public Date getFirstDay() {
-		return this.firstDay;
+		return firstDay;
 	}
 
 	/**
@@ -75,8 +75,8 @@ public class Offer implements Serializable {
 	 * @param firstDay
 	 *            The first day
 	 */
-	public void setFirstDay(Date firstDay) {
-		this.firstDay = firstDay;
+	public void setFirstDay(Date fd) {
+		firstDay = fd;
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Offer implements Serializable {
 	 * @return the last day
 	 */
 	public Date getLastDay() {
-		return this.lastDay;
+		return lastDay;
 	}
 
 	/**
@@ -94,8 +94,8 @@ public class Offer implements Serializable {
 	 * @param lastDay
 	 *            The last day
 	 */
-	public void setLastDay(Date lastDay) {
-		this.lastDay = lastDay;
+	public void setLastDay(Date ld) {
+		lastDay = ld;
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Offer implements Serializable {
 	 * @return price
 	 */
 	public float getPrice() {
-		return this.price;
+		return price;
 	}
 
 	/**
@@ -112,8 +112,8 @@ public class Offer implements Serializable {
 	 * 
 	 * @param price
 	 */
-	public void setPrice(float price) {
-		this.price = price;
+	public void setPrice(float p) {
+		price = p;
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Offer implements Serializable {
 	 * @return book object
 	 */
 	public Book getBook() {
-		return this.book;
+		return book;
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class Offer implements Serializable {
 	 *            Book object
 	 * @return None
 	 */
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBook(Book b) {
+		book = b;
 	}
 	
 	/**

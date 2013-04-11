@@ -53,7 +53,7 @@ public class BookRuralHouseConfirmationWindow extends JFrame {
     jTextField1.setBounds(new Rectangle(225, 20, 165, 25));
     jTextField1.setEditable(false);
 
-    jTextField1.setText(book.getOffer().getRuralHouse().getOwner().getBankAccount());
+    jTextField1.setText(book.getOffer().getRuralHouse().getUserAplication().getPropietario().getBankAccount());
     
     jLabel2.setText("Booking number:");
     jLabel2.setBounds(new Rectangle(20, 60, 130, 25));
@@ -80,10 +80,10 @@ public class BookRuralHouseConfirmationWindow extends JFrame {
     jTextField3.setBounds(new Rectangle(180, 140, 115, 25));
     jTextField3.setEditable(false);
 
-    jTextField3.setText(Float.toString(book.getPrice()) + " €");
+    jTextField3.setText(Float.toString(book.getPrice()) + " ï¿½");
     jTextField4.setBounds(new Rectangle(180, 175, 115, 25));
     jTextField4.setEditable(false);
-    jTextField4.setText(Float.toString(book.getPrice()*(float)0.2) + " €");
+    jTextField4.setText(Float.toString(book.getPrice()*(float)0.2) + " ï¿½");
     this.getContentPane().add(jTextField4, null);
     this.getContentPane().add(jTextField3, null);
     this.getContentPane().add(jLabel5, null);
