@@ -13,10 +13,10 @@ import externalDataSend.GestionTwitter;
 public class Login {
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
 	private static UserAplication usuario;
-	public static boolean estadoLogin (){
+	/*public static boolean estadoLogin (){
 		return estado;
-	}
-	public static boolean hacerLogin(String email, String pass) throws Exception{
+	}*/
+	/*public static boolean hacerLogin(String email, String pass) throws Exception{
 		if (email.compareTo("")==0 || pass.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		usuario = DB4oManager.getUser(email, pass);
 		if (usuario == null) return false;
@@ -25,9 +25,9 @@ public class Login {
 			return true;
 		}
 		//return (DB4oManager.comprobarEmailAndPass(email, pass));
-	}
+	}*/
 	
-	public static void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
+	/*public static void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
 		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
@@ -41,19 +41,19 @@ public class Login {
 				hacerLogin(email, pass);
 			}
 		}
-	}
+	}*/
 	
-	public static void logout() throws Exception{
+	/*public static void logout() throws Exception{
 		if (!estado) throw new Exception("No estas logueado.");
 		estado = false;
 		usuario = null;
-	}
+	}*/
 
-	public static UserAplication getUser() throws Exception {
+	/*public static UserAplication getUser() throws Exception {
 		if (!estado) throw new Exception("No estas logueado.");
 		return usuario;
-	}
-	public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
+	}*/
+	/*public static void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception{
 		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			//DB4oManager.deleteUser(usuario);
@@ -66,9 +66,9 @@ public class Login {
 			if(pass.compareTo("")!=0) usuario.setPass(pass);	
 			DB4oManager.storeUser(usuario);
 		}
-	}
+	}*/
 	
-	public static void recuperarContrasena(String email) throws Exception{
+	/*public static void recuperarContrasena(String email) throws Exception{
 		UserAplication user = DB4oManager.getUser(email, null);
 		try {
 			EnviarCorreo.enviarCorreos(user.getEmail(), "Contraseña", "Tu contraseña es " + user.getPass());
@@ -76,10 +76,10 @@ public class Login {
 			// TODO Auto-generated catch block
 			throw new Exception(e.toString());
 		}
-	}
+	}*/
 	//Metodos Datos
 	
-	public static String getEmail() {
+	/*public static String getEmail() {
 		return usuario.getEmail();
 	}
 	
@@ -142,14 +142,14 @@ public class Login {
 	public String toString(){
 		return usuario.toString();
 	}	
-
+*/
 	public static void setPropietario(Owner own){
 		DB4oManager.deleteUser(usuario);
 		usuario.setPropietario(own);
 		DB4oManager.storeUser(usuario);
 	}
 	
-	public static Owner getPropietario(){
+	/*public static Owner getPropietario(){
 		return usuario.getPropietario();
-	}
+	}*/
 }

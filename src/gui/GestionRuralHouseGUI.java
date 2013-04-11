@@ -190,25 +190,32 @@ public class GestionRuralHouseGUI extends JFrame {
 		comBoxCasas = new JComboBox();
 		comBoxCasas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
 				if (comBoxCasas.getSelectedIndex() != -1){
 					enaDis(true);
 					btnEliminar.setEnabled(false);
 					if (comBoxCasas.getSelectedIndex() != 0){
 						RuralHouse rh;
-						java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
-						while (i.hasNext()){
-							rh = i.next();
-							if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
-								btnEliminar.setEnabled(true);
-								textPaneDescription.setText(rh.getDescription());
-								textCity.setText(rh.getCity());
-								textRooms.setText(Integer.toString(rh.getRooms()));
-								textKitchen.setText(Integer.toString(rh.getKitchen()));
-								textBath.setText(Integer.toString(rh.getBaths()));
-								textLiving.setText(Integer.toString(rh.getLiving()));
-								textPark.setText(Integer.toString(rh.getPark()));
-								break;
+						java.util.Iterator<RuralHouse> i;
+						try {
+							i = facade.getOwner().getRuralHouses().iterator();
+							while (i.hasNext()){
+								rh = i.next();
+								if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
+									btnEliminar.setEnabled(true);
+									textPaneDescription.setText(rh.getDescription());
+									textCity.setText(rh.getCity());
+									textRooms.setText(Integer.toString(rh.getRooms()));
+									textKitchen.setText(Integer.toString(rh.getKitchen()));
+									textBath.setText(Integer.toString(rh.getBaths()));
+									textLiving.setText(Integer.toString(rh.getLiving()));
+									textPark.setText(Integer.toString(rh.getPark()));
+									break;
+								}
 							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 					}
 				}
@@ -245,12 +252,19 @@ public class GestionRuralHouseGUI extends JFrame {
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos() {
 		modeloEC.addElement("Nueva Casa Rural");
-		java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
-		while (i.hasNext()){
-			modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+		ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+		java.util.Iterator<RuralHouse> i;
+		try {
+			i = facade.getOwner().getRuralHouses().iterator();
+			while (i.hasNext()){
+				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+			}
+			enaDis(false);
+			comBoxCasas.setSelectedIndex(-1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		enaDis(false);
-		comBoxCasas.setSelectedIndex(-1);
 	}
 	
 	private void enaDis(boolean b){

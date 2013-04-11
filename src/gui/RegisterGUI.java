@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.HeadlessException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
@@ -14,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JPasswordField;
+
+import domain.UserAplication;
+
+import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -59,6 +64,7 @@ public class RegisterGUI extends JFrame {
 		buttonRegister = new JButton("Register");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
@@ -68,30 +74,35 @@ public class RegisterGUI extends JFrame {
 				String apellidos = textApellido.getText();
 				String telefono = textTelefono.getText();
 				String pais = textPais.getText();
-				if(Login.estadoLogin()){
-					try {
-						Login.modificarPerfil(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
-						javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-						StartWindow.actualizarLogin();
-						setVisible(false);
-					} catch (Exception e) {
-						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
-					}
-				}else{ 
-					try {
-						Login.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
-						javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-						StartWindow.actualizarLogin();
-						setVisible(false);
-						int x=javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
-						if (x==0){
-							JFrame a = new OwnerGUI();
-							a.setVisible(true);
+				try {
+					if(facade.estadoLogin()){
+						try {
+							facade.modificarPerfil(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+							StartWindow.actualizarLogin();
+							setVisible(false);
+						} catch (Exception e) {
+							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (Exception e) {
-						javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					}else{ 
+						try {
+							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+							StartWindow.actualizarLogin();
+							setVisible(false);
+							int x=javax.swing.JOptionPane.showConfirmDialog(null, "ï¿½Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
+							if (x==0){
+								JFrame a = new OwnerGUI();
+								a.setVisible(true);
+							}
+						} catch (Exception e) {
+							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+						}
+
 					}
-			
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}	
 		});
@@ -203,27 +214,34 @@ public class RegisterGUI extends JFrame {
 	
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		if (Login.estadoLogin()){
-			textEmail.enable(false);
-			textEmail.setText(Login.getEmail());
-			textEdad.setText(Login.getEdad());
-			textNombre.setText(Login.getName());
-			textApellido.setText(Login.getApellidos());
-			textTelefono.setText(Login.getTelefono());
-			textPais.setText(Login.getPais());
-			comboEC.setSelectedItem(Login.getEstadoCivil());
-			buttonRegister.setText("Guardar");
-		} else {
-			textEmail.enable(true);
-			textEmail.setText("");
-			passPass.setText("");
-			textEdad.setText("");
-			textNombre.setText("");
-			textApellido.setText("");
-			textTelefono.setText("");
-			textPais.setText("");
-			comboEC.setSelectedIndex(0);
-			buttonRegister.setText("Registrar");
+		ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+		try {
+			if (facade.estadoLogin()){
+				UserAplication user = facade.getUsuario();
+				textEmail.enable(false);
+				textEmail.setText(user.getEmail());
+				textEdad.setText(user.getEdad());
+				textNombre.setText(user.getName());
+				textApellido.setText(user.getApellidos());
+				textTelefono.setText(user.getTelefono());
+				textPais.setText(user.getPais());
+				comboEC.setSelectedItem(user.getEstadoCivil());
+				buttonRegister.setText("Guardar");
+			} else {
+				textEmail.enable(true);
+				textEmail.setText("");
+				passPass.setText("");
+				textEdad.setText("");
+				textNombre.setText("");
+				textApellido.setText("");
+				textTelefono.setText("");
+				textPais.setText("");
+				comboEC.setSelectedIndex(0);
+				buttonRegister.setText("Registrar");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

@@ -28,6 +28,7 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -281,17 +282,23 @@ public class StartWindow extends JFrame {
 			buttonLogin = new JButton("Login");
 			buttonLogin.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					if (Login.estadoLogin()) {
-						try {
-							Login.logout();
-							javax.swing.JOptionPane.showMessageDialog(null, "Estas deslogueado", "Logout", javax.swing.JOptionPane.NO_OPTION);
-							actualizarLogin();
-						} catch (Exception e1) {
-							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+					ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+					try {
+						if (facade.estadoLogin()) {
+							try {
+								facade.logout();
+								javax.swing.JOptionPane.showMessageDialog(null, "Estas deslogueado", "Logout", javax.swing.JOptionPane.NO_OPTION);
+								actualizarLogin();
+							} catch (Exception e1) {
+								javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+							}
+						} else {
+							JFrame a = new LoginGUI();
+							a.setVisible(true);
 						}
-					} else {
-						JFrame a = new LoginGUI();
-						a.setVisible(true);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			});
@@ -353,25 +360,31 @@ public class StartWindow extends JFrame {
 	
 	public static void actualizarLogin(){
 		textTwitter.setText(GestionTwitter.getUltimoTweet());
-		if (Login.estadoLogin()){
-			buttonLogin.setText("Logout");
-			buttonRegister.setText("Perfil");
-			OwnerButton.setVisible(true);
-			if(Login.getPropietario() != null){
-				textLogin.setText("Est�s logueado como propietario");
-				OwnerButton.setText("Editar Propietario");
-				AddRuralHouseButton.setVisible(true);
-			}else{
-				textLogin.setText("Est�s logueado");
-				OwnerButton.setText("Ser Propietario");
+		ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+		try {
+			if (facade.estadoLogin()){
+				buttonLogin.setText("Logout");
+				buttonRegister.setText("Perfil");
+				OwnerButton.setVisible(true);
+				if(facade.getOwner() != null){
+					textLogin.setText("Est�s logueado como propietario");
+					OwnerButton.setText("Editar Propietario");
+					AddRuralHouseButton.setVisible(true);
+				}else{
+					textLogin.setText("Est�s logueado");
+					OwnerButton.setText("Ser Propietario");
+				}
+			} else {
+				buttonLogin.setText("Login");
+				buttonRegister.setText("Nuevo user");
+				buttonRegister.setVisible(true);
+				textLogin.setText("No est�s logueado");
+				OwnerButton.setVisible(false);
+				AddRuralHouseButton.setVisible(false);
 			}
-		} else {
-			buttonLogin.setText("Login");
-			buttonRegister.setText("Nuevo user");
-			buttonRegister.setVisible(true);
-			textLogin.setText("No est�s logueado");
-			OwnerButton.setVisible(false);
-			AddRuralHouseButton.setVisible(false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	private JLabel getLblNewLabel_1() {

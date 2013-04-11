@@ -9,6 +9,7 @@ import domain.Book;
 import domain.Offer;
 import domain.Owner;
 import domain.RuralHouse;
+import domain.UserAplication;
 
 
 import exceptions.OfferCanNotBeBooked; 
@@ -23,8 +24,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	 *            
 	 * @return a vector of Rural Houses
 	 */
-	Vector<RuralHouse> getRuralHouses(Owner owner)
-			throws RemoteException;
+	Vector<RuralHouse> getRuralHouses()	throws RemoteException;
 
 	
 
@@ -67,8 +67,8 @@ public interface ApplicationFacadeInterface extends Remote {
 	 * This method existing  owners 
 	 * 
 	 */
-	public Vector<Owner> getOwners() throws RemoteException,
-			Exception;
+	//public Vector<Owner> getOwners() throws RemoteException,
+		//	Exception;
 	
 	public Vector<RuralHouse> getAllRuralHouses()throws RemoteException,
 	Exception;
@@ -78,13 +78,26 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void anadirRuralHouse(
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception;
+	
 	public void modficarRuralHouse( int numero,
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception;
 
 	public void eliminarCasaRural (int numero) throws Exception;
 	
-	//
+	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
 	
+	public void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
 	
+	public UserAplication getUsuario() throws Exception;
+	
+	public boolean hacerLogin(String email, String pass) throws Exception;
+	
+	public boolean estadoLogin () throws Exception;
+	
+	public void logout() throws Exception;
+	
+	public void recuperarContrasena(String email) throws Exception;
+	
+	public Owner getOwner() throws Exception;
 }

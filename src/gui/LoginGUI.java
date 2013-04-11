@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 
 import dataAccess.DB4oManager;
@@ -28,6 +29,8 @@ public class LoginGUI extends JFrame {
 	private JPasswordField passPass;
 	private JTextField textEmail;
 
+	ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +66,7 @@ public class LoginGUI extends JFrame {
 				String email = textEmail.getText();
 				String pass = passPass.getText();
 				try {
-					if (Login.hacerLogin(email, pass)) {
+					if (facade.hacerLogin(email, pass)) {
 						javax.swing.JOptionPane.showMessageDialog(null, "Ok...", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 						StartWindow.actualizarLogin();
 						setVisible(false);
@@ -108,8 +111,9 @@ public class LoginGUI extends JFrame {
 		JButton btnRecuperar = new JButton("Recuperar");
 		btnRecuperar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
 				try {
-					Login.recuperarContrasena(textEmail.getText());
+					facade.recuperarContrasena(textEmail.getText());
 					javax.swing.JOptionPane.showMessageDialog(null, "Se te ha enviado un email con la contraseña", "Bien.", javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

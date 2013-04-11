@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import java.awt.Color;
 import javax.swing.JButton;
 
+import businessLogic.ApplicationFacadeInterface;
 import businessLogic.Login;
 
 import domain.Owner;
@@ -148,7 +149,7 @@ public class OwnerGUI extends JFrame {
 		comboMoneda.setBounds(248, 261, 109, 34);
 		comboMoneda.setModel(modeloMon);
 		modeloMon.addElement("");
-		modeloMon.addElement("€");
+		modeloMon.addElement("ï¿½");
 		modeloMon.addElement("$");
 		contentPane.add(comboMoneda);
 		
@@ -167,6 +168,7 @@ public class OwnerGUI extends JFrame {
 		buttonGuardar=new JButton("Registrar");
 		buttonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
 				String cuenta= "";
 				String tipo = "";
 				String profes= "";
@@ -183,15 +185,22 @@ public class OwnerGUI extends JFrame {
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
 				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
-				if(Login.getPropietario()!=null){
-					java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
-						while (i.hasNext()){
-							own.addRuralHouse(i.next());
-						}
+				
+				try {
+					if(facade.getOwner()!=null){
+						java.util.Iterator<RuralHouse> i =  facade.getOwner().getRuralHouses().iterator();
+							while (i.hasNext()){
+								own.addRuralHouse(i.next());
+							}
+					}
+					Login.setPropietario(own);
+					StartWindow.actualizarLogin();
+					setVisible(false);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				Login.setPropietario(own);
-				StartWindow.actualizarLogin();
-				setVisible(false);
+				
 			}
 		});
 		buttonGuardar.setForeground(Color.BLUE);
@@ -202,35 +211,43 @@ public class OwnerGUI extends JFrame {
 
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		if (Login.getPropietario()!=null){
-			textCuentaBancaria.enable(false);
-			textCuentaBancaria.setText(Login.getPropietario().getBankAccount());
-			if(Login.getPropietario().getTipo()=="Particular"){
+		ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+		Owner ow;
+		try {
+			ow = facade.getOwner();
+			if (ow!=null){
+				textCuentaBancaria.enable(false);
+				textCuentaBancaria.setText(ow.getBankAccount());
+				if(ow.getTipo()=="Particular"){
+					rdbtnProfesional.setSelected(false);
+					rdbtnParticular.setSelected(true);
+				}else if(ow.getTipo()=="Profesional"){
+					rdbtnProfesional.setSelected(true);
+					rdbtnParticular.setSelected(false);
+				}
+				textIdioma1.setText(ow.getIdiomas().elementAt(0));
+				textIdioma2.setText(ow.getIdiomas().elementAt(1));
+				textIdioma3.setText(ow.getIdiomas().elementAt(2));
+				textIdioma4.setText(ow.getIdiomas().elementAt(3));
+				textProfesion.setText(ow.getProfesion());
+				comboMoneda.setSelectedItem(ow.getMoneda());
+				buttonGuardar.setText("Guardar");
+			} else {
+				textCuentaBancaria.enable(true);
+				textCuentaBancaria.setText("");
 				rdbtnProfesional.setSelected(false);
-				rdbtnParticular.setSelected(true);
-			}else if(Login.getPropietario().getTipo()=="Profesional"){
-				rdbtnProfesional.setSelected(true);
 				rdbtnParticular.setSelected(false);
+				textIdioma1.setText("");
+				textIdioma2.setText("");
+				textIdioma3.setText("");
+				textIdioma4.setText("");
+				textProfesion.setText("");
+				comboMoneda.setSelectedIndex(0);
+				buttonGuardar.setText("Registrar");
 			}
-			textIdioma1.setText(Login.getPropietario().getIdiomas().elementAt(0));
-			textIdioma2.setText(Login.getPropietario().getIdiomas().elementAt(1));
-			textIdioma3.setText(Login.getPropietario().getIdiomas().elementAt(2));
-			textIdioma4.setText(Login.getPropietario().getIdiomas().elementAt(3));
-			textProfesion.setText(Login.getPropietario().getProfesion());
-			comboMoneda.setSelectedItem(Login.getPropietario().getMoneda());
-			buttonGuardar.setText("Guardar");
-		} else {
-			textCuentaBancaria.enable(true);
-			textCuentaBancaria.setText("");
-			rdbtnProfesional.setSelected(false);
-			rdbtnParticular.setSelected(false);
-			textIdioma1.setText("");
-			textIdioma2.setText("");
-			textIdioma3.setText("");
-			textIdioma4.setText("");
-			textProfesion.setText("");
-			comboMoneda.setSelectedIndex(0);
-			buttonGuardar.setText("Registrar");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

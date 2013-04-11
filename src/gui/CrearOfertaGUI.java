@@ -169,15 +169,17 @@ public class CrearOfertaGUI extends JFrame {
 		bttnSalvar = new JButton("Salvar");
 		bttnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+				java.util.Iterator<RuralHouse> i;
+				try {
+					i = facade.getOwner().getRuralHouses().iterator();
 					RuralHouse ruralHouse = null;
-					java.util.Iterator<RuralHouse> i = Login.getPropietario().getRuralHouses().iterator();
 					while (i.hasNext()){
 						ruralHouse = i.next();
 						if (ruralHouse.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
 							break;
 						}
 					}
-				
 				  	//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
 				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
 				    //Remove the hour:minute:second:ms from the date 
@@ -187,17 +189,16 @@ public class CrearOfertaGUI extends JFrame {
 				  	lastDay=Date.valueOf(lastDay.toString());
 				  	//It could be to trigger an exception if the introduced string is not a number
 				  	float price= Float.parseFloat(textPrecio.getText());
-				  	try {
-				  	    //Obtain the business logic from a StartWindow class (local or remote)
-						ApplicationFacadeInterface facade=StartWindow.getBusinessLogic();
-						
-				  		facade.createOffer(ruralHouse, firstDay, lastDay, price); 
-				  		  		
-						setVisible(false);
-					} catch (Exception e1) {
 
-						e1.printStackTrace();
-					}
+			  	    //Obtain the business logic from a StartWindow class (local or remote)					
+			  		facade.createOffer(ruralHouse, firstDay, lastDay, price); 	  		
+					setVisible(false);
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
 			}
 		});
 		bttnSalvar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
@@ -232,12 +233,20 @@ public class CrearOfertaGUI extends JFrame {
 	}
 	
 	private void inicializarCampos() {
-		java.util.Iterator<RuralHouse> i =  Login.getPropietario().getRuralHouses().iterator();
-		while (i.hasNext()){
-			modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+		ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+		java.util.Iterator<RuralHouse> i;
+		try {
+			i = facade.getOwner().getRuralHouses().iterator();
+			while (i.hasNext()){
+				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+			}
+			enaDis(false);
+			comBoxCasas.setSelectedIndex(-1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		enaDis(false);
-		comBoxCasas.setSelectedIndex(-1);
+
 	}
 	
 	private void enaDis(boolean b){

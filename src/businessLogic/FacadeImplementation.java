@@ -2,6 +2,7 @@ package businessLogic;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Calendar;
 import java.util.Date;
 import java.sql.SQLException;
 
@@ -17,13 +18,18 @@ import domain.Book;
 import domain.Offer;
 import domain.Owner;
 import domain.RuralHouse;
+import domain.UserAplication;
 
 
 import exceptions.OfferCanNotBeBooked;
+import externalDataSend.EnviarCorreo;
+import externalDataSend.GestionTwitter;
 
 
 public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface {
 	private static final long serialVersionUID = 1L;
+	private static boolean estado = false; //SinLogin = 0; //Login = 1
+	private static UserAplication usuario;
 	BookManager theBookMngr;
 	
  
@@ -181,11 +187,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 				if (r<3) throw new Exception("La casa debe tener m�nimo 3 habitaciones.");
 				if (k<1) throw new Exception("La casa debe tener m�nimo 1 cocina.");
 				if (b<2) throw new Exception("La casa debe tener m�nimo 2 ba�os.");
-				Owner own =Login.getPropietario();
-				RuralHouse rh = new RuralHouse(getNumeroCR(), Login.getUser(),
+				RuralHouse rh = new RuralHouse(getNumeroCR(), usuario,
 						description, city, r, k, b, l, p);
-				own.addRuralHouse(rh);
-				Login.setPropietario(own);
+				usuario.getPropietario().addRuralHouse(rh);
+				Login.setPropietario(usuario.getPropietario());
 				javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 			} catch (Exception e) {
 				javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -213,7 +218,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 					if (r<3) throw new Exception("La casa debe tener m�nimo 3 habitaciones.");
 					if (k<1) throw new Exception("La casa debe tener m�nimo 1 cocina.");
 					if (b<2) throw new Exception("La casa debe tener m�nimo 2 ba�os.");
-					Owner own =Login.getPropietario();
+					//Owner own =Login.getPropietario();
 					
 
 					
@@ -229,7 +234,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 					rh.setLiving(l);
 					rh.setPark(p);
 					rh.setRooms(r);					
-					Login.setPropietario(own);
+					Login.setPropietario(usuario.getPropietario());
 					javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -246,8 +251,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		RuralHouse rh = (RuralHouse) result.next();
 		
 		DB4oManager.getContainer().delete(rh);
-		Login.getPropietario().getRuralHouses().remove(rh);
-		Login.setPropietario(Login.getPropietario());
+		usuario.getPropietario().getRuralHouses().remove(rh);
+		Login.setPropietario(usuario.getPropietario());
 		
 	}
 	
@@ -264,5 +269,90 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return max;
 	}
 
+
+	public Vector<RuralHouse> getRuralHouses() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
+	public void nuevoUsuario(String email, String pass, String estadoCivil,
+			String nombre, String apellidos, String telefono, String pais,
+			String edad) throws Exception {
+		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+			if (edad.compareTo("")==0) edad = null;
+			if (apellidos.compareTo("")==0) apellidos = null;
+			if (telefono.compareTo("")==0) telefono = null;
+			if (DB4oManager.comprobarEmail(email)) throw new Exception("Email ya usado. Logueate");
+			else{
+				EnviarCorreo.enviarCorreos(email, "Registro en Villatripas de Arriba", "Te has registrado en villatripas de arribacon el email " + email);
+				GestionTwitter.enviarTweet("Bienvenid@: " + nombre + " " + Calendar.getInstance().getTime().toString());
+				DB4oManager.storeUser(new UserAplication(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad));
+				hacerLogin(email, pass);
+			}
+		}
+	}
+
+
+	public void modificarPerfil(String email, String pass, String estadoCivil,
+			String nombre, String apellidos, String telefono, String pais,
+			String edad) throws Exception {
+		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+			//DB4oManager.deleteUser(usuario);
+			usuario.setEstadoCivil(estadoCivil);
+			usuario.setName(nombre);
+			usuario.setApellidos(apellidos);
+			usuario.setTelefono(telefono);
+			usuario.setPais(pais);
+			usuario.setEdad(edad);
+			if(pass.compareTo("")!=0) usuario.setPass(pass);	
+			DB4oManager.storeUser(usuario);
+		}
+	}
+
+
+	public boolean hacerLogin(String email, String pass) throws Exception {
+		if (email.compareTo("")==0 || pass.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		usuario = DB4oManager.getUser(email, pass);
+		if (usuario == null) return false;
+		else {
+			estado = true;
+			return true;
+		}
+	}
+
+
+	public void logout() throws Exception {
+		if (!estado) throw new Exception("No estas logueado.");
+		estado = false;
+		usuario = null;
+	}
+
+
+	public void recuperarContrasena(String email) throws Exception {
+		UserAplication user = DB4oManager.getUser(email, null);
+		try {
+			EnviarCorreo.enviarCorreos(user.getEmail(), "Contraseña", "Tu contraseña es " + user.getPass());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			throw new Exception(e.toString());
+		}
+	}
+
+	public boolean estadoLogin() throws Exception {
+		return estado;
+	}
+
+	@Override
+	public UserAplication getUsuario() throws Exception {
+		return usuario;
+	}
+
+	public Owner getOwner() throws Exception {
+		return usuario.getPropietario();
+	}
+	
+}
 
