@@ -82,7 +82,8 @@ public class DB4oManager {
 
 	public static void deleteUser(UserAplication usuario) {
 		db.delete(usuario);
-		
 	}
+	
+	
 }
 	

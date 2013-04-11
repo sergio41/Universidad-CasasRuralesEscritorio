@@ -100,4 +100,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void recuperarContrasena(String email) throws Exception;
 	
 	public Owner getOwner() throws Exception;
+	
+	public void modificarOwner(String bA, String t, Vector<String> i, String p, String m) throws Exception;
 }

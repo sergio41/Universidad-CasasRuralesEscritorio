@@ -353,6 +353,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Owner getOwner() throws Exception {
 		return usuario.getPropietario();
 	}
+
+	@Override
+	public void modificarOwner(String bA, String t, Vector<String> i, String p,
+			String m) throws Exception {
+
+		
+	}
 	
 }
 
