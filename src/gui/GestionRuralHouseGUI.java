@@ -22,7 +22,6 @@ import javax.swing.JTextPane;
 
 import EDU.purdue.cs.bloat.tree.EliminationInformation;
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 
 import domain.Owner;
 import domain.RuralHouse;

@@ -13,7 +13,6 @@ import java.awt.Color;
 import javax.swing.JComboBox;
 
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 
 import com.toedter.calendar.JCalendar;
 

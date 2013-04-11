@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 
 import com.toedter.calendar.JCalendar;
 

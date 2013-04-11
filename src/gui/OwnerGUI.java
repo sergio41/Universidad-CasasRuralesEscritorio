@@ -19,7 +19,6 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 
 import domain.Owner;
 import domain.RuralHouse;
@@ -184,16 +183,17 @@ public class OwnerGUI extends JFrame {
 				idiom.add(textIdioma4.getText());
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
-				Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
+				//Owner own = new Owner(cuenta, tipo, idiom, profes, mon);
 				
 				try {
-					if(facade.getOwner()!=null){
+					/*if(facade.getOwner()!=null){
 						java.util.Iterator<RuralHouse> i =  facade.getOwner().getRuralHouses().iterator();
 							while (i.hasNext()){
 								own.addRuralHouse(i.next());
 							}
-					}
-					Login.setPropietario(own);
+					}*/
+					facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
+					//Login.setPropietario(own);
 					StartWindow.actualizarLogin();
 					setVisible(false);
 				} catch (Exception e) {

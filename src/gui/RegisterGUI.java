@@ -19,7 +19,6 @@ import javax.swing.JPasswordField;
 import domain.UserAplication;
 
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import businessLogic.ApplicationFacadeInterface;
-import businessLogic.Login;
 
 import dataAccess.DB4oManager;
 import domain.UserAplication;
