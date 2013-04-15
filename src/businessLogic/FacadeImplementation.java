@@ -344,7 +344,6 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return estado;
 	}
 
-	@Override
 	public UserAplication getUsuario() throws Exception {
 		return usuario;
 	}
