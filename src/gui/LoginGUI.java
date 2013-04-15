@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -25,7 +26,7 @@ public class LoginGUI extends JPanel {
 	public LoginGUI() {
 		setBackground(new Color(0, 255, 0));
 		setLayout(null);
-		
+	
 		btnEntrar = new JButton("Entrar");
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -68,6 +69,9 @@ public class LoginGUI extends JPanel {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 400, 100);
 		add(lblNewLabel);
+
+		lblNewLabel.setBounds(0, 0, 400, 100);
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
 		
 	}
 }
