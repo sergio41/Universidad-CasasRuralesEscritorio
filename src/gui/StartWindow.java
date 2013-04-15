@@ -292,7 +292,7 @@ public class StartWindow extends JFrame {
 								javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 							}
 						} else {
-							JFrame a = new LoginGUI();
+							JFrame a = new LoginGUIViejo();
 							a.setVisible(true);
 						}
 					} catch (Exception e1) {

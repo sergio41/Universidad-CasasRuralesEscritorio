@@ -24,7 +24,9 @@ public class Start extends JFrame {
 					Start frame = new Start();
 					frame.setVisible(true);
 					JPanel panel = new PantallaPrincipalGUI();
-					modificarPanel(panel);
+					modificarPanelAbajo(panel);
+					JPanel panel1 = new LoginGUI();
+					modificarPanelArriba(panel1);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -46,13 +48,18 @@ public class Start extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 1018, 100);
+		lblNewLabel.setBounds(0, 0, 618, 100);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoArriba.jpg")));
 		contentPane.add(lblNewLabel);
 	}
 
-	public static void modificarPanel(JPanel panel){
+	public static void modificarPanelAbajo(JPanel panel){
 		panel.setBounds(0, 100, 1018, 465);
+		contentPane.add(panel);
+	}
+	
+	public static void modificarPanelArriba(JPanel panel){
+		panel.setBounds(618, 0, 400, 100);
 		contentPane.add(panel);
 	}
 }
