@@ -46,6 +46,7 @@ public class LoginGUIViejo extends JFrame {
 		});
 	}
 
+	
 	/**
 	 * Create the frame.
 	 */
