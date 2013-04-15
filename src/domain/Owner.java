@@ -20,57 +20,28 @@ public class Owner implements Serializable {
 		moneda=m;
 		ruralHouses=new Vector<RuralHouse>();	
 	}
-
 	
-	public String getBankAccount() {
-		return bankAccount;
-	}
+	public String getBankAccount() {return bankAccount;}
 
-	public void setBankAccount(String bA) {
-		bankAccount = bA;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String t) {
-		tipo = t;
-	}
-	public Vector<String> getIdiomas() {
-		return idiomas;
-	}
-
-	public void actualizarIdiomas(Vector<String> i) {
-		idiomas = i;
-	}
-
-	public String getProfesion() {
-		return profesion;
-	}
-
-
-	public void setProfesion(String p) {
-		profesion = p;
-	}
-
-
-	public String getMoneda() {
-		return moneda;
-	}
-
-
-	public void setMoneda(String m) {
-		moneda = m;
-	}
+	public void setBankAccount(String bA) {bankAccount = bA;}
 	
+	public String getTipo() {return tipo;}
+
+	public void setTipo(String t) {	tipo = t;}
 	
-	public Vector<RuralHouse> getRuralHouses() {
-		return ruralHouses;
-	}
+	public Vector<String> getIdiomas() {return idiomas;}
+
+	public void setIdiomas(Vector<String> i) {idiomas = i;}
+
+	public String getProfesion() {return profesion;}
+
+	public void setProfesion(String p) {profesion = p;}
+
+	public String getMoneda() {return moneda;}
+
+	public void setMoneda(String m) {moneda = m;}
 	
-	public RuralHouse addRuralHouse(RuralHouse rh) {
-	 ruralHouses.add(rh);
-	 return rh;
-	 
-	}
+	public Vector<RuralHouse> getRuralHouses() {return ruralHouses;}
+	
+	public RuralHouse addRuralHouse(RuralHouse rh) {ruralHouses.add(rh);return rh;}
 }

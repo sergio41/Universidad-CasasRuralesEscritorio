@@ -190,7 +190,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 				RuralHouse rh = new RuralHouse(getNumeroCR(), usuario,
 						description, city, r, k, b, l, p);
 				usuario.getPropietario().addRuralHouse(rh);
-				Login.setPropietario(usuario.getPropietario());
+				DB4oManager.storeUser(usuario);
 				javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 			} catch (Exception e) {
 				javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -234,7 +234,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 					rh.setLiving(l);
 					rh.setPark(p);
 					rh.setRooms(r);					
-					Login.setPropietario(usuario.getPropietario());
+					DB4oManager.storeUser(usuario);
 					javax.swing.JOptionPane.showMessageDialog(null,"Casa a�adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -252,8 +252,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 		DB4oManager.getContainer().delete(rh);
 		usuario.getPropietario().getRuralHouses().remove(rh);
-		Login.setPropietario(usuario.getPropietario());
-		
+		DB4oManager.storeUser(usuario);
 	}
 	
 	private int getNumeroCR(){
@@ -354,11 +353,14 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return usuario.getPropietario();
 	}
 
-	@Override
 	public void modificarOwner(String bA, String t, Vector<String> i, String p,
 			String m) throws Exception {
-
-		
+			usuario.getPropietario().setBankAccount(bA);
+			usuario.getPropietario().setTipo(t);
+			usuario.getPropietario().setIdiomas(i);
+			usuario.getPropietario().setProfesion(p);
+			usuario.getPropietario().setMoneda(m);
+			DB4oManager.storeUser(usuario);
 	}
 	
 }
