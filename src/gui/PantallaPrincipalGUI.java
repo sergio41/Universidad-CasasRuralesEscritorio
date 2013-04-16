@@ -2,14 +2,14 @@ package gui;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JFormattedTextField;
-import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 public class PantallaPrincipalGUI extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Create the panel.
