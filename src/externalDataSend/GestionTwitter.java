@@ -10,16 +10,16 @@ public class GestionTwitter {
 	private static Twitter twitter;
 		
 	private static void inicializarTwitter(){
-		ConfigurationBuilder cb = new ConfigurationBuilder();
+		/*ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setOAuthConsumerKey("xEIAPcAcPKSnUj3cQVmkqQ");
 		cb.setOAuthConsumerSecret("XwLA9bC2RwW5HMMVF1Qx7icMiu9MsoXNAmEEXDM3ng");
 		cb.setOAuthAccessToken("1318353908-WXP45IIedFVt8iGtBajcEdXYw013vxxQpyk2gBh");
 		cb.setOAuthAccessTokenSecret("MAtTy95rsDhbAChmALQglVtwIayNjDdFMBgD156w");
-		twitter = new TwitterFactory(cb.build()).getInstance();
+		twitter = new TwitterFactory(cb.build()).getInstance();*/
 	}
 	
 	public static void enviarTweet(String s){
-		if (twitter == null) inicializarTwitter();
+		/*if (twitter == null) inicializarTwitter();
 		Status status;
 		try {
 			status = twitter.updateStatus(s);
@@ -27,13 +27,13 @@ public class GestionTwitter {
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static Vector<String> getTodosTweets(){
-		if (twitter == null) inicializarTwitter();
+		//if (twitter == null) inicializarTwitter();
 		Vector<String> vectorTweets = new Vector<String>();
-		try {
+		/*try {
 			List<Status> statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) vectorTweets.add(status.getText());
 		} catch (TwitterException e) {
@@ -42,18 +42,18 @@ public class GestionTwitter {
 		}
 	    //System.out.println("Showing home timeline.");
 	    //for (Status status1 : statuses) {System.out.println(status1.getUser().getName() + ":" + status1.getText());
-		return vectorTweets;
+		*/return vectorTweets;
 	}
 	
 	public static String getUltimoTweet(){
-		if (twitter == null) inicializarTwitter();
+		/*if (twitter == null) inicializarTwitter();
 		try {
 			List<Status> statuses = twitter.getHomeTimeline();
 			return statuses.get(0).getText();
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		return "Error";
 	}
 }

@@ -36,8 +36,8 @@ public class LoginGUI extends JPanel {
 				try {
 					if (facade.hacerLogin(email, pass)) {
 						javax.swing.JOptionPane.showMessageDialog(null, "Ok...", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-						StartWindow.actualizarLogin();
-						setVisible(false);
+						JPanel temp = new LoginONGUI();
+						Start.modificarPanelArriba(temp);
 					} else javax.swing.JOptionPane.showMessageDialog(null, "No, no, no, no...", "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -54,6 +54,12 @@ public class LoginGUI extends JPanel {
 		add(btnEntrar);
 		
 		btnSignUp = new JButton("Sign UP!");
+		btnSignUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel temp = new UserRegisterGUI();
+				Start.modificarPanelAbajo(temp);
+			}
+		});
 		btnSignUp.setBounds(275, 12, 97, 25);
 		add(btnSignUp);
 		
@@ -71,7 +77,7 @@ public class LoginGUI extends JPanel {
 		add(lblNewLabel);
 
 		lblNewLabel.setBounds(0, 0, 400, 100);
-		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
+		//lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
 		
 	}
 }

@@ -21,6 +21,9 @@ public class Start extends JFrame {
 	private static JPanel contentPane;
 	public static boolean isLocal=true;
 	public static ApplicationFacadeInterface facadeInterface;
+	public static JPanel panelArriba;
+	public static JPanel panelPrincipal;
+	
 	
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
@@ -58,10 +61,10 @@ public class Start extends JFrame {
 				try {
 					Start frame = new Start();
 					frame.setVisible(true);
-					JPanel panel = new PantallaPrincipalGUI();
-					modificarPanelAbajo(panel);
-					JPanel panel1 = new LoginGUI();
-					modificarPanelArriba(panel1);
+					panelPrincipal = new PantallaPrincipalGUI();
+					modificarPanelAbajo(panelPrincipal);
+					panelArriba = new LoginGUI();
+					modificarPanelArriba(panelArriba);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -89,12 +92,20 @@ public class Start extends JFrame {
 	}
 
 	public static void modificarPanelAbajo(JPanel panel){
+		panelPrincipal.setVisible(false);
+		contentPane.remove(panelPrincipal);
 		panel.setBounds(0, 100, 1018, 465);
+		panelPrincipal = panel;
 		contentPane.add(panel);
+		panelPrincipal.setVisible(true);
 	}
 	
 	public static void modificarPanelArriba(JPanel panel){
+		panelArriba.setVisible(false);
+		contentPane.remove(panelArriba);
 		panel.setBounds(618, 0, 400, 100);
-		contentPane.add(panel);
+		panelArriba = panel;
+		contentPane.add(panelArriba);
+		panelArriba.setVisible(true);
 	}
 }
