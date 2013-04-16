@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -16,6 +15,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LoginGUI extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textEmail;
 	private JPasswordField passPass;
 	private static JButton btnEntrar;
@@ -31,6 +34,7 @@ public class LoginGUI extends JPanel {
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String email = textEmail.getText();
+				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {

@@ -1,8 +1,6 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.rmi.Naming;
 
 import javax.swing.ImageIcon;
@@ -10,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import businessLogic.ApplicationFacadeInterface;
@@ -18,6 +15,10 @@ import businessLogic.FacadeImplementation;
 import configuration.Config;
 
 public class Start extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static JPanel contentPane;
 	public static boolean isLocal=true;
 	public static ApplicationFacadeInterface facadeInterface;

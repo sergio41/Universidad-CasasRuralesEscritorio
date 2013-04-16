@@ -1,21 +1,19 @@
 package gui;
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LoginONGUI extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static JButton btnLogout;
 	/**
 	 * Create the panel.

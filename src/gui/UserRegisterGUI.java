@@ -2,11 +2,8 @@ package gui;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.JFormattedTextField;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,12 +12,18 @@ import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 
+import domain.UserAplication;
+
 import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class UserRegisterGUI extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField textEmail;
 	private JPasswordField passPass;
 	private JTextField textEdad;
@@ -30,6 +33,7 @@ public class UserRegisterGUI extends JPanel {
 	private JTextField textPais;
 	private JComboBox<String> comboEC;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private JButton buttonRegister;
 
 	/**
 	 * Create the panel.
@@ -128,10 +132,10 @@ public class UserRegisterGUI extends JPanel {
 		textPais.setBounds(358, 229, 156, 34);
 		add(textPais);
 		
-		JButton button = new JButton("Register");
-		button.addActionListener(new ActionListener() {
+		JButton buttonRegister = new JButton("Register");
+		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
@@ -153,10 +157,10 @@ public class UserRegisterGUI extends JPanel {
 						try {
 							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-							int x=javax.swing.JOptionPane.showConfirmDialog(null, "ï¿½Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
+							int x=javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
 							if (x==0){
-								JFrame a = new OwnerGUI();
-								a.setVisible(true);
+								JPanel temp = new OwnerRegisterGUI();
+								Start.modificarPanelAbajo(temp);
 							}
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -169,10 +173,10 @@ public class UserRegisterGUI extends JPanel {
 				}
 			}
 		});
-		button.setForeground(Color.BLUE);
-		button.setFont(new Font("Dialog", Font.PLAIN, 21));
-		button.setBounds(390, 285, 124, 45);
-		add(button);
+		buttonRegister.setForeground(Color.BLUE);
+		buttonRegister.setFont(new Font("Dialog", Font.PLAIN, 21));
+		buttonRegister.setBounds(390, 285, 124, 45);
+		add(buttonRegister);
 		
 		JLabel label_8 = new JLabel("Los campos marcados con * son obligatorios");
 		label_8.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -186,5 +190,39 @@ public class UserRegisterGUI extends JPanel {
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		add(lblNewLabel);
 
+		inicializarCampos();
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void inicializarCampos(){
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		try {
+			if (facade.estadoLogin()){
+				UserAplication user = facade.getUsuario();
+				textEmail.enable(false);
+				textEmail.setText(user.getEmail());
+				textEdad.setText(user.getEdad());
+				textNombre.setText(user.getName());
+				textApellido.setText(user.getApellidos());
+				textTelefono.setText(user.getTelefono());
+				textPais.setText(user.getPais());
+				comboEC.setSelectedItem(user.getEstadoCivil());
+				buttonRegister.setText("Guardar");
+			} else {
+				textEmail.enable(true);
+				textEmail.setText("");
+				passPass.setText("");
+				textEdad.setText("");
+				textNombre.setText("");
+				textApellido.setText("");
+				textTelefono.setText("");
+				textPais.setText("");
+				comboEC.setSelectedIndex(0);
+				buttonRegister.setText("Registrar");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

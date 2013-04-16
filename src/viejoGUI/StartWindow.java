@@ -1,9 +1,10 @@
-package gui;
+package viejoGUI;
 
 /**
  * @author Grupo 2
  */
 import javax.swing.*;
+
 
 
 import businessLogic.FacadeImplementation;
@@ -18,6 +19,11 @@ import java.util.List;
 
 import configuration.Config;
 import externalDataSend.GestionTwitter;
+import gui.BookRuralHouseGUI;
+import gui.CrearOfertaGUI;
+import gui.GestionRuralHouseGUI;
+import gui.PantallaCargandoMain;
+import gui.QueryAvailabilityGUI;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;

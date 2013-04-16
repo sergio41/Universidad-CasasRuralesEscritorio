@@ -1,4 +1,5 @@
-package gui;
+package viejoGUI;
+
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -7,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.HeadlessException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;

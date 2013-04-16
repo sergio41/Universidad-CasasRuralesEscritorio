@@ -30,6 +30,8 @@ import javax.swing.JComboBox;
 
 import org.omg.CORBA.INTERNAL;
 
+import viejoGUI.StartWindow;
+
 import java.util.*;
 
 public class GestionRuralHouseGUI extends JFrame {

@@ -29,6 +29,9 @@ import java.util.Locale;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import viejoGUI.StartWindow;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
