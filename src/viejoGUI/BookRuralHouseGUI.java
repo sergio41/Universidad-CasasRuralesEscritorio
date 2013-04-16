@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 
 import businessLogic.ApplicationFacadeInterface;
 
@@ -17,7 +17,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import viejoGUI.StartWindow;
 
 import java.awt.*;
 import java.awt.event.*;

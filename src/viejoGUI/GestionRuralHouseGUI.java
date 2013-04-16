@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -30,7 +30,6 @@ import javax.swing.JComboBox;
 
 import org.omg.CORBA.INTERNAL;
 
-import viejoGUI.StartWindow;
 
 import java.util.*;
 

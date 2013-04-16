@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 
 import businessLogic.ApplicationFacadeInterface;
 
@@ -9,7 +9,6 @@ import domain.RuralHouse;
 
 import javax.swing.*;
 
-import viejoGUI.StartWindow;
 
 import java.awt.*;
 import java.awt.event.*;

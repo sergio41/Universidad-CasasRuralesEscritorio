@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 import javax.swing.ImageIcon;
 
 public class PantallaCargandoMain {

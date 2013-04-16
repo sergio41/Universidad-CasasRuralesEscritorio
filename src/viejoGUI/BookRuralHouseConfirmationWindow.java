@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;

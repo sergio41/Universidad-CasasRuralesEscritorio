@@ -1,4 +1,4 @@
-package gui;
+package viejoGUI;
 import java.beans.*;
 
 import java.sql.Date;
@@ -7,7 +7,6 @@ import java.util.*;
 
 import javax.swing.*;
 
-import viejoGUI.StartWindow;
 
 import java.awt.*;
 import java.awt.event.*;
