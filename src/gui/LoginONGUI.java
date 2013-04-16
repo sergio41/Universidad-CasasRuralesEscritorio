@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -35,7 +36,7 @@ public class LoginONGUI extends JPanel {
 		add(lblNewLabel);
 
 		lblNewLabel.setBounds(0, 0, 400, 100);
-		//lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
-		
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
+		lblNewLabel.setVisible(true);
 	}
 }
