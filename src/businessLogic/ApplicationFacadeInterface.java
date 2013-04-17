@@ -87,7 +87,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
 	
-	public void modificarPerfil(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
+	public void modificarPerfil( String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
 	
 	public UserAplication getUsuario() throws Exception;
 	

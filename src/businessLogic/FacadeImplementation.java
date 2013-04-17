@@ -230,30 +230,21 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 
 
-	public Vector<RuralHouse> getRuralHouses() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 	
 
 
-	public void modificarPerfil(String email, String pass, String estadoCivil,
-			String nombre, String apellidos, String telefono, String pais,
-			String edad) throws Exception {
-		if (email.compareTo("")==0 ||  nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+	public void modificarPerfil(String email, String estadoCivil,String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
+		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
-			//DB4oManager.deleteUser(usuario);
-			usuario.setEstadoCivil(estadoCivil);
-			usuario.setName(nombre);
-			usuario.setApellidos(apellidos);
-			usuario.setTelefono(telefono);
-			usuario.setPais(pais);
-			usuario.setEdad(edad);
-			if(pass.compareTo("")!=0) usuario.setPass(pass);	
-			//DB4oManager.storeUser(usuario);
+			
 		}
+	}
+	
+	public void modificarContraseña(String email){
+		
 	}
 
 
@@ -261,7 +252,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 
 	//Desde aqui esta bien.
 
-	
+	public Vector<RuralHouse> getRuralHousesTodas() throws RemoteException {
+		return DB4oManager.getCasasRuralesTodas();
+	}
 	
 	public void modificarOwner(String bA, String t, Vector<String> i, String p,	String m) throws Exception {
 			DB4oManager.modificarOwner(usuario, emailUser, bA, t, i, p, m);
@@ -333,6 +326,20 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		estado = false;
 		usuario = null;
 		emailUser = null;
+	}
+
+	@Override
+	public Vector<RuralHouse> getRuralHouses() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void modificarPerfil(String estadoCivil, String nombre,
+			String apellidos, String telefono, String pais, String edad)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
