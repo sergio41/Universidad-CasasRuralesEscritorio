@@ -79,9 +79,9 @@ public interface ApplicationFacadeInterface extends Remote {
 			String description, String city, String nRooms, String nKitchen,
 			String nBaths, String nLiving, String nPark) throws Exception;
 	
-	public void modficarRuralHouse( int numero,
-			String description, String city, String nRooms, String nKitchen,
-			String nBaths, String nLiving, String nPark) throws Exception;
+	public void modificarRuralHouse( int numero,
+			String description, String city, int nRooms, int nKitchen,
+			int nBaths, int nLiving, int nPark) throws Exception;
 
 	public void eliminarCasaRural (int numero) throws Exception;
 	
@@ -91,7 +91,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public UserAplication getUsuario() throws Exception;
 	
-	public boolean hacerLogin(String email, String pass) throws Exception;
+	public void hacerLogin(String email, String pass) throws Exception;
 	
 	public boolean estadoLogin () throws Exception;
 	
