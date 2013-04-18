@@ -103,6 +103,22 @@ public class DB4oManager {
 		} else throw new Exception("La casa rural no se puede modificar. No se ha encontrado en la base de datos.");
 	}
 	
+	public static UserAplication modificarUsuario(UserAplication user, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
+		UserAplication u = new UserAplication(user.getEmail(), null, null, null, null, null, null, null);
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(u);	
+		if (userConcretos.hasNext()){ 
+			UserAplication use = userConcretos.next();
+			use.setEstadoCivil(estadoCivil);
+			use.setName(nombre);
+			use.setApellidos(apellidos);
+			use.setTelefono(telefono);
+			use.setPais(pais);
+			use.setEdad(edad);
+			db.store(user);
+			return user;
+		}else throw new Exception("El usuario no existe");
+	}
+	
 	public static UserAplication modificarOwner(UserAplication user, String email, String bA, String t, Vector<String> i, String p, String m) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){

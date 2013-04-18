@@ -236,12 +236,6 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 
 
-	public void modificarPerfil(String email, String estadoCivil,String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
-		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
-		else {
-			
-		}
-	}
 	
 	public void modificarContraseña(String email){
 		
@@ -328,18 +322,18 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		emailUser = null;
 	}
 
-	@Override
 	public Vector<RuralHouse> getRuralHouses() throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void modificarPerfil(String estadoCivil, String nombre,
 			String apellidos, String telefono, String pais, String edad)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
+		else {
+			usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad);		
+		}
 	}
 }
 
