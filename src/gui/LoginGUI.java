@@ -39,7 +39,8 @@ public class LoginGUI extends JPanel {
 				String pass = passPass.getText();
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					if (facade.hacerLogin(email, pass)) {
+					facade.hacerLogin(email, pass);
+					if (facade.estadoLogin()) {
 						javax.swing.JOptionPane.showMessageDialog(null, "Ok...", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 						JPanel temp = new LoginONGUI();
 						Start.modificarPanelArriba(temp);

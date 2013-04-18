@@ -148,7 +148,7 @@ public class UserRegisterGUI extends JPanel {
 				try {
 					if(facade.estadoLogin()){
 						try {
-							facade.modificarPerfil(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad);
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);

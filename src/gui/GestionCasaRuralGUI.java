@@ -161,16 +161,17 @@ public class GestionCasaRuralGUI extends JPanel {
 				try {
 					String description = textPaneDescription.getText();
 					String city = textCity.getText();
-					String nRooms = textRooms.getText();
-					String nKitchen = textKitchen.getText();
-					String nBaths = textBath.getText();
-					String nLiving = textLiving.getText();
-					String nPark = textPark.getText();
+					int nRooms = Integer.parseInt(textRooms.getText());
+					int nKitchen = Integer.parseInt(textKitchen.getText());
+					int nBaths = Integer.parseInt(textBath.getText());
+					int nLiving = Integer.parseInt(textLiving.getText());
+					int nPark = Integer.parseInt(textPark.getText());
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						//facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark)
+						//facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						facade.modficarRuralHouse(comBoxCasas.getSelectedIndex(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						facade.modificarRuralHouse((int) comBoxCasas.getSelectedItem(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					}
 					setVisible(false);
 				} catch (Exception e) {
