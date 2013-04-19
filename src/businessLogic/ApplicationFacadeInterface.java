@@ -16,18 +16,6 @@ import exceptions.OfferCanNotBeBooked;
 
 
 public interface ApplicationFacadeInterface extends Remote {
-
-	/**
-	 * This method obtains owner rural houses 
-	 * 
-	 * @param owner object
-	 *            
-	 * @return a vector of Rural Houses
-	 */
-	Vector<RuralHouse> getRuralHouses()	throws RemoteException;
-
-	
-
 	/**
 	 * This method creates an offer with a house number, first day, last day and price
 	 * 
@@ -35,8 +23,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	 *            number, start day, last day and price
 	 * @return None
 	 */
-
-
 	Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception;
 
@@ -51,8 +37,6 @@ public interface ApplicationFacadeInterface extends Remote {
 			String telephoneNumber) throws RemoteException,
 			OfferCanNotBeBooked;
 
-	
-
 	/**
 	 * This method obtains available offers for a concrete house in a certain period 
 	 * 
@@ -63,21 +47,12 @@ public interface ApplicationFacadeInterface extends Remote {
 	 */
 	Vector<Offer> getOffers(RuralHouse houseNumber, Date firstDay, Date lastDay) throws RemoteException, Exception;
 	
-	/**
-	 * This method existing  owners 
-	 * 
-	 */
-	//public Vector<Owner> getOwners() throws RemoteException,
-		//	Exception;
-	
 	public Vector<RuralHouse> getAllRuralHouses()throws RemoteException,
 	Exception;
 	
 	public void close() throws RemoteException;
 
-	public void anadirRuralHouse(
-			String description, String city, String nRooms, String nKitchen,
-			String nBaths, String nLiving, String nPark) throws Exception;
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception;
 	
 	public void modificarRuralHouse( int numero,
 			String description, String city, int nRooms, int nKitchen,
@@ -102,4 +77,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public Owner getOwner() throws Exception;
 	
 	public void modificarOwner(String bA, String t, Vector<String> i, String p, String m) throws Exception;
+	
+	public void modificarContraseña(String pass) throws Exception;
 }

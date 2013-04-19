@@ -35,30 +35,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
  
 
-	public FacadeImplementation() throws RemoteException, InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException {
+	public FacadeImplementation() throws RemoteException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Config c=Config.getInstance();
 		String dataBaseOpenMode=c.getDataBaseOpenMode();
 		DB4oManager.openDatabase(dataBaseOpenMode);
 		theBookMngr = BookManager.getInstance();
 		//dbMngr = DB4oManager.getInstance();
 	}
-
-	/**
-	 * This method obtains owner rural houses 
-	 * 
-	 * @param owner object
-	 *            
-	 * @return a vector of Rural Houses
-	 */
-	public Vector<RuralHouse> getRuralHouses(Owner owner)
-			throws RemoteException {
-		
-		return owner.getRuralHouses();
-		
-	}
-
-	
 
 	/**
 	 * This method creates an offer with a house number, first day, last day and price
@@ -87,8 +70,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 *            day, last day, house number and telephone
 	 * @return a book
 	 */
-	public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber)
-			throws OfferCanNotBeBooked {
+	public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
 
 		
 		/*try {
@@ -116,6 +98,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 
 	
+	
+
+	//Desde aqui esta bien.
 	/**
 	 * This method obtains available offers for a concrete house in a certain period 
 	 * 
@@ -124,130 +109,34 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 * @param lastDay, last day in a period range
 	 * @return a vector of offers(Offer class)  available  in this period
 	 */
-	public Vector<Offer> getOffers(RuralHouse house,Date firstDay, Date lastDay) throws RemoteException,
-			Exception {
-		
+	public Vector<Offer> getOffers(RuralHouse house,Date firstDay, Date lastDay) throws RemoteException, Exception {
 		return house.getOffers(firstDay, lastDay);
-
 	}
-	/**
-	 * This method existing  owners 
-	 * 
-	 */
-	public Vector<Owner> getOwners() throws RemoteException,
-			Exception {
-		/*ObjectContainer db=DB4oManager.getContainer();
-
-		 try {
-			 Owner proto = new Owner(null, null, null, null, null);
-			 ObjectSet result = db.queryByExample(proto);
-			 Vector<Owner> owners=new Vector<Owner>();
-			 while(result.hasNext())				 
-				 owners.add((Owner)result.next());
-			 return owners;
-	     } finally {
-	         //db.close();
-	     }*/
-		return null;
-	} 
-	public Vector<RuralHouse> getAllRuralHouses() throws RemoteException,
-	Exception {
-		/*ObjectContainer db=DB4oManager.getContainer();
-
-		 try {
-			 RuralHouse proto = new RuralHouse(0,null,null,null,0,0,0,0,0);
-			 ObjectSet result = db.queryByExample(proto);
-			 Vector<RuralHouse> ruralHouses=new Vector<RuralHouse>();
-			 while(result.hasNext()) 
-				 ruralHouses.add((RuralHouse)result.next());
-			 return ruralHouses;
-	     } finally {
-	         //db.close();
-	     }*/
-		return null;
+	
+	public void eliminarCasaRural(int numero) throws Exception {
+		DB4oManager.eliminarCasaRural(usuario, numero);
 	}
+	
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {
+	if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
+	else {			
+			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
+			if (nKitchen<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
+			if (nBaths<2) throw new Exception("La casa debe tener mínimo 2 baños.");
+			DB4oManager.anadirRuralHouse(usuario, getNumeroCR(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+		}
+	}
+	
+	public void modificarContraseña(String pass) throws Exception {
+		usuario = DB4oManager.modificarContrasena(usuario, pass);
+	}
+	
+	public Vector<RuralHouse> getAllRuralHouses() throws RemoteException, Exception {
+		return DB4oManager.getCasasRuralesTodas();
+	}
+	
 	public void close() throws RemoteException{
 		DB4oManager.close();
-
-	}
-
-	@Override
-	public void anadirRuralHouse(String description, String city,
-			String nRooms, String nKitchen, String nBaths, String nLiving,
-			String nPark) throws Exception {
-	if (city.compareTo("") == 0 || nRooms.compareTo("") == 0
-			|| nKitchen.compareTo("") == 0 || nBaths.compareTo("") == 0
-			|| nLiving.compareTo("") == 0 || nPark.compareTo("") == 0)
-		throw new Exception("Algunos datos obligatorios faltan.");
-	else {
-			try {
-				int r = Integer.parseInt(nRooms);
-				int k = Integer.parseInt(nKitchen);
-				int b = Integer.parseInt(nBaths);
-				int l = Integer.parseInt(nLiving);
-				int p = Integer.parseInt(nPark);
-				
-				if (r<3) throw new Exception("La casa debe tener mï¿½nimo 3 habitaciones.");
-				if (k<1) throw new Exception("La casa debe tener mï¿½nimo 1 cocina.");
-				if (b<2) throw new Exception("La casa debe tener mï¿½nimo 2 baï¿½os.");
-				RuralHouse rh = new RuralHouse(getNumeroCR(), usuario,
-						description, city, r, k, b, l, p);
-				usuario.getPropietario().addRuralHouse(rh);
-				//DB4oManager.storeUser(usuario);
-				javax.swing.JOptionPane.showMessageDialog(null,"Casa aï¿½adida correctamente.", "Bien....",javax.swing.JOptionPane.NO_OPTION);
-			} catch (Exception e) {
-				javax.swing.JOptionPane.showMessageDialog(null,e.toString(),"Alguna casilla ha sido mal rellenada.",javax.swing.JOptionPane.ERROR_MESSAGE);
-			}
-	}
-		
-	}
-
-
-
-	public void eliminarCasaRural(int numero) {
-		//ObjectContainer db=DB4oManager.getContainer();
-		RuralHouse proto = new RuralHouse(numero,null,null,null,0,0,0,0,0);
-		//ObjectSet result = db.queryByExample(proto);
-		
-		//RuralHouse rh = (RuralHouse) result.next();
-		
-		//DB4oManager.getContainer().delete(rh);
-		//usuario.getPropietario().getRuralHouses().remove(rh);
-		//DB4oManager.storeUser(usuario);
-	}
-	
-	private int getNumeroCR(){
-		Vector<RuralHouse> vector = new Vector<RuralHouse>();
-		//vector = DB4oManager.getCR();
-		int max = 0;
-		java.util.Iterator<RuralHouse> i = vector.iterator();
-		while (i.hasNext()) {
-			int aux = i.next().getHouseNumber();
-			if( max < aux) max = aux;
-		}
-		max++;
-		return max;
-	}
-
-
-
-
-
-	
-
-
-	
-	public void modificarContraseña(String email){
-		
-	}
-
-
-
-
-	//Desde aqui esta bien.
-
-	public Vector<RuralHouse> getRuralHousesTodas() throws RemoteException {
-		return DB4oManager.getCasasRuralesTodas();
 	}
 	
 	public void modificarOwner(String bA, String t, Vector<String> i, String p,	String m) throws Exception {
@@ -322,18 +211,22 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		emailUser = null;
 	}
 
-	public Vector<RuralHouse> getRuralHouses() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public void modificarPerfil(String estadoCivil, String nombre,
-			String apellidos, String telefono, String pais, String edad)
-			throws Exception {
+	public void modificarPerfil(String estadoCivil, String nombre,String apellidos, String telefono, String pais, String edad) throws Exception {
 		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
-		else {
-			usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad);		
+		else usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad);		
+	}
+	
+	private int getNumeroCR(){
+		Vector<RuralHouse> vector = DB4oManager.getCasasRuralesTodas();
+		int max = 0;
+		java.util.Iterator<RuralHouse> i = vector.iterator();
+		while (i.hasNext()) {
+			int aux = i.next().getHouseNumber();
+			if( max < aux) max = aux;
 		}
+		max++;
+		return max;
 	}
 }
 

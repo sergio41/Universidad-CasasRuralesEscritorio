@@ -1,11 +1,14 @@
 package dataAccess;
 
 import java.io.File;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 
 import com.db4o.*;
 import configuration.Config;
 import domain.*;
+import exceptions.OfferCanNotBeBooked;
 
 public class DB4oManager { 
 	private static ObjectContainer  db;
@@ -131,6 +134,65 @@ public class DB4oManager {
 			db.store(userConcreto);
 			return getUser(email);
 		} else throw new Exception("El usuario no se ha encontrado.");
+	}
+	
+	public static UserAplication modificarContrasena(UserAplication user, String pass) throws Exception {
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			userConcreto.setPass(pass);
+			db.store(userConcreto);
+			return getUser(user.getEmail());
+		} else throw new Exception("El usuario no se ha encontrado.");
+	}
+	
+	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception{
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark));
+			db.store(userConcreto);
+			return getUser(user.getEmail());
+		} else throw new Exception("El usuario no se ha encontrado.");
+	}
+	
+	public static UserAplication eliminarCasaRural(UserAplication user, int numero) throws Exception {
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			Iterator<RuralHouse> i = userConcreto.getPropietario().getRuralHouses().iterator();
+			while (i.hasNext()){
+				RuralHouse casa = i.next();
+				if(casa.getHouseNumber() == numero){
+					userConcreto.getPropietario().getRuralHouses().remove(casa);
+					db.store(userConcreto);
+					return getUser(user.getEmail());
+				}
+			}
+			throw new Exception("La casa rural no ha podido ser eliminada.");
+		} else throw new Exception("El usuario no se ha encontrado.");
+	}
+	
+public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
+		try{
+			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
+			ObjectSet<RuralHouse> result = db.queryByExample(proto);
+			RuralHouse rh = result.next();
+			Book b = null;
+			Offer offer;
+			offer = rh.findOffer(firstDate, lastDate);
+			if (offer!=null) {
+				 b=new Book(bookTelephoneNumber,offer);
+				offer.setBook(b);
+				db.store(b);
+				db.store(offer);
+				db.commit();
+			}
+			return b;
+		} catch (Exception exc) {
+			exc.printStackTrace();
+			return null;
+		}
 	}
 }
 	

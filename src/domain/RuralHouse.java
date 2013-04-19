@@ -32,16 +32,16 @@ public class RuralHouse implements Serializable {
 		super();
 	}
 
-	public RuralHouse(int h, UserAplication o, String d, String c, int r, int k, int b, int l, int p) {
-		houseNumber = h;
-		description = d;
-		user = o;
-		city = c;
-		nRooms = r;
-		nKitchen = k;
-		nBaths = b;
-		nLiving = l;
-		nPark = p;
+	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento) {
+		houseNumber = hNumber;
+		description = descripcion;
+		user = usuario;
+		city = ciudad;
+		nRooms = cuartos;
+		nKitchen = cocina;
+		nBaths = banos;
+		nLiving = salon;
+		nPark = aparcamiento;
 		offers=new Vector<Offer>();
 	}
 
