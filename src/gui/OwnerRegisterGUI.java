@@ -25,28 +25,25 @@ public class OwnerRegisterGUI extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField textProfesion;
-	private JTextField textIdioma3;
-	private JTextField textIdioma1;
-	private JTextField textIdioma2;
-	private JTextField textIdioma4;
-	private JTextField textCuentaBancaria;
-	private JButton buttonGuardar;
+	private static JTextField textProfesion;
+	private static JTextField textIdioma3;
+	private static JTextField textIdioma1;
+	private static JTextField textIdioma2;
+	private static JTextField textIdioma4;
+	private static JTextField textCuentaBancaria;
+	private static JButton buttonGuardar;
 	
 	private static JComboBox<String> comboMoneda;
 	private static JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
 	private static JRadioButton rdbtnParticular = new JRadioButton("Particular");
-	private DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
+	private static DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
 
 	/**
 	 * Create the panel.
 	 */
 	public OwnerRegisterGUI(){
 		setLayout(null);
-		
-		inicializarCampos();
-		
-		JButton buttonGuardar = new JButton("Registrar");
+		buttonGuardar = new JButton("Registrar");
 		buttonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -131,12 +128,12 @@ public class OwnerRegisterGUI extends JPanel {
 		add(textIdioma4);
 		
 		JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
-		rdbtnProfesional.setBackground(new Color(178, 238, 238));
+		rdbtnProfesional.setOpaque(false);
 		rdbtnProfesional.setBounds(457, 81, 127, 34);
 		add(rdbtnProfesional);
 		
 		JRadioButton rdbtnParticular = new JRadioButton("Particular");
-		rdbtnParticular.setBackground(new Color(178, 238, 238));
+		rdbtnParticular.setOpaque(false);
 		rdbtnParticular.setBounds(252, 81, 127, 34);
 		add(rdbtnParticular);
 		

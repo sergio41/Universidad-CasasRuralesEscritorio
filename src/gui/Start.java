@@ -6,6 +6,7 @@ import java.rmi.Naming;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -13,6 +14,10 @@ import javax.swing.JLabel;
 import businessLogic.ApplicationFacadeInterface;
 import businessLogic.FacadeImplementation;
 import configuration.Config;
+import java.awt.Color;
+import javax.swing.JTextPane;
+import java.awt.Font;
+import javax.swing.JTextArea;
 
 public class Start extends JFrame {
 	/**
@@ -52,7 +57,8 @@ public class Start extends JFrame {
 				facadeInterface = (ApplicationFacadeInterface) Naming.lookup("rmi://"
 					+ serverRMI + ":" + portNumber + serviceName);
 			} 
-
+			
+			
 		} catch (Exception e) {
 		//System.out.println(e.toString());
 			e.printStackTrace();
@@ -82,9 +88,39 @@ public class Start extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.GREEN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
+		
+		JLabel lblTitulo = new JLabel("Villatripas de Arriba");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setForeground(new Color(102, 204, 51));
+		lblTitulo.setFont(new Font("Viner Hand ITC", Font.BOLD, 32));
+		lblTitulo.setBounds(112, 0, 443, 50);
+		contentPane.add(lblTitulo);
+		
+		JLabel lblTwitter = new JLabel("");
+		lblTwitter.setBounds(124, 50, 50, 50);
+		lblTwitter.setIcon(new ImageIcon(getClass().getResource("/imagenes/twitter50x50.png")));
+		contentPane.add(lblTwitter);
+		
+		JTextPane textTwitter = new JTextPane();
+		textTwitter.setOpaque(false);
+		textTwitter.setEditable(false);
+		textTwitter.setBounds(175, 50, 443, 50);
+		
+		contentPane.add(textTwitter);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setBounds(567, 0, 50, 50);
+		lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/imagenes/home50x50.png")));
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(0, 0, 100, 100);
+		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/imagenes/logo100x100.png")));
+		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 618, 100);

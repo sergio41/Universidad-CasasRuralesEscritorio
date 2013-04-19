@@ -132,7 +132,7 @@ public class UserRegisterGUI extends JPanel {
 		textPais.setBounds(358, 229, 156, 34);
 		add(textPais);
 		
-		JButton buttonRegister = new JButton("Register");
+		buttonRegister = new JButton("");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -151,19 +151,20 @@ public class UserRegisterGUI extends JPanel {
 							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad);
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 						} catch (Exception e) {
-							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
 					}else{ 
 						try {
 							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+							JPanel temp = new LoginONGUI();
+							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-							int x=javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION);
-							if (x==0){
-								JPanel temp = new OwnerRegisterGUI();
-								Start.modificarPanelAbajo(temp);
+							if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+								JPanel temp1 = new OwnerRegisterGUI();
+								Start.modificarPanelAbajo(temp1);
 							}
 						} catch (Exception e) {
-							javax.swing.JOptionPane.showMessageDialog(null, e.toString(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
 
 					}
@@ -221,7 +222,6 @@ public class UserRegisterGUI extends JPanel {
 				buttonRegister.setText("Registrar");
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
