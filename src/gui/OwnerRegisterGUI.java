@@ -37,7 +37,8 @@ public class OwnerRegisterGUI extends JPanel {
 	private static JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
 	private static JRadioButton rdbtnParticular = new JRadioButton("Particular");
 	private static DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
-
+	ApplicationFacadeInterface facade = Start.getBusinessLogic();
+	
 	/**
 	 * Create the panel.
 	 */
@@ -46,7 +47,7 @@ public class OwnerRegisterGUI extends JPanel {
 		buttonGuardar = new JButton("Registrar");
 		buttonGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				//ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				String cuenta= "";
 				String tipo = "";
 				String profes= "";
@@ -64,9 +65,12 @@ public class OwnerRegisterGUI extends JPanel {
 				mon= (String) comboMoneda.getSelectedItem();
 				try {
 					facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
+					JPanel temp1= new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.getMessage();
 				}
+				
 			}
 		});
 		buttonGuardar.setForeground(Color.BLUE);
@@ -170,7 +174,7 @@ public class OwnerRegisterGUI extends JPanel {
 	
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		//ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		Owner ow;
 		try {
 			ow = facade.getOwner();

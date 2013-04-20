@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-
 import businessLogic.ApplicationFacadeInterface;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -38,6 +37,8 @@ public class LoginGUI extends JPanel {
 					facade.hacerLogin(email, pass);
 					JPanel temp = new LoginONGUI();
 					Start.modificarPanelArriba(temp);
+					JPanel temp1 = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 				}

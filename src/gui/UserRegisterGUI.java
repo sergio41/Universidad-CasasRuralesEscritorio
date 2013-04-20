@@ -34,7 +34,9 @@ public class UserRegisterGUI extends JPanel {
 	private JComboBox<String> comboEC;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JButton buttonRegister;
+	ApplicationFacadeInterface facade = Start.getBusinessLogic();
 
+	
 	/**
 	 * Create the panel.
 	 */
@@ -135,7 +137,7 @@ public class UserRegisterGUI extends JPanel {
 		buttonRegister = new JButton("");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				//ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
@@ -150,6 +152,8 @@ public class UserRegisterGUI extends JPanel {
 						try {
 							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad);
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+							JPanel temp1 = new PantallaPrincipalGUI();
+							Start.modificarPanelAbajo(temp1);
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
@@ -159,10 +163,13 @@ public class UserRegisterGUI extends JPanel {
 							JPanel temp = new LoginONGUI();
 							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
+							facade.hacerLogin(email, pass);
 							if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
 								JPanel temp1 = new OwnerRegisterGUI();
 								Start.modificarPanelAbajo(temp1);
-							}
+							}else{
+								JPanel temp1 = new PantallaPrincipalGUI();
+								Start.modificarPanelAbajo(temp1);}
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
@@ -196,7 +203,7 @@ public class UserRegisterGUI extends JPanel {
 	
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		//ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			if (facade.estadoLogin()){
 				UserAplication user = facade.getUsuario();

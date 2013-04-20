@@ -140,7 +140,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 	
 	public void modificarOwner(String bA, String t, Vector<String> i, String p,	String m) throws Exception {
-			DB4oManager.modificarOwner(usuario, emailUser, bA, t, i, p, m);
+		if(usuario.getPropietario()!=null)
+			usuario= DB4oManager.modificarOwner(usuario, usuario.getEmail(), bA, t, i, p, m);
+		else 
+			usuario= DB4oManager.nuevoOwner(usuario, usuario.getEmail(), bA, t, i, p, m);
 	}
 	
 	public void modificarRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {

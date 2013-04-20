@@ -17,7 +17,6 @@ import configuration.Config;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.Font;
-import javax.swing.JTextArea;
 
 public class Start extends JFrame {
 	/**

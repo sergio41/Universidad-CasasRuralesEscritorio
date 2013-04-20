@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
+import businessLogic.ApplicationFacadeInterface;
+
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
@@ -16,16 +18,27 @@ public class LoginONGUI extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JButton btnLogout;
+	ApplicationFacadeInterface facade = Start.getBusinessLogic();
+
 	/**
 	 * Create the panel.
 	 */
 	public LoginONGUI() {
 		setBackground(new Color(0, 255, 0));
 		setLayout(null);
-	
 		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					facade.logout();
+					JPanel temp1 = new LoginGUI();
+					Start.modificarPanelArriba(temp1);
+					JPanel temp2 = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(temp2);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.getMessage();
+				}				
 			}
 		});
 		btnLogout.setBounds(120, 30, 97, 25);

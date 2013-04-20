@@ -87,6 +87,7 @@ public class DB4oManager {
 		if (userConcretos.hasNext()) throw new Exception("El email ya esta usado. Logueate");
 		UserAplication user = new UserAplication(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
 		db.store(user);
+		db.commit();
 		return user;
 	}
 	
@@ -102,6 +103,7 @@ public class DB4oManager {
 			casa.setLiving(nLiving);
 			casa.setPark(nPark);
 			db.store(casa);
+			db.commit();
 			return getUser(email);
 		} else throw new Exception("La casa rural no se puede modificar. No se ha encontrado en la base de datos.");
 	}
@@ -118,8 +120,23 @@ public class DB4oManager {
 			use.setPais(pais);
 			use.setEdad(edad);
 			db.store(user);
+			db.commit();
 			return user;
 		}else throw new Exception("El usuario no existe");
+	}
+
+	public static UserAplication nuevoOwner(UserAplication user, String email, String bA, String t, Vector<String> i, String p, String m) throws Exception{
+		Owner owner = new Owner(bA, t, i, p, m);
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			if(userConcreto.getPropietario()==null){
+			userConcreto.setPropietario(owner);
+			db.store(userConcreto);
+			db.commit();
+			return getUser(email);
+			}else throw new Exception("El usuario ya es propietario");				
+		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
 	public static UserAplication modificarOwner(UserAplication user, String email, String bA, String t, Vector<String> i, String p, String m) throws Exception{
@@ -132,6 +149,7 @@ public class DB4oManager {
 			userConcreto.getPropietario().setProfesion(p);
 			userConcreto.getPropietario().setTipo(t);
 			db.store(userConcreto);
+			db.commit();
 			return getUser(email);
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
@@ -142,6 +160,7 @@ public class DB4oManager {
 			UserAplication userConcreto = userConcretos.next();
 			userConcreto.setPass(pass);
 			db.store(userConcreto);
+			db.commit();
 			return getUser(user.getEmail());
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
@@ -152,6 +171,7 @@ public class DB4oManager {
 			UserAplication userConcreto = userConcretos.next();
 			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark));
 			db.store(userConcreto);
+			db.commit();
 			return getUser(user.getEmail());
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
@@ -166,6 +186,7 @@ public class DB4oManager {
 				if(casa.getHouseNumber() == numero){
 					userConcreto.getPropietario().getRuralHouses().remove(casa);
 					db.store(userConcreto);
+					db.commit();
 					return getUser(user.getEmail());
 				}
 			}
