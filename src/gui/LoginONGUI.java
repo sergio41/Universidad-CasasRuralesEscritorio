@@ -11,6 +11,8 @@ import businessLogic.ApplicationFacadeInterface;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import java.awt.Font;
 
 public class LoginONGUI extends JPanel {
 	/**
@@ -18,7 +20,9 @@ public class LoginONGUI extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JButton btnLogout;
-	ApplicationFacadeInterface facade = Start.getBusinessLogic();
+	private static JButton modOwner;
+	private static JButton modPerfil;
+	private static JTextPane txtpnPropietario;
 
 	/**
 	 * Create the panel.
@@ -29,6 +33,7 @@ public class LoginONGUI extends JPanel {
 		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					facade.logout();
 					JPanel temp1 = new LoginGUI();
@@ -41,8 +46,47 @@ public class LoginONGUI extends JPanel {
 				}				
 			}
 		});
-		btnLogout.setBounds(120, 30, 97, 25);
+		btnLogout.setBounds(267, 18, 126, 23);
 		add(btnLogout);
+		
+		modPerfil = new JButton("Editar Perfil");
+		modPerfil.setBounds(5, 18, 126, 23);
+		modPerfil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					JPanel temp1= new UserRegisterGUI();
+					Start.modificarPanelAbajo(temp1);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+				
+			}
+		});
+		add(modPerfil);
+		
+		modOwner = new JButton("Ser Propietario");
+		modOwner.setBounds(136, 18, 126, 23);
+		modOwner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					JPanel temp1= new OwnerRegisterGUI();
+					Start.modificarPanelAbajo(temp1);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+				
+			}
+		});
+		add(modOwner);
+		
+		txtpnPropietario = new JTextPane();
+		txtpnPropietario.setFont(new Font("Vijaya", Font.BOLD, 25));
+		txtpnPropietario.setForeground(new Color(255, 0, 0));
+		txtpnPropietario.setEditable(false);
+		txtpnPropietario.setOpaque(false);
+		txtpnPropietario.setText("Registrado como usuario.");
+		txtpnPropietario.setBounds(5, 56, 388, 31);
+		add(txtpnPropietario);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 400, 100);
@@ -51,5 +95,24 @@ public class LoginONGUI extends JPanel {
 		lblNewLabel.setBounds(0, 0, 400, 100);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
 		lblNewLabel.setVisible(true);
+		
+		inicializarCampos();
+	}
+	
+	public void inicializarCampos(){
+		try {
+			ApplicationFacadeInterface facade = Start.getBusinessLogic();
+			modPerfil.setVisible(true);
+			modOwner.setVisible(true);
+			if(facade.getOwner() != null){
+				modOwner.setText("Editar Propietario");
+				txtpnPropietario.setText("Registrado como propietario.");
+			}else{
+				modOwner.setText("Ser Propietario");
+				txtpnPropietario.setText("Registrado como usuario.");
+			}
+		} catch (Exception e) {
+			e.getMessage();
+		}
 	}
 }

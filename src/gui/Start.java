@@ -17,6 +17,8 @@ import configuration.Config;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Start extends JFrame {
 	/**
@@ -112,6 +114,12 @@ public class Start extends JFrame {
 		contentPane.add(textTwitter);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent arg0) {
+				JPanel panel = new PantallaPrincipalGUI();
+				modificarPanelAbajo(panel);
+			}
+		});
 		lblNewLabel_2.setBounds(567, 0, 50, 50);
 		lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/imagenes/home50x50.png")));
 		contentPane.add(lblNewLabel_2);
@@ -132,7 +140,7 @@ public class Start extends JFrame {
 		contentPane.remove(panelPrincipal);
 		panel.setBounds(0, 100, 1018, 465);
 		panelPrincipal = panel;
-		contentPane.add(panel);
+		contentPane.add(panelPrincipal);
 		panelPrincipal.setVisible(true);
 	}
 	

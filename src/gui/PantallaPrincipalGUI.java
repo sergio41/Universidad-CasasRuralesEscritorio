@@ -7,8 +7,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
@@ -16,17 +14,16 @@ import javax.swing.JButton;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
-import businessLogic.ApplicationFacadeInterface;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Color;
 
 public class PantallaPrincipalGUI extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static JButton modPerfil;
-	private static JButton modOwner;
 	private static JDateChooser dateDesde;
 	private static JDateChooser dateHasta;
 	private JTextField textCiudad;
@@ -38,8 +35,12 @@ public class PantallaPrincipalGUI extends JPanel {
 		setLayout(null);
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(146, 179, 97, 25);
+		btnBuscar.setBounds(20, 179, 223, 28);
 		add(btnBuscar);
+		
+		JButton btnBusquedaAvanzada = new JButton("Busqueda avanzada");
+		btnBusquedaAvanzada.setBounds(20, 223, 223, 28);
+		add(btnBusquedaAvanzada);
 		
 		textCiudad = new JTextField();
 		textCiudad.setColumns(10);
@@ -107,64 +108,22 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblInicio.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 98));
 		add(lblInicio);
 		
-		modPerfil = new JButton("Editar Perfil");
-		modPerfil.setBounds(20, 339, 116, 23);
-		modPerfil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					JPanel temp1= new UserRegisterGUI();
-					Start.modificarPanelAbajo(temp1);
-				} catch (Exception e) {
-					e.getMessage();
-				}
-				
-			}
-		});
-		add(modPerfil);
-
-
-		
-		
-		modOwner = new JButton("Ser Propietario");
-		modOwner.setBounds(20, 373, 116, 23);
-		modOwner.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					JPanel temp1= new OwnerRegisterGUI();
-					Start.modificarPanelAbajo(temp1);
-				} catch (Exception e) {
-					e.getMessage();
-				}
-				
-			}
-		});
-		add(modOwner);
+		JLabel lblSeleccioneLosDatos = DefaultComponentFactory.getInstance().createTitle("Seleccione los datos:");
+		lblSeleccioneLosDatos.setForeground(new Color(255, 0, 0));
+		lblSeleccioneLosDatos.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
+		lblSeleccioneLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSeleccioneLosDatos.setBounds(20, 23, 223, 22);
+		add(lblSeleccioneLosDatos);
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		add(lblNewLabel);
+		
+		
 		inicializarCampos();
-
 	}
 	
 	public void inicializarCampos(){
-		try {
-			ApplicationFacadeInterface facade = Start.getBusinessLogic();
-			if (facade.estadoLogin()){
-				modPerfil.setVisible(true);
-				modOwner.setVisible(true);
-				if(facade.getOwner() != null){
-					modOwner.setText("Editar Propietario");
-				}else{
-					modOwner.setText("Ser Propietario");
-				}
-			} else {
-				modPerfil.setVisible(false);
-				modOwner.setVisible(false);
-			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
 	}
 }
 

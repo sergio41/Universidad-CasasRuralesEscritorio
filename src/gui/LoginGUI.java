@@ -46,14 +46,14 @@ public class LoginGUI extends JPanel {
 		});
 		
 		textEmail = new JTextField();
-		textEmail.setBounds(115, 13, 116, 22);
+		textEmail.setBounds(28, 16, 219, 25);
 		add(textEmail);
 		textEmail.setColumns(10);
 		
 		passPass = new JPasswordField();
-		passPass.setBounds(115, 48, 116, 22);
+		passPass.setBounds(28, 57, 219, 25);
 		add(passPass);
-		btnEntrar.setBounds(275, 47, 97, 25);
+		btnEntrar.setBounds(275, 57, 97, 25);
 		add(btnEntrar);
 		
 		btnSignUp = new JButton("Sign UP!");
@@ -63,7 +63,7 @@ public class LoginGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnSignUp.setBounds(275, 12, 97, 25);
+		btnSignUp.setBounds(275, 16, 97, 25);
 		add(btnSignUp);
 		
 		JLabel lblNewLabel = new JLabel("");
