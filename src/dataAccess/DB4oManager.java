@@ -194,6 +194,18 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
+	public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
+		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);
+		if (RHConcreto.hasNext()){
+			RuralHouse casa= RHConcreto.next();
+			casa.addOffer(of);
+			db.store(casa);
+			db.commit();
+			return of;
+		}
+		else throw new Exception("Error al guardar la oferta.");
+		}
+	
 public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
 		try{
 			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());

@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.sql.SQLException;
 
 import java.util.Vector;
@@ -50,7 +51,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 *            number, start day, last day and price
 	 * @return None
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
+	/*public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception {
 		//ObjectContainer db=DB4oManager.getContainer();
 		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
@@ -61,7 +62,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		//.store(o);
 		//db.commit(); 
 		return null;//o;
-	}
+	}*/
 
 	/**
 	 * This method creates a book with a corresponding parameters
@@ -101,14 +102,30 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 
 	//Desde aqui esta bien.
-	/**
-	 * This method obtains available offers for a concrete house in a certain period 
-	 * 
-	 * @param houseNumber, the house number where the offers must be obtained 
-	 * @param firstDay, first day in a period range 
-	 * @param lastDay, last day in a period range
-	 * @return a vector of offers(Offer class)  available  in this period
-	 */
+	
+	public boolean colisionOfertas(RuralHouse rh, Date firstDay, Date lastDay){
+		Iterator<Offer> i = rh.getOffers(firstDay, lastDay).iterator();
+		while (i.hasNext()){
+			Offer of = i.next();
+			if (of.getRuralHouse().equals(rh) && of.getFirstDay().compareTo(firstDay)>=0 && of.getLastDay().compareTo(lastDay)<=0);
+				return true;
+		}
+		return false;
+	}
+	
+
+	//Desde aqui esta bien.
+	
+	public Offer createOffer(RuralHouse rh, Date firstDay, Date lastDay,
+			float price) throws RemoteException, Exception {
+			if(!colisionOfertas(rh, firstDay, lastDay)){
+				Offer of =rh.createOffer(firstDay, lastDay, price);
+				DB4oManager.crearOferta(rh, of);
+			}
+			else throw new Exception("La oferta ya existe. Elija unas fechas sin colisiones.");
+		return null;
+	}
+	
 	public Vector<Offer> getOffers(RuralHouse house,Date firstDay, Date lastDay) throws RemoteException, Exception {
 		return house.getOffers(firstDay, lastDay);
 	}

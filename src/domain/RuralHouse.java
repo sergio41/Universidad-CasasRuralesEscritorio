@@ -219,5 +219,5 @@ public class RuralHouse implements Serializable {
 		
 	}
 
-
+	public Offer addOffer(Offer o) {offers.add(o); return o;}
 }
