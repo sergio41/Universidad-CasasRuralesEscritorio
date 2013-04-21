@@ -3,19 +3,19 @@ package gui;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
-
 import javax.swing.JButton;
 
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
-
-
-
-
 import businessLogic.ApplicationFacadeInterface;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -27,7 +27,8 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JButton modPerfil;
 	private static JButton modOwner;
-	ApplicationFacadeInterface facade = Start.getBusinessLogic();
+	private static JDateChooser dateDesde;
+	private static JDateChooser dateHasta;
 	private JTextField textCiudad;
 
 	/**
@@ -45,10 +46,44 @@ public class PantallaPrincipalGUI extends JPanel {
 		textCiudad.setBounds(105, 58, 137, 28);
 		add(textCiudad);
 		
-		JDateChooser dateHasta = new JDateChooser();
+		Date fechaHoy = new Date();
+		long time = fechaHoy.getTime() + 1*(3600*24*1000);
+		Date fechaManana = new Date();
+		fechaManana.setTime(time);
+		
+		dateHasta = new JDateChooser();
+		dateHasta.setMinSelectableDate(fechaManana);
+		dateHasta.setDate(fechaManana);
 		dateHasta.setDateFormatString("yyyy-MM-dd");
 		dateHasta.setBounds(105, 138, 137, 28);
 		add(dateHasta);
+	
+		dateDesde = new JDateChooser();
+		dateDesde.setBounds(105, 97, 137, 28);
+		dateDesde.setDate(fechaHoy);
+		dateDesde.setDateFormatString("yyyy-MM-dd");
+		dateDesde.setMinSelectableDate(fechaHoy);
+		try {
+			UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		dateDesde.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+	        @Override
+	        public void propertyChange(PropertyChangeEvent e) {
+	            if ("date".equals(e.getPropertyName())) {
+	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
+					long time = dateDesde.getDate().getTime() + 1*(3600*24*1000);
+					Date fechaSiguiente = new Date();
+					fechaSiguiente.setTime(time);
+					dateHasta.setMinSelectableDate(fechaSiguiente);
+					dateHasta.setDate(fechaSiguiente);
+	            }
+	        }
+	    });
+		add(dateDesde);
+
 		
 		JLabel lblHasta = new JLabel("Hasta:");
 		lblHasta.setBounds(20, 138, 73, 28);
@@ -86,26 +121,8 @@ public class PantallaPrincipalGUI extends JPanel {
 			}
 		});
 		add(modPerfil);
-		//JCalendar a;
-		//JDateChooser calendario = new JDateChooser(new Date(), "dd/MM/yyyy"); //Aqui ele seta a data de hoje no formato dd/mm/aaaa 
 
-		try {
-			JDateChooser dateDesde = new JDateChooser();
-			dateDesde.setBounds(105, 97, 137, 28);
-			dateDesde.setDateFormatString("yyyy-MM-dd");
-			JLabel dateLabel = new JLabel("Date");
-			dateLabel.setBounds(0, 0, 0, 0);
-			add(dateLabel);//1
-			add(dateDesde); 
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		  
-		//calendario.setBounds(350,50,145,20); // x y ancho alto
-	     //   add(calendario);
 
-		
-		
 		
 		
 		modOwner = new JButton("Ser Propietario");
@@ -132,6 +149,7 @@ public class PantallaPrincipalGUI extends JPanel {
 	
 	public void inicializarCampos(){
 		try {
+			ApplicationFacadeInterface facade = Start.getBusinessLogic();
 			if (facade.estadoLogin()){
 				modPerfil.setVisible(true);
 				modOwner.setVisible(true);
