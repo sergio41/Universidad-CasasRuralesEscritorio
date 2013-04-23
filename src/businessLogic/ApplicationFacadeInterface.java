@@ -79,4 +79,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void modificarOwner(String bA, String t, Vector<String> i, String p, String m) throws Exception;
 	
 	public void modificarContraseña(String pass) throws Exception;
+	
+	public Vector<String> Ultimos10Tweets() throws Exception;
 }

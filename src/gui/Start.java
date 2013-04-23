@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.EventQueue;
 import java.rmi.Naming;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -19,6 +22,7 @@ import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 public class Start extends JFrame {
 	/**
@@ -31,6 +35,9 @@ public class Start extends JFrame {
 	public static JPanel panelArriba;
 	public static JPanel panelPrincipal;
 	
+	private static Vector<String> vectorTwitter;
+	private static int intTwitter;
+	private static JTextPane textTwitter;
 	
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
@@ -73,6 +80,7 @@ public class Start extends JFrame {
 					modificarPanelAbajo(panelPrincipal);
 					panelArriba = new LoginGUI();
 					modificarPanelArriba(panelArriba);
+					controlTiempo();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,6 +92,8 @@ public class Start extends JFrame {
 	 * Create the frame.
 	 */
 	public Start() {
+		setTitle("Casas Rurales Villatripas de Arriba");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Start.class.getResource("/imagenes/logo100x100.png")));
 		setResizable(false);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,10 +116,13 @@ public class Start extends JFrame {
 		lblTwitter.setIcon(new ImageIcon(getClass().getResource("/imagenes/twitter50x50.png")));
 		contentPane.add(lblTwitter);
 		
-		JTextPane textTwitter = new JTextPane();
+		textTwitter = new JTextPane();
+		textTwitter.setForeground(new Color(0, 255, 255));
+		textTwitter.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
+		textTwitter.setText("Error al procesar twitter");
 		textTwitter.setOpaque(false);
 		textTwitter.setEditable(false);
-		textTwitter.setBounds(175, 50, 443, 50);
+		textTwitter.setBounds(175, 39, 443, 61);
 		
 		contentPane.add(textTwitter);
 		
@@ -125,7 +138,7 @@ public class Start extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(0, 0, 100, 100);
+		lblNewLabel_1.setBounds(15, 0, 100, 100);
 		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/imagenes/logo100x100.png")));
 		contentPane.add(lblNewLabel_1);
 		
@@ -151,5 +164,24 @@ public class Start extends JFrame {
 		panelArriba = panel;
 		contentPane.add(panelArriba);
 		panelArriba.setVisible(true);
+	}
+	
+	public static void controlTiempo(){
+		TimerTask timerTask = new TimerTask() { 
+			public void run() {
+				try {
+					intTwitter++;
+					if (vectorTwitter == null || intTwitter == 10 || vectorTwitter.size()<intTwitter){
+						vectorTwitter = facadeInterface.Ultimos10Tweets();
+						intTwitter =0;
+					}
+					textTwitter.setText(vectorTwitter.get(intTwitter));
+				} catch (Exception e) {
+					textTwitter.setText("Error al procesar twitter");
+				}
+			} 
+		}; 
+		Timer timer = new Timer(); 
+		timer.scheduleAtFixedRate(timerTask, 0, 15000);
 	}
 }

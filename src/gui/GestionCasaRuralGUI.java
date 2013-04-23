@@ -44,22 +44,26 @@ public class GestionCasaRuralGUI extends JPanel {
 	public GestionCasaRuralGUI(){
 		setLayout(null);
 		
-		JButton button = new JButton("Eliminar");
-		button.addActionListener(new ActionListener() {
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() > 0) {
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					try {
-						facade.eliminarCasaRural(Integer.parseInt(comBoxCasas.getSelectedItem().toString()));
-						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+						facade.eliminarCasaRural(Integer.parseInt(comBoxCasas.getSelectedItem().toString()));						
+						JPanel panel = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(panel);
+						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
 					}catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						javax.swing.JOptionPane.showMessageDialog(null,"Error al eliminar: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 					} 
 					
 				}
 			}
 		});
+		btnEliminar.setEnabled(false);
+		btnEliminar.setBounds(437, 25, 134, 33);
+		add(btnEliminar);
 		
 		JLabel label_5 = new JLabel("N\u00BA Habitaciones*:");
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -78,9 +82,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		label_7.setFont(new Font("Dialog", Font.PLAIN, 21));
 		label_7.setBounds(312, 312, 178, 33);
 		add(label_7);
-		button.setEnabled(false);
-		button.setBounds(437, 25, 134, 33);
-		add(button);
+		
 		
 		textPaneDescription = new JTextPane();
 		textPaneDescription.setText("");
@@ -155,7 +157,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		textPark.setBounds(502, 312, 69, 33);
 		add(textPark);
 		
-		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -168,12 +170,12 @@ public class GestionCasaRuralGUI extends JPanel {
 					int nPark = Integer.parseInt(textPark.getText());
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						//facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark)
-						//facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
 						facade.modificarRuralHouse((int) comBoxCasas.getSelectedItem(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					}
-					setVisible(false);
+					JPanel panel = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(panel);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -227,6 +229,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			}
 		});
 		comBoxCasas.setSelectedIndex(-1);
+		comBoxCasas.setModel(modeloEC);
 		comBoxCasas.setBounds(31, 25, 377, 33);
 		add(comBoxCasas);
 		
@@ -235,7 +238,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		add(lblNewLabel);
 		
-
+		inicializarCampos();
 	}
 
 	private void enaDis(boolean b){
@@ -257,6 +260,23 @@ public class GestionCasaRuralGUI extends JPanel {
 		textLiving.setText("");
 		textPark.setText("");
 	}
+
+	private void inicializarCampos() {
+		modeloEC.addElement("Nueva Casa Rural");
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		java.util.Iterator<RuralHouse> i;
+		try {
+			i = facade.getOwner().getRuralHouses().iterator();
+			while (i.hasNext()){
+				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
+			}
+			enaDis(false);
+			comBoxCasas.setSelectedIndex(-1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	public DefaultComboBoxModel<String> getModeloEC() {
 		return modeloEC;

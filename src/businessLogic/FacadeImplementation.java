@@ -12,6 +12,7 @@ import java.util.Vector;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 
+
 import configuration.Config;
 
 import dataAccess.DB4oManager;
@@ -32,6 +33,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	private static boolean estado = false; //SinLogin = 0; //Login = 1
 	private static UserAplication usuario;
 	private static String emailUser;
+	private static Vector<String> twitter10;
 	BookManager theBookMngr;
 	
  
@@ -51,18 +53,18 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 *            number, start day, last day and price
 	 * @return None
 	 */
-	/*public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
+	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception {
-		//ObjectContainer db=DB4oManager.getContainer();
+		ObjectContainer db=DB4oManager.getContainer();
 		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
 				ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
-		// ObjectSet result = db.queryByExample(proto);
-		// RuralHouse rh=(RuralHouse)result.next();
-		//Offer o=rh.createOffer(firstDay, lastDay, price);
-		//.store(o);
-		//db.commit(); 
-		return null;//o;
-	}*/
+		 ObjectSet<RuralHouse> result = db.queryByExample(proto);
+		 RuralHouse rh=(RuralHouse)result.next();
+		Offer o=rh.createOffer(firstDay, lastDay, price);
+		db.store(o);
+		db.commit(); 
+		return null;
+	}
 
 	/**
 	 * This method creates a book with a corresponding parameters
@@ -74,11 +76,11 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
 
 		
-		/*try {
+		try {
 			ObjectContainer db=DB4oManager.getContainer();
 			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
 					ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
-			 ObjectSet result = db.queryByExample(proto);
+			 ObjectSet<RuralHouse> result = db.queryByExample(proto);
 			 RuralHouse rh=(RuralHouse)result.next();
 			Book b=null;
 			Offer offer;
@@ -94,8 +96,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			return b;
 		} catch (Exception exc) {
 			exc.printStackTrace();
-			*/return null;
-		//}
+			return null;
+		}
 	}
 
 	
@@ -115,16 +117,6 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 
 	//Desde aqui esta bien.
-	
-	public Offer createOffer(RuralHouse rh, Date firstDay, Date lastDay,
-			float price) throws RemoteException, Exception {
-			if(!colisionOfertas(rh, firstDay, lastDay)){
-				Offer of =rh.createOffer(firstDay, lastDay, price);
-				DB4oManager.crearOferta(rh, of);
-			}
-			else throw new Exception("La oferta ya existe. Elija unas fechas sin colisiones.");
-		return null;
-	}
 	
 	public Vector<Offer> getOffers(RuralHouse house,Date firstDay, Date lastDay) throws RemoteException, Exception {
 		return house.getOffers(firstDay, lastDay);
@@ -247,6 +239,29 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		max++;
 		return max;
+	}
+
+	public Vector<String> Ultimos10Tweets() throws Exception {
+		try {
+			Iterator<String> i = GestionTwitter.getTodosTweets().iterator();
+			twitter10 = new Vector<String>();
+			int x = 0;
+			while (i.hasNext()){
+				twitter10.add(i.next());
+				x++;
+				if(x==10) break;
+			}
+			return twitter10;
+		} catch (Exception e) {
+			System.out.println("error");
+			if (twitter10 == null)throw new Exception();			
+			return twitter10;
+		}		
+	}
+	
+	public void setPrecios(Date inicio, Date fin){
+		
+		
 	}
 }
 

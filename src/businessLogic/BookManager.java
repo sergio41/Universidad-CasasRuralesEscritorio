@@ -39,12 +39,12 @@ public final class BookManager {
 	public static BookManager getInstance()  {
 		ObjectContainer db=DB4oManager.getContainer();
 	    BookManager b = new BookManager();
-	    ObjectSet result = db.queryByExample(b);
+	    ObjectSet<BookManager> result = db.queryByExample(b);
 	    if (!result.hasNext()){
 	    	theBookManager = new BookManager();
 	    	db.store(theBookManager);
 	    	db.commit();
-	    } else theBookManager=(BookManager)result.next();
+	    } else theBookManager=result.next();
 		return theBookManager;
 	}
 }

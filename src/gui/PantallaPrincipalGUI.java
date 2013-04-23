@@ -12,12 +12,19 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import javax.swing.JButton;
 
+import businessLogic.ApplicationFacadeInterface;
+
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+
 
 public class PantallaPrincipalGUI extends JPanel {
 	/**
@@ -26,7 +33,8 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JDateChooser dateDesde;
 	private static JDateChooser dateHasta;
-	private JTextField textCiudad;
+	private static JTextField textCiudad;
+	private static JButton btnGestionCasasRurales;
 
 	/**
 	 * Create the panel.
@@ -103,10 +111,6 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblCiudad.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCiudad.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 		add(lblCiudad);
-		JLabel lblInicio = new JLabel("INICIO");
-		lblInicio.setBounds(473, 221, 379, 207);
-		lblInicio.setFont(new Font("Tempus Sans ITC", Font.PLAIN, 98));
-		add(lblInicio);
 		
 		JLabel lblSeleccioneLosDatos = DefaultComponentFactory.getInstance().createTitle("Seleccione los datos:");
 		lblSeleccioneLosDatos.setForeground(new Color(255, 0, 0));
@@ -114,6 +118,16 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblSeleccioneLosDatos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSeleccioneLosDatos.setBounds(20, 23, 223, 22);
 		add(lblSeleccioneLosDatos);
+		
+		btnGestionCasasRurales = new JButton("Gestionar Casas Rurales");
+		btnGestionCasasRurales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel temp = new GestionCasaRuralGUI();
+				Start.modificarPanelAbajo(temp);
+			}
+		});
+		btnGestionCasasRurales.setBounds(20, 427, 223, 28);
+		add(btnGestionCasasRurales);
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -124,6 +138,14 @@ public class PantallaPrincipalGUI extends JPanel {
 	}
 	
 	public void inicializarCampos(){
+		ApplicationFacadeInterface i = Start.getBusinessLogic();
+		boolean login = false;
+		try {
+			if (i.estadoLogin())  login = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		btnGestionCasasRurales.setVisible(login);
 	}
 }
 
