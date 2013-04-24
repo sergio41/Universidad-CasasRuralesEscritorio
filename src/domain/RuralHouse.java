@@ -68,8 +68,8 @@ public class RuralHouse implements Serializable {
 	public String toString() {return this.houseNumber + ": " + this.city;}
 	
 	public Vector<Fechas> getFechas(){return fechas;}
-	public boolean añadirFecha(int numeroReserva, Date date, int precio){
-		Fechas fecha = new Fechas(numeroReserva, date, this, precio);
+	public boolean añadirFecha( Date date, int precio){
+		Fechas fecha = new Fechas(date, this, precio);
 		Iterator<Fechas> i = fechas.iterator();
 		while (i.hasNext()){
 			Fechas aux = i.next();
@@ -100,24 +100,26 @@ public class RuralHouse implements Serializable {
 		return false;
 	}
 	
-	public boolean hacerReserva(Date inicio, Date fin){
+	public boolean hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
 		if (!disponibleFechas(inicio, fin)) return false;
 		Date aux = inicio;
 		aux.setTime(aux.getTime()+1*24*60*60*1000);
 		while (aux.compareTo(fin) !=0 ){
-			
+			hacerReservaFecha(cliente, numeroDeReserva, aux);
 			aux.setTime(aux.getTime()+1*24*60*60*1000);
 		}
-		if (aux.compareTo(fin) ==0 && disponibleFecha(aux)) return true;
+		if (aux.compareTo(fin) ==0 && disponibleFecha(aux)) hacerReservaFecha(cliente, numeroDeReserva, aux);
 		return true;
 	}
 	
-	private void hacerReserva (int numeroDeReserva, Date date){
+	private void hacerReservaFecha(UserAplication cliente ,int numeroDeReserva, Date date){
 		Iterator<Fechas> i = fechas.iterator();
 		while (i.hasNext()){
-		/*	Fechas aux = i.ne
+			Fechas aux = i.next();
+			if (aux.getFecha().compareTo(date)==0){
+				aux.hacerReserva(cliente, numeroDeReserva);
 				break;
-			}*/
+			}
 		}
 	}
 	/**
