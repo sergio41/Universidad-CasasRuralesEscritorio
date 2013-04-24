@@ -82,6 +82,44 @@ public class RuralHouse implements Serializable {
 		fechas.add(fecha);
 		return true;
 	}
+	
+	public boolean disponibleFecha(Date date){
+		Iterator<Fechas> i = fechas.iterator();
+		while (i.hasNext()){
+			Fechas aux = i.next();
+			if (aux.getFecha().compareTo(date)==0 && !aux.isReservado()) return true;
+		}
+		return false;
+	}
+	
+	public boolean disponibleFechas(Date inicio, Date fin){
+		Date aux = inicio;
+		aux.setTime(aux.getTime()+1*24*60*60*1000);
+		while (aux.compareTo(fin) !=0 && disponibleFecha(aux)) aux.setTime(aux.getTime()+1*24*60*60*1000);
+		if (aux.compareTo(fin) ==0 && disponibleFecha(aux)) return true;
+		return false;
+	}
+	
+	public boolean hacerReserva(Date inicio, Date fin){
+		if (!disponibleFechas(inicio, fin)) return false;
+		Date aux = inicio;
+		aux.setTime(aux.getTime()+1*24*60*60*1000);
+		while (aux.compareTo(fin) !=0 ){
+			
+			aux.setTime(aux.getTime()+1*24*60*60*1000);
+		}
+		if (aux.compareTo(fin) ==0 && disponibleFecha(aux)) return true;
+		return true;
+	}
+	
+	private void hacerReserva (int numeroDeReserva, Date date){
+		Iterator<Fechas> i = fechas.iterator();
+		while (i.hasNext()){
+		/*	Fechas aux = i.ne
+				break;
+			}*/
+		}
+	}
 	/**
 	 * This method creates an offer with a house number, first day, last day and price
 	 * 

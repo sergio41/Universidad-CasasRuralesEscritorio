@@ -194,6 +194,20 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
+	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin){
+		Vector<RuralHouse> result = new Vector<RuralHouse>();
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(0, inicio, null, 0, false, null));	
+		while (fechasConcretas.hasNext()){
+			RuralHouse rh = fechasConcretas.next().getCasaRural();
+			Date aux = inicio;
+			aux.setTime(aux.getTime()+1*24*60*60*1000);
+			while (aux.compareTo(fin) !=0 && rh.disponibleFecha(aux)) aux.setTime(aux.getTime()+1*24*60*60*1000);
+			if (aux.compareTo(fin) ==0 && rh.disponibleFecha(aux)) result.add(rh);
+		}
+		return result;		
+	}
+	
+	
 	/*public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);
 		if (RHConcreto.hasNext()){
