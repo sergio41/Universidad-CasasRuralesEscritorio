@@ -83,7 +83,7 @@ public class RuralHouse implements Serializable {
 		return true;
 	}
 	
-	public boolean disponibleFecha(Date date){
+	private boolean disponibleFecha(Date date){
 		Iterator<Fechas> i = fechas.iterator();
 		while (i.hasNext()){
 			Fechas aux = i.next();
