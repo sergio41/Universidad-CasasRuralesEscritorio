@@ -1,19 +1,11 @@
 package domain;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.Vector;
 
 public class RuralHouse implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
+
 	private int houseNumber;
 	private String description;
 	private UserAplication user;
@@ -23,14 +15,12 @@ public class RuralHouse implements Serializable {
 	private int nBaths;
 	private int nLiving;
 	private int nPark;
+	private Vector<Fechas> fechas;
 	public Vector<Offer> offers;
-	
 
-
-
-	public RuralHouse() {
+	/*public RuralHouse() {
 		super();
-	}
+	}*/
 
 	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento) {
 		houseNumber = hNumber;
@@ -42,84 +32,38 @@ public class RuralHouse implements Serializable {
 		nBaths = banos;
 		nLiving = salon;
 		nPark = aparcamiento;
-		offers=new Vector<Offer>();
+		fechas = new Vector<Fechas>();
+		//offers=new Vector<Offer>();
 	}
 
-	public int getHouseNumber() {
-		return houseNumber;
-	}
+	public int getHouseNumber() {return houseNumber;}
+	public void setHouseNumber(int h) {houseNumber = h;}
 
-	public void setHouseNumber(int h) {
-		houseNumber = h;
-	}
+	public String getDescription() {return description;}	
+	public void setDescription(String d) {description=d;}
 
-	public String getDescription() {
-		return description;
-	}
+	public UserAplication getUserAplication() {return user;}
+	public void setUser(UserAplication o) {user =o;}
 	
-	public void setDescription(String d) {
-		description=d;
-	}
+	public String getCity() {return city;}	
+	public void setCity(String c) {city=c;}
 
-	public UserAplication getUserAplication() {
-		return user;
-	}
+	public int getRooms() {return nRooms;}
+	public void setRooms(int r) {nRooms = r;}
 
-	public void setUser(UserAplication o) {
-		user =o;
-	}
+	public int getKitchen() {return nKitchen;}
+	public void setKitchen(int k) {nKitchen = k;}
 	
-	public String getCity() {
-		return city;
-	}
+	public int getBaths() {return nBaths;}
+	public void setBaths(int b) {nBaths = b;}
 	
-	public void setCity(String c) {
-		city=c;
-	}
-
-	public int getRooms() {
-		return nRooms;
-	}
+	public int getLiving() {return nLiving;}
+	public void setLiving(int l) {nLiving = l;}
 	
-	public void setRooms(int r) {
-		nRooms = r;
-	}
-
-	public int getKitchen() {
-		return nKitchen;
-	}
+	public int getPark() {return nPark;}
+	public void setPark(int p) {nPark = p;}
 	
-	public void setKitchen(int k) {
-		nKitchen = k;
-	}
-	
-	public int getBaths() {
-		return nBaths;
-	}
-	
-	public void setBaths(int b) {
-		nBaths = b;
-	}
-	
-	public int getLiving() {
-		return nLiving;
-	}
-	
-	public void setLiving(int l) {
-		nLiving = l;
-	}
-	
-	public int getPark() {
-		return nPark;
-	}
-	
-	public void setPark(int p) {
-		nPark = p;
-	}
-	
-	public String toString() {
-		return this.houseNumber + ": " + this.city;
-	}
+	public String toString() {return this.houseNumber + ": " + this.city;}
 	
 	/**
 	 * This method creates an offer with a house number, first day, last day and price
@@ -128,7 +72,7 @@ public class RuralHouse implements Serializable {
 	 *            number, start day, last day and price
 	 * @return None
 	 */
-	public Offer createOffer(Date firstDay, Date lastDay, float price)  {
+	/*public Offer createOffer(Date firstDay, Date lastDay, float price)  {
         Offer off=new Offer(this,firstDay,lastDay,price);
         offers.add(off);
         return off;
@@ -156,7 +100,7 @@ public class RuralHouse implements Serializable {
 		return true;
 	}
 	
-	
+	*/
 	/**
 	 * This method obtains the account number of the owner of the  house number
 	 * 
@@ -165,8 +109,8 @@ public class RuralHouse implements Serializable {
 	 * @return Owner account number of the house
 	 */
 	
-	public String getAccountNumber(int houseNumber) {
-		/*try {
+	/*public String getAccountNumber(int houseNumber) {
+		try {
 			dbMngr=DBManager.getInstance();
 			return dbMngr.getOwner(houseNumber).getBankAccount();
 
@@ -174,9 +118,9 @@ public class RuralHouse implements Serializable {
 			System.out.println("Error, accessing to DB Manager: "
 					+ e.toString());
 			return null;
-		}*/ return null;
+		} return null;
 	}
-	
+	*/
 	/**
 	 * This method obtains available offers for a concrete house in a certain period 
 	 * 
@@ -185,7 +129,7 @@ public class RuralHouse implements Serializable {
 	 * @param lastDay, last day in a period range
 	 * @return a vector of offers(Offer class)  available  in this period
 	 */
-	public Vector<Offer> getOffers( Date firstDay,  Date lastDay) {
+	/*public Vector<Offer> getOffers( Date firstDay,  Date lastDay) {
 		
 		Vector<Offer> availableOffers=new Vector<Offer>();
 		Iterator<Offer> e=offers.iterator();
@@ -198,7 +142,7 @@ public class RuralHouse implements Serializable {
 		return availableOffers;
 		
 	}
-	
+	*/
 	/**
 	 * This method obtains the offer that match exactly with a given dates that has not been booked
 	 * 
@@ -206,7 +150,7 @@ public class RuralHouse implements Serializable {
 	 * @param lastDay, last day in a period range
 	 * @return the  offer(Offer class)  available  for a this period
 	 */
-	public Offer findOffer( Date firstDay,  Date lastDay) {
+	/*public Offer findOffer( Date firstDay,  Date lastDay) {
 		
 		Iterator<Offer> e=offers.iterator();
 		Offer offer=null;
@@ -219,5 +163,5 @@ public class RuralHouse implements Serializable {
 		
 	}
 
-	public Offer addOffer(Offer o) {offers.add(o); return o;}
+	public Offer addOffer(Offer o) {offers.add(o); return o;}*/
 }

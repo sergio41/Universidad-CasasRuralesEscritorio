@@ -194,7 +194,7 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
-	public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
+	/*public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);
 		if (RHConcreto.hasNext()){
 			RuralHouse casa= RHConcreto.next();
@@ -226,6 +226,6 @@ public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, Str
 			exc.printStackTrace();
 			return null;
 		}
-	}
+	}*/
 }
 	

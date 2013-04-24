@@ -53,7 +53,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 *            number, start day, last day and price
 	 * @return None
 	 */
-	public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
+	/*public Offer createOffer(RuralHouse ruralHouse, Date firstDay, Date lastDay,
 			float price) throws RemoteException, Exception {
 		ObjectContainer db=DB4oManager.getContainer();
 		RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), 
@@ -64,7 +64,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		db.store(o);
 		db.commit(); 
 		return null;
-	}
+	}*/
 
 	/**
 	 * This method creates a book with a corresponding parameters
@@ -73,7 +73,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	 *            day, last day, house number and telephone
 	 * @return a book
 	 */
-	public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
+	/*public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
 
 		
 		try {
@@ -120,7 +120,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 	public Vector<Offer> getOffers(RuralHouse house,Date firstDay, Date lastDay) throws RemoteException, Exception {
 		return house.getOffers(firstDay, lastDay);
-	}
+	}*/
 	
 	public void eliminarCasaRural(int numero) throws Exception {
 		DB4oManager.eliminarCasaRural(usuario, numero);
@@ -262,6 +262,27 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public void setPrecios(Date inicio, Date fin){
 		
 		
+	}
+
+	@Override
+	public Offer createOffer(RuralHouse ruralHouse, Date firstDay,
+			Date lastDay, float price) throws RemoteException, Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Book createBook(RuralHouse ruralHouse, Date firstDay, Date lastDay,
+			String telephoneNumber) throws RemoteException, OfferCanNotBeBooked {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Vector<Offer> getOffers(RuralHouse houseNumber, Date firstDay,
+			Date lastDay) throws RemoteException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 
