@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Vector;
-
 public class UserAplication {
 	private String email;
 	private String pass;

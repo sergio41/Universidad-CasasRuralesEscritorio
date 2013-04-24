@@ -81,4 +81,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void modificarContraseña(String pass) throws Exception;
 	
 	public Vector<String> Ultimos10Tweets() throws Exception;
+	
+	public void hacerReserva(int numeroRH, Date inicio, Date fin) throws Exception;
 }

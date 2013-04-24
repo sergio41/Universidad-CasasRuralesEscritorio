@@ -5,10 +5,11 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
+import EDU.purdue.cs.bloat.tree.NewArrayExpr;
+
 import com.db4o.*;
 import configuration.Config;
 import domain.*;
-import exceptions.OfferCanNotBeBooked;
 
 public class DB4oManager { 
 	private static ObjectContainer  db;
@@ -204,6 +205,22 @@ public class DB4oManager {
 		return result;		
 	}
 	
+	public static UserAplication hacerReserva(UserAplication user, int numero, Date inicio, Date fin) throws Exception{
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0));	
+			if (rHConcretos.hasNext()){
+				RuralHouse rHConcreto = rHConcretos.next();
+				rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
+				db.store(rHConcreto);
+				db.store(userConcreto);
+				db.commit();
+				return getUser(user.getEmail());
+			}
+		}
+		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
+	}
 	
 	/*public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);

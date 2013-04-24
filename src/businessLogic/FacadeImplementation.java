@@ -264,6 +264,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		
 	}
 
+	public void hacerReserva(int numeroRH, Date inicio, Date fin) throws Exception{
+		DB4oManager.hacerReserva(usuario, numeroRH, inicio, fin);
+	}
+	
 	@Override
 	public Offer createOffer(RuralHouse ruralHouse, Date firstDay,
 			Date lastDay, float price) throws RemoteException, Exception {
