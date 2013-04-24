@@ -31,10 +31,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Date;
+//import java.sql.Date;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Date;
+
+
 
 
 public class CreateOfferGUI extends JPanel {
@@ -42,12 +45,13 @@ public class CreateOfferGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JComboBox comBoxCasas;
-	private JCalendar calendarFirstday = new JCalendar();
-	private JTextField textFirstday = new JTextField();
+	//private JCalendar calendarFirstday = new JCalendar();
+	private JDateChooser calendarFirstday;
 	private Calendar calendar1 = null;
 	private JCalendar jCalendar1 = new JCalendar();
-	private JTextField textLastday = new JTextField();
-	private JCalendar calendarLastday = new JCalendar();
+	//private JCalendar calendarLastday = new JCalendar();
+	private JDateChooser calendarLastday;
+
 	private Calendar calendar2 = null;
 	private JButton bttnSalvar;
 	private JCalendar jCalendar2 = new JCalendar();
@@ -73,41 +77,7 @@ public class CreateOfferGUI extends JPanel {
 		});
 		add(comBoxCasas);
 		
-		textFirstday.setBounds(200, 103, 149, 20);
-		add(textFirstday);
-		textFirstday.setColumns(10);
-		
-		calendarFirstday.setBounds(359, 103, 268, 138);
-		calendarFirstday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
-		calendarFirstday.getDayChooser().setBackground(Color.CYAN);
-		calendarFirstday.setBackground(new Color(178, 238, 238));
-		add(calendarFirstday);
-		
-		calendarFirstday.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent propertychangeevent) {
-				if (propertychangeevent.getPropertyName().equals("locale")) {
-					calendarFirstday.setLocale((Locale) propertychangeevent
-							.getNewValue());
-					DateFormat dateformat = DateFormat.getDateInstance(1,
-							calendarFirstday.getLocale());
-					textFirstday.setText(dateformat.format(calendar1.getTime()));
-				} else if (propertychangeevent.getPropertyName().equals(
-						"calendar")) {
-					calendar1 = (Calendar) propertychangeevent.getNewValue();
-					DateFormat dateformat1 = DateFormat.getDateInstance(1,
-							calendarFirstday.getLocale());
-					textFirstday.setText(dateformat1.format(calendar1
-							.getTime()));
-					calendarFirstday.setCalendar(calendar1);
-				}
-			}
-		});
-		
-		textLastday.setBounds(200, 285, 149, 20);
-		add(textLastday);
-		textLastday.setColumns(10);
-		
-		calendarLastday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
+		/*calendarLastday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
 		calendarLastday.getDayChooser().setBackground(Color.CYAN);
 		calendarLastday.setBackground(new Color(178, 238, 238));
 		calendarLastday.setBounds(359, 283, 268, 138);
@@ -131,40 +101,45 @@ public class CreateOfferGUI extends JPanel {
 					calendarLastday.setCalendar(calendar2);
 				}
 			}
-		});
+		});*/
 		
-		/*dateHasta = new JDateChooser();
-		dateHasta.setMinSelectableDate(fechaManana);
-		dateHasta.setDate(fechaManana);
-		dateHasta.setDateFormatString("yyyy-MM-dd");
-		dateHasta.setBounds(105, 138, 137, 28);
-		add(dateHasta);
+		Date fechaHoy = new Date();
+		long time = fechaHoy.getTime() + 1*(3600*24*1000);
+		Date fechaManana = new Date();
+		fechaManana.setTime(time);
+		
+		calendarLastday = new JDateChooser();
+		calendarLastday.setMinSelectableDate(fechaManana);
+		calendarLastday.setDate(fechaManana);
+		calendarLastday.setDateFormatString("yyyy-MM-dd");
+		calendarLastday.setBounds(200, 105, 268, 20);
+		add(calendarLastday);
 	
-		dateDesde = new JDateChooser();
-		dateDesde.setBounds(105, 97, 137, 28);
-		dateDesde.setDate(fechaHoy);
-		dateDesde.setDateFormatString("yyyy-MM-dd");
-		dateDesde.setMinSelectableDate(fechaHoy);
+		calendarFirstday = new JDateChooser();
+		calendarFirstday.setBounds(200, 287, 268, 22);
+		calendarFirstday.setDate(fechaHoy);
+		calendarFirstday.setDateFormatString("yyyy-MM-dd");
+		calendarFirstday.setMinSelectableDate(fechaHoy);
 		try {
 			UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
 		} catch (UnsupportedLookAndFeelException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} 
-		dateDesde.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+		calendarFirstday.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 	        @Override
 	        public void propertyChange(PropertyChangeEvent e) {
 	            if ("date".equals(e.getPropertyName())) {
 	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
-					long time = dateDesde.getDate().getTime() + 1*(3600*24*1000);
+					long time = calendarFirstday.getDate().getTime() + 1*(3600*24*1000);
 					Date fechaSiguiente = new Date();
 					fechaSiguiente.setTime(time);
-					dateHasta.setMinSelectableDate(fechaSiguiente);
-					dateHasta.setDate(fechaSiguiente);
+					calendarFirstday.setMinSelectableDate(fechaSiguiente);
+					calendarFirstday.setDate(fechaSiguiente);
 	            }
 	        }
 	    });
-		add(dateDesde);	*/	
+		add(calendarFirstday);	
 				
 		bttnSalvar = new JButton("Salvar");
 		bttnSalvar.addActionListener(new ActionListener() {
@@ -180,7 +155,7 @@ public class CreateOfferGUI extends JPanel {
 							break;
 						}
 					}
-				  	//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
+				  	/*//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
 				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
 				    //Remove the hour:minute:second:ms from the date 
 				  	firstDay=Date.valueOf(firstDay.toString());
@@ -192,7 +167,7 @@ public class CreateOfferGUI extends JPanel {
 
 			  	    //Obtain the business logic from a StartWindow class (local or remote)					
 			  		facade.createOffer(ruralHouse, firstDay, lastDay, price); 	  		
-					setVisible(false);
+					setVisible(false);*/
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
 				} catch (Exception e1) {
@@ -256,8 +231,6 @@ public class CreateOfferGUI extends JPanel {
 
 	
 	private void enaDis(boolean b){
-		textFirstday.setEnabled(b);
-		textLastday.setEnabled(b);
 		textPrecio.setEnabled(b);
 		calendarFirstday.setEnabled(b);
 		calendarLastday.setEnabled(b);
