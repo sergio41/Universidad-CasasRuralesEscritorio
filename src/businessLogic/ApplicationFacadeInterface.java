@@ -85,4 +85,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void hacerReserva(int numeroRH, Date inicio, Date fin) throws Exception;
 	
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception;
+	
+	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad) throws Exception;
 }

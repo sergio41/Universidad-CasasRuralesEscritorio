@@ -290,5 +290,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception{
 		return DB4oManager.casasRuralesDisponibles(inicio, fin);
 	}
+	
+	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad) throws Exception{
+		return DB4oManager.casasRuralesDisponibles(inicio, fin, Ciudad);
+	}
 }
 

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import EDU.purdue.cs.bloat.tree.NewArrayExpr;
 
 import com.db4o.*;
 import configuration.Config;
@@ -205,6 +204,16 @@ public class DB4oManager {
 		return result;		
 	}
 	
+	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad){
+		Vector<RuralHouse> result = new Vector<RuralHouse>();
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, null, 0, false, null));	
+		while (fechasConcretas.hasNext()){
+			RuralHouse rh = fechasConcretas.next().getCasaRural();
+			if (rh.getCity().equalsIgnoreCase(Ciudad) && rh.disponibleFechas(inicio, fin)) result.add(rh);
+		}
+		return result;	
+	}
+	
 	public static UserAplication hacerReserva(UserAplication user, int numero, Date inicio, Date fin) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
@@ -221,6 +230,7 @@ public class DB4oManager {
 		}
 		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
 	}
+	
 	
 	/*public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);
