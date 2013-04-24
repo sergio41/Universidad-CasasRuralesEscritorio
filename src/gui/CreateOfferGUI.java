@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -17,7 +20,9 @@ import javax.swing.border.LineBorder;
 
 import viejoGUI.StartWindow;
 
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 
 import domain.RuralHouse;
 import businessLogic.ApplicationFacadeInterface;
@@ -107,27 +112,60 @@ public class CreateOfferGUI extends JPanel {
 		calendarLastday.setBackground(new Color(178, 238, 238));
 		calendarLastday.setBounds(359, 283, 268, 138);
 		add(calendarLastday);
+
+		calendarLastday.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent propertychangeevent) {
+				if (propertychangeevent.getPropertyName().equals("locale")) {
+					calendarLastday.setLocale((Locale) propertychangeevent
+							.getNewValue());
+					DateFormat dateformat = DateFormat.getDateInstance(1,
+							calendarLastday.getLocale());
+					textLastday.setText(dateformat.format(calendar2.getTime()));
+				} else if (propertychangeevent.getPropertyName().equals(
+						"calendar")) {
+					calendar2 = (Calendar) propertychangeevent.getNewValue();
+					DateFormat dateformat1 = DateFormat.getDateInstance(1,
+							calendarLastday.getLocale());
+					textLastday.setText(dateformat1.format(calendar2
+							.getTime()));
+					calendarLastday.setCalendar(calendar2);
+				}
+			}
+		});
 		
-				calendarLastday.addPropertyChangeListener(new PropertyChangeListener() {
-					public void propertyChange(PropertyChangeEvent propertychangeevent) {
-						if (propertychangeevent.getPropertyName().equals("locale")) {
-							calendarLastday.setLocale((Locale) propertychangeevent
-									.getNewValue());
-							DateFormat dateformat = DateFormat.getDateInstance(1,
-									calendarLastday.getLocale());
-							textLastday.setText(dateformat.format(calendar2.getTime()));
-						} else if (propertychangeevent.getPropertyName().equals(
-								"calendar")) {
-							calendar2 = (Calendar) propertychangeevent.getNewValue();
-							DateFormat dateformat1 = DateFormat.getDateInstance(1,
-									calendarLastday.getLocale());
-							textLastday.setText(dateformat1.format(calendar2
-									.getTime()));
-							calendarLastday.setCalendar(calendar2);
-						}
-					}
-				});
-		
+		/*dateHasta = new JDateChooser();
+		dateHasta.setMinSelectableDate(fechaManana);
+		dateHasta.setDate(fechaManana);
+		dateHasta.setDateFormatString("yyyy-MM-dd");
+		dateHasta.setBounds(105, 138, 137, 28);
+		add(dateHasta);
+	
+		dateDesde = new JDateChooser();
+		dateDesde.setBounds(105, 97, 137, 28);
+		dateDesde.setDate(fechaHoy);
+		dateDesde.setDateFormatString("yyyy-MM-dd");
+		dateDesde.setMinSelectableDate(fechaHoy);
+		try {
+			UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
+		dateDesde.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+	        @Override
+	        public void propertyChange(PropertyChangeEvent e) {
+	            if ("date".equals(e.getPropertyName())) {
+	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
+					long time = dateDesde.getDate().getTime() + 1*(3600*24*1000);
+					Date fechaSiguiente = new Date();
+					fechaSiguiente.setTime(time);
+					dateHasta.setMinSelectableDate(fechaSiguiente);
+					dateHasta.setDate(fechaSiguiente);
+	            }
+	        }
+	    });
+		add(dateDesde);	*/	
+				
 		bttnSalvar = new JButton("Salvar");
 		bttnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -35,7 +35,8 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JDateChooser dateHasta;
 	private static JTextField textCiudad;
 	private static JButton btnGestionCasasRurales;
-
+	private static JButton btnGestionOfertas;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -128,6 +129,17 @@ public class PantallaPrincipalGUI extends JPanel {
 		});
 		btnGestionCasasRurales.setBounds(20, 427, 223, 28);
 		add(btnGestionCasasRurales);
+		
+		btnGestionOfertas = new JButton("Gestionar Ofertas");
+		btnGestionOfertas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel temp = new CreateOfferGUI();
+				Start.modificarPanelAbajo(temp);
+			}
+		});
+		btnGestionOfertas.setBounds(20, 377, 223, 28);
+		add(btnGestionOfertas);
+
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -141,11 +153,14 @@ public class PantallaPrincipalGUI extends JPanel {
 		ApplicationFacadeInterface i = Start.getBusinessLogic();
 		boolean login = false;
 		try {
-			if (i.estadoLogin())  login = true;
+			if (i.estadoLogin())  
+				if(i.getOwner()!=null)
+					login = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		btnGestionCasasRurales.setVisible(login);
+		btnGestionOfertas.setVisible(login);
 	}
 }
 
