@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class RuralHouse implements Serializable {
@@ -16,7 +18,7 @@ public class RuralHouse implements Serializable {
 	private int nLiving;
 	private int nPark;
 	private Vector<Fechas> fechas;
-	public Vector<Offer> offers;
+	//public Vector<Offer> offers;
 
 	/*public RuralHouse() {
 		super();
@@ -65,6 +67,21 @@ public class RuralHouse implements Serializable {
 	
 	public String toString() {return this.houseNumber + ": " + this.city;}
 	
+	public Vector<Fechas> getFechas(){return fechas;}
+	public boolean añadirFecha(int numeroReserva, Date date, int precio){
+		Fechas fecha = new Fechas(numeroReserva, date, this, precio);
+		Iterator<Fechas> i = fechas.iterator();
+		while (i.hasNext()){
+			Fechas aux = i.next();
+			if (aux.getFecha().compareTo(date)==0){
+				if (aux.isReservado()) return false;
+				aux.cambiarPrecio(precio);
+				return true;
+			}
+		}
+		fechas.add(fecha);
+		return true;
+	}
 	/**
 	 * This method creates an offer with a house number, first day, last day and price
 	 * 

@@ -4,13 +4,15 @@ import java.util.Date;
 
 public class Fechas {
 
+	private int numero;
 	private Date fecha;
 	private RuralHouse casaRural;
 	private int precio;
 	private boolean reservado;
 	private UserAplication reservante;
 	
-	public Fechas (Date date, RuralHouse RuralHouse, int cost){
+	public Fechas (int numeroReserva, Date date, RuralHouse RuralHouse, int cost){
+		numero = numeroReserva;
 		fecha = date;
 		casaRural = RuralHouse;
 		precio = cost;
@@ -18,7 +20,8 @@ public class Fechas {
 		reservante = null;
 	}
 	
-	public Fechas (Date date, RuralHouse RuralHouse, int cost, boolean estado, UserAplication cliente){
+	public Fechas (int numeroReserva, Date date, RuralHouse RuralHouse, int cost, boolean estado, UserAplication cliente){
+		numero = numeroReserva;
 		fecha = date;
 		casaRural = RuralHouse;
 		precio = cost;
@@ -55,4 +58,7 @@ public class Fechas {
 		return reservante;
 	}
 	
+	public int getNumeroReserva(){
+		return numero;
+	}
 }
