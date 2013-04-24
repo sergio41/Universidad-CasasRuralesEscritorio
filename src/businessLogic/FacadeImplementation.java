@@ -123,7 +123,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}*/
 	
 	public void eliminarCasaRural(int numero) throws Exception {
-		DB4oManager.eliminarCasaRural(usuario, numero);
+		usuario = DB4oManager.eliminarCasaRural(usuario, numero);
 	}
 	
 	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {
