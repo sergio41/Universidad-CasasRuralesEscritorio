@@ -9,8 +9,6 @@ import java.sql.SQLException;
 
 import java.util.Vector;
 
-import com.db4o.ObjectContainer;
-import com.db4o.ObjectSet;
 
 
 import configuration.Config;
@@ -287,6 +285,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			Date lastDay) throws RemoteException, Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception{
+		return DB4oManager.casasRuralesDisponibles(inicio, fin);
 	}
 }
 
