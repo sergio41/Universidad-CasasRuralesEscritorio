@@ -147,14 +147,14 @@ public class CreateOfferGUI extends JPanel {
 				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
 				java.util.Iterator<RuralHouse> i;
 				try {
-					i = facade.getOwner().getRuralHouses().iterator();
+					/*i = facade.getOwner().getRuralHouses().iterator();
 					RuralHouse ruralHouse = null;
 					while (i.hasNext()){
 						ruralHouse = i.next();
 						if (ruralHouse.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
 							break;
 						}
-					}
+					}*/
 				  	/*//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
 				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
 				    //Remove the hour:minute:second:ms from the date 
