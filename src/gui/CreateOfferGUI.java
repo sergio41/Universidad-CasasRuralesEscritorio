@@ -7,21 +7,21 @@ import javax.swing.JPanel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextPane;
+//import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.Font;
-import javax.swing.SwingConstants;
+//import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JComboBox;
-import javax.swing.border.LineBorder;
+//import javax.swing.border.LineBorder;
 
 import viejoGUI.StartWindow;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
-import com.toedter.calendar.JCalendar;
+//import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import domain.RuralHouse;
@@ -32,9 +32,9 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 //import java.sql.Date;
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+//import java.text.DateFormat;
+//import java.util.Calendar;
+//import java.util.Locale;
 import java.util.Date;
 
 
@@ -44,17 +44,17 @@ public class CreateOfferGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
-	private JComboBox comBoxCasas;
+	private JComboBox<String> comBoxCasas;
 	//private JCalendar calendarFirstday = new JCalendar();
 	private JDateChooser calendarFirstday;
-	private Calendar calendar1 = null;
-	private JCalendar jCalendar1 = new JCalendar();
+	//private Calendar calendar1 = null;
+	//private JCalendar jCalendar1 = new JCalendar();
 	//private JCalendar calendarLastday = new JCalendar();
 	private JDateChooser calendarLastday;
 
-	private Calendar calendar2 = null;
+	//private Calendar calendar2 = null;
 	private JButton bttnSalvar;
-	private JCalendar jCalendar2 = new JCalendar();
+	//private JCalendar jCalendar2 = new JCalendar();
 	private JTextField textPrecio;
 
 	public CreateOfferGUI(){
@@ -65,7 +65,7 @@ public class CreateOfferGUI extends JPanel {
 		ruralhouselbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		add(ruralhouselbl);
 		
-		comBoxCasas = new JComboBox();
+		comBoxCasas = new JComboBox<String>();
 		comBoxCasas.setBounds(478, 35, 149, 22);
 		comBoxCasas.setModel(modeloEC);
 		comBoxCasas.addActionListener(new ActionListener() {
@@ -112,11 +112,11 @@ public class CreateOfferGUI extends JPanel {
 		calendarLastday.setMinSelectableDate(fechaManana);
 		calendarLastday.setDate(fechaManana);
 		calendarLastday.setDateFormatString("yyyy-MM-dd");
-		calendarLastday.setBounds(200, 105, 268, 20);
+		calendarLastday.setBounds(200, 287, 268, 20);
 		add(calendarLastday);
 	
 		calendarFirstday = new JDateChooser();
-		calendarFirstday.setBounds(200, 287, 268, 22);
+		calendarFirstday.setBounds(200, 105, 268, 22);
 		calendarFirstday.setDate(fechaHoy);
 		calendarFirstday.setDateFormatString("yyyy-MM-dd");
 		calendarFirstday.setMinSelectableDate(fechaHoy);
@@ -134,8 +134,8 @@ public class CreateOfferGUI extends JPanel {
 					long time = calendarFirstday.getDate().getTime() + 1*(3600*24*1000);
 					Date fechaSiguiente = new Date();
 					fechaSiguiente.setTime(time);
-					calendarFirstday.setMinSelectableDate(fechaSiguiente);
-					calendarFirstday.setDate(fechaSiguiente);
+					calendarLastday.setMinSelectableDate(fechaSiguiente);
+					calendarLastday.setDate(fechaSiguiente);
 	            }
 	        }
 	    });
