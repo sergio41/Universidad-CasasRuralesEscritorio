@@ -72,6 +72,8 @@ public class Offer implements Serializable {
 	}
 	
 	public boolean contiene(Date fecha){
-		return true;
+		Iterator<Fechas> i = vectorFechas.iterator();
+		while (i.hasNext()) if (i.next().getFecha().compareTo(fecha) == 0) return true;
+		return false;
 	}
 }

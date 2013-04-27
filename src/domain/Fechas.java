@@ -51,7 +51,7 @@ public class Fechas {
 	
 	public Offer getOfer(){return offer;}
 	public void setOferta(Offer oferta, boolean unidoAOferta){offer=oferta;unidoOferta=unidoAOferta;}
-	public boolean getUnidoOferta(){return unidoOferta;}
+	public boolean isUnidoOferta(){return unidoOferta;}
 	
 	public void cancelarReserva(){reservado=false;reserva=null;}
 	
