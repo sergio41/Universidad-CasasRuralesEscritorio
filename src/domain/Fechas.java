@@ -4,62 +4,59 @@ import java.util.Date;
 
 public class Fechas {
 
-	private int numero;
 	private Date fecha;
-	private RuralHouse casaRural;
-	private int precio;
+	private float precio;
 	private boolean reservado;
-	private UserAplication reservante;
+	private RuralHouse casaRural;
+	private int minDias;
+	private Book reserva;
+	private Offer offer;
+	private Boolean unidoOferta;
 	
-	public Fechas ( Date date, RuralHouse RuralHouse, int cost){
-		numero = 0;
+	public Fechas (Date date, float cost, RuralHouse ruralHouse, int minimoDias){
 		fecha = date;
-		casaRural = RuralHouse;
 		precio = cost;
 		reservado = false;
-		reservante = null;
+		casaRural = ruralHouse;
+		minDias = minimoDias;
+		reserva = null;
+		offer = null;
+		unidoOferta = false;
 	}
 	
-	public Fechas ( Date date, RuralHouse RuralHouse, int cost, boolean estado, UserAplication cliente){
-		numero = 0;
+	public Fechas ( Date date, float cost, boolean estado, RuralHouse ruralHouse,  int minimoDias){
 		fecha = date;
-		casaRural = RuralHouse;
 		precio = cost;
+		reservado = estado;
+		casaRural = ruralHouse;
+		minDias = minimoDias;
+		reserva = null;
+		offer = null;
+		unidoOferta = false;
+	}
+	
+	public Date getFecha() {return fecha;}
+	
+	public float getPrecio() {return precio;}
+	public void setPrecio(float cost){precio = cost;}
+	
+	public boolean isReservado() {return reservado;}
+	
+	public RuralHouse getCasaRural() {return casaRural;}
+	
+	public int getMinimoDias(){return minDias;}
+	public void setMinimodias(int minimoDias){minDias=minimoDias;}
+	
+	public Book getReserva(){return reserva;}
+	
+	public Offer getOfer(){return offer;}
+	public void setOferta(Offer oferta, boolean unidoAOferta){offer=oferta;unidoOferta=unidoAOferta;}
+	public boolean getUnidoOferta(){return unidoOferta;}
+	
+	public void cancelarReserva(){reservado=false;reserva=null;}
+	
+	protected void hacerReserva(Book reservaBook){
+		reserva = reservaBook;
 		reservado = true;
-		reservante = cliente;
-	}
-	
-	public void hacerReserva(UserAplication cliente, int numeroDeReserva){
-		reservado = true;
-		reservante = cliente;
-		numero = numeroDeReserva;
-	}
-	
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public RuralHouse getCasaRural() {
-		return casaRural;
-	}
-
-	public int getPrecio() {
-		return precio;
-	}
-
-	public void cambiarPrecio(int cost){
-		precio = cost;
-	}
-
-	public boolean isReservado() {
-		return reservado;
-	}
-
-	public UserAplication getCliente() {
-		return reservante;
-	}
-	
-	public int getNumeroReserva(){
-		return numero;
 	}
 }
