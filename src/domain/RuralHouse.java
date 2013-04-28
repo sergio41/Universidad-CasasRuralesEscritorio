@@ -5,10 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.xml.crypto.Data;
-
-import com.db4o.typehandlers.VectorTypeHandler;
-
 public class RuralHouse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -72,17 +68,22 @@ public class RuralHouse implements Serializable {
 	public Vector<Book> getReservas(){return vectorReservas;}
 	
 	public Vector<Offer> getOfertas(){ return vectorOfertas;}
-	public void añadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
+	@SuppressWarnings("deprecation")
+	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Date aux = primerDia;
 		Date auxFin = ultimoDia;
-		aux.setTime(auxFin.getTime()+1*24*60*60*1000);
-		while (aux.compareTo(auxFin) !=0 ){
+		auxFin.setTime(auxFin.getTime()+1*24*60*60*1000);
+		while (aux.getDay() != auxFin.getDay() || aux.getMonth() != auxFin.getMonth() || aux.getYear() != auxFin.getYear() ){
+			System.out.println("Inicio2: " + primerDia.toString());
+			System.out.println("Fin: " + ultimoDia.toString());
+			System.out.println("AuxInicio: " + aux.toString());
+			System.out.println("AuxFin: " + auxFin.toString());
 			Fechas auxFecha = null;
 			Iterator<Fechas> i = vectorFechas.iterator();
 			while (i.hasNext()){
-				auxFecha = i.next(); 
-				if (auxFecha.getFecha().compareTo(aux) == 0) break; 
+				auxFecha = i.next();
+				if (auxFecha.getFecha().compareTo(aux) == 0) break;
 			}
 			if (auxFecha == null || auxFecha.getFecha().compareTo(aux) != 0){
 				auxFecha = new Fechas(aux, 0, this, 0);
@@ -162,25 +163,33 @@ public class RuralHouse implements Serializable {
 		return aux;
 	}
 	
-	public boolean hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
+	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
+		System.out.println("A");
 		Offer auxOferta = disponibleFechaOferta(inicio, fin);
+		Book reserva = null;
+		System.out.println("B");
 		if (disponibleFechas(inicio, fin) || auxOferta != null){
+			System.out.println("C");
 			Vector<Fechas> auxFechas = getFechas(inicio, fin);
+			System.out.println("D");
 			if (auxOferta != null && auxFechas != null){
-				vectorReservas.add(new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas));
-				return true;
+				System.out.println("E");
+				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
+				
+				vectorReservas.add(reserva);
+				System.out.println("F");
 			} else if (auxOferta == null && auxFechas != null){
 				float precio = 0;
 				Iterator<Fechas> i = auxFechas.iterator();
+				System.out.println("G");
 				while (i.hasNext()) precio = precio + i.next().getPrecio();
-				vectorReservas.add(new Book(numeroDeReserva, precio, cliente, auxFechas));
+				System.out.println("H");
+				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
+				vectorReservas.add(reserva);
 				eliminarOfertaQueContenga(vectorFechas);
-				return true;
-			} else {
-				return false;
 			}
 		} 
-		return false;		
+		return reserva;		
 	}
 	
 	private void eliminarOfertaQueContenga(Vector<Fechas> vectorFe){

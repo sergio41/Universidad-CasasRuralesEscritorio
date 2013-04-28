@@ -196,7 +196,7 @@ public class DB4oManager {
 	
 	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin){
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
-		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, null, 0, false, null));	
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, 0, false, null, 0));	
 		while (fechasConcretas.hasNext()){
 			RuralHouse rh = fechasConcretas.next().getCasaRural();
 			if (rh.disponibleFechas(inicio, fin)) result.add(rh);
@@ -206,7 +206,7 @@ public class DB4oManager {
 	
 	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad){
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
-		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, null, 0, false, null));	
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, 0, false, null, 0));	
 		while (fechasConcretas.hasNext()){
 			RuralHouse rh = fechasConcretas.next().getCasaRural();
 			if (rh.getCity().equalsIgnoreCase(Ciudad) && rh.disponibleFechas(inicio, fin)) result.add(rh);
@@ -231,39 +231,24 @@ public class DB4oManager {
 		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
 	}
 	
-	
-	/*public static Offer crearOferta(RuralHouse ruralHouse, Offer of) throws Exception {	
-		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(ruralHouse);
-		if (RHConcreto.hasNext()){
-			RuralHouse casa= RHConcreto.next();
-			casa.addOffer(of);
-			db.store(casa);
-			db.commit();
-			return of;
-		}
-		else throw new Exception("Error al guardar la oferta.");
-		}
-	
-public Book createBook(RuralHouse ruralHouse, Date firstDate, Date lastDate, String bookTelephoneNumber) throws OfferCanNotBeBooked {
-		try{
-			RuralHouse proto = new RuralHouse(ruralHouse.getHouseNumber(),null,ruralHouse.getDescription(),ruralHouse.getCity(), ruralHouse.getRooms(), ruralHouse.getKitchen(), ruralHouse.getBaths(), ruralHouse.getLiving(), ruralHouse.getPark());
-			ObjectSet<RuralHouse> result = db.queryByExample(proto);
-			RuralHouse rh = result.next();
-			Book b = null;
-			Offer offer;
-			offer = rh.findOffer(firstDate, lastDate);
-			if (offer!=null) {
-				 b=new Book(bookTelephoneNumber,offer);
-				offer.setBook(b);
-				db.store(b);
-				db.store(offer);
+	public static UserAplication anadirOferta(UserAplication user, int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception{
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			System.out.println("numero: " + numero);
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0));	
+			if (rHConcretos.hasNext() ){
+				RuralHouse rHConcreto = rHConcretos.next();
+				System.out.println("Inicio: " + inicio.toString());
+				System.out.println("Fin: " + fin.toString());
+				rHConcreto.anadirOferta(inicio, fin, precio, obligatorio);
+				db.store(rHConcreto);
+				db.store(userConcreto);
 				db.commit();
+				return getUser(user.getEmail());
 			}
-			return b;
-		} catch (Exception exc) {
-			exc.printStackTrace();
-			return null;
 		}
-	}*/
+		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
+	}
 }
 	

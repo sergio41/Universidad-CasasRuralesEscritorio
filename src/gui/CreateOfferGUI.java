@@ -1,60 +1,34 @@
 package gui;
 
-
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-//import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
 import java.awt.Font;
-//import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JComboBox;
-//import javax.swing.border.LineBorder;
-
-import viejoGUI.StartWindow;
-
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
-//import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-
 import domain.RuralHouse;
 import businessLogic.ApplicationFacadeInterface;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-//import java.sql.Date;
-//import java.text.DateFormat;
-//import java.util.Calendar;
-//import java.util.Locale;
 import java.util.Date;
-
-
-
 
 public class CreateOfferGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
-	private JComboBox<String> comBoxCasas;
-	//private JCalendar calendarFirstday = new JCalendar();
+	private DefaultComboBoxModel<Integer> modeloEC = new DefaultComboBoxModel<Integer>();
+	private JComboBox<Integer> comBoxCasas;
 	private JDateChooser calendarFirstday;
-	//private Calendar calendar1 = null;
-	//private JCalendar jCalendar1 = new JCalendar();
-	//private JCalendar calendarLastday = new JCalendar();
 	private JDateChooser calendarLastday;
-
-	//private Calendar calendar2 = null;
 	private JButton bttnSalvar;
-	//private JCalendar jCalendar2 = new JCalendar();
 	private JTextField textPrecio;
 
 	public CreateOfferGUI(){
@@ -65,7 +39,7 @@ public class CreateOfferGUI extends JPanel {
 		ruralhouselbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		add(ruralhouselbl);
 		
-		comBoxCasas = new JComboBox<String>();
+		comBoxCasas = new JComboBox<Integer>();
 		comBoxCasas.setBounds(478, 35, 149, 22);
 		comBoxCasas.setModel(modeloEC);
 		comBoxCasas.addActionListener(new ActionListener() {
@@ -77,31 +51,6 @@ public class CreateOfferGUI extends JPanel {
 		});
 		add(comBoxCasas);
 		
-		/*calendarLastday.getDayChooser().setBorder(new LineBorder(new Color(0, 0, 0), 0));
-		calendarLastday.getDayChooser().setBackground(Color.CYAN);
-		calendarLastday.setBackground(new Color(178, 238, 238));
-		calendarLastday.setBounds(359, 283, 268, 138);
-		add(calendarLastday);
-
-		calendarLastday.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent propertychangeevent) {
-				if (propertychangeevent.getPropertyName().equals("locale")) {
-					calendarLastday.setLocale((Locale) propertychangeevent
-							.getNewValue());
-					DateFormat dateformat = DateFormat.getDateInstance(1,
-							calendarLastday.getLocale());
-					textLastday.setText(dateformat.format(calendar2.getTime()));
-				} else if (propertychangeevent.getPropertyName().equals(
-						"calendar")) {
-					calendar2 = (Calendar) propertychangeevent.getNewValue();
-					DateFormat dateformat1 = DateFormat.getDateInstance(1,
-							calendarLastday.getLocale());
-					textLastday.setText(dateformat1.format(calendar2
-							.getTime()));
-					calendarLastday.setCalendar(calendar2);
-				}
-			}
-		});*/
 		
 		Date fechaHoy = new Date();
 		long time = fechaHoy.getTime() + 1*(3600*24*1000);
@@ -113,6 +62,14 @@ public class CreateOfferGUI extends JPanel {
 		calendarLastday.setDate(fechaManana);
 		calendarLastday.setDateFormatString("yyyy-MM-dd");
 		calendarLastday.setBounds(200, 287, 268, 20);
+		calendarLastday.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+		    @Override
+	        public void propertyChange(PropertyChangeEvent e) {
+	            if ("date".equals(e.getPropertyName())) {
+	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
+	            }
+	        }
+	    });
 		add(calendarLastday);
 	
 		calendarFirstday = new JDateChooser();
@@ -134,6 +91,7 @@ public class CreateOfferGUI extends JPanel {
 					long time = calendarFirstday.getDate().getTime() + 1*(3600*24*1000);
 					Date fechaSiguiente = new Date();
 					fechaSiguiente.setTime(time);
+					System.out.println(fechaSiguiente.getDate());
 					calendarLastday.setMinSelectableDate(fechaSiguiente);
 					calendarLastday.setDate(fechaSiguiente);
 	            }
@@ -144,30 +102,11 @@ public class CreateOfferGUI extends JPanel {
 		bttnSalvar = new JButton("Salvar");
 		bttnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ApplicationFacadeInterface facade = StartWindow.getBusinessLogic();
-				java.util.Iterator<RuralHouse> i;
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					/*i = facade.getOwner().getRuralHouses().iterator();
-					RuralHouse ruralHouse = null;
-					while (i.hasNext()){
-						ruralHouse = i.next();
-						if (ruralHouse.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
-							break;
-						}
-					}*/
-				  	/*//RuralHouse ruralHouse=((RuralHouse)comBoxCasas.getSelectedItem());
-				  	Date firstDay=new Date(jCalendar1.getCalendar().getTime().getTime());
-				    //Remove the hour:minute:second:ms from the date 
-				  	firstDay=Date.valueOf(firstDay.toString());
-				  	Date lastDay=new Date(jCalendar2.getCalendar().getTime().getTime());
-				    //Remove the hour:minute:second:ms from the date 
-				  	lastDay=Date.valueOf(lastDay.toString());
-				  	//It could be to trigger an exception if the introduced string is not a number
-				  	float price= Float.parseFloat(textPrecio.getText());
-
-			  	    //Obtain the business logic from a StartWindow class (local or remote)					
-			  		facade.createOffer(ruralHouse, firstDay, lastDay, price); 	  		
-					setVisible(false);*/
+					System.out.println(calendarFirstday.getDate());
+					System.out.println(calendarLastday.getDate());
+					facade.anadirOferta(1, calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
 				} catch (Exception e1) {
@@ -215,20 +154,16 @@ public class CreateOfferGUI extends JPanel {
 	}
 
 	private void inicializarCampos() {
-		modeloEC.addElement("Nueva Casa Rural");
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
 			i = facade.getOwner().getRuralHouses().iterator();
-			while (i.hasNext()){
-				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
-			}
+			while (i.hasNext())	modeloEC.addElement(i.next().getHouseNumber());
 			enaDis(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 	
 	private void enaDis(boolean b){
 		textPrecio.setEnabled(b);
