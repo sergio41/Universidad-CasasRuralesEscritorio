@@ -23,7 +23,6 @@ public class BusquedaGUI extends JPanel {
 	private JTextField textCity;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JButton btnSalvar;
-	private JButton btnEliminar;
 
 	public BusquedaGUI() {
 		setLayout(null);
@@ -129,14 +128,14 @@ public class BusquedaGUI extends JPanel {
 		inicializarCampos();
 	}
 	private void enaDis(boolean b){
-		btnSalvar.setEnabled(b);
+		/*btnSalvar.setEnabled(b);
 		btnEliminar.setEnabled(b);
 		textCity.setEnabled(b);
-		textCity.setText("");
+		textCity.setText("");*/
 	}
 
 	private void inicializarCampos() {
-		modeloEC.addElement("Nueva Casa Rural");
+		/*modeloEC.addElement("Nueva Casa Rural");
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
@@ -147,7 +146,7 @@ public class BusquedaGUI extends JPanel {
 			enaDis(false);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 

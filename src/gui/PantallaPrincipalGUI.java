@@ -48,6 +48,12 @@ public class PantallaPrincipalGUI extends JPanel {
 		add(btnBuscar);
 		
 		JButton btnBusquedaAvanzada = new JButton("Busqueda avanzada");
+		btnBusquedaAvanzada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel panel = new BusquedaGUI();
+				Start.modificarPanelAbajo(panel);
+			}
+		});
 		btnBusquedaAvanzada.setBounds(20, 223, 223, 28);
 		add(btnBusquedaAvanzada);
 		
