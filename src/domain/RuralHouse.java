@@ -1,9 +1,12 @@
 package domain;
 
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
 
 public class RuralHouse implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,8 +23,10 @@ public class RuralHouse implements Serializable {
 	private Vector<Fechas> vectorFechas;
 	private Vector<Offer> vectorOfertas;
 	private Vector<Book> vectorReservas;
-
-	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento) {
+	private Vector<Image> vectorImage;
+	private int MaxImages = 10;
+	
+	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<Image> images) {
 		houseNumber = hNumber;
 		description = descripcion;
 		user = usuario;
@@ -34,6 +39,7 @@ public class RuralHouse implements Serializable {
 		vectorFechas = new Vector<Fechas>();
 		vectorOfertas = new Vector<Offer>();
 		vectorReservas = new Vector<Book>();
+		vectorImage = images;
 	}
 
 	public int getHouseNumber() {return houseNumber;}
@@ -111,6 +117,19 @@ public class RuralHouse implements Serializable {
 		vectorFechas.add(fecha);
 		return true;
 	}
+	
+	public Vector<Image> getImages(){
+		return vectorImage;
+	}
+	
+	public void añadirImagen(Image image) throws Exception {
+		if(vectorImage.size()<MaxImages){
+			vectorImage.add(image);
+		}
+		else throw new Exception("No se pueden añadir más imagenes");
+	}
+	
+	
 	
 	private boolean disponibleFecha(Date date){
 		Iterator<Fechas> i = vectorFechas.iterator();

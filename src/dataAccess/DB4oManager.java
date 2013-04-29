@@ -1,9 +1,12 @@
 package dataAccess;
 
+import java.awt.Image;
 import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
 
 
 import com.db4o.*;
@@ -67,7 +70,7 @@ public class DB4oManager {
 	}	
 	
 	public static RuralHouse getRuralHouse(int houseNumber) throws Exception{
-		RuralHouse rh = new RuralHouse(houseNumber, null,null,null,0,0,0,0,0);
+		RuralHouse rh = new RuralHouse(houseNumber, null,null,null,0,0,0,0,0,null);
 		ObjectSet<RuralHouse> ruralHouseConcretos = db.queryByExample(rh);
 		if (ruralHouseConcretos.hasNext()) return ruralHouseConcretos.next();
 		else throw new Exception("La casa rural no existe.");
@@ -75,7 +78,7 @@ public class DB4oManager {
 	
 	public static Vector<RuralHouse> getCasasRuralesTodas(){
 		Vector<RuralHouse> vector = new Vector<RuralHouse>();
-		RuralHouse rh = new RuralHouse(0, null,null,null,0,0,0,0,0);
+		RuralHouse rh = new RuralHouse(0, null,null,null,0,0,0,0,0, null);
 		ObjectSet<RuralHouse> ruralHouseConcretos = db.queryByExample(rh);
 		while (ruralHouseConcretos.hasNext())vector.add(ruralHouseConcretos.next());
 		return vector;
@@ -92,7 +95,7 @@ public class DB4oManager {
 	}
 	
 	public static UserAplication modificarRuralHouse(String email, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {
-		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0));
+		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));
 		if (RHConcreto.hasNext()){
 			RuralHouse casa = RHConcreto.next();
 			casa.setBaths(nBaths);
@@ -165,11 +168,11 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
-	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception{
+	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
-			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark));
+			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images));
 			db.store(userConcreto);
 			db.commit();
 			return getUser(user.getEmail());
@@ -218,7 +221,7 @@ public class DB4oManager {
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
-			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0));	
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext()){
 				RuralHouse rHConcreto = rHConcretos.next();
 				rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
@@ -236,7 +239,7 @@ public class DB4oManager {
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			System.out.println("numero: " + numero);
-			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0));	
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext() ){
 				RuralHouse rHConcreto = rHConcretos.next();
 				System.out.println("Inicio: " + inicio.toString());

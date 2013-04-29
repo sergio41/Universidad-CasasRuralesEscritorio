@@ -1,5 +1,6 @@
 package businessLogic;
 
+import java.awt.Image;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
@@ -7,6 +8,9 @@ import java.util.Date;
 import java.util.Iterator;
 import java.sql.SQLException;
 import java.util.Vector;
+
+import javax.swing.ImageIcon;
+
 import configuration.Config;
 import dataAccess.DB4oManager;
 import domain.Owner;
@@ -34,13 +38,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		usuario = DB4oManager.eliminarCasaRural(usuario, numero);
 	}
 	
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception{
 	if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 	else {			
 			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
 			if (nKitchen<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
 			if (nBaths<2) throw new Exception("La casa debe tener mínimo 2 baños.");
-			DB4oManager.anadirRuralHouse(usuario, getNumeroCR(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+			DB4oManager.anadirRuralHouse(usuario, getNumeroCR(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 		}
 	}
 	

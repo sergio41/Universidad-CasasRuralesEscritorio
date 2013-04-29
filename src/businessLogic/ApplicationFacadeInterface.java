@@ -1,8 +1,12 @@
 package businessLogic;
 
+import java.awt.Image;
 import java.rmi.*;
 import java.util.Vector;
 import java.util.Date;
+
+import javax.swing.ImageIcon;
+
 import domain.Owner;
 import domain.RuralHouse;
 import domain.UserAplication;
@@ -13,7 +17,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public void close() throws RemoteException;
 
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception;
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception;
 	
 	public void modificarRuralHouse( int numero,
 			String description, String city, int nRooms, int nKitchen,

@@ -5,20 +5,26 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import domain.RuralHouse;
 import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.Vector;
 
 
 public class GestionCasaRuralGUI extends JPanel {
@@ -37,7 +43,14 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JButton btnSalvar;
 	private JButton btnEliminar;
 	private JTextPane textPaneDescription;
-
+	private JLabel image1label;
+	private JLabel labelflechaDer;
+	private JLabel labelflechaIzq;
+	private JButton btnEliminarimg;
+	private JComboBox comboBox;
+	private JButton btnanadirImg;
+	private Vector<Image> images;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -168,9 +181,10 @@ public class GestionCasaRuralGUI extends JPanel {
 					int nBaths = Integer.parseInt(textBath.getText());
 					int nLiving = Integer.parseInt(textLiving.getText());
 					int nPark = Integer.parseInt(textPark.getText());
+					
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
 						facade.modificarRuralHouse((Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					}
@@ -184,14 +198,14 @@ public class GestionCasaRuralGUI extends JPanel {
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.PLAIN, 21));
 		btnSalvar.setEnabled(false);
-		btnSalvar.setBounds(447, 388, 124, 45);
+		btnSalvar.setBounds(863, 385, 124, 45);
 		add(btnSalvar);
 		
 		JLabel label_4 = new JLabel("Los campos marcados con * son obligatorios");
 		label_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_4.setForeground(Color.RED);
 		label_4.setFont(new Font("Dialog", Font.PLAIN, 18));
-		label_4.setBounds(57, 393, 366, 34);
+		label_4.setBounds(473, 390, 366, 34);
 		add(label_4);
 		
 		comBoxCasas = new JComboBox<String>();
@@ -232,6 +246,43 @@ public class GestionCasaRuralGUI extends JPanel {
 		comBoxCasas.setModel(modeloEC);
 		comBoxCasas.setBounds(31, 25, 377, 33);
 		add(comBoxCasas);
+
+		image1label = new JLabel("");
+		image1label.setBounds(674, 95, 250, 250);
+		ImageIcon imagen = new ImageIcon("C:\\Users\\Public\\Pictures\\avatar-22648.jpg");
+        Image aux = imagen.getImage();
+        Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+        image1label.setIcon(new ImageIcon(aux1));
+		add(image1label);
+		
+		btnanadirImg = new JButton("A\u00F1adir");
+		btnanadirImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				buscarImagen();
+				
+		        
+			}
+		});
+		btnanadirImg.setBounds(674, 59, 76, 23);
+		add(btnanadirImg);
+		
+		comboBox = new JComboBox();
+		comboBox.setBounds(761, 59, 77, 23);
+		add(comboBox);
+		
+		btnEliminarimg = new JButton("Eliminar");
+		btnEliminarimg.setBounds(848, 59, 76, 23);
+		add(btnEliminarimg);
+		
+		labelflechaIzq = new JLabel("");
+		labelflechaIzq.setBounds(606, 196, 50, 50);
+		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flecha.png")));
+		add(labelflechaIzq);
+		
+		labelflechaDer = new JLabel("");
+		labelflechaDer.setBounds(941, 196, 50, 50);
+		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flecha.png")));
+		add(labelflechaDer);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -252,6 +303,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		textPaneDescription.setEditable(b);
 		textPark.setEnabled(b);
 		textRooms.setEnabled(b);
+		comboBox.setEnabled(b);
+		btnanadirImg.setEnabled(b);
+		btnEliminarimg.setEnabled(b);
 		textPaneDescription.setText("");
 		textCity.setText("");
 		textRooms.setText("");
@@ -285,4 +339,26 @@ public class GestionCasaRuralGUI extends JPanel {
 	public void setModeloEC(DefaultComboBoxModel<String> modeloEC) {
 		this.modeloEC = modeloEC;
 	}
-}
+	
+	public void buscarImagen(){
+		
+		
+		JFileChooser fc = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "bmp", "gif", "jpg", "png");
+		fc.setFileFilter(filter);
+		//fc.setCurrentDirectory();
+
+        int respuesta = fc.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION)
+        {
+            File archivoElegido = fc.getSelectedFile();
+            ImageIcon imagen = new ImageIcon(archivoElegido.getPath());
+            Image aux = imagen.getImage();
+            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+            images.add(aux);
+            
+            image1label.setIcon(new ImageIcon(aux1));
+        }
+	}
+}	
