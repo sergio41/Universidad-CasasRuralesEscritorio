@@ -172,7 +172,7 @@ public class GestionCasaRuralGUI extends JPanel {
 					if (comBoxCasas.getSelectedIndex() == 0){
 						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						facade.modificarRuralHouse((int) comBoxCasas.getSelectedItem(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						facade.modificarRuralHouse((Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
 					}
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
