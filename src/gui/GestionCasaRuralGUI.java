@@ -276,12 +276,12 @@ public class GestionCasaRuralGUI extends JPanel {
 		
 		labelflechaIzq = new JLabel("");
 		labelflechaIzq.setBounds(606, 196, 50, 50);
-		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flecha.png")));
+		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaIzq.png")));
 		add(labelflechaIzq);
 		
 		labelflechaDer = new JLabel("");
 		labelflechaDer.setBounds(941, 196, 50, 50);
-		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flecha.png")));
+		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaDer.png")));
 		add(labelflechaDer);
 		
 		JLabel lblNewLabel = new JLabel("");
