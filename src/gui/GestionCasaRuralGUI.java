@@ -23,6 +23,8 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Vector;
 
@@ -49,7 +51,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JButton btnEliminarimg;
 	private JComboBox comboBox;
 	private JButton btnanadirImg;
-	private Vector<Image> images;
+	private Vector<Image> images=new Vector<Image>();
 	
 	/**
 	 * Create the panel.
@@ -182,6 +184,7 @@ public class GestionCasaRuralGUI extends JPanel {
 					int nLiving = Integer.parseInt(textLiving.getText());
 					int nPark = Integer.parseInt(textPark.getText());
 					
+					
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
 						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
@@ -255,7 +258,7 @@ public class GestionCasaRuralGUI extends JPanel {
         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));
 		add(image1label);
-		
+
 		btnanadirImg = new JButton("A\u00F1adir");
 		btnanadirImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -279,11 +282,54 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaIzq.setBounds(606, 196, 50, 50);
 		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaIzq.png")));
 		add(labelflechaIzq);
+		/*labelflechaIzq.addMouseListener(new MouseAdapter() {
+			int i=0;
+			RuralHouse rh;
+			Vector<Image> image1 = rh.getImages();
+			public void mouseClicked(MouseEvent arg0) {
+				if (i==0) {
+					 Image aux = image1.lastElement();
+			         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+			         image1label.setIcon(new ImageIcon(aux1));
+			         image1label.repaint();
+					
+				}
+				else {
+					Image aux = image1.get(i);
+					i--;
+					Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+			        image1label.setIcon(new ImageIcon(aux1));
+			        image1label.repaint();
+				}
+			}
+		});*/
 		
 		labelflechaDer = new JLabel("");
 		labelflechaDer.setBounds(941, 196, 50, 50);
 		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaDer.png")));
 		add(labelflechaDer);
+		/*labelflechaDer.addMouseListener(new MouseAdapter() {
+			int d=0;
+			RuralHouse rh;
+			Vector<Image> image1 = rh.getImages();
+			public void mouseClicked(MouseEvent arg0) {
+				int l = image1.size();
+				if (d==l) {
+					 Image aux = image1.firstElement();
+			         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+			         image1label.setIcon(new ImageIcon(aux1));
+			         image1label.repaint();
+					
+				}
+				else {
+					Image aux = image1.get(d);
+					d++;
+					Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+			        image1label.setIcon(new ImageIcon(aux1));
+			        image1label.repaint();
+				}
+			}
+		});*/
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -357,9 +403,11 @@ public class GestionCasaRuralGUI extends JPanel {
             ImageIcon imagen = new ImageIcon(archivoElegido.getPath());
             Image aux = imagen.getImage();
             Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-            images.add(aux);
-            
             image1label.setIcon(new ImageIcon(aux1));
+            image1label.repaint();
+            
+         
+            
         }
 	}
 }	
