@@ -43,5 +43,5 @@ public class Owner implements Serializable {
 	
 	public Vector<RuralHouse> getRuralHouses() {return ruralHouses;}
 	
-	public RuralHouse addRuralHouse(RuralHouse rh) {ruralHouses.add(rh);return rh;}
+	public void addRuralHouse(RuralHouse rh) {ruralHouses.add(rh);}
 }
