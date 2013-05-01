@@ -54,4 +54,5 @@ public interface ApplicationFacadeInterface extends Remote {
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad) throws Exception;
 	
 	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception;
+
 }

@@ -253,5 +253,6 @@ public class DB4oManager {
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 	}
+
 }
 	

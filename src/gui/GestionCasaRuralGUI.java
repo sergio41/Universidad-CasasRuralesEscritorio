@@ -249,7 +249,8 @@ public class GestionCasaRuralGUI extends JPanel {
 
 		image1label = new JLabel("");
 		image1label.setBounds(674, 95, 250, 250);
-		ImageIcon imagen = new ImageIcon("C:\\Users\\Public\\Pictures\\avatar-22648.jpg");
+		//ImageIcon imagen = new ImageIcon("C:\\Users\\Public\\Pictures\\avatar-22648.jpg");
+		ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/casaDefault.png"));
         Image aux = imagen.getImage();
         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));

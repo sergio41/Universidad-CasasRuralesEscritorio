@@ -223,4 +223,5 @@ public class RuralHouse implements Serializable {
 			if (aux.contiene(fecha)) vectorOfertas.remove(aux);
 		}
 	}
+
 }
