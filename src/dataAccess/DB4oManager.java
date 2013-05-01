@@ -94,7 +94,7 @@ public class DB4oManager {
 		return user;
 	}
 	
-	public static UserAplication modificarRuralHouse(String email, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark) throws Exception {
+	public static UserAplication modificarRuralHouse(String email, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception {
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));
 		if (RHConcreto.hasNext()){
 			RuralHouse casa = RHConcreto.next();
@@ -105,6 +105,7 @@ public class DB4oManager {
 			casa.setKitchen(nKitchen);
 			casa.setLiving(nLiving);
 			casa.setPark(nPark);
+			casa.setImages(images);
 			db.store(casa);
 			db.commit();
 			return getUser(email);

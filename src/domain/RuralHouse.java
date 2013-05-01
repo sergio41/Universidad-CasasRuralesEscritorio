@@ -24,7 +24,6 @@ public class RuralHouse implements Serializable {
 	private Vector<Offer> vectorOfertas;
 	private Vector<Book> vectorReservas;
 	private Vector<Image> vectorImage;
-	private int MaxImages = 10;
 	
 	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<Image> images) {
 		houseNumber = hNumber;
@@ -39,7 +38,9 @@ public class RuralHouse implements Serializable {
 		vectorFechas = new Vector<Fechas>();
 		vectorOfertas = new Vector<Offer>();
 		vectorReservas = new Vector<Book>();
+		System.out.print("estoy");
 		vectorImage = images;
+		System.out.print("estoy");
 	}
 
 	public int getHouseNumber() {return houseNumber;}
@@ -123,10 +124,7 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public void añadirImagen(Image image) throws Exception {
-		if(vectorImage.size()<MaxImages){
 			vectorImage.add(image);
-		}
-		else throw new Exception("No se pueden añadir más imagenes");
 	}
 	
 	
@@ -222,6 +220,10 @@ public class RuralHouse implements Serializable {
 			Offer aux = i.next();
 			if (aux.contiene(fecha)) vectorOfertas.remove(aux);
 		}
+	}
+
+	public void setImages(Vector<Image> images) {
+		vectorImage= images;
 	}
 
 }

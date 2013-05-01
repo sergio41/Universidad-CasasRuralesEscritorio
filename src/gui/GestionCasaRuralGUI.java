@@ -23,10 +23,10 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Vector;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class GestionCasaRuralGUI extends JPanel {
@@ -42,6 +42,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JTextField textPark;
 	private JComboBox<String> comBoxCasas;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private DefaultComboBoxModel<String> modeloImg = new DefaultComboBoxModel<String>();
 	private JButton btnSalvar;
 	private JButton btnEliminar;
 	private JTextPane textPaneDescription;
@@ -49,9 +50,10 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JLabel labelflechaDer;
 	private JLabel labelflechaIzq;
 	private JButton btnEliminarimg;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JButton btnanadirImg;
-	private Vector<Image> images=new Vector<Image>();
+	private static Vector<Image> images = new Vector<Image>();
+
 	
 	/**
 	 * Create the panel.
@@ -184,17 +186,16 @@ public class GestionCasaRuralGUI extends JPanel {
 					int nLiving = Integer.parseInt(textLiving.getText());
 					int nPark = Integer.parseInt(textPark.getText());
 					
-					
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
 						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						facade.modificarRuralHouse((Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
+						facade.modificarRuralHouse((Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					}
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
 				} catch (Exception e) {
-					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -234,6 +235,9 @@ public class GestionCasaRuralGUI extends JPanel {
 									textBath.setText(Integer.toString(rh.getBaths()));
 									textLiving.setText(Integer.toString(rh.getLiving()));
 									textPark.setText(Integer.toString(rh.getPark()));
+									images= rh.getImages();
+									rellenarImg();
+									image1label.setIcon(new ImageIcon(images.elementAt(0)));
 									break;
 								}
 							}
@@ -252,25 +256,35 @@ public class GestionCasaRuralGUI extends JPanel {
 
 		image1label = new JLabel("");
 		image1label.setBounds(674, 95, 250, 250);
-		//ImageIcon imagen = new ImageIcon("C:\\Users\\Public\\Pictures\\avatar-22648.jpg");
 		ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/casaDefault.png"));
         Image aux = imagen.getImage();
         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));
 		add(image1label);
-
+		
 		btnanadirImg = new JButton("A\u00F1adir");
 		btnanadirImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				buscarImagen();
-				
-		        
+				buscarImagen();	        
 			}
 		});
 		btnanadirImg.setBounds(674, 59, 76, 23);
 		add(btnanadirImg);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (comBoxCasas.getSelectedIndex() != -1){
+					if(images!=null && images.size()>0){
+						int x =  comboBox.getSelectedIndex();
+						image1label.setIcon(new ImageIcon(images.elementAt(x)));
+						btnEliminarimg.setEnabled(true);
+					}
+				}
+			}
+		});
+		comboBox.setSelectedIndex(-1);
+		comboBox.setModel(modeloImg);
 		comboBox.setBounds(761, 59, 77, 23);
 		add(comboBox);
 		
@@ -279,57 +293,32 @@ public class GestionCasaRuralGUI extends JPanel {
 		add(btnEliminarimg);
 		
 		labelflechaIzq = new JLabel("");
+		labelflechaIzq.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(comboBox.getSelectedIndex()>0 & images.size()>0){
+					comboBox.setSelectedIndex(comboBox.getSelectedIndex()-1);
+					image1label.setIcon(new ImageIcon(images.elementAt(comboBox.getSelectedIndex())));
+				}
+			}
+		});
 		labelflechaIzq.setBounds(606, 196, 50, 50);
 		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaIzq.png")));
 		add(labelflechaIzq);
-		/*labelflechaIzq.addMouseListener(new MouseAdapter() {
-			int i=0;
-			RuralHouse rh;
-			Vector<Image> image1 = rh.getImages();
-			public void mouseClicked(MouseEvent arg0) {
-				if (i==0) {
-					 Image aux = image1.lastElement();
-			         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-			         image1label.setIcon(new ImageIcon(aux1));
-			         image1label.repaint();
-					
-				}
-				else {
-					Image aux = image1.get(i);
-					i--;
-					Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-			        image1label.setIcon(new ImageIcon(aux1));
-			        image1label.repaint();
-				}
-			}
-		});*/
 		
 		labelflechaDer = new JLabel("");
+		labelflechaDer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if((comboBox.getSelectedIndex()<images.size()-1) & images.size()>0){
+					comboBox.setSelectedIndex(comboBox.getSelectedIndex()+1);
+					image1label.setIcon(new ImageIcon(images.elementAt(comboBox.getSelectedIndex())));
+				}
+			}
+		});
 		labelflechaDer.setBounds(941, 196, 50, 50);
 		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaDer.png")));
 		add(labelflechaDer);
-		/*labelflechaDer.addMouseListener(new MouseAdapter() {
-			int d=0;
-			RuralHouse rh;
-			Vector<Image> image1 = rh.getImages();
-			public void mouseClicked(MouseEvent arg0) {
-				int l = image1.size();
-				if (d==l) {
-					 Image aux = image1.firstElement();
-			         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-			         image1label.setIcon(new ImageIcon(aux1));
-			         image1label.repaint();
-					
-				}
-				else {
-					Image aux = image1.get(d);
-					d++;
-					Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-			        image1label.setIcon(new ImageIcon(aux1));
-			        image1label.repaint();
-				}
-			}
-		});*/
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -360,6 +349,8 @@ public class GestionCasaRuralGUI extends JPanel {
 		textBath.setText("");
 		textLiving.setText("");
 		textPark.setText("");
+		modeloImg.removeAllElements();
+		images.clear();
 	}
 
 	private void inicializarCampos() {
@@ -387,8 +378,14 @@ public class GestionCasaRuralGUI extends JPanel {
 		this.modeloEC = modeloEC;
 	}
 	
+	public void rellenarImg(){
+		if(images!=null){
+			int x = images.size();
+			for(int i=1; i<=x; i++)
+				modeloImg.addElement(Integer.toString(i));}
+	}
+	
 	public void buscarImagen(){
-		
 		
 		JFileChooser fc = new JFileChooser();
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "bmp", "gif", "jpg", "png");
@@ -398,16 +395,16 @@ public class GestionCasaRuralGUI extends JPanel {
         int respuesta = fc.showOpenDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION)
-        {
-            File archivoElegido = fc.getSelectedFile();
-            ImageIcon imagen = new ImageIcon(archivoElegido.getPath());
-            Image aux = imagen.getImage();
-            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-            image1label.setIcon(new ImageIcon(aux1));
-            image1label.repaint();
-            
-         
-            
+        { 
+           		File archivoElegido = fc.getSelectedFile();
+	            ImageIcon imagen = new ImageIcon(archivoElegido.getPath());
+	            Image aux = imagen.getImage();
+	            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+	            image1label.setIcon(new ImageIcon(aux1));
+	            System.out.println(images.size()+1);
+				images.add(images.size(), aux1);
+				modeloImg.addElement(Integer.toString(images.size()));
+				comboBox.setSelectedIndex(images.size()-1);
         }
-	}
-}	
+	}	
+}
