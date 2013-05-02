@@ -4,7 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 /*DEMO POR INFORUX*/
 public class PantallaCargando extends JWindow {
-  BorderLayout borderLayout1 = new BorderLayout();
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+BorderLayout borderLayout1 = new BorderLayout();
   JLabel imageLabel = new JLabel();
   JPanel southPanel = new JPanel();
   FlowLayout southPanelFlowLayout = new FlowLayout();
@@ -59,7 +63,8 @@ public void velocidadDeCarga(){
     {
       for (long j=0; j<500000; ++j)//modifica el numero segun la velidad q desees
       {
-        String poop = " " + (j + i);
+        @SuppressWarnings("unused")
+		String poop = " " + (j + i);
       }
      setProgreso("Cargando " + i, i);  // si quieres q muestre los numeros y un mensaje
      //setProgreso(i);        //si no quieres q muestre nada, solo la barra

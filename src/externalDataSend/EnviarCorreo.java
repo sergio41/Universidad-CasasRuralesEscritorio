@@ -14,7 +14,7 @@ public class EnviarCorreo {
 
 	//public static void main(String[] args) {
 	public static void enviarCorreos( String dest, String asu, String mensa) throws Exception{
-		/*String servidorSMTP = "smtp.gmail.com";
+		String servidorSMTP = "smtp.gmail.com";
 		String puerto = "587";
 		String usuario = "villatripasdearribacr@gmail.com";
 		String password = "villavilla";
@@ -46,6 +46,6 @@ public class EnviarCorreo {
 			tr.close();
 		} catch (MessagingException e) {
 			throw new Exception(e.toString());
-		}*/
+		}
 	}
 }
