@@ -140,6 +140,7 @@ public class RuralHouse implements Serializable {
 			while(j.hasNext()){ System.out.println("VectorFinal: " + j.next().getFecha().toString());}
 			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
 		}
+		vectorOfertas.add(new Offer(primerDia, ultimoDia, precio, this, auxVectorFechas, obligatorio));
 	}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
