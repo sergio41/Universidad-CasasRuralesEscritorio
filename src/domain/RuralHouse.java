@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
-
 public class RuralHouse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -79,25 +77,28 @@ public class RuralHouse implements Serializable {
 	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Date aux = primerDia;
-		Date auxFin = ultimoDia;
-		auxFin.setTime(auxFin.getTime()+1*24*60*60*1000);
-		while (aux.getDay() != auxFin.getDay() || aux.getMonth() != auxFin.getMonth() || aux.getYear() != auxFin.getYear() ){
-			System.out.println("Inicio2: " + primerDia.toString());
-			System.out.println("Fin: " + ultimoDia.toString());
-			System.out.println("AuxInicio: " + aux.toString());
-			System.out.println("AuxFin: " + auxFin.toString());
-			Fechas auxFecha = null;
+		while (aux.getDay() != ultimoDia.getDay()+1 || aux.getMonth() != ultimoDia.getMonth() || aux.getYear() != ultimoDia.getYear() ){			
+			Fechas auxFecha = new Fechas(null, 0, null, 0);
 			Iterator<Fechas> i = vectorFechas.iterator();
 			while (i.hasNext()){
 				auxFecha = i.next();
-				if (auxFecha.getFecha().compareTo(aux) == 0) break;
+				if (aux.getDay() == auxFecha.getFecha().getDay() && aux.getMonth() == auxFecha.getFecha().getMonth() && aux.getYear() == auxFecha.getFecha().getYear() ) break;
 			}
-			if (auxFecha == null || auxFecha.getFecha().compareTo(aux) != 0){
-				auxFecha = new Fechas(aux, 0, this, 0);
+			if (auxFecha == null || (aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
+				Date aux1 = aux;
+				auxFecha = new Fechas(aux1, 0, this, 0);
 				vectorFechas.add(auxFecha);
 			}
-			auxVectorFechas.add(auxFecha);
+			System.out.println("Vector: " + auxFecha.getFecha().toString());
+			auxVectorFechas.add(auxVectorFechas.size(),auxFecha);//add(auxFecha);
+			Iterator<Fechas> j = auxVectorFechas.iterator();
+			while(j.hasNext()){ System.out.println("Vectorjjjj: " + j.next().getFecha().toString());}
+			
 			aux.setTime(aux.getTime()+1*24*60*60*1000);
+		}
+		Iterator<Fechas> i = auxVectorFechas.iterator();
+		while(i.hasNext()){
+			System.out.println("Vector1: " + i.next().getFecha().toString());
 		}
 		vectorOfertas.add(new Offer(primerDia, ultimoDia, precio, this, auxVectorFechas, obligatorio));
 	}
