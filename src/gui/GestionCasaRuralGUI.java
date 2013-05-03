@@ -246,6 +246,7 @@ public class GestionCasaRuralGUI extends JPanel {
 									textLiving.setText(Integer.toString(rh.getLiving()));
 									textPark.setText(Integer.toString(rh.getPark()));
 									images= rh.getImages();
+									System.out.println(images.size());
 									rellenarImg();
 									ImageIcon imagen = new ImageIcon(images.elementAt(0).getPath());
 						            Image aux = imagen.getImage();
@@ -405,6 +406,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			int x = images.size();
 			for(int i=0; i<x; i++)
 				modeloImg.addElement(Integer.toString(i+1));}
+		
 	}
 	
 	public Vector<File> rellenarVectorImagenes(){
@@ -429,7 +431,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		for (int i=0; i<images.size(); i++){
 			try {
-				File FDestino = new File("\\imagenes\\"+facade.getUsuario().getEmail()+"\\"+comBoxCasas.getSelectedIndex()+"\\"+images.get(i).getName());
+				File FDestino = new File("\\imagenes\\"+facade.getUsuario().getEmail()+"\\"+comBoxCasas.getSelectedItem().toString()+"\\"+images.get(i).getName());
 				CopiarImagen(images.get(i), FDestino);
 				auxV.add(i,FDestino);
 			} catch (Exception e) {
@@ -473,8 +475,8 @@ public class GestionCasaRuralGUI extends JPanel {
         if(FOrigen.exists()){  
             String copiar="S";  
             if(FDestino.exists()){  
-               System.out.println("La imagen ya existe, Desea Sobre Escribir:S/N ");  
-               copiar = (new BufferedReader(new InputStreamReader(System.in))).readLine();  
+               //System.out.println("La imagen ya existe, Desea Sobre Escribir:S/N ");  
+               copiar = "N";//(new BufferedReader(new InputStreamReader(System.in))).readLine();  
             }  
             if(copiar.toUpperCase().equals("S")){            
                 FileInputStream LeeOrigen= new FileInputStream(FOrigen);  

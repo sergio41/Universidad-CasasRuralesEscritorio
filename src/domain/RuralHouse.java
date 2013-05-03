@@ -270,7 +270,11 @@ public class RuralHouse implements Serializable {
 	}
 
 	public void setImages(Vector<File> images) {
-		vectorImage= images;
+		vectorImage= new Vector<File>();
+		for(int i =0; i<images.size();i++){
+			vectorImage.add(images.get(i));
+		}
+			
 	}
 
 }
