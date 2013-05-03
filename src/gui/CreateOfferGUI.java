@@ -106,17 +106,15 @@ public class CreateOfferGUI extends JPanel {
 				try {
 					System.out.println(calendarFirstday.getDate());
 					System.out.println(calendarLastday.getDate());
-					facade.anadirOferta(1, calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
+					facade.anadirOferta(Integer.parseInt(comBoxCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					javax.swing.JOptionPane.showMessageDialog(null,"Error al crear oferta. " + e1.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
 		});
-				
 		bttnSalvar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		bttnSalvar.setForeground(Color.BLUE);
 		bttnSalvar.setBounds(804, 375, 149, 46);

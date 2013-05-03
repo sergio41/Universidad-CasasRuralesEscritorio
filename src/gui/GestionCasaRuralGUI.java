@@ -23,7 +23,12 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Vector;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -397,6 +402,8 @@ public class GestionCasaRuralGUI extends JPanel {
         if (respuesta == JFileChooser.APPROVE_OPTION)
         { 
            		File archivoElegido = fc.getSelectedFile();
+           		//if ()
+           		//CopiarImagen(archivoElegido,) añadir comprobacion si existe directorio o no
 	            ImageIcon imagen = new ImageIcon(archivoElegido.getPath());
 	            Image aux = imagen.getImage();
 	            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
@@ -407,4 +414,36 @@ public class GestionCasaRuralGUI extends JPanel {
 				comboBox.setSelectedIndex(images.size()-1);
         }
 	}	
+	
+	public static void CopiarImagen(File FOrigen,File FDestino){  
+        try {  
+
+        if(FOrigen.exists()){  
+            String copiar="S";  
+            if(FDestino.exists()){  
+               System.out.println("El fichero ya existe, Desea Sobre Escribir:S/N ");  
+               copiar = (new BufferedReader(new InputStreamReader(System.in))).readLine();  
+            }  
+            if(copiar.toUpperCase().equals("S")){            
+                FileInputStream LeeOrigen= new FileInputStream(FOrigen);  
+                OutputStream Salida = new FileOutputStream(FDestino);  
+                byte[] buffer = new byte[1024];  
+                int tamaño;  
+                while ((tamaño = LeeOrigen.read(buffer)) > 0) {  
+                Salida.write(buffer, 0, tamaño);  
+                }  
+                System.out.println(FOrigen.getName()+" Copiado con Exito!!");  
+                Salida.close();  
+                LeeOrigen.close();  
+            }  
+              
+        }else{//l fichero a copiar no existe                  
+            System.out.println("El fichero a copiar no existe..."+FOrigen.getAbsolutePath());  
+        }  
+          
+    } catch (Exception ex) {  
+        System.out.println(ex.getMessage());  
+      
+   }  
+	}
 }

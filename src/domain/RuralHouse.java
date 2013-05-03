@@ -109,8 +109,9 @@ public class RuralHouse implements Serializable {
 			e1.printStackTrace();
 		}
 	}*/
-	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
+	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio) throws Exception{
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
+		Date primero = (Date) primerDia.clone();
 		Date auxp = primerDia;
 		Date auxu = ultimoDia;
 		boolean esta = false;
@@ -122,25 +123,29 @@ public class RuralHouse implements Serializable {
 				System.out.println("VectorViejo: " + auxFecha.getFecha().toString());
 				
 				if (auxp.compareTo(auxFecha.getFecha())==0) {
-					esta = true;
-					break;
+					vectorFechas.remove(primero);
+					while (primero.compareTo(auxp)!=0){
+					primero.setTime(primero.getTime()+1*24*60*60*1000);
+					}
+					throw new Exception ("Colision de fechas. Reintroduce las fechas de la nueva oferta.");
+			
 				}
 			}
-			//if (auxFecha.equals(null) || auxp.compareTo(auxFecha.getFecha())!=0)
+				if(!vectorFechas.contains(auxp)){
+			//if (auxFecha.(null) || auxp.compareTo(auxFecha.getFecha())!=0)
 	//(aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
 				Object aux5 = auxp.clone();
 				Date aux1 = (Date) aux5;
 				auxFecha = new Fechas(aux1, 0, this, houseNumber);
 				vectorFechas.add(auxFecha);
 				auxVectorFechas.add(auxFecha);
-			//}
+			}
 			System.out.println("Vector: " + auxFecha.getFecha().toString());
-			//auxVectorFechas.add(auxVectorFechas.size(),auxFecha);//add(auxFecha);
 			Iterator<Fechas> j = vectorFechas.iterator();
 			while(j.hasNext()){ System.out.println("VectorFinal: " + j.next().getFecha().toString());}
 			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
 		}
-		vectorOfertas.add(new Offer(primerDia, ultimoDia, precio, this, auxVectorFechas, obligatorio));
+		vectorOfertas.add(new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio));
 	}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
