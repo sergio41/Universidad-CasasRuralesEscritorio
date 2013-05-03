@@ -1,6 +1,7 @@
 package domain;
 
 import java.awt.Image;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Iterator;
@@ -21,9 +22,9 @@ public class RuralHouse implements Serializable {
 	private Vector<Fechas> vectorFechas;
 	private Vector<Offer> vectorOfertas;
 	private Vector<Book> vectorReservas;
-	private Vector<Image> vectorImage;
+	private Vector<File> vectorImage;
 	
-	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<Image> images) {
+	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<File> images) {
 		houseNumber = hNumber;
 		description = descripcion;
 		user = usuario;
@@ -165,11 +166,11 @@ public class RuralHouse implements Serializable {
 		return true;
 	}
 	
-	public Vector<Image> getImages(){
+	public Vector<File> getImages(){
 		return vectorImage;
 	}
 	
-	public void añadirImagen(Image image) throws Exception {
+	public void añadirImagen(File image) throws Exception {
 			vectorImage.add(image);
 	}
 	
@@ -268,7 +269,7 @@ public class RuralHouse implements Serializable {
 		}
 	}
 
-	public void setImages(Vector<Image> images) {
+	public void setImages(Vector<File> images) {
 		vectorImage= images;
 	}
 

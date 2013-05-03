@@ -1,6 +1,7 @@
 package businessLogic;
 
 import java.awt.Image;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
@@ -35,7 +36,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		usuario = DB4oManager.eliminarCasaRural(usuario, numero);
 	}
 	
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception{
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception{
 	if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 	else {			
 			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
@@ -64,7 +65,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			usuario= DB4oManager.nuevoOwner(usuario, usuario.getEmail(), bA, t, i, p, m);
 	}
 	
-	public void modificarRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> images) throws Exception {
+	public void modificarRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception {
 		if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {					
 			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
@@ -138,7 +139,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		else usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad);		
 	}
 	
-	private int getNumeroCR(){
+	public int getNumeroCR() throws Exception{
 		Vector<RuralHouse> vector = DB4oManager.getCasasRuralesTodas();
 		int max = 0;
 		java.util.Iterator<RuralHouse> i = vector.iterator();

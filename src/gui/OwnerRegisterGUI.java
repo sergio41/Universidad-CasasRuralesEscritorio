@@ -15,6 +15,7 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.JRadioButton;
@@ -63,12 +64,19 @@ public class OwnerRegisterGUI extends JPanel {
 				idiom.add(textIdioma4.getText());
 				profes = textProfesion.getText();
 				mon= (String) comboMoneda.getSelectedItem();
+
 				try {
 					facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
+					String ruta = new String("\\imagenes\\"+facade.getUsuario().getEmail());
+					System.out.println(ruta);
+					File carpet =new File(ruta);
+					carpet.mkdirs();
 					JPanel temp1= new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(temp1);
+					JPanel temp2 = new LoginONGUI();
+					Start.modificarPanelArriba(temp2);
 				} catch (Exception e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 				
 			}
