@@ -37,9 +37,7 @@ public class RuralHouse implements Serializable {
 		vectorFechas = new Vector<Fechas>();
 		vectorOfertas = new Vector<Offer>();
 		vectorReservas = new Vector<Book>();
-		System.out.print("estoy");
 		vectorImage = images;
-		System.out.print("estoy");
 	}
 
 	public int getHouseNumber() {return houseNumber;}

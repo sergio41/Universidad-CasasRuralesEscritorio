@@ -246,7 +246,6 @@ public class GestionCasaRuralGUI extends JPanel {
 									textLiving.setText(Integer.toString(rh.getLiving()));
 									textPark.setText(Integer.toString(rh.getPark()));
 									images= rh.getImages();
-									System.out.println(images.size());
 									rellenarImg();
 									ImageIcon imagen = new ImageIcon(images.elementAt(0).getPath());
 						            Image aux = imagen.getImage();
