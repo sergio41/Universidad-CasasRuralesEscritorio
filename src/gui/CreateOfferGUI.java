@@ -110,6 +110,7 @@ public class CreateOfferGUI extends JPanel {
 					System.out.println(calendarFirstday.getDate());
 					System.out.println(calendarLastday.getDate());
 					facade.anadirOferta(Integer.parseInt(comBoxCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
+					table.removeAll();
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
 				} catch (Exception e1) {
@@ -167,6 +168,7 @@ public class CreateOfferGUI extends JPanel {
 			i = facade.getOwner().getRuralHouses().iterator();
 			while (i.hasNext())	modeloEC.addElement(i.next().getHouseNumber());
 			enaDis(false);
+			comBoxCasas.setSelectedIndex(-1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -177,13 +179,15 @@ public class CreateOfferGUI extends JPanel {
 		calendarFirstday.setEnabled(b);
 		calendarLastday.setEnabled(b);
 		bttnSalvar.setEnabled(b);
+		table.setEnabled(b);
 	}
 	
 	private void actualizarTabla(int numeroRH){
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			int a = modelTb.getRowCount()-1;
-			for(int i=0; i<a;i++) modelTb.removeRow(i);
+			while (modelTb.getRowCount() > 0){
+				modelTb.removeRow(modelTb.getRowCount()-1);
+			}
 			Vector<Offer> aux =  facade.getOfertas(numeroRH);
 			Iterator<Offer> i = aux.iterator();
 			while (i.hasNext()){
