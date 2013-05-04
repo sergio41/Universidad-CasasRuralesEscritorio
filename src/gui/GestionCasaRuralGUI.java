@@ -55,7 +55,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JLabel labelflechaDer;
 	private JLabel labelflechaIzq;
 	private JButton btnEliminarimg;
-	private JComboBox<String> comboBox;
+	private JComboBox<String> comBoxImg;
 	private JButton btnanadirImg;
 	private static Vector<File> images = new Vector<File>();
 
@@ -245,12 +245,13 @@ public class GestionCasaRuralGUI extends JPanel {
 									textBath.setText(Integer.toString(rh.getBaths()));
 									textLiving.setText(Integer.toString(rh.getLiving()));
 									textPark.setText(Integer.toString(rh.getPark()));
-									images= rh.getImages();
+									images = rh.getImages();
+									if (!images.isEmpty()){
 									rellenarImg();
 									ImageIcon imagen = new ImageIcon(images.elementAt(0).getPath());
 						            Image aux = imagen.getImage();
 						            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
-						            image1label.setIcon(new ImageIcon(aux1));
+						            image1label.setIcon(new ImageIcon(aux1));}
 									break;
 								}
 							}
@@ -284,12 +285,12 @@ public class GestionCasaRuralGUI extends JPanel {
 		btnanadirImg.setBounds(674, 59, 76, 23);
 		add(btnanadirImg);
 		
-		comboBox = new JComboBox<String>();
-		comboBox.addActionListener(new ActionListener() {
+		comBoxImg = new JComboBox<String>();
+		comBoxImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() != -1){
 					if(images!=null && images.size()>0){
-						int x =  comboBox.getSelectedIndex();
+						int x =  comBoxImg.getSelectedIndex();
 			            ImageIcon imagen = new ImageIcon(images.get(x).getPath());
 			            Image aux = imagen.getImage();
 			            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
@@ -299,12 +300,21 @@ public class GestionCasaRuralGUI extends JPanel {
 				}
 			}
 		});
-		comboBox.setSelectedIndex(-1);
-		comboBox.setModel(modeloImg);
-		comboBox.setBounds(761, 59, 77, 23);
-		add(comboBox);
+		comBoxImg.setSelectedIndex(-1);
+		comBoxImg.setModel(modeloImg);
+		comBoxImg.setBounds(761, 59, 77, 23);
+		add(comBoxImg);
 		
 		btnEliminarimg = new JButton("Eliminar");
+		btnEliminarimg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (comBoxImg.getItemCount()>0){
+				btnEliminarimg.setEnabled(true);
+				eliminarImagen();
+				}
+				else btnEliminarimg.setEnabled(false);
+			}
+		});
 		btnEliminarimg.setBounds(848, 59, 76, 23);
 		add(btnEliminarimg);
 		
@@ -312,9 +322,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaIzq.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(comboBox.getSelectedIndex()>0 & images.size()>0){
-					comboBox.setSelectedIndex(comboBox.getSelectedIndex()-1);
-		            ImageIcon imagen = new ImageIcon(images.elementAt(comboBox.getSelectedIndex()).getPath());
+				if(comBoxImg.getSelectedIndex()>0 & images.size()>0){
+					comBoxImg.setSelectedIndex(comBoxImg.getSelectedIndex()-1);
+		            ImageIcon imagen = new ImageIcon(images.elementAt(comBoxImg.getSelectedIndex()).getPath());
 		            Image aux = imagen.getImage();
 		            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
 		            image1label.setIcon(new ImageIcon(aux1));
@@ -329,9 +339,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaDer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if((comboBox.getSelectedIndex()<images.size()-1) & images.size()>0){
-					comboBox.setSelectedIndex(comboBox.getSelectedIndex()+1);
-		            ImageIcon imagen = new ImageIcon(images.elementAt(comboBox.getSelectedIndex()).getPath());
+				if((comBoxImg.getSelectedIndex()<images.size()-1) & images.size()>0){
+					comBoxImg.setSelectedIndex(comBoxImg.getSelectedIndex()+1);
+		            ImageIcon imagen = new ImageIcon(images.elementAt(comBoxImg.getSelectedIndex()).getPath());
 		            Image aux = imagen.getImage();
 		            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
 		            image1label.setIcon(new ImageIcon(aux1));
@@ -361,7 +371,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		textPaneDescription.setEditable(b);
 		textPark.setEnabled(b);
 		textRooms.setEnabled(b);
-		comboBox.setEnabled(b);
+		comBoxImg.setEnabled(b);
 		btnanadirImg.setEnabled(b);
 		btnEliminarimg.setEnabled(b);
 		textPaneDescription.setText("");
@@ -375,6 +385,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		images.clear();
 	}
 
+
 	private void inicializarCampos() {
 		modeloEC.addElement("Nueva Casa Rural");
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -385,6 +396,9 @@ public class GestionCasaRuralGUI extends JPanel {
 				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 			}
 			enaDis(false);
+			if (comBoxImg.getItemCount()==0){
+				btnEliminarimg.setEnabled(false);}
+			else btnEliminarimg.setEnabled(true);
 			comBoxCasas.setSelectedIndex(-1);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -460,7 +474,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		            image1label.setIcon(new ImageIcon(aux1));
 					images.add(imagenElegida);
 					modeloImg.addElement(Integer.toString(images.size()));
-					comboBox.setSelectedIndex(images.size()-1);
+					comBoxImg.setSelectedIndex(images.size()-1);
            		} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -498,5 +512,15 @@ public class GestionCasaRuralGUI extends JPanel {
         System.out.println(ex.getMessage());  
       
    }  
+	}
+	
+	public void eliminarImagen(){
+		System.out.println(comBoxImg.getSelectedIndex());
+		String s = images.elementAt(comBoxImg.getSelectedIndex()).getPath();
+		comBoxImg.removeItem(comBoxImg.getSelectedItem());
+		images.removeElementAt(comBoxImg.getSelectedIndex());	
+		File d = new File(s);
+        d.delete();
+        
 	}
 }
