@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
@@ -18,11 +19,13 @@ import java.util.*;
 public class CreateOfferGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JComboBox<Integer> comBCasas;
 	private DefaultComboBoxModel<Integer> modeloEC = new DefaultComboBoxModel<Integer>();
-	private JComboBox<Integer> comBoxCasas;
+	private JComboBox<String> comBObligatorio;
+	private DefaultComboBoxModel<String> modeloOB = new DefaultComboBoxModel<String>();
 	private JDateChooser calendarFirstday;
 	private JDateChooser calendarLastday;
-	private JButton bttnSalvar;
+	private JButton bttnAnadir;
 	private JTextField textPrecio;
 	private JTable table;
 	private DefaultTableModel modelTb = new DefaultTableModel(
@@ -36,23 +39,24 @@ public class CreateOfferGUI extends JPanel {
 	public CreateOfferGUI(){
 		setLayout(null);
 		JLabel ruralhouselbl = new JLabel("Casa rural: ");
-		ruralhouselbl.setBounds(155, 35, 102, 22);
+		ruralhouselbl.setBounds(30, 110, 126, 22);
 		ruralhouselbl.setForeground(Color.BLUE);
 		ruralhouselbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		add(ruralhouselbl);
 		
-		comBoxCasas = new JComboBox<Integer>();
-		comBoxCasas.setBounds(267, 35, 149, 22);
-		comBoxCasas.setModel(modeloEC);
-		comBoxCasas.addActionListener(new ActionListener() {
+		comBCasas = new JComboBox<Integer>();
+		comBCasas.setBounds(196, 110, 149, 22);
+		comBCasas.setModel(modeloEC);
+		comBCasas.setSelectedIndex(-1);
+		comBCasas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (comBoxCasas.getSelectedIndex() != -1){
+				if (comBCasas.getSelectedIndex() != -1){
 					enaDis(true);
-					actualizarTabla((int)comBoxCasas.getSelectedItem());
-				}
+					actualizarTabla((int)comBCasas.getSelectedItem());
+				} else borrarTabla();
 			}
 		});
-		add(comBoxCasas);
+		add(comBCasas);
 		
 		
 		Date fechaHoy = new Date();
@@ -64,7 +68,7 @@ public class CreateOfferGUI extends JPanel {
 		calendarLastday.setMinSelectableDate(fechaManana);
 		calendarLastday.setDate(fechaManana);
 		calendarLastday.setDateFormatString("yyyy-MM-dd");
-		calendarLastday.setBounds(200, 287, 268, 20);
+		calendarLastday.setBounds(196, 186, 149, 22);
 		calendarLastday.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 		    @Override
 	        public void propertyChange(PropertyChangeEvent e) {
@@ -76,7 +80,7 @@ public class CreateOfferGUI extends JPanel {
 		add(calendarLastday);
 	
 		calendarFirstday = new JDateChooser();
-		calendarFirstday.setBounds(200, 105, 268, 22);
+		calendarFirstday.setBounds(196, 145, 149, 22);
 		calendarFirstday.setDate(fechaHoy);
 		calendarFirstday.setDateFormatString("yyyy-MM-dd");
 		calendarFirstday.setMinSelectableDate(fechaHoy);
@@ -87,7 +91,8 @@ public class CreateOfferGUI extends JPanel {
 			e1.printStackTrace();
 		} 
 		calendarFirstday.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-	        @Override
+	        @SuppressWarnings("deprecation")
+			@Override
 	        public void propertyChange(PropertyChangeEvent e) {
 	            if ("date".equals(e.getPropertyName())) {
 	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
@@ -102,14 +107,14 @@ public class CreateOfferGUI extends JPanel {
 	    });
 		add(calendarFirstday);	
 				
-		bttnSalvar = new JButton("Salvar");
-		bttnSalvar.addActionListener(new ActionListener() {
+		bttnAnadir = new JButton("A\u00F1adir");
+		bttnAnadir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					System.out.println(calendarFirstday.getDate());
 					System.out.println(calendarLastday.getDate());
-					facade.anadirOferta(Integer.parseInt(comBoxCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
+					facade.anadirOferta(Integer.parseInt(comBCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
 					table.removeAll();
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
@@ -119,39 +124,67 @@ public class CreateOfferGUI extends JPanel {
 
 			}
 		});
-		bttnSalvar.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
-		bttnSalvar.setForeground(Color.BLUE);
-		bttnSalvar.setBounds(804, 375, 149, 46);
-		add(bttnSalvar);
+		bttnAnadir.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
+		bttnAnadir.setForeground(Color.BLUE);
+		bttnAnadir.setBounds(196, 306, 149, 46);
+		add(bttnAnadir);
 		
 		JLabel firstdaylbl = new JLabel("Primer d\u00EDa:");
 		firstdaylbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		firstdaylbl.setForeground(Color.BLUE);
-		firstdaylbl.setBounds(98, 105, 110, 22);
+		firstdaylbl.setBounds(30, 145, 110, 22);
 		add(firstdaylbl);
 		
 		JLabel lastdaylbl = new JLabel("\u00DAltimo d\u00EDa:");
 		lastdaylbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		lastdaylbl.setForeground(Color.BLUE);
-		lastdaylbl.setBounds(98, 287, 110, 22);
+		lastdaylbl.setBounds(30, 186, 110, 22);
 		add(lastdaylbl);
 		
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setForeground(Color.BLUE);
 		lblPrecio.setFont(new Font("Dialog", Font.PLAIN, 21));
-		lblPrecio.setBounds(117, 391, 110, 22);
+		lblPrecio.setBounds(30, 219, 110, 22);
 		add(lblPrecio);
 		
 		textPrecio = new JTextField();
 		textPrecio.setColumns(10);
-		textPrecio.setBounds(219, 391, 149, 22);
+		textPrecio.setBounds(196, 219, 149, 22);
 		add(textPrecio);
 		
 		table = new JTable();
 		table.setModel(modelTb);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setBounds(582, 35, 371, 301);
+		table.setBounds(402, 35, 551, 317);
 		add(table);
+		
+		JLabel lblAadirNuevaOferta = new JLabel("A\u00F1adir nueva oferta:");
+		lblAadirNuevaOferta.setFont(new Font("Viner Hand ITC", Font.BOLD, 28));
+		lblAadirNuevaOferta.setForeground(new Color(0, 255, 0));
+		lblAadirNuevaOferta.setBounds(30, 35, 315, 51);
+		add(lblAadirNuevaOferta);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setForeground(Color.BLUE);
+		btnEliminar.setFont(new Font("Dialog", Font.PLAIN, 21));
+		btnEliminar.setEnabled(false);
+		btnEliminar.setBounds(804, 374, 149, 46);
+		add(btnEliminar);
+		
+		comBObligatorio = new JComboBox<String>();
+		comBObligatorio.setModel(modeloOB);
+		comBObligatorio.setSelectedIndex(-1);
+		comBObligatorio.setBounds(30, 262, 315, 31);
+		modeloOB.addElement("Esta oferta se puede reservar por dias. *");
+		modeloOB.addElement("Esta oferta no se puede dividir. *");
+		add(comBObligatorio);
+		
+		JTextPane txtpnLasOfertasPueden = new JTextPane();
+		txtpnLasOfertasPueden.setForeground(new Color(255, 0, 0));
+		txtpnLasOfertasPueden.setFont(new Font("Vani", Font.BOLD, 14));
+		txtpnLasOfertasPueden.setText("Las ofertas pueden ser de dos tipos: La oferta puede ser completa, es decir, no se puede reservar por dias. El otro tipo es lo contrario. Se puede reservar por dias (fracciones de la oferta).");
+		txtpnLasOfertasPueden.setBounds(30, 376, 762, 44);
+		add(txtpnLasOfertasPueden);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -167,8 +200,8 @@ public class CreateOfferGUI extends JPanel {
 		try {
 			i = facade.getOwner().getRuralHouses().iterator();
 			while (i.hasNext())	modeloEC.addElement(i.next().getHouseNumber());
+			comBCasas.setSelectedIndex(-1);
 			enaDis(false);
-			comBoxCasas.setSelectedIndex(-1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -178,31 +211,68 @@ public class CreateOfferGUI extends JPanel {
 		textPrecio.setEnabled(b);
 		calendarFirstday.setEnabled(b);
 		calendarLastday.setEnabled(b);
-		bttnSalvar.setEnabled(b);
+		bttnAnadir.setEnabled(b);
 		table.setEnabled(b);
+		comBObligatorio.setEnabled(b);
 	}
 	
 	private void actualizarTabla(int numeroRH){
+	
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			while (modelTb.getRowCount() > 0){
-				modelTb.removeRow(modelTb.getRowCount()-1);
-			}
+			borrarTabla();
 			Vector<Offer> aux =  facade.getOfertas(numeroRH);
 			Iterator<Offer> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object> vector = new Vector<Object>();
 				Offer auxi = i.next();
-				vector.add(1);
+				vector.add(modelTb.getRowCount());
 				vector.add(auxi.getPrimerDia());
 				vector.add(auxi.getUltimoDia());
 				vector.add(auxi.getPrice());
 				vector.add(auxi.isUnidoAFechas());
 				modelTb.addRow(vector);
 			}
+			ajustarColumnas();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-}
+	
+	private void borrarTabla(){ while (modelTb.getRowCount() > 0) modelTb.removeRow(modelTb.getRowCount()-1); }
+	
+	private void ajustarColumnas(){
+		int anchoTabla = 551;
+		int anchoColumna = 0, anchoColumnaMin = 0, anchoColumnaMax = 0;
+		TableColumn columnaTabla = null;
+		for(int i=0; i<table.getColumnCount(); i++) {
+			columnaTabla = table.getColumnModel().getColumn(i);
+			switch(i) {
+				case 0: anchoColumna = (5*anchoTabla)/100;
+				anchoColumnaMin = (5*anchoTabla)/100;
+				anchoColumnaMax = (5*anchoTabla)/100;
+				break;
+				case 1: anchoColumna = (35*anchoTabla)/100;
+				anchoColumnaMin = (35*anchoTabla)/100;
+				anchoColumnaMax = (35*anchoTabla)/100;
+				break;
+				case 2: anchoColumna = (35*anchoTabla)/100;
+				anchoColumnaMin = (35*anchoTabla)/100;
+				anchoColumnaMax = (35*anchoTabla)/100;
+				break;
+				case 3: anchoColumna = (15*anchoTabla)/100;
+				anchoColumnaMin = (15*anchoTabla)/100;
+				anchoColumnaMax = (15*anchoTabla)/100;
+				break;
+				case 4: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
+				break;
+			}
+			columnaTabla.setPreferredWidth(anchoColumna);
+			columnaTabla.setMinWidth(anchoColumnaMin);
+			columnaTabla.setMaxWidth(anchoColumnaMax);
+			}
+		}
+	}
