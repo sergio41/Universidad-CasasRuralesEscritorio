@@ -198,6 +198,16 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
+
+	public static Vector<RuralHouse> getHouse(String ciudad, int banos,
+			int habita, int cocina, int estar, int park) {
+		Vector<RuralHouse> result = new Vector<RuralHouse>();
+		ObjectSet<RuralHouse> casasConcretas = db.queryByExample(new RuralHouse(0, null, null, ciudad, habita, cocina, banos, estar, park, null));	
+		while (casasConcretas.hasNext())
+			result.add(casasConcretas.next());
+		return result;	
+	}	
+	
 	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin){
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
 		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, 0, false, null, 0));	
@@ -254,6 +264,7 @@ public class DB4oManager {
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 	}
+
 
 }
 	

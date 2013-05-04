@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
@@ -15,10 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import businessLogic.ApplicationFacadeInterface;
+import domain.Offer;
 import domain.RuralHouse;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class BusquedaGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -36,65 +42,80 @@ public class BusquedaGUI extends JPanel {
 	private JComboBox<String> comboEstar;
 	private JComboBox<String> comboPark;
 	private JComboBox<String> comboCity;
+	private JTable table;
+	private DefaultTableModel modelTb = new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Numero", "Ciudad", "Baños", "Cocinas", "SalasDeEstar", "Domitorios", "PlazasParking"
+			}
+		);
 	
 	public BusquedaGUI() {
 		setLayout(null);
 		
 		JLabel label_5 = new JLabel("N\u00BA Habitaciones*:");
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_5.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_5.setBounds(271, 257, 168, 34);
+		label_5.setFont(new Font("Dialog", Font.BOLD, 11));
+		label_5.setBounds(165, 127, 114, 34);
 		add(label_5);
 		
 		JLabel label_6 = new JLabel("N\u00BA Salas de estar*:");
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_6.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_6.setBounds(256, 294, 183, 34);
+		label_6.setFont(new Font("Dialog", Font.BOLD, 11));
+		label_6.setBounds(155, 157, 124, 34);
 		add(label_6);
 		
 		JLabel label_7 = new JLabel("N\u00BA Aparcamientos*:");
 		label_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_7.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_7.setBounds(256, 331, 183, 34);
+		label_7.setFont(new Font("Dialog", Font.BOLD, 11));
+		label_7.setBounds(155, 187, 124, 34);
 		add(label_7);
 		
 		JLabel label = new JLabel("N\u00BA Cocinas*:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		label.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label.setBounds(315, 217, 124, 34);
+		label.setFont(new Font("Dialog", Font.BOLD, 11));
+		label.setBounds(185, 97, 94, 34);
 		add(label);
 		
 		JLabel label_1 = new JLabel("N\u00BA Ba\u00F1os*:");
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_1.setBounds(335, 172, 104, 34);
+		label_1.setFont(new Font("Dialog", Font.BOLD, 11));
+		label_1.setBounds(196, 68, 83, 34);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("Ciudad*:");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_2.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_2.setBounds(315, 127, 124, 34);
+		label_2.setFont(new Font("Dialog", Font.BOLD, 11));
+		label_2.setBounds(194, 38, 83, 34);
 		add(label_2);
 		
 		btnSalvar = new JButton("Buscar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					/*String description = textPaneDescription.getText();
-					String city = textCity.getText();
-					int nRooms = Integer.parseInt(textRooms.getText());
-					int nKitchen = Integer.parseInt(textKitchen.getText());
-					int nBaths = Integer.parseInt(textBath.getText());
-					int nLiving = Integer.parseInt(textLiving.getText());
-					int nPark = Integer.parseInt(textPark.getText());
-					ApplicationFacadeInterface facade=Start.getBusinessLogic();
-					if (comBoxCasas.getSelectedIndex() == 0){
-						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
-					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						facade.modificarRuralHouse((int) comBoxCasas.getSelectedItem(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark);
-					}*/
-					JPanel panel = new PantallaPrincipalGUI();
-					Start.modificarPanelAbajo(panel);
+					String ciudad =(String) comboCity.getSelectedItem();
+					int Banos;
+					int Habita;
+					int Cocina;
+					int Estar;
+					int Park;
+					if(comboBanos.getSelectedIndex()==-1){Banos=0;
+					}else{Banos = Integer.parseInt((String) comboBanos.getSelectedItem());}
+					
+					if(comboHabita.getSelectedIndex()==-1){Habita=0;
+					}else{Habita = Integer.parseInt((String) comboHabita.getSelectedItem());}
+					
+					if(comboCocinas.getSelectedIndex()==-1){Cocina=0;
+					}else{Cocina = Integer.parseInt((String) comboCocinas.getSelectedItem());}
+					
+					if(comboEstar.getSelectedIndex()==-1){Estar=0;
+					}else{Estar = Integer.parseInt((String) comboEstar.getSelectedItem());}
+					
+					if(comboPark.getSelectedIndex()==-1){Park=0;
+					}else{Park = Integer.parseInt((String) comboPark.getSelectedItem());}
+					
+					actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -103,39 +124,51 @@ public class BusquedaGUI extends JPanel {
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.PLAIN, 21));
 		btnSalvar.setEnabled(false);
-		btnSalvar.setBounds(694, 225, 124, 45);
+		btnSalvar.setBounds(165, 240, 259, 27);
 		add(btnSalvar);
 		
 		comboBanos = new JComboBox<String>();
-		comboBanos.setBounds(456, 176, 128, 27);
+		comboBanos.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboBanos.setBounds(296, 72, 128, 27);
 		comboBanos.setModel(modeloBanos);
 		add(comboBanos);
 		
 		comboCocinas = new JComboBox<String>();
-		comboCocinas.setBounds(456, 217, 128, 27);
+		comboCocinas.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboCocinas.setBounds(296, 102, 128, 27);
 		comboCocinas.setModel(modeloCocin);
 		add(comboCocinas);
 		
 		comboHabita = new JComboBox<String>();
-		comboHabita.setBounds(456, 255, 128, 27);
+		comboHabita.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboHabita.setBounds(296, 132, 128, 27);
 		comboHabita.setModel(modeloDorm);
 		add(comboHabita);
 		
 		comboEstar = new JComboBox<String>();
-		comboEstar.setBounds(456, 294, 128, 27);
+		comboEstar.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboEstar.setBounds(296, 162, 128, 27);
 		comboEstar.setModel(modeloSala);
 		add(comboEstar);
 		
 		comboPark = new JComboBox<String>();
-		comboPark.setBounds(456, 331, 128, 27);
+		comboPark.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboPark.setBounds(296, 192, 128, 27);
 		comboPark.setModel(modeloParkin);
 		add(comboPark);
 		
 		
 		comboCity = new JComboBox<String>();
-		comboCity.setBounds(456, 131, 128, 27);
+		comboCity.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboCity.setBounds(296, 42, 128, 27);
 		comboCity.setModel(modeloCity);
 		add(comboCity);
+		
+		table = new JTable();
+		table.setModel(modelTb);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setBounds(434, 38, 551, 229);
+		add(table);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -143,12 +176,6 @@ public class BusquedaGUI extends JPanel {
 		add(lblNewLabel);
 		
 		inicializarCampos();
-	}
-	private void enaDis(boolean b){
-		/*btnSalvar.setEnabled(b);
-		btnEliminar.setEnabled(b);
-		textCity.setEnabled(b);
-		textCity.setText("");*/
 	}
 
 	private void inicializarCampos() {
@@ -188,7 +215,68 @@ public class BusquedaGUI extends JPanel {
 		}
 	}
 	
-
+	private void actualizarTabla(String city, int banos, int habita, int cocina, int estar, int park ){
+		
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		try {
+			borrarTabla();
+			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
+			Iterator<RuralHouse> i = aux.iterator();
+			while (i.hasNext()){
+				Vector<Object> vector = new Vector<Object>();
+				RuralHouse auxi = i.next();
+				vector.add(modelTb.getRowCount());
+				vector.add(auxi.getCity());
+				vector.add(auxi.getBaths());
+				vector.add(auxi.getKitchen());
+				vector.add(auxi.getLiving());
+				vector.add(auxi.getRooms());
+				vector.add(auxi.getPark());
+				modelTb.addRow(vector);
+			}
+			ajustarColumnas();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
+	}
+	
+	private void borrarTabla(){ while (modelTb.getRowCount() > 0) modelTb.removeRow(modelTb.getRowCount()-1); }
+	
+	private void ajustarColumnas(){
+		int anchoTabla = 551;
+		int anchoColumna = 0, anchoColumnaMin = 0, anchoColumnaMax = 0;
+		TableColumn columnaTabla = null;
+		for(int i=0; i<table.getColumnCount(); i++) {
+			columnaTabla = table.getColumnModel().getColumn(i);
+			switch(i) {
+				case 0: anchoColumna = (5*anchoTabla)/100;
+				anchoColumnaMin = (5*anchoTabla)/100;
+				anchoColumnaMax = (5*anchoTabla)/100;
+				break;
+				case 1: anchoColumna = (35*anchoTabla)/100;
+				anchoColumnaMin = (20*anchoTabla)/100;
+				anchoColumnaMax = (20*anchoTabla)/100;
+				break;
+				case 2: anchoColumna = (35*anchoTabla)/100;
+				anchoColumnaMin = (20*anchoTabla)/100;
+				anchoColumnaMax = (20*anchoTabla)/100;
+				break;
+				case 3: anchoColumna = (15*anchoTabla)/100;
+				anchoColumnaMin = (15*anchoTabla)/100;
+				anchoColumnaMax = (15*anchoTabla)/100;
+				break;
+				case 4: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
+				break;
+			}
+			columnaTabla.setPreferredWidth(anchoColumna);
+			columnaTabla.setMinWidth(anchoColumnaMin);
+			columnaTabla.setMaxWidth(anchoColumnaMax);
+			}
+		}
+	
 	public DefaultComboBoxModel<String> getModeloEC() {
 		return modeloEC;
 	}
@@ -199,7 +287,6 @@ public class BusquedaGUI extends JPanel {
 	
 	public boolean estaCity(String s){
 		for (int j = 0; j<modeloCity.getSize();j++){
-			System.out.println(j+modeloCity.getElementAt(j)+" "+s);
 			if(modeloCity.getElementAt(j).compareTo(s)==0){
 				return true;
 			}
@@ -251,5 +338,4 @@ public class BusquedaGUI extends JPanel {
 		}
 		return false;		
 	}
-	
 }

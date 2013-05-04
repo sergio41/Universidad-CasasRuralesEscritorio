@@ -193,5 +193,17 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		throw new Exception("Ha ocurrido un error a la hora de encontrar ofertas");
 	}
+
+	@Override
+	public Vector<RuralHouse> getCasas(String ciudad, int Banos, int Habita,
+			int Cocina, int Estar, int Park) throws Exception {
+		Vector<RuralHouse> vector;
+		vector = DB4oManager.getHouse(ciudad, Banos, Habita,
+					Cocina, Estar, Park);
+		if(vector==null){
+			throw new Exception("No existen casas con esos datos.");
+		}
+		return vector;
+	}
 }
 
