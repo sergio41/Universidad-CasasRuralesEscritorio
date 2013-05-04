@@ -142,12 +142,22 @@ public class OwnerRegisterGUI extends JPanel {
 		textIdioma4.setBounds(613, 211, 161, 34);
 		add(textIdioma4);
 		
-		JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
+		rdbtnProfesional = new JRadioButton("Profesional");
+		rdbtnProfesional.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnParticular.setSelected(!rdbtnProfesional.isSelected());
+			}
+		});
 		rdbtnProfesional.setOpaque(false);
-		rdbtnProfesional.setBounds(647, 89, 127, 34);
+		rdbtnProfesional.setBounds(613, 89, 127, 34);
 		add(rdbtnProfesional);
 		
-		JRadioButton rdbtnParticular = new JRadioButton("Particular");
+		rdbtnParticular = new JRadioButton("Particular");
+		rdbtnParticular.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rdbtnProfesional.setSelected(!rdbtnParticular.isSelected());
+			}
+		});
 		rdbtnParticular.setOpaque(false);
 		rdbtnParticular.setBounds(360, 82, 127, 34);
 		add(rdbtnParticular);

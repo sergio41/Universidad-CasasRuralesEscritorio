@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -23,28 +25,19 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Vector;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JSpinner;
 
 
 public class GestionCasaRuralGUI extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textCity;
-	private JTextField textBath;
-	private JTextField textKitchen;
-	private JTextField textRooms;
-	private JTextField textLiving;
-	private JTextField textPark;
 	private JComboBox<String> comBoxCasas;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private DefaultComboBoxModel<String> modeloImg = new DefaultComboBoxModel<String>();
@@ -58,6 +51,16 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JComboBox<String> comBoxImg;
 	private JButton btnanadirImg;
 	private static Vector<File> images = new Vector<File>();
+	private JSpinner textLiving;
+	private JSpinner textRooms;
+	private JSpinner textBath;
+	private JSpinner textKitchen;
+	private JSpinner textPark;
+	private SpinnerNumberModel modeloSpinnerBanos = new SpinnerNumberModel(2, 2, 40, 1);
+	private SpinnerNumberModel modeloSpinnerCocinas = new SpinnerNumberModel(1, 1, 40, 1);
+	private SpinnerNumberModel modeloSpinnerHabitaciones = new SpinnerNumberModel(3, 3, 40, 1);
+	private SpinnerNumberModel modeloSpinnerSala = new SpinnerNumberModel(0, 0, 40, 1);
+	private SpinnerNumberModel modeloSpinnerAparcamiento = new SpinnerNumberModel(0, 0, 40, 1);
 
 	
 	/**
@@ -90,19 +93,19 @@ public class GestionCasaRuralGUI extends JPanel {
 		JLabel label_5 = new JLabel("N\u00BA Habitaciones*:");
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_5.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_5.setBounds(337, 211, 153, 34);
+		label_5.setBounds(326, 213, 164, 34);
 		add(label_5);
 		
 		JLabel label_6 = new JLabel("N\u00BA Salas de estar*:");
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_6.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_6.setBounds(307, 256, 183, 34);
+		label_6.setBounds(282, 258, 208, 34);
 		add(label_6);
 		
 		JLabel label_7 = new JLabel("N\u00BA Aparcamientos*:");
 		label_7.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_7.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_7.setBounds(312, 312, 178, 33);
+		label_7.setBounds(282, 314, 208, 33);
 		add(label_7);
 		
 		
@@ -117,22 +120,8 @@ public class GestionCasaRuralGUI extends JPanel {
 		textCity.setText("");
 		textCity.setEnabled(false);
 		textCity.setColumns(10);
-		textCity.setBounds(201, 213, 128, 33);
+		textCity.setBounds(201, 213, 116, 33);
 		add(textCity);
-		
-		textBath = new JTextField();
-		textBath.setText("");
-		textBath.setEnabled(false);
-		textBath.setColumns(10);
-		textBath.setBounds(201, 256, 69, 34);
-		add(textBath);
-		
-		textKitchen = new JTextField();
-		textKitchen.setText("");
-		textKitchen.setEnabled(false);
-		textKitchen.setColumns(10);
-		textKitchen.setBounds(201, 312, 69, 33);
-		add(textKitchen);
 		
 		JLabel label = new JLabel("N\u00BA Cocinas*:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -143,7 +132,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		JLabel label_1 = new JLabel("N\u00BA Ba\u00F1os*:");
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_1.setBounds(82, 256, 96, 34);
+		label_1.setBounds(54, 256, 124, 34);
 		add(label_1);
 		
 		JLabel label_2 = new JLabel("Ciudad*:");
@@ -158,38 +147,17 @@ public class GestionCasaRuralGUI extends JPanel {
 		label_3.setBounds(54, 83, 124, 34);
 		add(label_3);
 		
-		textRooms = new JTextField();
-		textRooms.setText("");
-		textRooms.setEnabled(false);
-		textRooms.setColumns(10);
-		textRooms.setBounds(502, 211, 69, 34);
-		add(textRooms);
-		
-		textLiving = new JTextField();
-		textLiving.setText("");
-		textLiving.setEnabled(false);
-		textLiving.setColumns(10);
-		textLiving.setBounds(502, 256, 69, 34);
-		add(textLiving);
-		
-		textPark = new JTextField();
-		textPark.setText("");
-		textPark.setEnabled(false);
-		textPark.setColumns(10);
-		textPark.setBounds(502, 312, 69, 33);
-		add(textPark);
-		
 		btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					String description = textPaneDescription.getText();
 					String city = textCity.getText();
-					int nRooms = Integer.parseInt(textRooms.getText());
-					int nKitchen = Integer.parseInt(textKitchen.getText());
-					int nBaths = Integer.parseInt(textBath.getText());
-					int nLiving = Integer.parseInt(textLiving.getText());
-					int nPark = Integer.parseInt(textPark.getText());
+					int nRooms = (int) textRooms.getValue();
+					int nKitchen = (int) textKitchen.getValue();
+					int nBaths = (int) textBath.getValue();
+					int nLiving = (int) textLiving.getValue();
+					int nPark = (int) textPark.getValue();
 							
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
@@ -240,11 +208,11 @@ public class GestionCasaRuralGUI extends JPanel {
 									btnEliminar.setEnabled(true);
 									textPaneDescription.setText(rh.getDescription());
 									textCity.setText(rh.getCity());
-									textRooms.setText(Integer.toString(rh.getRooms()));
-									textKitchen.setText(Integer.toString(rh.getKitchen()));
-									textBath.setText(Integer.toString(rh.getBaths()));
-									textLiving.setText(Integer.toString(rh.getLiving()));
-									textPark.setText(Integer.toString(rh.getPark()));
+									textRooms.setValue(rh.getRooms());
+									textKitchen.setValue(rh.getKitchen());
+									textBath.setValue(rh.getBaths());
+									textLiving.setValue(rh.getLiving());
+									textPark.setValue(rh.getPark());
 									images = rh.getImages();
 									if (!images.isEmpty()){
 									rellenarImg();
@@ -352,6 +320,31 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaDer.png")));
 		add(labelflechaDer);
 		
+		textPark = new JSpinner();
+		textPark.setModel(modeloSpinnerAparcamiento);
+		textPark.setBounds(508, 312, 63, 33);
+		add(textPark);
+		
+		textLiving = new JSpinner();
+		textLiving.setModel(modeloSpinnerSala);
+		textLiving.setBounds(508, 256, 63, 33);
+		add(textLiving);
+		
+		textRooms = new JSpinner();
+		textRooms.setModel(modeloSpinnerHabitaciones);
+		textRooms.setBounds(508, 211, 63, 33);
+		add(textRooms);
+		
+		textBath = new JSpinner();
+		textBath.setBounds(201, 256, 63, 33);
+		textBath.setModel(modeloSpinnerBanos);
+		add(textBath);
+		
+		textKitchen = new JSpinner();
+		textKitchen.setModel(modeloSpinnerCocinas);
+		textKitchen.setBounds(201, 311, 63, 33);
+		add(textKitchen);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -363,24 +356,20 @@ public class GestionCasaRuralGUI extends JPanel {
 	private void enaDis(boolean b){
 		btnSalvar.setEnabled(b);
 		btnEliminar.setEnabled(b);
-		textBath.setEnabled(b);
 		textCity.setEnabled(b);
-		textKitchen.setEnabled(b);
-		textLiving.setEnabled(b);
 		textPaneDescription.setEnabled(b);
 		textPaneDescription.setEditable(b);
-		textPark.setEnabled(b);
-		textRooms.setEnabled(b);
 		comBoxImg.setEnabled(b);
 		btnanadirImg.setEnabled(b);
 		btnEliminarimg.setEnabled(b);
+		textKitchen.setEnabled(b);
+		textBath.setEnabled(b);
+		textCity.setEnabled(b);
+		textLiving.setEnabled(b);
+		textPark.setEnabled(b);
+		textRooms.setEnabled(b);
 		textPaneDescription.setText("");
 		textCity.setText("");
-		textRooms.setText("");
-		textKitchen.setText("");
-		textBath.setText("");
-		textLiving.setText("");
-		textPark.setText("");
 		modeloImg.removeAllElements();
 		images.clear();
 	}

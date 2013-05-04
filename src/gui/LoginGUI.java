@@ -7,8 +7,13 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import businessLogic.ApplicationFacadeInterface;
+
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.regex.Pattern;
 
 public class LoginGUI extends JPanel {
 	/**
@@ -46,6 +51,18 @@ public class LoginGUI extends JPanel {
 		});
 		
 		textEmail = new JTextField();
+		textEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String email = textEmail.getText();
+				String exp = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; 
+				CharSequence seq = email;
+				Pattern pattern = Pattern.compile(exp,Pattern.CASE_INSENSITIVE); 
+				java.util.regex.Matcher m = pattern.matcher(seq);
+				if (m.matches())textEmail.setForeground(Color.GREEN);
+				else textEmail.setForeground(Color.RED);
+			}
+		});
 		textEmail.setBounds(28, 16, 219, 25);
 		add(textEmail);
 		textEmail.setColumns(10);
