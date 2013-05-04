@@ -4,6 +4,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,15 +20,17 @@ import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.regex.Pattern;
 
 public class UserRegisterGUI extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField textEmail;
 	private JPasswordField passPass;
-	private JTextField textEdad;
 	private JTextField textNombre;
 	private JTextField textApellido;
 	private JTextField textTelefono;
@@ -34,7 +38,8 @@ public class UserRegisterGUI extends JPanel {
 	private JComboBox<String> comboEC;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JButton buttonRegister;
-	ApplicationFacadeInterface facade = Start.getBusinessLogic();
+	private JSpinner textEdad;
+	private SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(0, 0, 150, 1);
 
 	
 	/**
@@ -46,48 +51,56 @@ public class UserRegisterGUI extends JPanel {
 		JLabel label = new JLabel("Email (user)*:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label.setBounds(12, 13, 124, 34);
+		label.setBounds(12, 35, 156, 34);
 		add(label);
 		
 		textEmail = new JTextField();
+		
+		textEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String email = textEmail.getText();
+				String exp = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; 
+				CharSequence seq = email;
+				Pattern pattern = Pattern.compile(exp,Pattern.CASE_INSENSITIVE); 
+				java.util.regex.Matcher m = pattern.matcher(seq);
+				if (m.matches())textEmail.setForeground(Color.GREEN);
+				else textEmail.setForeground(Color.RED);
+			}
+		});
 		textEmail.setColumns(10);
-		textEmail.setBounds(148, 13, 366, 34);
+		textEmail.setBounds(192, 35, 366, 34);
 		add(textEmail);
 		
 		JLabel label_1 = new JLabel("Pass*:");
 		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_1.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_1.setBounds(12, 67, 124, 34);
+		label_1.setBounds(44, 104, 124, 34);
 		add(label_1);
 		
 		passPass = new JPasswordField();
-		passPass.setBounds(148, 67, 192, 34);
+		passPass.setBounds(192, 104, 192, 34);
 		add(passPass);
 		
 		JLabel label_2 = new JLabel("Edad");
 		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_2.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_2.setBounds(352, 67, 53, 34);
+		label_2.setBounds(396, 104, 53, 34);
 		add(label_2);
-		
-		textEdad = new JTextField();
-		textEdad.setColumns(10);
-		textEdad.setBounds(433, 67, 81, 34);
-		add(textEdad);
 		
 		textNombre = new JTextField();
 		textNombre.setColumns(10);
-		textNombre.setBounds(322, 121, 192, 34);
+		textNombre.setBounds(366, 173, 192, 34);
 		add(textNombre);
 		
 		JLabel label_3 = new JLabel("Nombre*");
 		label_3.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_3.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_3.setBounds(235, 121, 81, 34);
+		label_3.setBounds(279, 173, 81, 34);
 		add(label_3);
 		
 		comboEC = new JComboBox<String>();
-		comboEC.setBounds(148, 121, 75, 34);
+		comboEC.setBounds(192, 173, 75, 34);
 		comboEC.setModel(modeloEC);
 		modeloEC.addElement("");
 		modeloEC.addElement("Sr.");
@@ -98,40 +111,48 @@ public class UserRegisterGUI extends JPanel {
 		JLabel label_4 = new JLabel("Estado Civil*");
 		label_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_4.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_4.setBounds(12, 121, 124, 34);
+		label_4.setBounds(44, 173, 124, 34);
 		add(label_4);
 		
 		JLabel label_5 = new JLabel("Apellidos");
 		label_5.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_5.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_5.setBounds(12, 175, 124, 34);
+		label_5.setBounds(44, 242, 124, 34);
 		add(label_5);
 		
 		textApellido = new JTextField();
 		textApellido.setColumns(10);
-		textApellido.setBounds(148, 175, 366, 34);
+		textApellido.setBounds(192, 242, 366, 34);
 		add(textApellido);
 		
 		textTelefono = new JTextField();
+		textTelefono.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char car = evt.getKeyChar();
+				if(textTelefono.getText().length()>=9) evt.consume();
+				if((car<'0' || car>'9')) evt.consume();
+			}
+		});
 		textTelefono.setColumns(10);
-		textTelefono.setBounds(148, 229, 133, 34);
+		textTelefono.setBounds(192, 311, 133, 34);
 		add(textTelefono);
 		
 		JLabel label_6 = new JLabel("Telefono");
 		label_6.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_6.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_6.setBounds(12, 229, 124, 34);
+		label_6.setBounds(44, 311, 124, 34);
 		add(label_6);
 		
 		JLabel label_7 = new JLabel("Pais*");
 		label_7.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_7.setFont(new Font("Dialog", Font.PLAIN, 21));
-		label_7.setBounds(293, 229, 53, 34);
+		label_7.setBounds(337, 311, 53, 34);
 		add(label_7);
 		
 		textPais = new JTextField();
 		textPais.setColumns(10);
-		textPais.setBounds(358, 229, 156, 34);
+		textPais.setBounds(402, 311, 156, 34);
 		add(textPais);
 		
 		buttonRegister = new JButton("");
@@ -141,12 +162,13 @@ public class UserRegisterGUI extends JPanel {
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
-				String edad = textEdad.getText();
+				String edad = textEdad.getValue().toString();
 				String estadoCivil = (String) comboEC.getSelectedItem();
 				String nombre = textNombre.getText();
 				String apellidos = textApellido.getText();
 				String telefono = textTelefono.getText();
 				String pais = textPais.getText();
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					if(facade.estadoLogin()){
 						try {
@@ -159,7 +181,7 @@ public class UserRegisterGUI extends JPanel {
 						}
 					}else{ 
 						try {
-							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, (String) edad);
 							JPanel temp = new LoginONGUI();
 							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
@@ -183,15 +205,20 @@ public class UserRegisterGUI extends JPanel {
 		});
 		buttonRegister.setForeground(Color.BLUE);
 		buttonRegister.setFont(new Font("Dialog", Font.PLAIN, 21));
-		buttonRegister.setBounds(390, 285, 124, 45);
+		buttonRegister.setBounds(434, 380, 124, 45);
 		add(buttonRegister);
 		
 		JLabel label_8 = new JLabel("Los campos marcados con * son obligatorios");
 		label_8.setHorizontalAlignment(SwingConstants.RIGHT);
 		label_8.setForeground(Color.RED);
 		label_8.setFont(new Font("Dialog", Font.PLAIN, 18));
-		label_8.setBounds(12, 290, 366, 34);
+		label_8.setBounds(54, 380, 366, 34);
 		add(label_8);
+		
+		textEdad = new JSpinner();
+		textEdad.setBounds(477, 104, 81, 34);
+		textEdad.setModel(modeloSpinner);
+		add(textEdad);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -203,13 +230,13 @@ public class UserRegisterGUI extends JPanel {
 	
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		//ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			if (facade.estadoLogin()){
 				UserAplication user = facade.getUsuario();
 				textEmail.enable(false);
 				textEmail.setText(user.getEmail());
-				textEdad.setText(user.getEdad());
+				textEdad.setValue(Integer.parseInt(user.getEdad()));
 				textNombre.setText(user.getName());
 				textApellido.setText(user.getApellidos());
 				textTelefono.setText(user.getTelefono());
@@ -220,7 +247,7 @@ public class UserRegisterGUI extends JPanel {
 				textEmail.enable(true);
 				textEmail.setText("");
 				passPass.setText("");
-				textEdad.setText("");
+				modeloSpinner.setValue(0);
 				textNombre.setText("");
 				textApellido.setText("");
 				textTelefono.setText("");
