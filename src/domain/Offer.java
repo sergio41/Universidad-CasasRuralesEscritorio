@@ -44,9 +44,12 @@ public class Offer implements Serializable {
 	private void setUnidoAFechaExternamente(){
 		if(vectorFechas != null){
 			Iterator<Fechas> i = vectorFechas.iterator();
-			while (i.hasNext()) i.next().setOferta(this, unidoOferta);
-		}
-		
+			while (i.hasNext()){
+				Fechas auxi = i.next();
+				if (auxi.getPrecio()==0)auxi.setOferta(this, true);
+				else auxi.setOferta(this, unidoOferta);
+			}
+		}	
 	}
 	
 	public Date getPrimerDia(){return firstDay;}

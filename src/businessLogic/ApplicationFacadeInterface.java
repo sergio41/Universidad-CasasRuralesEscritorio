@@ -1,13 +1,10 @@
 package businessLogic;
-
-import java.awt.Image;
 import java.io.File;
 import java.rmi.*;
 import java.util.Vector;
 import java.util.Date;
-import domain.Owner;
-import domain.RuralHouse;
-import domain.UserAplication;
+
+import domain.*;
 
 public interface ApplicationFacadeInterface extends Remote {
 	public Vector<RuralHouse> getAllRuralHouses()throws RemoteException,
@@ -55,4 +52,5 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception;
 
+	public Vector<Offer> getOfertas(int numeroRH) throws Exception;
 }

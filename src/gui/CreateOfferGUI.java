@@ -1,25 +1,19 @@
 package gui;
 
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
-import domain.RuralHouse;
-import businessLogic.ApplicationFacadeInterface;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Date;
+
+import domain.*;
+import businessLogic.*;
+import java.awt.event.*;
+import java.beans.*;
+import java.util.*;
 
 public class CreateOfferGUI extends JPanel {
 
@@ -30,22 +24,31 @@ public class CreateOfferGUI extends JPanel {
 	private JDateChooser calendarLastday;
 	private JButton bttnSalvar;
 	private JTextField textPrecio;
+	private JTable table;
+	private DefaultTableModel modelTb = new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Numero", "Inicio", "Fin", "Precio", "Obligatorio"
+			}
+		);
 
 	public CreateOfferGUI(){
 		setLayout(null);
 		JLabel ruralhouselbl = new JLabel("Casa rural: ");
-		ruralhouselbl.setBounds(366, 35, 102, 22);
+		ruralhouselbl.setBounds(155, 35, 102, 22);
 		ruralhouselbl.setForeground(Color.BLUE);
 		ruralhouselbl.setFont(new Font("Tekton Pro", Font.PLAIN, 21));
 		add(ruralhouselbl);
 		
 		comBoxCasas = new JComboBox<Integer>();
-		comBoxCasas.setBounds(478, 35, 149, 22);
+		comBoxCasas.setBounds(267, 35, 149, 22);
 		comBoxCasas.setModel(modeloEC);
 		comBoxCasas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() != -1){
 					enaDis(true);
+					actualizarTabla((int)comBoxCasas.getSelectedItem());
 				}
 			}
 		});
@@ -135,13 +138,19 @@ public class CreateOfferGUI extends JPanel {
 		JLabel lblPrecio = new JLabel("Precio:");
 		lblPrecio.setForeground(Color.BLUE);
 		lblPrecio.setFont(new Font("Dialog", Font.PLAIN, 21));
-		lblPrecio.setBounds(671, 109, 110, 22);
+		lblPrecio.setBounds(117, 391, 110, 22);
 		add(lblPrecio);
 		
 		textPrecio = new JTextField();
 		textPrecio.setColumns(10);
-		textPrecio.setBounds(773, 109, 149, 22);
+		textPrecio.setBounds(219, 391, 149, 22);
 		add(textPrecio);
+		
+		table = new JTable();
+		table.setModel(modelTb);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setBounds(582, 35, 371, 301);
+		add(table);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -168,5 +177,28 @@ public class CreateOfferGUI extends JPanel {
 		calendarFirstday.setEnabled(b);
 		calendarLastday.setEnabled(b);
 		bttnSalvar.setEnabled(b);
+	}
+	
+	private void actualizarTabla(int numeroRH){
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		try {
+			int a = modelTb.getRowCount()-1;
+			for(int i=0; i<a;i++) modelTb.removeRow(i);
+			Vector<Offer> aux =  facade.getOfertas(numeroRH);
+			Iterator<Offer> i = aux.iterator();
+			while (i.hasNext()){
+				Vector<Object> vector = new Vector<Object>();
+				Offer auxi = i.next();
+				vector.add(1);
+				vector.add(auxi.getPrimerDia());
+				vector.add(auxi.getUltimoDia());
+				vector.add(auxi.getPrice());
+				vector.add(auxi.isUnidoAFechas());
+				modelTb.addRow(vector);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

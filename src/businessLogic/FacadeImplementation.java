@@ -1,6 +1,4 @@
 package businessLogic;
-
-import java.awt.Image;
 import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -11,6 +9,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 import configuration.Config;
 import dataAccess.DB4oManager;
+import domain.Offer;
 import domain.Owner;
 import domain.RuralHouse;
 import domain.UserAplication;
@@ -183,6 +182,16 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception{
 		usuario = DB4oManager.anadirOferta(usuario, numero, inicio, fin, precio, obligatorio);
+	}
+
+
+	public Vector<Offer> getOfertas(int numeroRH) throws Exception {
+		Iterator<RuralHouse> i = usuario.getPropietario().getRuralHouses().iterator();
+		while (i.hasNext()){
+			RuralHouse aux = i.next();
+			if (aux.getHouseNumber() == numeroRH) return aux.getOfertas();
+		}
+		throw new Exception("Ha ocurrido un error a la hora de encontrar ofertas");
 	}
 }
 

@@ -1,6 +1,5 @@
 package domain;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
@@ -110,41 +109,48 @@ public class RuralHouse implements Serializable {
 	}*/
 	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio) throws Exception{
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
+		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
 		Date primero = (Date) primerDia.clone();
 		Date auxp = primerDia;
-		Date auxu = ultimoDia;
-		boolean esta = false;
 		Fechas auxFecha = new Fechas(null, 0, null, 0);
-		while (auxp.compareTo(auxu)<=0){
+		while (auxp.compareTo(ultimoDia)<=0){
 			Iterator<Fechas> i = vectorFechas.iterator();
 			while (i.hasNext()){
-				auxFecha = i.next();
-				System.out.println("VectorViejo: " + auxFecha.getFecha().toString());
-				
+				auxFecha = i.next();				
 				if (auxp.compareTo(auxFecha.getFecha())==0) {
 					vectorFechas.remove(primero);
 					while (primero.compareTo(auxp)!=0){
-					primero.setTime(primero.getTime()+1*24*60*60*1000);
+						primero.setTime(primero.getTime()+1*24*60*60*1000);
 					}
 					throw new Exception ("Colision de fechas. Reintroduce las fechas de la nueva oferta.");
-			
 				}
 			}
-				if(!vectorFechas.contains(auxp)){
-			//if (auxFecha.(null) || auxp.compareTo(auxFecha.getFecha())!=0)
-	//(aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
+			if(!vectorFechas.contains(auxp)){
+				//if (auxFecha.(null) || auxp.compareTo(auxFecha.getFecha())!=0)
+				//(aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
 				Object aux5 = auxp.clone();
 				Date aux1 = (Date) aux5;
-				auxFecha = new Fechas(aux1, 0, this, houseNumber);
+				auxFecha = new Fechas(aux1, 0, this, 0);
+				auxVectorFechasNuevas.add(auxFecha);
 				vectorFechas.add(auxFecha);
 				auxVectorFechas.add(auxFecha);
 			}
-			System.out.println("Vector: " + auxFecha.getFecha().toString());
-			Iterator<Fechas> j = vectorFechas.iterator();
-			while(j.hasNext()){ System.out.println("VectorFinal: " + j.next().getFecha().toString());}
 			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
 		}
-		vectorOfertas.add(new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio));
+		Offer oferta = new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio);
+		vectorOfertas.add(oferta);
+		
+		Iterator<Fechas> i = auxVectorFechasNuevas.iterator();
+		while(obligatorio && i.hasNext()){
+			Fechas auxi = i.next();
+			Iterator<Fechas> j = vectorFechas.iterator();
+			while(j.hasNext()){
+				Fechas auxj = j.next();
+				if (auxj.equals(auxi)){
+					auxj.setOferta(oferta, true);
+				}
+			}
+		}
 	}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
