@@ -1,5 +1,6 @@
 package gui;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -9,6 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 import java.util.Date;
 import javax.swing.JButton;
 
@@ -23,6 +25,7 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 
 
 
@@ -36,6 +39,7 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JTextField textCiudad;
 	private static JButton btnGestionCasasRurales;
 	private static JButton btnGestionOfertas;
+	private static JLabel lblMapa;
 	
 	/**
 	 * Create the panel.
@@ -145,6 +149,10 @@ public class PantallaPrincipalGUI extends JPanel {
 		});
 		btnGestionOfertas.setBounds(20, 377, 223, 28);
 		add(btnGestionOfertas);
+		
+		lblMapa = new JLabel("mapa");
+		lblMapa.setBounds(376, 98, 319, 278);
+		add(lblMapa);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -167,6 +175,22 @@ public class PantallaPrincipalGUI extends JPanel {
 		}
 		btnGestionCasasRurales.setVisible(login);
 		btnGestionOfertas.setVisible(login);
+		mapa();
 	}
+	
+	public void mapa(){
+		try{
+		  BufferedImage img = ImageIO.read(new URL("http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"));
+		  lblMapa.setIcon(new ImageIcon(img));
+				 //File outputfile = new File("map.png");
+				   // ImageIO.write(img, "png", outputfile);
+				   // System.out.println("Saved!");
+				    } catch (Exception ex) {
+				         System.out.println("Error!" + ex);
+				    }
+		
+	
+	}
+
 }
 
