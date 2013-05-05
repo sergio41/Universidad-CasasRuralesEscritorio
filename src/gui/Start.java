@@ -48,6 +48,7 @@ public class Start extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
+			new PantallaCargandoLanzadora();
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 			Config c=Config.getInstance();
@@ -184,4 +185,6 @@ public class Start extends JFrame {
 		Timer timer = new Timer(); 
 		timer.scheduleAtFixedRate(timerTask, 0, 15000);
 	}
+	
+	
 }
