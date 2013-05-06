@@ -24,8 +24,9 @@ public class verFotos extends JFrame {
 	private DefaultComboBoxModel<Integer> modeloCombo = new DefaultComboBoxModel<Integer>();
 	private JLabel label_1 = new JLabel("");
 	private JLabel label_2 = new JLabel("");
-	private ImageIcon imagenDefecto;
+	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
 	private JLabel lblNewLabel;
+	private Image aux = (new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"))).getImage();
 	/**
 	 * Launch the application.
 	 */
@@ -59,7 +60,7 @@ public class verFotos extends JFrame {
 		comboBox = new JComboBox<Integer>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				rellenarComboBox();
+				cargarImagen(0);
 			}
 		});
 		comboBox.setModel(modeloCombo);
@@ -102,7 +103,7 @@ public class verFotos extends JFrame {
 	}
 	
 	public  void cargarImagen(int numero){
-		Image aux = imagenDefecto.getImage();
+		
 		if (images != null) {
 			if (images != null && numero >= images.size()) numero = images.size();
 			if (images != null && images.size() != 0)aux = images.elementAt(numero);

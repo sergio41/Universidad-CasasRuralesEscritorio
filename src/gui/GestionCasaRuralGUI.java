@@ -196,6 +196,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				if (comBoxCasas.getSelectedIndex() != -1){
+					images = new Vector<Image>();
 					enaDis(true);
 					btnEliminar.setEnabled(false);
 					if (comBoxCasas.getSelectedIndex() != 0){
@@ -215,7 +216,6 @@ public class GestionCasaRuralGUI extends JPanel {
 									textLiving.setValue(rh.getLiving());
 									textPark.setValue(rh.getPark());
 									images = facade.getFotosRH(rh.getHouseNumber());
-									cargarImagen(0);
 									break;
 								}
 							}
@@ -224,6 +224,8 @@ public class GestionCasaRuralGUI extends JPanel {
 							e.printStackTrace();
 						}
 					}
+					cargarImagen(0);
+					rellenarComboBox();
 				}
 			}
 		});
@@ -252,7 +254,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		comBoxImg = new JComboBox<Integer>();
 		comBoxImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cargarImagen(0);
+				cargarImagen(comBoxImg.getSelectedIndex());
 			}
 		});
 		comBoxImg.setSelectedIndex(-1);
@@ -263,7 +265,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		btnEliminarimg = new JButton("Eliminar");
 		btnEliminarimg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				images.remove(comBoxImg.getSelectedIndex());
+				cargarImagen(0);
+				rellenarComboBox();
 			}
 		});
 		btnEliminarimg.setBounds(848, 59, 76, 23);
@@ -273,6 +277,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaIzq.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				System.out.println(comBoxImg.getSelectedIndex());
 				if (comBoxImg.getSelectedIndex() !=0) comBoxImg.setSelectedIndex(comBoxImg.getSelectedIndex()-1);
 			}
 		});
@@ -284,7 +289,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		labelflechaDer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (comBoxImg.getSelectedIndex() != comBoxImg.getItemCount()) comBoxImg.setSelectedIndex(comBoxImg.getSelectedIndex()+1);
+				System.out.println(comBoxImg.getSelectedIndex());
+				System.out.println(comBoxImg.getItemCount());
+				if (comBoxImg.getSelectedIndex() != comBoxImg.getItemCount()-1) comBoxImg.setSelectedIndex(comBoxImg.getSelectedIndex()+1);
 			}
 		});
 		labelflechaDer.setBounds(941, 196, 50, 50);
@@ -397,7 +404,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		Image aux = imagenDefecto.getImage();
 		if (images != null) {
 			if (images != null && numero >= images.size()) numero = images.size();
-			if (images != null && images.size() != 0)aux = images.elementAt(numero);
+			if (images != null && images.size() > 0 && numero >= 0) aux = images.elementAt(numero);
 		}
         Image aux1 = aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));
@@ -410,7 +417,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			labelflechaIzq.setEnabled(false);
 			labelflechaDer.setEnabled(false);
 		} else { 
-			for (int i = 1; i<images.size(); i++) modeloImg.addElement(i);
+			for (int i = 1; i<=images.size(); i++) modeloImg.addElement(i);
 			comBoxImg.setEnabled(true);
 			labelflechaIzq.setEnabled(true);
 			labelflechaDer.setEnabled(true);
