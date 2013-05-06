@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
@@ -51,6 +52,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JComboBox<String> comBoxImg;
 	private JButton btnanadirImg;
 	private static Vector<File> images = new Vector<File>();
+	private JButton btnVerMapa;
 	private JSpinner textLiving;
 	private JSpinner textRooms;
 	private JSpinner textBath;
@@ -345,6 +347,19 @@ public class GestionCasaRuralGUI extends JPanel {
 		textKitchen.setBounds(201, 311, 63, 33);
 		add(textKitchen);
 		
+		btnVerMapa = new JButton("Ver Mapa");
+		btnVerMapa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Frame a = new Mapas(textCity.getText());
+				a.setVisible(true);
+			}
+		});
+		btnVerMapa.setForeground(Color.BLUE);
+		btnVerMapa.setFont(new Font("Dialog", Font.PLAIN, 21));
+		btnVerMapa.setEnabled(false);
+		btnVerMapa.setBounds(31, 385, 124, 45);
+		add(btnVerMapa);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -372,6 +387,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		textCity.setText("");
 		modeloImg.removeAllElements();
 		images.clear();
+		btnVerMapa.setEnabled(b);
 	}
 
 

@@ -23,7 +23,6 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	private static UserAplication usuario;
 	private static String emailUser;
 	private static Vector<String> twitter10;
-	BookManager theBookMngr;
 	
 	public FacadeImplementation() throws RemoteException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Config c=Config.getInstance();
@@ -85,7 +84,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 				EnviarCorreo.enviarCorreos(email, "Registro en Villatripas de Arriba", "Te has registrado en villatripas de arriba con el email: " + email);
 				GestionTwitter.enviarTweet("Bienvenid@: " + nombre + " " + Calendar.getInstance().getTime().toString());
 			} catch (Exception e) {
-				throw new Exception("Error al enviar el email de registro o envio de tweet automatico.");
+				javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Este error no es significativo.", javax.swing.JOptionPane.ERROR_MESSAGE);
+				//throw new Exception("Error al enviar el email de registro o envio de tweet automatico.");
 			}
 		}
 	}	

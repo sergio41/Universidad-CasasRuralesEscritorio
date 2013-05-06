@@ -76,6 +76,7 @@ public class LoginGUI extends JPanel {
 		btnSignUp = new JButton("Sign UP!");
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				JPanel temp = new UserRegisterGUI();
 				Start.modificarPanelAbajo(temp);
 			}
