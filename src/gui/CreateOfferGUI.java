@@ -152,7 +152,10 @@ public class CreateOfferGUI extends JPanel {
 		textPrecio.setBounds(196, 219, 149, 22);
 		add(textPrecio);
 		
-		table = new JTable();
+		table = new JTable(){
+	        public boolean isCellEditable(int rowIndex, int vColIndex) {
+	            return false;
+	        }};
 		table.setModel(modelTb);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBounds(402, 35, 551, 317);

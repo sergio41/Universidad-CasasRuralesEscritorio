@@ -205,5 +205,14 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		return vector;
 	}
+	
+	public RuralHouse getCasas(int num) throws Exception {
+		RuralHouse vector;
+		vector = DB4oManager.getRuralHouse(num);
+		if(vector==null){
+			throw new Exception("No existen casas con esos datos.");
+		}
+		return vector;
+	}
 }
 

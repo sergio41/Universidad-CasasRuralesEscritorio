@@ -190,6 +190,7 @@ public class DB4oManager {
 				if(casa.getHouseNumber() == numero){
 					userConcreto.getPropietario().getRuralHouses().remove(casa);
 					db.store(userConcreto);
+					db.delete(casa);
 					db.commit();
 					return getUser(user.getEmail());
 				}
@@ -264,7 +265,6 @@ public class DB4oManager {
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 	}
-
 
 }
 	

@@ -55,4 +55,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception;
 
 	public Vector<Offer> getOfertas(int numeroRH) throws Exception;
+	
+	public RuralHouse getCasas(int num) throws Exception;
 }
