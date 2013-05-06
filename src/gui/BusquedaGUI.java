@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -31,6 +32,10 @@ import javax.swing.table.TableColumn;
 import java.awt.ScrollPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class BusquedaGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -69,6 +74,9 @@ public class BusquedaGUI extends JPanel {
 	private JTextPane textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
+	private JCheckBox chckbxNewCheckBox;
+	private JDateChooser dateChooserFin;
+	private JDateChooser dateChooserIni;
 	
 	@SuppressWarnings("serial")
 	public BusquedaGUI() {
@@ -114,28 +122,55 @@ public class BusquedaGUI extends JPanel {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String ciudad =(String) comboCity.getSelectedItem();
-					int Banos;
-					int Habita;
-					int Cocina;
-					int Estar;
-					int Park;
-					if(comboBanos.getSelectedIndex()==-1){Banos=0;
-					}else{Banos = Integer.parseInt((String) comboBanos.getSelectedItem());}
+					if(chckbxNewCheckBox.isSelected()){
+						String ciudad =(String) comboCity.getSelectedItem();
+						int Banos;
+						int Habita;
+						int Cocina;
+						int Estar;
+						int Park;
+						if(comboBanos.getSelectedIndex()==-1){Banos=0;
+						}else{Banos = Integer.parseInt((String) comboBanos.getSelectedItem());}
+						
+						if(comboHabita.getSelectedIndex()==-1){Habita=0;
+						}else{Habita = Integer.parseInt((String) comboHabita.getSelectedItem());}
+						
+						if(comboCocinas.getSelectedIndex()==-1){Cocina=0;
+						}else{Cocina = Integer.parseInt((String) comboCocinas.getSelectedItem());}
+						
+						if(comboEstar.getSelectedIndex()==-1){Estar=0;
+						}else{Estar = Integer.parseInt((String) comboEstar.getSelectedItem());}
+						
+						if(comboPark.getSelectedIndex()==-1){Park=0;
+						}else{Park = Integer.parseInt((String) comboPark.getSelectedItem());}
 					
-					if(comboHabita.getSelectedIndex()==-1){Habita=0;
-					}else{Habita = Integer.parseInt((String) comboHabita.getSelectedItem());}
-					
-					if(comboCocinas.getSelectedIndex()==-1){Cocina=0;
-					}else{Cocina = Integer.parseInt((String) comboCocinas.getSelectedItem());}
-					
-					if(comboEstar.getSelectedIndex()==-1){Estar=0;
-					}else{Estar = Integer.parseInt((String) comboEstar.getSelectedItem());}
-					
-					if(comboPark.getSelectedIndex()==-1){Park=0;
-					}else{Park = Integer.parseInt((String) comboPark.getSelectedItem());}
-					
-					actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park);
+						actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park);
+					}else{
+						String ciudad =(String) comboCity.getSelectedItem();
+						int Banos;
+						int Habita;
+						int Cocina;
+						int Estar;
+						int Park;
+						if(comboBanos.getSelectedIndex()==-1){Banos=0;
+						}else{Banos = Integer.parseInt((String) comboBanos.getSelectedItem());}
+						
+						if(comboHabita.getSelectedIndex()==-1){Habita=0;
+						}else{Habita = Integer.parseInt((String) comboHabita.getSelectedItem());}
+						
+						if(comboCocinas.getSelectedIndex()==-1){Cocina=0;
+						}else{Cocina = Integer.parseInt((String) comboCocinas.getSelectedItem());}
+						
+						if(comboEstar.getSelectedIndex()==-1){Estar=0;
+						}else{Estar = Integer.parseInt((String) comboEstar.getSelectedItem());}
+						
+						if(comboPark.getSelectedIndex()==-1){Park=0;
+						}else{Park = Integer.parseInt((String) comboPark.getSelectedItem());}
+						
+						Date ini = dateChooserIni.getDate();
+						Date fin = dateChooserFin.getDate();
+						actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park,ini, fin);
+					}
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -214,7 +249,7 @@ public class BusquedaGUI extends JPanel {
 		add(tableCasas);
 		
 		scrollPane = new JScrollPane(tableCasas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setBounds(377, 146, 571, 106);
+		scrollPane.setBounds(377, 68, 571, 184);
 		add(scrollPane);
 		
 		tableOfertas = new JTable();
@@ -258,12 +293,54 @@ public class BusquedaGUI extends JPanel {
 		
 		lblTelef = new JLabel("");
 		lblTelef.setForeground(new Color(0, 128, 0));
-		lblTelef.setBounds(128, 397, 239, 21);
+		lblTelef.setBounds(128, 404, 239, 14);
 		add(lblTelef);
 		
 		JButton btnImg = new JButton("Ver imagenes");
-		btnImg.setBounds(373, 397, 249, 23);
+		btnImg.setBounds(373, 367, 249, 23);
 		add(btnImg);
+		
+		dateChooserIni = new JDateChooser();
+		dateChooserIni.setEnabled(true);
+		dateChooserIni.setDateFormatString("yyyy-MM-dd");
+		dateChooserIni.setBounds(551, 30, 149, 21);
+		add(dateChooserIni);
+		
+		dateChooserFin = new JDateChooser();
+		dateChooserFin.setEnabled(true);
+		dateChooserFin.setDateFormatString("yyyy-MM-dd");
+		dateChooserFin.setBounds(799, 30, 149, 22);
+		add(dateChooserFin);
+		
+		JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
+		lblFechaInicio.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblFechaInicio.setBounds(480, 30, 74, 21);
+		add(lblFechaInicio);
+		
+		JLabel lblFechaFin = new JLabel("Fecha Fin:");
+		lblFechaFin.setFont(new Font("Dialog", Font.BOLD, 11));
+		lblFechaFin.setBounds(741, 30, 74, 21);
+		add(lblFechaFin);
+		
+		chckbxNewCheckBox = new JCheckBox("Sin fecha");
+		chckbxNewCheckBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(chckbxNewCheckBox.isSelected()){
+					dateChooserIni.setEnabled(false);
+					dateChooserFin.setEnabled(false);
+				}else{
+					dateChooserIni.setEnabled(true);
+					dateChooserFin.setEnabled(true);
+				}	
+			}
+		});
+		chckbxNewCheckBox.setOpaque(false);
+		chckbxNewCheckBox.setBounds(377, 30, 97, 23);
+		add(chckbxNewCheckBox);
+		
+		JButton buttonMapa = new JButton("Ver mapa");
+		buttonMapa.setBounds(373, 397, 249, 23);
+		add(buttonMapa);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
@@ -271,6 +348,33 @@ public class BusquedaGUI extends JPanel {
 		add(lblNewLabel);
 		
 		inicializarCampos();
+	}
+
+	protected void actualizarTabla(String city, int banos, int habita,
+			int cocina, int estar, int park, Date ini, Date fin) {
+		
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		try {
+			borrarTabla();
+			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
+			Iterator<RuralHouse> i = aux.iterator();
+			while (i.hasNext()){
+				Vector<Object>  vector = new Vector<Object>();
+				RuralHouse auxi = i.next();
+				vector.add(auxi.getHouseNumber());
+				vector.add(auxi.getCity());
+				vector.add(auxi.getBaths());
+				vector.add(auxi.getKitchen());
+				vector.add(auxi.getLiving());
+				vector.add(auxi.getRooms());
+				vector.add(auxi.getPark());
+				modelTb.addRow(vector);
+			}
+			ajustarColumnas();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.getMessage();
+		}
 	}
 
 	private void inicializarCampos() {
