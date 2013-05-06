@@ -187,8 +187,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return DB4oManager.casasRuralesDisponibles(inicio, fin);
 	}
 	
-	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad) throws Exception{
+	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin,
+			String Ciudad) throws Exception {
 		return DB4oManager.casasRuralesDisponibles(inicio, fin, Ciudad);
+	}
+	
+	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad, int Banos, int habita, int cocina, int sala, int park) throws Exception{
+		return DB4oManager.casasRuralesDisponibles(inicio, fin, Ciudad, Banos, habita, cocina, sala, park);
 	}
 	
 	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception{

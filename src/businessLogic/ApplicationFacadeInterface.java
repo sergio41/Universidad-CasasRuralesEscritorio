@@ -60,4 +60,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	public RuralHouse getCasas(int num) throws Exception;
 	
 	public Vector<Image> getFotosRH(int numeroDeCasa) throws Exception;
+
+	public Vector<RuralHouse> casasRuralesDisponibles(Date ini, Date fin,
+			String city, int banos, int habita, int cocina, int estar, int park)throws Exception;
 }

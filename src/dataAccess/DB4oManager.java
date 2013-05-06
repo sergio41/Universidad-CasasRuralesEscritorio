@@ -229,6 +229,28 @@ public class DB4oManager {
 		return result;	
 	}
 	
+	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String ciudad, int banos, int habita, int cocina, int sala, int park){
+		Vector<RuralHouse> result = new Vector<RuralHouse>();
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, 0, false, null, 0));	
+		System.out.println(inicio.toString());
+		System.out.println(ciudad+banos+habita+cocina+sala+park);
+		while (fechasConcretas.hasNext()){
+			System.out.println(ciudad+banos+habita+cocina+sala+park);
+			RuralHouse rh = fechasConcretas.next().getCasaRural();
+			if (rh.getCity().equalsIgnoreCase(ciudad) && 
+					rh.getBaths()==banos && 
+					rh.getRooms()==habita && 
+					rh.getKitchen()==cocina && 
+					rh.getLiving()==sala && 
+					rh.getPark()==park && 
+					rh.disponibleFechas(inicio, fin)){ 
+				System.out.println(ciudad+banos+habita+cocina+sala+park);
+				result.add(rh);
+			}
+		}
+		return result;	
+	}
+	
 	public static UserAplication hacerReserva(UserAplication user, int numero, Date inicio, Date fin) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
