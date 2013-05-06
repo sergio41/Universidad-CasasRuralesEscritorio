@@ -356,7 +356,7 @@ public class BusquedaGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			borrarTabla();
-			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
+			Vector<RuralHouse> aux =  facade.casasRuralesDisponibles(ini, fin, city,banos,habita,cocina,estar,park );
 			Iterator<RuralHouse> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object>  vector = new Vector<Object>();
@@ -372,7 +372,6 @@ public class BusquedaGUI extends JPanel {
 			}
 			ajustarColumnas();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.getMessage();
 		}
 	}
