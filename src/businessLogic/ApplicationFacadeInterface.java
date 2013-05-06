@@ -1,4 +1,5 @@
 package businessLogic;
+import java.awt.Image;
 import java.io.File;
 import java.rmi.*;
 import java.util.Vector;
@@ -12,11 +13,11 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public void close() throws RemoteException;
 
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception;
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception;
 	
 	public void modificarRuralHouse( int numero,
 			String description, String city, int nRooms, int nKitchen,
-			int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception;
+			int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception;
 
 	public void eliminarCasaRural (int numero) throws Exception;
 	
@@ -57,4 +58,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public Vector<Offer> getOfertas(int numeroRH) throws Exception;
 	
 	public RuralHouse getCasas(int num) throws Exception;
+	
+	public Vector<Image> getFotosRH(int numeroDeCasa) throws Exception;
 }

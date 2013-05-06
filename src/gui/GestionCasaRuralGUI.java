@@ -51,7 +51,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JButton btnEliminarimg;
 	private JComboBox<String> comBoxImg;
 	private JButton btnanadirImg;
-	private static Vector<File> images = new Vector<File>();
+	private  Vector<Image> images = new Vector<Image>();
 	private JButton btnVerMapa;
 	private JSpinner textLiving;
 	private JSpinner textRooms;

@@ -1,5 +1,11 @@
 package businessLogic;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
@@ -7,6 +13,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.sql.SQLException;
 import java.util.Vector;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import configuration.Config;
 import dataAccess.DB4oManager;
 import domain.Offer;
@@ -34,13 +44,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		usuario = DB4oManager.eliminarCasaRural(usuario, numero);
 	}
 	
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception{
+	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception{
 	if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 	else {			
 			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
 			if (nKitchen<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
 			if (nBaths<2) throw new Exception("La casa debe tener mínimo 2 baños.");
-			DB4oManager.anadirRuralHouse(usuario, getNumeroCR(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
+			DB4oManager.anadirRuralHouse(usuario, getNumeroCR(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, setGuardarImagenes(imagenes));
 		}
 	}
 	
@@ -63,13 +73,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			usuario= DB4oManager.nuevoOwner(usuario, usuario.getEmail(), bA, t, i, p, m);
 	}
 	
-	public void modificarRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception {
+	public void modificarRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception {
 		if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {					
 			if (nRooms<3) throw new Exception("La casa debe tener mínimo 3 habitaciones.");
 			if (nKitchen<1) throw new Exception("La casa debe tener mínimo 1 cocina.");
 			if (nBaths<2) throw new Exception("La casa debe tener mínimo 2 baños.");
-			DB4oManager.modificarRuralHouse(emailUser, numero, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
+			DB4oManager.modificarRuralHouse(emailUser, numero, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, setGuardarImagenes(imagenes));
 		}
 	}
 	
@@ -214,5 +224,42 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		return vector;
 	}
+
+	public Vector<Image> getFotosRH(int numeroDeCasa) throws Exception {
+		Vector<Image> aux = new Vector<Image>();
+		RuralHouse casa = DB4oManager.getRuralHouse(numeroDeCasa);
+		Iterator<File> i = casa.getImages().iterator();
+		while (i.hasNext()) aux.add((new ImageIcon(i.next().getPath())).getImage());
+		return aux;
+	}
+
+	private Vector<File> setGuardarImagenes(Vector<Image> imagenes, int numeroCasaRural) throws Exception {
+		Vector<File> aux = new Vector<File>();
+		Iterator<Image> i = imagenes.iterator();
+		while (i.hasNext()){
+			try {
+				Image auxi = i.next();
+				File fDestino = new File("\\imagenes\\"+usuario.getEmail()+"\\"+numeroCasaRural+"\\"+auxi.toString());
+				if(fDestino.exists())fDestino.delete();
+				BufferedImage bi = (BufferedImage) auxi;
+				ImageIO.write(bi, "png", fDestino);
+				aux.add(fDestino);
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+		return aux;
+	}
+	
+	 private static BufferedImage toBufferedImage(Image src) {
+	        int w = src.getWidth(null);
+	        int h = src.getHeight(null);
+	        int type = BufferedImage.TYPE_INT_RGB;  // other options
+	        BufferedImage dest = new BufferedImage(w, h, type);
+	        Graphics2D g2 = dest.createGraphics();
+	        g2.drawImage(src, 0, 0, null);
+	        g2.dispose();
+	        return dest;
+	    }
 }
 
