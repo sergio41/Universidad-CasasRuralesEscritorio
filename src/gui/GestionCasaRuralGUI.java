@@ -258,15 +258,25 @@ public class GestionCasaRuralGUI extends JPanel {
 		comBoxImg = new JComboBox<String>();
 		comBoxImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (comBoxCasas.getSelectedIndex() != -1){
+				int x;
+				if (comBoxImg.getSelectedIndex() != -1){
 					if(images!=null && images.size()>0){
-						int x =  comBoxImg.getSelectedIndex();
+						if(images.size()==1){
+							x=0;
+						}else{
+						x = comBoxImg.getSelectedIndex();}
 			            ImageIcon imagen = new ImageIcon(images.get(x).getPath());
 			            Image aux = imagen.getImage();
 			            Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
 			            image1label.setIcon(new ImageIcon(aux1));
 						btnEliminarimg.setEnabled(true);
 					}
+				}
+				else {
+					ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/casaDefault.png"));
+			        Image aux = imagen.getImage();
+			        Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+			        image1label.setIcon(new ImageIcon(aux1));
 				}
 			}
 		});
@@ -386,7 +396,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		textPaneDescription.setText("");
 		textCity.setText("");
 		modeloImg.removeAllElements();
-		images.clear();
+		//images.clear();
 		btnVerMapa.setEnabled(b);
 	}
 
@@ -520,12 +530,14 @@ public class GestionCasaRuralGUI extends JPanel {
 	}
 	
 	public void eliminarImagen(){
-		System.out.println(comBoxImg.getSelectedIndex());
 		String s = images.elementAt(comBoxImg.getSelectedIndex()).getPath();
-		comBoxImg.removeItem(comBoxImg.getSelectedItem());
 		images.removeElementAt(comBoxImg.getSelectedIndex());	
+		comBoxImg.removeItem(comBoxImg.getSelectedItem());
 		File d = new File(s);
         d.delete();
+        if (comBoxImg.getItemCount()==0){
+			btnEliminarimg.setEnabled(false);
+		}
         
 	}
 }
