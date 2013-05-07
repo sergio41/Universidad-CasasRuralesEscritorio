@@ -357,7 +357,6 @@ public class BusquedaGUI extends JPanel {
 		
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			System.out.println(ini);
 			borrarTabla();
 			borrarTablaOferta();
 			Vector<RuralHouse> aux =  facade.casasRuralesDisponibles(ini, fin, city,banos,habita,cocina,estar,park );

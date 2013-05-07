@@ -230,7 +230,6 @@ public class DB4oManager {
 		Fechas fechas= new Fechas(inicio, 0, false, null, 0, true);
 		ObjectSet<Fechas> fechasConcretas = db.queryByExample(fechas);	
 		while (fechasConcretas.hasNext()){
-			System.out.println(ciudad+banos+habita+cocina+sala+park);
 			RuralHouse rh = fechasConcretas.next().getCasaRural();
 			if(ciudad==null)
 				ciudad=rh.getCity();
@@ -250,7 +249,6 @@ public class DB4oManager {
 					rh.getKitchen()==cocina && 
 					rh.getLiving()==sala && 
 					rh.getPark()==park && rh.disponibleFechas(inicio, fin)){ 
-						System.out.println(ciudad+banos+habita+cocina+sala+park);
 						result.add(rh);
 					}
 			}
