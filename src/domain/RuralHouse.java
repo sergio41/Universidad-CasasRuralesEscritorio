@@ -183,6 +183,7 @@ public class RuralHouse implements Serializable {
 		Iterator<Fechas> i = vectorFechas.iterator();
 		while (i.hasNext()){
 			Fechas aux = i.next();
+			System.out.println(aux.getFecha()+"dentro");
 			if (aux.getFecha().compareTo(date)==0 && !aux.isReservado() && !aux.isUnidoOferta()) return true;
 			else if (aux.getFecha().compareTo(date)==0 && (aux.isReservado() || aux.isUnidoOferta())) return false;
 		}

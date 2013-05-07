@@ -152,24 +152,26 @@ public class BusquedaGUI extends JPanel {
 						int Cocina;
 						int Estar;
 						int Park;
-						if(comboBanos.getSelectedIndex()==-1){Banos=0;
+						if(comboBanos.getSelectedIndex()==-1){Banos=-1;
 						}else{Banos = Integer.parseInt((String) comboBanos.getSelectedItem());}
 						
-						if(comboHabita.getSelectedIndex()==-1){Habita=0;
+						if(comboHabita.getSelectedIndex()==-1){Habita=-1;
 						}else{Habita = Integer.parseInt((String) comboHabita.getSelectedItem());}
 						
-						if(comboCocinas.getSelectedIndex()==-1){Cocina=0;
+						if(comboCocinas.getSelectedIndex()==-1){Cocina=-1;
 						}else{Cocina = Integer.parseInt((String) comboCocinas.getSelectedItem());}
 						
-						if(comboEstar.getSelectedIndex()==-1){Estar=0;
+						if(comboEstar.getSelectedIndex()==-1){Estar=-1;
 						}else{Estar = Integer.parseInt((String) comboEstar.getSelectedItem());}
 						
-						if(comboPark.getSelectedIndex()==-1){Park=0;
+						if(comboPark.getSelectedIndex()==-1){Park=-1;
 						}else{Park = Integer.parseInt((String) comboPark.getSelectedItem());}
 						
 						Date ini = dateChooserIni.getDate();
+						Date ini2 = new Date(ini.getYear(), ini.getMonth(), ini.getDate(), 0, 0);
 						Date fin = dateChooserFin.getDate();
-						actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park,ini, fin);
+						Date fin2 = new Date(fin.getYear(), fin.getMonth(), fin.getDate(), 0, 0);
+						actualizarTabla(ciudad,Banos,Habita,Cocina,Estar,Park,ini2, fin2);
 					}
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -350,12 +352,14 @@ public class BusquedaGUI extends JPanel {
 		inicializarCampos();
 	}
 
-	protected void actualizarTabla(String city, int banos, int habita,
+	private void actualizarTabla(String city, int banos, int habita,
 			int cocina, int estar, int park, Date ini, Date fin) {
 		
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
+			System.out.println(ini);
 			borrarTabla();
+			borrarTablaOferta();
 			Vector<RuralHouse> aux =  facade.casasRuralesDisponibles(ini, fin, city,banos,habita,cocina,estar,park );
 			Iterator<RuralHouse> i = aux.iterator();
 			while (i.hasNext()){
@@ -418,6 +422,7 @@ public class BusquedaGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			borrarTabla();
+			borrarTablaOferta();
 			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
 			Iterator<RuralHouse> i = aux.iterator();
 			while (i.hasNext()){

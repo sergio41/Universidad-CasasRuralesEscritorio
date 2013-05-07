@@ -35,6 +35,17 @@ public class Fechas {
 		unidoOferta = false;
 	}
 	
+	public Fechas ( Date date, float cost, boolean estado, RuralHouse ruralHouse,  int minimoDias, boolean unido){
+		fecha = date;
+		precio = cost;
+		reservado = estado;
+		casaRural = ruralHouse;
+		minDias = minimoDias;
+		reserva = null;
+		offer = null;
+		unidoOferta = unido;
+	}
+	
 	public Date getFecha() {return fecha;}
 	
 	public float getPrecio() {return precio;}

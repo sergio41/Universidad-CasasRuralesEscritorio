@@ -227,23 +227,33 @@ public class DB4oManager {
 	
 	public static Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String ciudad, int banos, int habita, int cocina, int sala, int park){
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
-		ObjectSet<Fechas> fechasConcretas = db.queryByExample(new Fechas(inicio, 0, false, null, 0));	
-		System.out.println(inicio.toString());
-		System.out.println(ciudad+banos+habita+cocina+sala+park);
+		Fechas fechas= new Fechas(inicio, 0, false, null, 0, true);
+		ObjectSet<Fechas> fechasConcretas = db.queryByExample(fechas);	
 		while (fechasConcretas.hasNext()){
 			System.out.println(ciudad+banos+habita+cocina+sala+park);
 			RuralHouse rh = fechasConcretas.next().getCasaRural();
+			if(ciudad==null)
+				ciudad=rh.getCity();
+			if(banos==-1)
+				banos=rh.getBaths();
+			if(habita==-1)
+				habita=rh.getRooms();
+			if(cocina==-1)
+				cocina=rh.getKitchen();
+			if(sala==-1)
+				sala=rh.getLiving();
+			if(park==-1)
+				park=rh.getPark();
 			if (rh.getCity().equalsIgnoreCase(ciudad) && 
 					rh.getBaths()==banos && 
 					rh.getRooms()==habita && 
 					rh.getKitchen()==cocina && 
 					rh.getLiving()==sala && 
-					rh.getPark()==park && 
-					rh.disponibleFechas(inicio, fin)){ 
-				System.out.println(ciudad+banos+habita+cocina+sala+park);
-				result.add(rh);
+					rh.getPark()==park && rh.disponibleFechas(inicio, fin)){ 
+						System.out.println(ciudad+banos+habita+cocina+sala+park);
+						result.add(rh);
+					}
 			}
-		}
 		return result;	
 	}
 	
