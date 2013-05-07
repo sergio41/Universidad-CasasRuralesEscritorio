@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.rmi.Naming;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,11 +35,12 @@ public class Start extends JFrame {
 	public static ApplicationFacadeInterface facadeInterface;
 	public static JPanel panelArriba;
 	public static JPanel panelPrincipal;
-	
+	private static JLabel lblNewLabel_1;
 	private static Vector<String> vectorTwitter;
 	private static int intTwitter;
 	private static JTextPane textTwitter;
 	
+	private static ImageIcon logo;
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
 	}
@@ -138,7 +140,7 @@ public class Start extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/imagenes/home50x50.png")));
 		contentPane.add(lblNewLabel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(15, 0, 100, 100);
 		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/imagenes/logo100x100.png")));
 		contentPane.add(lblNewLabel_1);
@@ -147,6 +149,8 @@ public class Start extends JFrame {
 		lblNewLabel.setBounds(0, 0, 618, 100);
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoArriba.jpg")));
 		contentPane.add(lblNewLabel);
+		
+		logo = new ImageIcon(this.getClass().getResource("/imagenes/logo100x100.png"));
 	}
 
 	public static void modificarPanelAbajo(JPanel panel){
@@ -186,5 +190,17 @@ public class Start extends JFrame {
 		timer.scheduleAtFixedRate(timerTask, 0, 15000);
 	}
 	
+	
+	public static void setFotoDefecto(){
+		lblNewLabel_1.setIcon(logo);
+	}
+	
+	public static void setFotoPerfil(Image perfil){
+		if (perfil == null) setFotoDefecto();
+		else {
+	        Image aux1 = perfil.getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getWidth(), java.awt.Image.SCALE_SMOOTH);
+	        lblNewLabel_1.setIcon(new ImageIcon(aux1));
+		}
+	}
 	
 }

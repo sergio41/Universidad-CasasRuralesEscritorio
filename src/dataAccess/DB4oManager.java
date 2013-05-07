@@ -1,14 +1,8 @@
 package dataAccess;
-
-import java.awt.Image;
 import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
-
-import javax.swing.ImageIcon;
-
-
 import com.db4o.*;
 import configuration.Config;
 import domain.*;
@@ -84,11 +78,12 @@ public class DB4oManager {
 		return vector;
 	}
 	
-	public static UserAplication nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
+	public static UserAplication nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, String perfil) throws Exception {
 		UserAplication u = new UserAplication(email, null, null, null, null, null, null, null);
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(u);	
 		if (userConcretos.hasNext()) throw new Exception("El email ya esta usado. Logueate");
 		UserAplication user = new UserAplication(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+		user.setPerfil(perfil);
 		db.store(user);
 		db.commit();
 		return user;
@@ -112,7 +107,7 @@ public class DB4oManager {
 		} else throw new Exception("La casa rural no se puede modificar. No se ha encontrado en la base de datos.");
 	}
 	
-	public static UserAplication modificarUsuario(UserAplication user, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
+	public static UserAplication modificarUsuario(UserAplication user, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, String perfil) throws Exception {
 		UserAplication u = new UserAplication(user.getEmail(), null, null, null, null, null, null, null);
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(u);	
 		if (userConcretos.hasNext()){ 
@@ -123,6 +118,7 @@ public class DB4oManager {
 			use.setTelefono(telefono);
 			use.setPais(pais);
 			use.setEdad(edad);
+			use.setPerfil(perfil);
 			db.store(user);
 			db.commit();
 			return user;

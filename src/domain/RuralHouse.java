@@ -71,7 +71,6 @@ public class RuralHouse implements Serializable {
 	public Vector<Book> getReservas(){return vectorReservas;}
 	
 	public Vector<Offer> getOfertas(){ return vectorOfertas;}
-	@SuppressWarnings("deprecation")
 	/*public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Fechas auxFecha = new Fechas(primerDia, precio, this, houseNumber);

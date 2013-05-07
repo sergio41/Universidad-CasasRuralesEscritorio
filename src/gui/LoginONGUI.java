@@ -36,6 +36,7 @@ public class LoginONGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					facade.logout();
+					Start.setFotoDefecto();
 					JPanel temp1 = new LoginGUI();
 					Start.modificarPanelArriba(temp1);
 					JPanel temp2 = new PantallaPrincipalGUI();
@@ -97,6 +98,7 @@ public class LoginONGUI extends JPanel {
 		lblNewLabel.setVisible(true);
 		
 		inicializarCampos();
+		
 	}
 	
 	public void inicializarCampos(){
@@ -111,6 +113,7 @@ public class LoginONGUI extends JPanel {
 				modOwner.setText("Ser Propietario");
 				txtpnPropietario.setText("Registrado como usuario.");
 			}
+			Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
 		} catch (Exception e) {
 			e.getMessage();
 		}

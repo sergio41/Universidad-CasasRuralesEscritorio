@@ -2,11 +2,14 @@ package gui;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Color;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -21,10 +24,12 @@ import businessLogic.ApplicationFacadeInterface;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.regex.Pattern;
 
 public class UserRegisterGUI extends JPanel {
@@ -40,7 +45,9 @@ public class UserRegisterGUI extends JPanel {
 	private JButton buttonRegister;
 	private JSpinner textEdad;
 	private SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(0, 0, 150, 1);
-
+	private Image perfil = null;
+	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
+	private JLabel labelFoto;
 	
 	/**
 	 * Create the panel.
@@ -172,26 +179,29 @@ public class UserRegisterGUI extends JPanel {
 				try {
 					if(facade.estadoLogin()){
 						try {
-							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad);
+							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad, perfil);
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 							JPanel temp1 = new PantallaPrincipalGUI();
 							Start.modificarPanelAbajo(temp1);
+							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
 					}else{ 
 						try {
-							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, (String) edad);
+							facade.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, (String) edad, perfil);
 							JPanel temp = new LoginONGUI();
 							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 							facade.hacerLogin(email, pass);
+							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
 							if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
 								JPanel temp1 = new OwnerRegisterGUI();
 								Start.modificarPanelAbajo(temp1);
 							}else{
 								JPanel temp1 = new PantallaPrincipalGUI();
-								Start.modificarPanelAbajo(temp1);}
+								Start.modificarPanelAbajo(temp1);
+							}
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
@@ -220,6 +230,29 @@ public class UserRegisterGUI extends JPanel {
 		textEdad.setModel(modeloSpinner);
 		add(textEdad);
 		
+		JButton btnAadirfoto = new JButton("A\u00F1adirFoto");
+		btnAadirfoto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				anadirImagen();
+			}
+		});
+		btnAadirfoto.setBounds(653, 84, 109, 23);
+		add(btnAadirfoto);
+		
+		labelFoto = new JLabel("");
+		labelFoto.setBounds(653, 120, 250, 250);
+		add(labelFoto);
+		
+		JButton button_1 = new JButton("Eliminar");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				perfil = null;
+				cargarImagen();
+			}
+		});
+		button_1.setBounds(794, 84, 109, 23);
+		add(button_1);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -243,6 +276,7 @@ public class UserRegisterGUI extends JPanel {
 				textPais.setText(user.getPais());
 				comboEC.setSelectedItem(user.getEstadoCivil());
 				buttonRegister.setText("Guardar");
+				perfil = facade.getFotoPerfil(user.getEmail());
 			} else {
 				textEmail.enable(true);
 				textEmail.setText("");
@@ -254,9 +288,38 @@ public class UserRegisterGUI extends JPanel {
 				textPais.setText("");
 				comboEC.setSelectedIndex(0);
 				buttonRegister.setText("Registrar");
+				perfil = null;
 			}
+			cargarImagen();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private  void cargarImagen(){
+		Image aux = imagenDefecto.getImage();
+		if (perfil != null) {
+			aux = perfil;
+		}
+        Image aux1 = aux.getScaledInstance(labelFoto.getHeight(), labelFoto.getWidth(), java.awt.Image.SCALE_SMOOTH);
+        labelFoto.setIcon(new ImageIcon(aux1));
+	}
+	
+	private void anadirImagen(){
+		JFileChooser fc = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes", "bmp", "gif", "jpg", "png");
+		fc.setFileFilter(filter);
+		int respuesta = fc.showOpenDialog(this);
+        if (respuesta == JFileChooser.APPROVE_OPTION){            		
+       		try {
+       			File imagenElegida = fc.getSelectedFile();
+       	        ImageIcon imagen = new ImageIcon(imagenElegida.getPath());
+       	        perfil = imagen.getImage();
+       		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        cargarImagen();
 	}
 }

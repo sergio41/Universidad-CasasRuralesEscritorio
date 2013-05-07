@@ -1,6 +1,5 @@
 package businessLogic;
 import java.awt.Image;
-import java.io.File;
 import java.rmi.*;
 import java.util.Vector;
 import java.util.Date;
@@ -23,9 +22,11 @@ public interface ApplicationFacadeInterface extends Remote {
 	
 	public Vector<RuralHouse>  getCasas(String ciudad,int Banos,int Habita,int Cocina,int Estar,int Park) throws Exception;
 	
-	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
+	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
 	
-	public void modificarPerfil( String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception;
+	public void modificarPerfil(String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
+	
+	public Image getFotoPerfil(String email) throws Exception;
 	
 	public UserAplication getUsuario() throws Exception;
 	

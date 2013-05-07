@@ -1,5 +1,4 @@
 package domain;
-
 import java.util.Vector;
 
 public class UserAplication {
@@ -13,6 +12,7 @@ public class UserAplication {
 	private String edad;
 	private Owner propietario;
 	private Vector<Book> vectorBook;
+	private String perfil; 
 
 	public UserAplication(String e, String p, String eC, String nom, String ape, String tel, String ps, String edd){
 		email=e;
@@ -57,4 +57,7 @@ public class UserAplication {
 	public Vector<Book> getReservas(){return vectorBook;}
 	public void anadirReserva(Book reserva){ vectorBook.add(reserva);}
 	public void eliminarReserva(Book reserva){vectorBook.remove(reserva);}
+	
+	public String getPerfil(){return perfil;}
+	public void setPerfil(String imagenPerfil){ perfil = imagenPerfil;}
 }

@@ -3,9 +3,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
@@ -84,13 +81,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 	}
 	
-	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad) throws Exception {
+	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception {
 		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
 			if (apellidos.compareTo("")==0) apellidos = null;
 			if (telefono.compareTo("")==0) telefono = null;
-			usuario = DB4oManager.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad);
+			usuario = DB4oManager.nuevoUsuario(email, pass, estadoCivil, nombre, apellidos, telefono, pais, edad, setGuardarPerfil(perfil, email));
 			try {
 				EnviarCorreo.enviarCorreos(email, "Registro en Villatripas de Arriba", "Te has registrado en villatripas de arriba con el email: " + email);
 				GestionTwitter.enviarTweet("Bienvenid@: " + nombre + " " + Calendar.getInstance().getTime().toString());
@@ -144,9 +141,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 
 
-	public void modificarPerfil(String estadoCivil, String nombre,String apellidos, String telefono, String pais, String edad) throws Exception {
+	public void modificarPerfil(String estadoCivil, String nombre,String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception {
 		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
-		else usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad);		
+		else usuario= DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad, setGuardarPerfil(perfil, usuario.getEmail()));		
 	}
 	
 	public int getNumeroCR() throws Exception{
@@ -239,7 +236,16 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return aux;
 	}
 
+
+	public Image getFotoPerfil(String email) throws Exception {
+		if (DB4oManager.getUser(email).getPerfil() == null) return null;
+		return new ImageIcon(DB4oManager.getUser(email).getPerfil()).getImage();
+	}
+	
 	private Vector<File> setGuardarImagenes(Vector<Image> imagenes, int numeroCasaRural) throws Exception {
+		File fCarpeta = new File("\\imagenes\\"+usuario.getEmail()+"\\"+numeroCasaRural);
+		if (fCarpeta.exists()) fCarpeta.delete();
+		else fCarpeta.mkdirs();
 		Vector<File> aux = new Vector<File>();
 		Iterator<Image> i = imagenes.iterator();
 		while (i.hasNext()){
@@ -257,15 +263,30 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return aux;
 	}
 	
-	 private static BufferedImage toBufferedImage(Image src) {
-	        int w = src.getWidth(null);
-	        int h = src.getHeight(null);
-	        int type = BufferedImage.TYPE_INT_RGB;  // other options
-	        BufferedImage dest = new BufferedImage(w, h, type);
-	        Graphics2D g2 = dest.createGraphics();
-	        g2.drawImage(src, 0, 0, null);
-	        g2.dispose();
-	        return dest;
-	    }
+	private String setGuardarPerfil(Image imagen, String email) throws Exception {
+		if (imagen == null) return null;
+		try { 
+			File fCarpeta = new File("\\imagenes\\"+usuario.getEmail()+"\\Perfil");
+			if (fCarpeta.exists()) fCarpeta.delete();
+			else fCarpeta.mkdirs();
+			File fDestino = new File("\\imagenes\\"+usuario.getEmail()+"\\Perfil\\perfil");
+			BufferedImage bi = toBufferedImage(imagen);
+			ImageIO.write(bi, "png", fDestino);
+			return fDestino.getPath();
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		return null;
+	}
+	private static BufferedImage toBufferedImage(Image src) {
+		int w = src.getWidth(null);
+		int h = src.getHeight(null);
+		int type = BufferedImage.TYPE_INT_RGB;  // other options
+		BufferedImage dest = new BufferedImage(w, h, type);
+		Graphics2D g2 = dest.createGraphics();
+		g2.drawImage(src, 0, 0, null);
+		g2.dispose();
+		return dest;
+	}
 }
 
