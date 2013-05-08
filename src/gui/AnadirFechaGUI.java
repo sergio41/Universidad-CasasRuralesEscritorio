@@ -221,7 +221,6 @@ public class AnadirFechaGUI extends JPanel {
 			Vector<Fechas> aux =  facade.getFechas(numeroRH);
 			Iterator<Fechas> i = aux.iterator();
 			while (i.hasNext()){
-				System.out.println("1");
 				Vector<Object> vector = new Vector<Object>();
 				Fechas auxi = i.next();
 				vector.add(auxi.getFecha());
