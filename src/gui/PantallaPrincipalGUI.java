@@ -10,9 +10,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.net.URL;
 import java.util.Date;
 import javax.swing.JButton;
@@ -42,6 +39,7 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JTextField textCiudad;
 	private static JButton btnGestionCasasRurales;
 	private static JButton btnGestionOfertas;
+	private static JButton btnGestionFechas;
 	private static JLabel lblMapa;
 	
 	/**
@@ -143,7 +141,17 @@ public class PantallaPrincipalGUI extends JPanel {
 		btnGestionCasasRurales.setBounds(20, 427, 223, 28);
 		add(btnGestionCasasRurales);
 		
-		btnGestionOfertas = new JButton("Gestionar Ofertas");
+		btnGestionFechas = new JButton("Gestionar Casas Rurales");
+		btnGestionFechas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel temp = new AnadirFechaGUI();
+				Start.modificarPanelAbajo(temp);
+			}
+		});
+		btnGestionFechas.setBounds(20, 327, 223, 28);
+		add(btnGestionFechas);
+		
+		btnGestionOfertas = new JButton("Gestionar Disponibilidad");
 		btnGestionOfertas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JPanel temp = new CreateOfferGUI();
@@ -162,8 +170,8 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		add(lblNewLabel);
 		
-		this.getClass().getResource("");
-		inicializarCampos();		
+		
+		inicializarCampos();
 	}
 	
 	public void inicializarCampos(){
@@ -178,9 +186,23 @@ public class PantallaPrincipalGUI extends JPanel {
 		}
 		btnGestionCasasRurales.setVisible(login);
 		btnGestionOfertas.setVisible(login);
+		btnGestionFechas.setVisible(login);
+		mapa();
 	}
 	
+	public void mapa(){
+		try{
+		  //BufferedImage img = ImageIO.read(new URL("http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"));
+		 // lblMapa.setIcon(new ImageIcon(img));
+				 //File outputfile = new File("map.png");
+				   // ImageIO.write(img, "png", outputfile);
+				   // System.out.println("Saved!");
+				    } catch (Exception ex) {
+				         System.out.println("Error!" + ex);
+				    }
+		
 	
+	}
 
 }
 
