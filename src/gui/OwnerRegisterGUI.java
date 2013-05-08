@@ -57,29 +57,36 @@ public class OwnerRegisterGUI extends JPanel {
 				String profes= "";
 				String mon="";
 				Vector<String> idiom = new Vector<String>();
-				
-				cuenta= textCuentaBancaria.getText();
-				if(rdbtnParticular.isSelected()) tipo= "Particular";				
-				else if(rdbtnProfesional.isSelected()) tipo= "Profesional";	
-				idiom.add(textIdioma1.getText());
-				idiom.add(textIdioma2.getText());
-				idiom.add(textIdioma3.getText());
-				idiom.add(textIdioma4.getText());
-				profes = textProfesion.getText();
-				mon= (String) comboMoneda.getSelectedItem();
-
-				try {
-					facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
-					String ruta = new String("\\imagenes\\"+facade.getUsuario().getEmail());
-					System.out.println(ruta);
-					File carpet =new File(ruta);
-					carpet.mkdirs();
-					JPanel temp1= new PantallaPrincipalGUI();
-					Start.modificarPanelAbajo(temp1);
-					JPanel temp2 = new LoginONGUI();
-					Start.modificarPanelArriba(temp2);
-				} catch (Exception e) {
-					System.out.println(e.getMessage());
+				if(!textCuentaBancaria.isEditValid() || 
+						(!rdbtnParticular.isSelected()&&!rdbtnProfesional.isSelected())|| 
+						(textIdioma1.getText().compareTo("")==0 && textIdioma2.getText().compareTo("")==0&&
+						 textIdioma3.getText().compareTo("")==0 && textIdioma4.getText().compareTo("")==0)||
+						 textProfesion.getText().compareTo("")==0 || comboMoneda.getSelectedIndex()==-1){
+					javax.swing.JOptionPane.showMessageDialog(null, "Algunos datos obligatorios faltan!", "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
+				}else{
+					cuenta= textCuentaBancaria.getText();
+					if(rdbtnParticular.isSelected()) tipo= "Particular";				
+					else if(rdbtnProfesional.isSelected()) tipo= "Profesional";	
+					idiom.add(textIdioma1.getText());
+					idiom.add(textIdioma2.getText());
+					idiom.add(textIdioma3.getText());
+					idiom.add(textIdioma4.getText());
+					profes = textProfesion.getText();
+					mon= (String) comboMoneda.getSelectedItem();
+	
+					try {
+						facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
+						String ruta = new String("\\imagenes\\"+facade.getUsuario().getEmail());
+						System.out.println(ruta);
+						File carpet =new File(ruta);
+						carpet.mkdirs();
+						JPanel temp1= new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(temp1);
+						JPanel temp2 = new LoginONGUI();
+						Start.modificarPanelArriba(temp2);
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				}
 				
 			}
