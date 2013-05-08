@@ -10,6 +10,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.Date;
 import javax.swing.JButton;
@@ -159,8 +162,8 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
 		add(lblNewLabel);
 		
-		
-		inicializarCampos();
+		this.getClass().getResource("");
+		inicializarCampos();		
 	}
 	
 	public void inicializarCampos(){
@@ -175,22 +178,9 @@ public class PantallaPrincipalGUI extends JPanel {
 		}
 		btnGestionCasasRurales.setVisible(login);
 		btnGestionOfertas.setVisible(login);
-		mapa();
 	}
 	
-	public void mapa(){
-		try{
-		  //BufferedImage img = ImageIO.read(new URL("http://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Ccolor:red%7Clabel:C%7C40.718217,-73.998284&sensor=false"));
-		 // lblMapa.setIcon(new ImageIcon(img));
-				 //File outputfile = new File("map.png");
-				   // ImageIO.write(img, "png", outputfile);
-				   // System.out.println("Saved!");
-				    } catch (Exception ex) {
-				         System.out.println("Error!" + ex);
-				    }
-		
 	
-	}
 
 }
 

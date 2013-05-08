@@ -24,6 +24,9 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 
 public class Start extends JFrame {
 	/**
@@ -151,6 +154,7 @@ public class Start extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		logo = new ImageIcon(this.getClass().getResource("/imagenes/logo100x100.png"));
+		
 	}
 
 	public static void modificarPanelAbajo(JPanel panel){
@@ -202,5 +206,7 @@ public class Start extends JFrame {
 	        lblNewLabel_1.setIcon(new ImageIcon(aux1));
 		}
 	}
+	
+	
 	
 }
