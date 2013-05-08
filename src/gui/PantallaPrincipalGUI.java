@@ -141,7 +141,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		btnGestionCasasRurales.setBounds(20, 427, 223, 28);
 		add(btnGestionCasasRurales);
 		
-		btnGestionFechas = new JButton("Gestionar Casas Rurales");
+		btnGestionFechas = new JButton("Gestionar Disponibilidad");
 		btnGestionFechas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JPanel temp = new AnadirFechaGUI();
@@ -151,7 +151,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		btnGestionFechas.setBounds(20, 327, 223, 28);
 		add(btnGestionFechas);
 		
-		btnGestionOfertas = new JButton("Gestionar Disponibilidad");
+		btnGestionOfertas = new JButton("Gestionar Ofertas");
 		btnGestionOfertas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JPanel temp = new CreateOfferGUI();

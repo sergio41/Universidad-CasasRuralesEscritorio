@@ -66,4 +66,6 @@ public interface ApplicationFacadeInterface extends Remote {
 			String city, int banos, int habita, int cocina, int estar, int park)throws Exception;
 	
 	public void anadirFechas ( int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception; 
+
+	public Vector<Fechas> getFechas(int numeroRH) throws Exception;
 }

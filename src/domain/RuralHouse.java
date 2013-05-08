@@ -153,6 +153,7 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
+	
 	@SuppressWarnings("deprecation")
 	private boolean anadirFecha( Date date, float precio, int minimoDias){
 		Date auxDate = new Date(date.getYear(), date.getMonth(), date.getDate());
@@ -175,8 +176,12 @@ public class RuralHouse implements Serializable {
 		Date auxDate = new Date(primerDia.getYear(), primerDia.getMonth(), primerDia.getDate());
 		Date auxUltimoDia = new Date(ultimoDia.getYear(), ultimoDia.getMonth(), ultimoDia.getDate());
 		boolean auxB = true;
-		while (auxDate.equals(auxUltimoDia)){
+		if(auxDate.equals(auxUltimoDia))
 			if (!anadirFecha(auxDate, precio, minimoDias)) auxB = false;
+		while (!auxDate.equals(auxUltimoDia)){
+			System.out.println("22");
+			if (!anadirFecha(auxDate, precio, minimoDias)) auxB = false;
+			
 			auxDate.setTime(auxDate.getTime()+1*24*60*60*1000);
 		}
 		return auxB;

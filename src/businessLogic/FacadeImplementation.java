@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 
 import configuration.Config;
 import dataAccess.DB4oManager;
+import domain.Fechas;
 import domain.Offer;
 import domain.Owner;
 import domain.RuralHouse;
@@ -291,6 +292,15 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 
 	public void anadirFechas(int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception {
 		DB4oManager.anadirFechas(usuario, numero, inicio, fin, precio, minimoDeDias);
+	}
+
+	public Vector<Fechas> getFechas(int numeroRH) throws Exception{
+		Iterator<RuralHouse> i = usuario.getPropietario().getRuralHouses().iterator();
+		while (i.hasNext()){
+			RuralHouse aux = i.next();
+			if (aux.getHouseNumber() == numeroRH) return aux.getFechas();
+		}
+		throw new Exception("Ha ocurrido un error a la hora de encontrar fechas");
 	}
 }
 

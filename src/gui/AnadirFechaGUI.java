@@ -43,13 +43,6 @@ import javax.swing.JSpinner;
 public class AnadirFechaGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable tableCasas;
-	private DefaultTableModel modelTb = new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"nº", "Ciudad", "Baños", "Cocinas", "Salas", "Dormitorios", "Parkings"
-			}
-		);
 	private JScrollPane scrollPane;
 	private JDateChooser dateChooserFin;
 	private JDateChooser dateChooserIni;
@@ -59,6 +52,13 @@ public class AnadirFechaGUI extends JPanel {
 	private JSpinner spinner;
 	private JComboBox<String> comBoxCasas;
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
+	private DefaultTableModel modelTb= new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Fecha", "Precio", "MinimoDias", "Oferta", "Obligatoria Oferta" 
+			}
+		);
 	
 	@SuppressWarnings("serial")
 	public AnadirFechaGUI() {
@@ -68,13 +68,7 @@ public class AnadirFechaGUI extends JPanel {
 	        public boolean isCellEditable(int rowIndex, int vColIndex) {
 	            return false;
 	        }};
-		tableCasas.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Fecha", "Precio", "MinimoDias", "Oferta", "Obligatoria Oferta" 
-			}
-		));
+		tableCasas.setModel(modelTb);
 		tableCasas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableCasas.setBounds(434, 38, 551, 229);
 		ListSelectionModel cellSelectionModel = tableCasas.getSelectionModel();
@@ -162,6 +156,8 @@ public class AnadirFechaGUI extends JPanel {
 					float precio = Float.parseFloat(textField.getText());
 					int numero= Integer.parseInt(comBoxCasas.getSelectedItem().toString());
 					facade.anadirFechas(numero, aux, aux2, precio, numdias);
+					JPanel temp1= new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -188,7 +184,7 @@ public class AnadirFechaGUI extends JPanel {
 		comBoxCasas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (comBoxCasas.getSelectedIndex() != -1){
-					actualizarTabla((int)comBoxCasas.getSelectedItem());
+					actualizarTabla(Integer.parseInt(comBoxCasas.getSelectedItem().toString()));
 				} else borrarTabla();
 			}
 		});
@@ -222,9 +218,10 @@ public class AnadirFechaGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			borrarTabla();
-			/*Vector<Fechas> aux =  facade.getOfertas(numeroRH);
+			Vector<Fechas> aux =  facade.getFechas(numeroRH);
 			Iterator<Fechas> i = aux.iterator();
 			while (i.hasNext()){
+				System.out.println("1");
 				Vector<Object> vector = new Vector<Object>();
 				Fechas auxi = i.next();
 				vector.add(auxi.getFecha());
@@ -234,7 +231,7 @@ public class AnadirFechaGUI extends JPanel {
 				else vector.add(true);
 				vector.add(auxi.isUnidoOferta());
 				modelTb.addRow(vector);
-			}*/
+			}
 			ajustarColumnas();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -249,33 +246,25 @@ public class AnadirFechaGUI extends JPanel {
 		for(int i=0; i<tableCasas.getColumnCount(); i++) {
 			columnaTabla = tableCasas.getColumnModel().getColumn(i);
 			switch(i) {
-				case 0: anchoColumna = (5*anchoTabla)/100;
-				anchoColumnaMin = (5*anchoTabla)/100;
-				anchoColumnaMax = (5*anchoTabla)/100;
+				case 0: anchoColumna = (20*anchoTabla)/100;
+				anchoColumnaMin = (20*anchoTabla)/100;
+				anchoColumnaMax = (20*anchoTabla)/100;
 				break;
 				case 1: anchoColumna = (20*anchoTabla)/100;
 				anchoColumnaMin = (20*anchoTabla)/100;
 				anchoColumnaMax = (20*anchoTabla)/100;
 				break;
-				case 2: anchoColumna = (15*anchoTabla)/100;
-				anchoColumnaMin = (15*anchoTabla)/100;
-				anchoColumnaMax = (15*anchoTabla)/100;
+				case 2: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
 				break;
-				case 3: anchoColumna = (15*anchoTabla)/100;
-				anchoColumnaMin = (15*anchoTabla)/100;
-				anchoColumnaMax = (15*anchoTabla)/100;
+				case 3: anchoColumna = (20*anchoTabla)/100;
+				anchoColumnaMin = (20*anchoTabla)/100;
+				anchoColumnaMax = (20*anchoTabla)/100;
 				break;
-				case 4: anchoColumna = (15*anchoTabla)/100;
-				anchoColumnaMin = (15*anchoTabla)/100;
-				anchoColumnaMax = (15*anchoTabla)/100;
-				break;
-				case 5: anchoColumna = (16*anchoTabla)/100;
-				anchoColumnaMin = (16*anchoTabla)/100;
-				anchoColumnaMax = (16*anchoTabla)/100;
-				break;
-				case 6: anchoColumna = (15*anchoTabla)/100;
-				anchoColumnaMin = (15*anchoTabla)/100;
-				anchoColumnaMax = (15*anchoTabla)/100;
+				case 4: anchoColumna = (20*anchoTabla)/100;
+				anchoColumnaMin = (20*anchoTabla)/100;
+				anchoColumnaMax = (20*anchoTabla)/100;
 				break;
 			}
 			columnaTabla.setPreferredWidth(anchoColumna);
