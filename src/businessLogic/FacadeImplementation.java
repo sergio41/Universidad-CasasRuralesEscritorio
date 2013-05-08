@@ -288,5 +288,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		g2.dispose();
 		return dest;
 	}
+
+	public void anadirFechas(int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception {
+		DB4oManager.anadirFechas(usuario, numero, inicio, fin, precio, minimoDeDias);
+	}
 }
 

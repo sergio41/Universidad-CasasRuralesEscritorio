@@ -291,6 +291,26 @@ public class DB4oManager {
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 	}
+	
+	public static UserAplication anadirFechas(UserAplication user, int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception{
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			System.out.println("numero: " + numero);
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
+			if (rHConcretos.hasNext() ){
+				RuralHouse rHConcreto = rHConcretos.next();
+				System.out.println("Inicio: " + inicio.toString());
+				System.out.println("Fin: " + fin.toString());
+				if (!rHConcreto.anadirFechas(inicio, fin, precio, minimoDeDias)) throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
+				db.store(rHConcreto);
+				db.store(userConcreto);
+				db.commit();
+				return getUser(user.getEmail());
+			}
+		}
+		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
+	}
 
 }
 	

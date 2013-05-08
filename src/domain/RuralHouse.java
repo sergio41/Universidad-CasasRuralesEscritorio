@@ -153,8 +153,10 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
-	public boolean anadirFecha( Date date, float precio, int minimoDias){
-		Fechas fecha = new Fechas(date, precio, this, minimoDias);
+	@SuppressWarnings("deprecation")
+	private boolean anadirFecha( Date date, float precio, int minimoDias){
+		Date auxDate = new Date(date.getYear(), date.getMonth(), date.getDate());
+		Fechas fecha = new Fechas(auxDate, precio, this, minimoDias);
 		Iterator<Fechas> i = vectorFechas.iterator();
 		while (i.hasNext()){
 			Fechas aux = i.next();
@@ -167,6 +169,17 @@ public class RuralHouse implements Serializable {
 		}
 		vectorFechas.add(fecha);
 		return true;
+	}
+	@SuppressWarnings("deprecation")
+	public boolean anadirFechas( Date primerDia, Date ultimoDia,  float precio, int minimoDias){
+		Date auxDate = new Date(primerDia.getYear(), primerDia.getMonth(), primerDia.getDate());
+		Date auxUltimoDia = new Date(ultimoDia.getYear(), ultimoDia.getMonth(), ultimoDia.getDate());
+		boolean auxB = true;
+		while (auxDate.equals(auxUltimoDia)){
+			if (!anadirFecha(auxDate, precio, minimoDias)) auxB = false;
+			auxDate.setTime(auxDate.getTime()+1*24*60*60*1000);
+		}
+		return auxB;
 	}
 	
 	public Vector<File> getImages(){
