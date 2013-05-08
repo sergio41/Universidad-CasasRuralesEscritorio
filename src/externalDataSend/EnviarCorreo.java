@@ -25,7 +25,7 @@ public class EnviarCorreo {
 		String asunto = asu;
 		//String mensaje = mensa;
 		LeerMail a = new LeerMail();
-		String mensaje = a.leerEmail();
+		String mensaje = a.leerEmail(asu, mensa);
 
 		Properties props = new Properties();
 
