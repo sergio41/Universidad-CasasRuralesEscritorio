@@ -106,6 +106,7 @@ public class OwnerRegisterGUI extends JPanel {
 		comboMoneda = new JComboBox<String>();
 		comboMoneda.setBounds(360, 333, 109, 34);
 		comboMoneda.setModel(modeloMon);
+		modeloMon.removeAllElements();
 		modeloMon.addElement("");
 		modeloMon.addElement("€");
 		modeloMon.addElement("$");
