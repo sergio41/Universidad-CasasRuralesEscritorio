@@ -302,5 +302,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		throw new Exception("Ha ocurrido un error a la hora de encontrar fechas");
 	}
+	
+	public void eliminarOferta(int nRH, Date ini, Date fin) throws Exception{
+		usuario= DB4oManager.eliminarOferta(usuario, nRH, ini, fin);
+	}
+	
 }
 

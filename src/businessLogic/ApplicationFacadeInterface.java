@@ -68,4 +68,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void anadirFechas ( int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception; 
 
 	public Vector<Fechas> getFechas(int numeroRH) throws Exception;
+
+	public void eliminarOferta(int parseInt, Date ini, Date fin) throws Exception;
 }

@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JComboBox;
@@ -12,6 +13,7 @@ import com.toedter.calendar.JDateChooser;
 
 import domain.*;
 import businessLogic.*;
+
 import java.awt.event.*;
 import java.beans.*;
 import java.util.*;
@@ -26,6 +28,7 @@ public class CreateOfferGUI extends JPanel {
 	private JDateChooser calendarFirstday;
 	private JDateChooser calendarLastday;
 	private JButton bttnAnadir;
+	private JButton btnEliminar = new JButton();
 	private JTextField textPrecio;
 	private JTable table;
 	private DefaultTableModel modelTb = new DefaultTableModel(
@@ -35,6 +38,7 @@ public class CreateOfferGUI extends JPanel {
 				"Numero", "Inicio", "Fin", "Precio", "Obligatorio"
 			}
 		);
+	private JScrollPane scrollPane;
 
 	public CreateOfferGUI(){
 		setLayout(null);
@@ -156,10 +160,19 @@ public class CreateOfferGUI extends JPanel {
 	        public boolean isCellEditable(int rowIndex, int vColIndex) {
 	            return false;
 	        }};
+		table.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent arg0) {
+				btnEliminar.setEnabled(true);
+			}
+		});
 		table.setModel(modelTb);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setBounds(402, 35, 551, 317);
 		add(table);
+		
+		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(402, 35, 551, 317);
+		add(scrollPane);
 		
 		JLabel lblAadirNuevaOferta = new JLabel("A\u00F1adir nueva oferta:");
 		lblAadirNuevaOferta.setFont(new Font("Viner Hand ITC", Font.BOLD, 28));
@@ -167,7 +180,27 @@ public class CreateOfferGUI extends JPanel {
 		lblAadirNuevaOferta.setBounds(30, 35, 315, 51);
 		add(lblAadirNuevaOferta);
 		
-		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (comBCasas.getSelectedIndex() >= 0) {
+					ApplicationFacadeInterface facade=Start.getBusinessLogic();
+					try {						
+						Vector<Offer> aux1 =  facade.getOfertas(Integer.parseInt(comBCasas.getSelectedItem().toString()));
+						int x = (int) table.getValueAt(table.getSelectedRow(), 0);
+						Date ini = aux1.get(x).getPrimerDia();
+						Date fin = aux1.get(x).getUltimoDia();
+						facade.eliminarOferta(Integer.parseInt(comBCasas.getSelectedItem().toString()), ini, fin);						
+						JPanel panel = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(panel);
+						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
+					}catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null,"Error al eliminar: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+					} 
+					
+				}
+			}
+		});
 		btnEliminar.setForeground(Color.BLUE);
 		btnEliminar.setFont(new Font("Dialog", Font.PLAIN, 21));
 		btnEliminar.setEnabled(false);
