@@ -133,6 +133,7 @@ public class Start extends JFrame {
 		contentPane.add(textTwitter);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(Start.class.getResource("/localData/home50x50.png")));
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
 				JPanel panel = new PantallaPrincipalGUI();
