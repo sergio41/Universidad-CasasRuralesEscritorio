@@ -53,12 +53,12 @@ public class PantallaCargando extends JWindow {
 	
 	public void velocidadDeCarga(){
 		for (int i = 0; i <= 100; i++){
-			for (long j=0; j<50000; ++j){//modifica el numero segun la velidad q desees
+			for (long j=0; j<90000; ++j){
 				@SuppressWarnings("unused")
 				String poop = " " + (j + i);
 			}
-			setProgreso("Cargando " + i, i);  // si quieres q muestre los numeros y un mensaje
-			//setProgreso(i);        //si no quieres q muestre nada, solo la barra
+			setProgreso("Cargando " + i, i);
+			//setProgreso(i);
 		}
 		dispose();
 	}

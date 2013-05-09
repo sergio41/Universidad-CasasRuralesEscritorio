@@ -24,9 +24,9 @@ public class verFotos extends JFrame {
 	private DefaultComboBoxModel<Integer> modeloCombo = new DefaultComboBoxModel<Integer>();
 	private JLabel label_1 = new JLabel("");
 	private JLabel label_2 = new JLabel("");
-	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
+	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
 	private JLabel lblNewLabel;
-	private Image aux = (new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"))).getImage();
+	private Image aux = (new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"))).getImage();
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +48,7 @@ public class verFotos extends JFrame {
 	 * Create the frame.
 	 */
 	public verFotos(Vector<Image> imagenes) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(verFotos.class.getResource("/imagenes/casaDefault.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(verFotos.class.getResource("/localData/casaDefault.png")));
 		setTitle("Ver fotos Casa Rural");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 438, 497);
@@ -76,7 +76,7 @@ public class verFotos extends JFrame {
 				if (comboBox.getSelectedIndex() != comboBox.getItemCount())	comboBox.setSelectedIndex(comboBox.getSelectedIndex()+1);
 			}
 		});
-		label_1.setIcon(new ImageIcon(verFotos.class.getResource("/imagenes/flechaDer.png")));
+		label_1.setIcon(new ImageIcon(verFotos.class.getResource("/localData/flechaDer.png")));
 		label_1.setBounds(327, 13, 50, 50);
 		contentPane.add(label_1);
 		
@@ -87,7 +87,7 @@ public class verFotos extends JFrame {
 				if (comboBox.getSelectedIndex() !=0) comboBox.setSelectedIndex(comboBox.getSelectedIndex()-1);
 			}
 		});
-		label_2.setIcon(new ImageIcon(verFotos.class.getResource("/imagenes/flechaIzq.png")));
+		label_2.setIcon(new ImageIcon(verFotos.class.getResource("/localData/flechaIzq.png")));
 		label_2.setBounds(40, 13, 50, 50);
 		contentPane.add(label_2);
 		
@@ -96,7 +96,7 @@ public class verFotos extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		images = imagenes;
-		imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
+		imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
 		
 		cargarImagen(0);
 		rellenarComboBox();

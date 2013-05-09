@@ -99,7 +99,7 @@ public class Start extends JFrame {
 	 */
 	public Start() {
 		setTitle("Casas Rurales Villatripas de Arriba");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Start.class.getResource("/imagenes/logo100x100.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Start.class.getResource("/localData/logo100x100.png")));
 		setResizable(false);
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -119,7 +119,7 @@ public class Start extends JFrame {
 		
 		JLabel lblTwitter = new JLabel("");
 		lblTwitter.setBounds(124, 50, 50, 50);
-		lblTwitter.setIcon(new ImageIcon(getClass().getResource("/imagenes/twitter50x50.png")));
+		lblTwitter.setIcon(new ImageIcon(getClass().getResource("/localData/twitter50x50.png")));
 		contentPane.add(lblTwitter);
 		
 		textTwitter = new JTextPane();
@@ -140,20 +140,19 @@ public class Start extends JFrame {
 			}
 		});
 		lblNewLabel_2.setBounds(567, 0, 50, 50);
-		lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/imagenes/home50x50.png")));
 		contentPane.add(lblNewLabel_2);
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setBounds(15, 0, 100, 100);
-		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/imagenes/logo100x100.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/localData/logo100x100.png")));
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 618, 100);
-		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoArriba.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoArriba.jpg")));
 		contentPane.add(lblNewLabel);
 		
-		logo = new ImageIcon(this.getClass().getResource("/imagenes/logo100x100.png"));
+		logo = new ImageIcon(this.getClass().getResource("/localData/logo100x100.png"));
 		
 	}
 

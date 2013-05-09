@@ -59,7 +59,7 @@ public class Mapas extends JFrame {
 		center = direccion;
 		setForeground(Color.YELLOW);
 		setTitle("Mapa de la Casa Rural");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Mapas.class.getResource("/imagenes/iconMap.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Mapas.class.getResource("/localData/iconMap.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 522, 628);
 		contentPane = new JPanel();

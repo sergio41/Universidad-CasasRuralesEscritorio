@@ -345,7 +345,7 @@ public class BusquedaGUI extends JPanel {
 		add(buttonMapa);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		add(lblNewLabel);
 		

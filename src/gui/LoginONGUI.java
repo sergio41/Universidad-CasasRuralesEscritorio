@@ -94,7 +94,7 @@ public class LoginONGUI extends JPanel {
 		add(lblNewLabel);
 
 		lblNewLabel.setBounds(0, 0, 400, 100);
-		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/loginfondo.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/loginfondo.jpg")));
 		lblNewLabel.setVisible(true);
 		
 		inicializarCampos();

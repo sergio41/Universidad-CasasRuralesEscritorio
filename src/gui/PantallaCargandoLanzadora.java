@@ -11,7 +11,8 @@ public class PantallaCargandoLanzadora {
 	}
 	
 	private void inicioPantalla() {
-		ImageIcon myImage = new ImageIcon("imagen/Logo.jpg");
+		//ImageIcon myImage = new ImageIcon("/localData/Logo.jpg");
+		ImageIcon myImage = new ImageIcon(getClass().getResource("/localData/Logo.jpg"));
 		screen = new PantallaCargando(myImage);
 		screen.setLocationRelativeTo(null);
 		screen.setProgresoMax(100);

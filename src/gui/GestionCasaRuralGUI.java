@@ -49,7 +49,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JComboBox<Integer> comBoxImg = new JComboBox<Integer>();
 	private JButton btnanadirImg = new JButton();
 	private Vector<Image> images = new Vector<Image>();
-	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
+	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
 	private JButton btnVerMapa;
 	private JSpinner textLiving;
 	private JSpinner textRooms;
@@ -169,7 +169,7 @@ public class GestionCasaRuralGUI extends JPanel {
 					}
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
-					new File("/imagenes/"+facade.getUsuario().getEmail()+"/");
+					new File("/localData/"+facade.getUsuario().getEmail()+"/");
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -233,7 +233,7 @@ public class GestionCasaRuralGUI extends JPanel {
 
 		image1label = new JLabel("");
 		image1label.setBounds(674, 95, 250, 250);
-		ImageIcon imagen = new ImageIcon(getClass().getResource("/imagenes/casaDefault.png"));
+		ImageIcon imagen = new ImageIcon(getClass().getResource("/localData/casaDefault.png"));
         Image aux = imagen.getImage();
         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));
@@ -279,7 +279,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			}
 		});
 		labelflechaIzq.setBounds(606, 196, 50, 50);
-		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaIzq.png")));
+		labelflechaIzq.setIcon(new ImageIcon(getClass().getResource("/localData/flechaIzq.png")));
 		add(labelflechaIzq);
 		
 		labelflechaDer = new JLabel("");
@@ -292,7 +292,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			}
 		});
 		labelflechaDer.setBounds(941, 196, 50, 50);
-		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/imagenes/flechaDer.png")));
+		labelflechaDer.setIcon(new ImageIcon(getClass().getResource("/localData/flechaDer.png")));
 		add(labelflechaDer);
 		
 		textPark = new JSpinner();
@@ -334,7 +334,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		add(btnVerMapa);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/fondoAbajo.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		add(lblNewLabel);
 		
@@ -362,7 +362,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		//images.clear();
 		btnVerMapa.setEnabled(b);
 		
-		imagenDefecto = new ImageIcon(verFotos.class.getResource("/imagenes/casaDefault.png"));
+		imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
 		rellenarComboBox();
 		cargarImagen(0);
 	}

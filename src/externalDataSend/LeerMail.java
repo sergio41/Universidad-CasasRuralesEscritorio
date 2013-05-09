@@ -15,7 +15,7 @@ public class LeerMail {
 		FileReader fr1 = null, fr2 = null, fr3 = null;
 		String aux = "";
 		try {
-			String archivo1s = this.getClass().getResource("/imagenes/email1.html").getFile();
+			String archivo1s = this.getClass().getResource("/localData/email1.html").getFile();
 			File archivo1f = new File (archivo1s);
 			fr1 = new FileReader (archivo1f);
 			br = new BufferedReader(fr1);
@@ -24,7 +24,7 @@ public class LeerMail {
 			
 			aux = aux.concat(titulo);
 			
-			String archivo2s = this.getClass().getResource("/imagenes/email2.html").getFile();
+			String archivo2s = this.getClass().getResource("/localData/email2.html").getFile();
 			File archivo2f = new File (archivo2s);
 			fr2 = new FileReader (archivo2f);
 			br = new BufferedReader(fr2);
@@ -33,7 +33,7 @@ public class LeerMail {
 			
 			aux = aux.concat(texto);
 			
-			String archivo3s = this.getClass().getResource("/imagenes/email3.html").getFile();
+			String archivo3s = this.getClass().getResource("/localData/email3.html").getFile();
 			File archivo3f = new File (archivo3s);
 			fr3 = new FileReader (archivo3f);
 			br = new BufferedReader(fr3);
