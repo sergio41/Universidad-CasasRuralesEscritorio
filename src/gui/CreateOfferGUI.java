@@ -193,7 +193,7 @@ public class CreateOfferGUI extends JPanel {
 						facade.eliminarOferta(Integer.parseInt(comBCasas.getSelectedItem().toString()), ini, fin);						
 						JPanel panel = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(panel);
-						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
+						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la oferta", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
 					}catch (Exception e) {
 						javax.swing.JOptionPane.showMessageDialog(null,"Error al eliminar: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 					} 

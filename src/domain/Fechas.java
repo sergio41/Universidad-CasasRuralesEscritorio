@@ -6,7 +6,7 @@ public class Fechas {
 
 	private Date fecha;
 	private float precio;
-	private boolean reservado;
+	private Boolean reservado;
 	private RuralHouse casaRural;
 	private int minDias;
 	private Book reserva;

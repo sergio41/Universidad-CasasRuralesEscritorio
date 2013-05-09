@@ -437,9 +437,10 @@ public class DB4oManager {
 			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext() ){
 				RuralHouse rHConcreto = rHConcretos.next();
+				Date fin2 = new Date(fin.getYear(), fin.getMonth(), fin.getDate());
 				System.out.println("Inicio: " + inicio.toString());
-				System.out.println("Fin: " + fin.toString());
-				rHConcreto.anadirOferta(inicio, fin, precio, obligatorio);
+				System.out.println("Fin: " + fin2.toString());
+				rHConcreto.anadirOferta(inicio, fin2, precio, obligatorio);
 				db.store(rHConcreto);
 				db.store(userConcreto);
 				db.commit();
@@ -528,7 +529,6 @@ public class DB4oManager {
 								ObjectSet<Offer> ofertasConcretas = db.queryByExample(Offer.class);
 								Iterator<Offer> j = ofertasConcretas.iterator();
 								while (j.hasNext()){
-									System.out.println("1");
 									Offer offer = j.next();
 									System.out.println(offer.getPrimerDia()+"="+ini);
 									System.out.println(offer.getUltimoDia()+"="+fin);
@@ -545,10 +545,8 @@ public class DB4oManager {
 								ObjectSet<Fechas> fechasConcretas = db.queryByExample(Fechas.class);
 								Iterator<Fechas> k = fechasConcretas.iterator();
 								while (k.hasNext()&& !encontrado){
-									System.out.println("2");
 									Fechas fecha = k.next();
 									if(fecha.getCasaRural().getHouseNumber()==nRH && fecha.getFecha().compareTo(auxDate)==0){
-										System.out.println("2");
 										casa.getFechas().remove(fecha);
 										db.delete(fecha);
 										db.commit();
@@ -607,9 +605,7 @@ public class DB4oManager {
 						}
 						
 					}
-					userConcreto.getPropietario().getRuralHouses().remove(casa);
 					db.store(userConcreto);
-					db.delete(casa);
 					db.commit();
 					return getUser(usuario.getEmail());
 				}
