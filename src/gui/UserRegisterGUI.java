@@ -165,6 +165,7 @@ public class UserRegisterGUI extends JPanel {
 		buttonRegister = new JButton("");
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				anadirCargando();
 				//ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
@@ -211,6 +212,7 @@ public class UserRegisterGUI extends JPanel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				eliminarCargando();
 			}
 		});
 		buttonRegister.setForeground(Color.BLUE);
@@ -321,5 +323,21 @@ public class UserRegisterGUI extends JPanel {
 			}
         }
         cargarImagen();
+	}
+	
+	private JLabel lblCargando = null;
+	private void anadirCargando(){
+		lblCargando = new JLabel("Cargando");
+		lblCargando.setIcon(new ImageIcon(UserRegisterGUI.class.getResource("/localData/caragando.gif")));
+		lblCargando.setBounds(376, 98, 220, 220);
+		add(lblCargando, 1);
+		setVisible(false);
+		setVisible(true);
+	}
+	
+	private void eliminarCargando(){
+		if (lblCargando!= null)remove(lblCargando);
+		setVisible(false);
+		setVisible(true);
 	}
 }
