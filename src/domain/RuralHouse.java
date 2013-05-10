@@ -310,13 +310,13 @@ public class RuralHouse implements Serializable {
 		return auxVectorOffer;
 	}
 	
-	public RuralHouse eliminarReserva(int num) throws Exception{
+	public Book eliminarReserva(int num) throws Exception{
 		Iterator<Book> iter = vectorReservas.iterator();
 		while(iter.hasNext()){
 			Book reserv = iter.next();
 			if(reserv.getNumeroDeReserva()==num){
 				vectorReservas.remove(reserv);
-				return this;
+				return reserv;
 		
 			}
 		}	
