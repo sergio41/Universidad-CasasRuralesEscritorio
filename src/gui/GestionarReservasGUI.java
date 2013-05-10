@@ -34,6 +34,7 @@ import businessLogic.ApplicationFacadeInterface;
 
 import com.toedter.calendar.JDateChooser;
 
+import domain.Book;
 import domain.Fechas;
 import domain.Offer;
 import domain.RuralHouse;
@@ -49,7 +50,7 @@ public class GestionarReservasGUI extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Numero","FechaInicio", "FechaFin", "Precio" 
+				"Numero","FechaInicio", "FechaFin", "Precio", "FechaReserva"
 			}
 		);
 	private JButton btnTodas;
@@ -95,6 +96,11 @@ public class GestionarReservasGUI extends JPanel {
 		add(btnNewButton);
 		
 		btnTodas = new JButton("Ver todas las reservas");
+		btnTodas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actualizarTabla(0);
+			}
+		});
 		btnTodas.setBounds(62, 68, 365, 80);
 		add(btnTodas);
 		
@@ -135,28 +141,26 @@ public class GestionarReservasGUI extends JPanel {
 		}
 	}
 	
-	private void actualizarTabla(int numeroRH){
+	private void actualizarTabla(int tipo){
 		
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		try {
-			borrarTabla();
-			Vector<Fechas> aux =  facade.getFechas(numeroRH);
-			Iterator<Fechas> i = aux.iterator();
-			while (i.hasNext()){
-				Vector<Object> vector = new Vector<Object>();
-				Fechas auxi = i.next();
-				vector.add(auxi.getFecha());
-				vector.add(auxi.getPrecio());
-				vector.add(auxi.getMinimoDias());
-				if(auxi.getOfer()==null) vector.add(false);
-				else vector.add(true);
-				vector.add(auxi.isUnidoOferta());
-				modelTb.addRow(vector);
+		if(tipo ==0){
+			try {
+				Iterator<Book> iter = facade.getUsuario().getReservas().iterator();
+				while(iter.hasNext()){
+					Book reservaConcreta = iter.next();
+					Vector<Object> vector = new Vector<Object>();
+					vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+					vector.add(reservaConcreta.getFechas().get(0));
+					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+					vector.add(reservaConcreta.getPrecio());
+					vector.add(reservaConcreta.getFechaDeReserva());
+					modelTb.addColumn(vector);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			ajustarColumnas();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -167,21 +171,21 @@ public class GestionarReservasGUI extends JPanel {
 		for(int i=0; i<tableCasas.getColumnCount(); i++) {
 			columnaTabla = tableCasas.getColumnModel().getColumn(i);
 			switch(i) {
-				case 0: anchoColumna = (20*anchoTabla)/100;
-				anchoColumnaMin = (20*anchoTabla)/100;
-				anchoColumnaMax = (20*anchoTabla)/100;
+				case 0: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
 				break;
 				case 1: anchoColumna = (20*anchoTabla)/100;
 				anchoColumnaMin = (20*anchoTabla)/100;
 				anchoColumnaMax = (20*anchoTabla)/100;
 				break;
-				case 2: anchoColumna = (10*anchoTabla)/100;
-				anchoColumnaMin = (10*anchoTabla)/100;
-				anchoColumnaMax = (10*anchoTabla)/100;
-				break;
-				case 3: anchoColumna = (20*anchoTabla)/100;
+				case 2: anchoColumna = (20*anchoTabla)/100;
 				anchoColumnaMin = (20*anchoTabla)/100;
 				anchoColumnaMax = (20*anchoTabla)/100;
+				break;
+				case 3: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
 				break;
 				case 4: anchoColumna = (20*anchoTabla)/100;
 				anchoColumnaMin = (20*anchoTabla)/100;
