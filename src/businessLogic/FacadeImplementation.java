@@ -41,8 +41,37 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 	public void eliminarCasaRural(UserAplication usuario, int numero) throws Exception {
 		DB4oManager.eliminarCasaRural(usuario, numero);
+		File carpet = new File("\\imagenes\\"+usuario.getEmail()+"\\"+numero);
+		if(!eliminarCarpetaConfotos(carpet))
+			System.out.println("No se han eliminado guay las fotos");
 	}
 	
+	public boolean eliminarCarpetaConfotos(File directory) {
+		// System.out.println("removeDirectory " + directory);
+		if (directory == null)
+			return false;
+		if (!directory.exists())
+			return true;
+		if (!directory.isDirectory())
+			return false;
+		String[] list = directory.list();
+		if (list != null) {
+			for (int i = 0; i < list.length; i++) {
+				File entry = new File(directory, list[i]);
+				if (entry.isDirectory()) {
+					if (!eliminarCarpetaConfotos(entry))
+						return false;
+				} else {
+					if (!entry.delete())
+						return false;
+				}
+			}
+		}
+
+		return directory.delete();
+	}
+		
+
 	public void anadirRuralHouse(UserAplication usuario, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception{
 	if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 	else {			
