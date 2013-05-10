@@ -118,7 +118,9 @@ public class CreateOfferGUI extends JPanel {
 				try {
 					System.out.println(calendarFirstday.getDate());
 					System.out.println(calendarLastday.getDate());
-					facade.anadirOferta(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
+					boolean aux = true;
+					if (comBObligatorio.getSelectedIndex() == 0) aux = false;
+					facade.anadirOferta(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), aux);
 					table.removeAll();
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
@@ -154,10 +156,20 @@ public class CreateOfferGUI extends JPanel {
 		textPrecio = new JTextField();
 		textPrecio.setColumns(10);
 		textPrecio.setBounds(196, 219, 149, 22);
+		textPrecio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char car = evt.getKeyChar();
+				if (car == '.');
+				else if((car<'0' || car>'9')) evt.consume();
+			}
+		});
 		add(textPrecio);
 		
 		table = new JTable(){
-	        public boolean isCellEditable(int rowIndex, int vColIndex) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int rowIndex, int vColIndex) {
 	            return false;
 	        }};
 		table.addPropertyChangeListener(new PropertyChangeListener() {
