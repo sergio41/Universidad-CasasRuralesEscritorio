@@ -272,14 +272,23 @@ public class BusquedaGUI extends JPanel {
 		btnNewButton = new JButton("Reservar\r\n");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean pagado;
-				Date ahora = new Date();				
-				if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
-					pagado = pagarReserva(tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
-							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1),
-							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2));
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				//boolean pagado;
+				//Date ahora = new Date();				
+				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
+				try {
+					facade.hacerReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
+							(Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					javax.swing.JOptionPane.showConfirmDialog(null, "No se ha podido reservar", "nonono....", javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
-				int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
+				if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+					/*pagado = pagarReserva(tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
+							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1),
+							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2));*/
+				}
+				
 			}
 		});	
 		btnNewButton.setBounds(781, 397, 163, 34);
