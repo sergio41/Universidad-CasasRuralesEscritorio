@@ -116,11 +116,11 @@ public class Start extends JFrame {
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(new Color(102, 204, 51));
 		lblTitulo.setFont(new Font("Viner Hand ITC", Font.BOLD, 32));
-		lblTitulo.setBounds(112, 0, 443, 50);
+		lblTitulo.setBounds(63, 0, 443, 50);
 		contentPane.add(lblTitulo);
 		
 		JLabel lblTwitter = new JLabel("");
-		lblTwitter.setBounds(124, 50, 50, 50);
+		lblTwitter.setBounds(0, 50, 50, 50);
 		lblTwitter.setIcon(new ImageIcon(getClass().getResource("/localData/twitter50x50.png")));
 		contentPane.add(lblTwitter);
 		
@@ -130,7 +130,7 @@ public class Start extends JFrame {
 		textTwitter.setText("Error al procesar twitter");
 		textTwitter.setOpaque(false);
 		textTwitter.setEditable(false);
-		textTwitter.setBounds(175, 39, 443, 61);
+		textTwitter.setBounds(63, 39, 443, 61);
 		
 		contentPane.add(textTwitter);
 		
@@ -142,11 +142,11 @@ public class Start extends JFrame {
 				modificarPanelAbajo(panel);
 			}
 		});
-		lblNewLabel_2.setBounds(567, 0, 50, 50);
+		lblNewLabel_2.setBounds(0, 0, 50, 50);
 		contentPane.add(lblNewLabel_2);
 		
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(15, 0, 100, 100);
+		lblNewLabel_1.setBounds(518, 0, 100, 100);
 		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/localData/logo100x100.png")));
 		contentPane.add(lblNewLabel_1);
 		
