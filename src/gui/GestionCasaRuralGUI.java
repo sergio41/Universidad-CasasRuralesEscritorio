@@ -320,7 +320,9 @@ public class GestionCasaRuralGUI extends JPanel {
 		btnVerMapa = new JButton("Ver Mapa");
 		btnVerMapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Frame a = new Mapas(textCity.getText());
+				String x = textCity.getText();
+				String y = x.replaceAll(" ", "");
+				Frame a = new Mapas(y);
 				a.setVisible(true);
 			}
 		});
