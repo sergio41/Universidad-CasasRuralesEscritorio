@@ -29,9 +29,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import java.awt.ScrollPane;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
 import java.awt.event.ItemListener;
@@ -57,7 +54,7 @@ public class BusquedaGUI extends JPanel {
 	private DefaultTableModel modelTb = new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
+			new Object[] {
 				"nº", "Ciudad", "Baños", "Cocinas", "Salas", "Dormitorios", "Parkings"
 			}
 		);
@@ -65,7 +62,7 @@ public class BusquedaGUI extends JPanel {
 	private DefaultTableModel modelTbOfertas = new DefaultTableModel(
 			new Object[][] {
 			},
-			new String[] {
+			new Object[] {
 				/*"nº",*/ "FechaInicio", "FechaFin", "Precio"
 			}
 		);
@@ -277,16 +274,9 @@ public class BusquedaGUI extends JPanel {
 				//Date ahora = new Date();				
 				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
-					facade.hacerReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
-							(Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+					facade.hacerReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					javax.swing.JOptionPane.showConfirmDialog(null, "No se ha podido reservar", "nonono....", javax.swing.JOptionPane.ERROR_MESSAGE);
-				}
-				if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
-					/*pagado = pagarReserva(tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
-							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1),
-							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2));*/
+					e.printStackTrace();
 				}
 				
 			}

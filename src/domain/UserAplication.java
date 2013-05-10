@@ -55,7 +55,9 @@ public class UserAplication {
 	public Owner getPropietario(){return propietario;}
 	
 	public Vector<Book> getReservas(){return vectorBook;}
-	public void anadirReserva(Book reserva){ vectorBook.add(reserva);}
+	public void anadirReserva(Book reserva){ 
+		System.out.println("Reserva añadida");
+		vectorBook.add(reserva);}
 	public void eliminarReserva(Book reserva){vectorBook.remove(reserva);}
 	
 	public String getPerfil(){return perfil;}

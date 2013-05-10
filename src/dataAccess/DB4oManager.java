@@ -274,19 +274,18 @@ public class DB4oManager {
 		return result;	
 	}
 	
-	public static UserAplication hacerReserva(UserAplication user, int numero, Date inicio, Date fin) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+	public static UserAplication hacerReserva(UserAplication cliente, int numero, Date inicio, Date fin) throws Exception{
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(cliente);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext()){
 				RuralHouse rHConcreto = rHConcretos.next();
-				Book reserva = rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
-				db.store(rHConcreto);
-				userConcreto.anadirReserva(reserva);				
+				rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
+				db.store(rHConcreto);			
 				db.store(userConcreto);
 				db.commit();
-				return getUser(user.getEmail());
+				return getUser(cliente.getEmail());
 			}
 		}
 		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");

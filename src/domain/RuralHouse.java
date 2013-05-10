@@ -259,28 +259,21 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
-		System.out.println("holbbbbbbb:   " + inicio.toString() + fin.toString());
-		System.out.println("hA");
 		Offer auxOferta = disponibleFechaOferta(inicio, fin);
 		Book reserva = null;
-		System.out.println("hB");
 		if (disponibleFechas(inicio, fin) || auxOferta != null){
-			System.out.println("hC");
 			Vector<Fechas> auxFechas = getFechas(inicio, fin);
-			System.out.println("hD");
 			if (auxOferta != null && auxFechas != null){
-				System.out.println("hE");
 				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
+				cliente.anadirReserva(reserva);
 				vectorReservas.add(reserva);
-				System.out.println("hF");
 			} else if (auxOferta == null && auxFechas != null){
 				float precio = 0;
 				Iterator<Fechas> i = auxFechas.iterator();
-				System.out.println("hG");
 				while (i.hasNext()) precio = precio + i.next().getPrecio();
-				System.out.println("hH");
 				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
 				vectorReservas.add(reserva);
+				cliente.anadirReserva(reserva);
 				eliminarOfertaQueContenga(vectorFechas);
 			}
 		} 
