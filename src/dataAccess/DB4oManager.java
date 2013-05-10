@@ -332,6 +332,7 @@ public class DB4oManager {
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 	}
 
+	@SuppressWarnings("deprecation")
 	public static UserAplication eliminarOferta(UserAplication usuario,
 			int nRH, Date ini, Date fin) throws Exception {
 		ini = new Date(ini.getYear(), ini.getMonth(), ini.getDate());
