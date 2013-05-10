@@ -77,6 +77,7 @@ public class BusquedaGUI extends JPanel {
 	private JCheckBox chckbxNewCheckBox;
 	private JDateChooser dateChooserFin;
 	private JDateChooser dateChooserIni;
+	private JScrollPane scrollPaneOfer;
 	
 	@SuppressWarnings("serial")
 	public BusquedaGUI() {
@@ -259,9 +260,9 @@ public class BusquedaGUI extends JPanel {
 		tableOfertas.setBounds(626, 282, 318, 66);
 		add(tableOfertas);
 		
-		ScrollPane scrollPane_1 = new ScrollPane();
-		scrollPane_1.setBounds(626, 281, 318, 67);
-		add(scrollPane_1);
+		scrollPaneOfer = new JScrollPane(tableOfertas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneOfer.setBounds(626, 281, 318, 67);
+		add(scrollPaneOfer);
 		
 		JLabel label_3 = new JLabel("Descripci\u00F3n:");
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -269,6 +270,18 @@ public class BusquedaGUI extends JPanel {
 		add(label_3);
 		
 		btnNewButton = new JButton("Reservar\r\n");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				boolean pagado;
+				Date ahora = new Date();				
+				if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+					pagado = pagarReserva(tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0),
+							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1),
+							tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2));
+				}
+				int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
+			}
+		});	
 		btnNewButton.setBounds(781, 397, 163, 34);
 		add(btnNewButton);
 		
@@ -403,6 +416,10 @@ public class BusquedaGUI extends JPanel {
 					modeloParkin.addElement(Integer.toString(vectorCasas.get(i).getPark()));
 				}
 			}
+			if(facade.estadoLogin()==true)
+				btnNewButton.setEnabled(true);
+			else
+				btnNewButton.setEnabled(false);
 			comboBanos.setSelectedIndex(-1);
 			comboCity.setSelectedIndex(-1);
 			comboCocinas.setSelectedIndex(-1);

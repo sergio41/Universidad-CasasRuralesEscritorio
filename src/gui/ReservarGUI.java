@@ -34,7 +34,6 @@ public class ReservarGUI extends JPanel {
 	private static JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
 	private static JRadioButton rdbtnParticular = new JRadioButton("Particular");
 	private static DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
-	private JCheckBox chckbxNewCheckBox;
 	
 	
 	public ReservarGUI() {
@@ -45,14 +44,6 @@ public class ReservarGUI extends JPanel {
 			modeloMon.addElement("€");
 			modeloMon.addElement("$");
 			
-			MaskFormatter modeloCB = null;
-			try {
-				modeloCB = new MaskFormatter("####-####-##-##########");
-				modeloCB.setPlaceholderCharacter('_');
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
 			JButton btnNewButton = new JButton("Terminar");
 			btnNewButton.setBounds(782, 388, 194, 37);
@@ -66,11 +57,6 @@ public class ReservarGUI extends JPanel {
 			lblFechaDeFin.setBounds(277, 189, 134, 14);
 			add(lblFechaDeFin);
 			
-			chckbxNewCheckBox = new JCheckBox("Pagar ahora");
-			chckbxNewCheckBox.setBounds(594, 145, 97, 23);
-			chckbxNewCheckBox.setOpaque(false);
-			add(chckbxNewCheckBox);
-			
 			JButton btnNewButton_1 = new JButton("Mandar Factura");
 			btnNewButton_1.setBounds(538, 387, 217, 39);
 			add(btnNewButton_1);
@@ -79,20 +65,29 @@ public class ReservarGUI extends JPanel {
 			lblPrecio.setBounds(362, 229, 33, 14);
 			add(lblPrecio);
 			
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setForeground(new Color(0, 128, 0));
-			lblNewLabel_1.setBounds(409, 149, 97, 14);
-			add(lblNewLabel_1);
+			JLabel labelIni = new JLabel("");
+			labelIni.setForeground(new Color(0, 128, 0));
+			labelIni.setBounds(409, 149, 97, 14);
+			add(labelIni);
 			
-			JLabel label = new JLabel("");
-			label.setForeground(new Color(0, 128, 0));
-			label.setBounds(409, 189, 97, 14);
-			add(label);
+			JLabel labelFin = new JLabel("");
+			labelFin.setForeground(new Color(0, 128, 0));
+			labelFin.setBounds(409, 189, 97, 14);
+			add(labelFin);
 			
-			JLabel label_1 = new JLabel("");
-			label_1.setForeground(new Color(0, 128, 0));
-			label_1.setBounds(409, 229, 97, 14);
-			add(label_1);
+			JLabel labelprecio = new JLabel("");
+			labelprecio.setForeground(new Color(0, 128, 0));
+			labelprecio.setBounds(409, 229, 97, 14);
+			add(labelprecio);
+			
+			JLabel lblEstadoDePago = new JLabel("Estado de pago:");
+			lblEstadoDePago.setBounds(317, 269, 84, 14);
+			add(lblEstadoDePago);
+			
+			JLabel labelEstado = new JLabel("");
+			labelEstado.setForeground(new Color(0, 128, 0));
+			labelEstado.setBounds(409, 269, 97, 14);
+			add(labelEstado);
 			
 			JLabel lblNewLabel = new JLabel("");
 			lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
