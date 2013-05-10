@@ -23,9 +23,9 @@ public class RuralHouse implements Serializable {
 	private Vector<Fechas> vectorFechas;
 	private Vector<Offer> vectorOfertas;
 	private Vector<Book> vectorReservas;
-	private Vector<File> vectorImage;
+	private Vector<String> vectorImage;
 	
-	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<File> images) {
+	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<String> images) {
 		houseNumber = hNumber;
 		description = descripcion;
 		user = usuario;
@@ -193,11 +193,11 @@ public class RuralHouse implements Serializable {
 		return auxB;
 	}
 	
-	public Vector<File> getImages(){
+	public Vector<String> getImages(){
 		return vectorImage;
 	}
 	
-	public void añadirImagen(File image) throws Exception {
+	public void añadirImagen(String image) throws Exception {
 			vectorImage.add(image);
 	}
 	
@@ -293,8 +293,8 @@ public class RuralHouse implements Serializable {
 		}
 	}
 
-	public void setImages(Vector<File> images) {
-		vectorImage= new Vector<File>();
+	public void setImages(Vector<String> images) {
+		vectorImage= new Vector<String>();
 		for(int i =0; i<images.size();i++){
 			vectorImage.add(images.get(i));
 		}

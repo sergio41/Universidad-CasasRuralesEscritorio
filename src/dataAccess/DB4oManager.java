@@ -91,7 +91,7 @@ public class DB4oManager {
 		return user;
 	}
 	
-	public static UserAplication modificarRuralHouse(String email, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception {
+	public static UserAplication modificarRuralHouse(String email, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<String> images) throws Exception {
 		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));
 		if (RHConcreto.hasNext()){
 			RuralHouse casa = RHConcreto.next();
@@ -167,7 +167,7 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
-	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<File> images) throws Exception{
+	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<String> images) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();

@@ -274,7 +274,7 @@ public class BusquedaGUI extends JPanel {
 				//Date ahora = new Date();				
 				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
-					facade.hacerReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+					facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -415,7 +415,7 @@ public class BusquedaGUI extends JPanel {
 					modeloParkin.addElement(Integer.toString(vectorCasas.get(i).getPark()));
 				}
 			}
-			if(facade.estadoLogin()==true)
+			if(Start.estadoLogin())
 				btnNewButton.setEnabled(true);
 			else
 				btnNewButton.setEnabled(false);

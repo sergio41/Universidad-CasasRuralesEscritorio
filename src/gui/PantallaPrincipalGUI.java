@@ -190,10 +190,10 @@ public class PantallaPrincipalGUI extends JPanel {
 		boolean login = false;
 		boolean reserv = false;
 		try {
-			if (i.estadoLogin()){  
-				if(i.getOwner()!=null)
+			if (Start.estadoLogin()){  
+				if(i.getOwner(Start.getUsuario())!=null)
 					login = true;
-				if(i.getUsuario().getReservas().size()>0)
+				if(i.getUsuario(Start.getUsuario()).getReservas().size()>0)
 					reserv=true;
 				else
 					reserv=false;

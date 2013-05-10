@@ -75,7 +75,7 @@ public class GestionCasaRuralGUI extends JPanel {
 				if (comBoxCasas.getSelectedIndex() > 0) {
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					try {
-						facade.eliminarCasaRural(Integer.parseInt(comBoxCasas.getSelectedItem().toString()));						
+						facade.eliminarCasaRural(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()));						
 						JPanel panel = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(panel);
 						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la casa Rural", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
@@ -161,15 +161,15 @@ public class GestionCasaRuralGUI extends JPanel {
 							
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						File nuevDir = new File("\\imagenes\\"+facade.getUsuario().getEmail()+"\\"+facade.getNumeroCR());
+						File nuevDir = new File("\\imagenes\\"+facade.getUsuario(Start.getUsuario()).getEmail()+"\\"+facade.getNumeroCR());
 						nuevDir.mkdir();
-						facade.anadirRuralHouse(description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
+						facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
-						facade.modificarRuralHouse((Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
+						facade.modificarRuralHouse(Start.getUsuario(), (Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					}
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
-					new File("/localData/"+facade.getUsuario().getEmail()+"/");
+					new File("/localData/"+facade.getUsuario(Start.getUsuario()).getEmail()+"/");
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -200,7 +200,7 @@ public class GestionCasaRuralGUI extends JPanel {
 						RuralHouse rh;
 						java.util.Iterator<RuralHouse> i;
 						try {
-							i = facade.getOwner().getRuralHouses().iterator();
+							i = facade.getOwner(Start.getUsuario()).getRuralHouses().iterator();
 							while (i.hasNext()){
 								rh = i.next();
 								if (rh.getHouseNumber() == Integer.parseInt((String) comBoxCasas.getSelectedItem())){
@@ -373,7 +373,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
-			i = facade.getOwner().getRuralHouses().iterator();
+			i = facade.getOwner(Start.getUsuario()).getRuralHouses().iterator();
 			while (i.hasNext()){
 				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 			}

@@ -155,7 +155,7 @@ public class AnadirFechaGUI extends JPanel {
 					int numdias= (int) spinner.getValue();
 					float precio = Float.parseFloat(textField.getText());
 					int numero= Integer.parseInt(comBoxCasas.getSelectedItem().toString());
-					facade.anadirFechas(numero, aux, aux2, precio, numdias);
+					facade.anadirFechas(Start.getUsuario(), numero, aux, aux2, precio, numdias);
 					JPanel temp1= new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
@@ -203,7 +203,7 @@ public class AnadirFechaGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
-			i = facade.getOwner().getRuralHouses().iterator();
+			i = facade.getOwner(Start.getUsuario()).getRuralHouses().iterator();
 			while (i.hasNext()){
 				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 			}
@@ -218,7 +218,7 @@ public class AnadirFechaGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			borrarTabla();
-			Vector<Fechas> aux =  facade.getFechas(numeroRH);
+			Vector<Fechas> aux =  facade.getFechas(Start.getUsuario(), numeroRH);
 			Iterator<Fechas> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object> vector = new Vector<Object>();

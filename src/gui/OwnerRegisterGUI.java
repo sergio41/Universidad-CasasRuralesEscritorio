@@ -75,8 +75,8 @@ public class OwnerRegisterGUI extends JPanel {
 					mon= (String) comboMoneda.getSelectedItem();
 	
 					try {
-						facade.modificarOwner(cuenta, tipo, idiom, profes, mon);
-						String ruta = new String("\\imagenes\\"+facade.getUsuario().getEmail());
+						facade.modificarOwner(Start.getUsuario(), cuenta, tipo, idiom, profes, mon);
+						String ruta = new String("\\imagenes\\"+facade.getUsuario(Start.getUsuario()).getEmail());
 						System.out.println(ruta);
 						File carpet =new File(ruta);
 						carpet.mkdirs();
@@ -215,7 +215,7 @@ public class OwnerRegisterGUI extends JPanel {
 		Owner ow;
 		try {
 			
-			ow = facade.getOwner();
+			ow = facade.getOwner(Start.getUsuario());
 			if (ow!=null){
 				textCuentaBancaria.enable(false);
 				textCuentaBancaria.setText(ow.getBankAccount());

@@ -177,13 +177,13 @@ public class UserRegisterGUI extends JPanel {
 				String pais = textPais.getText();
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					if(facade.estadoLogin()){
+					if(Start.estadoLogin()){
 						try {
-							facade.modificarPerfil(estadoCivil, nombre, apellidos, telefono, pais, edad, perfil);
+							facade.modificarPerfil(Start.getUsuario(), estadoCivil, nombre, apellidos, telefono, pais, edad, perfil);
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 							JPanel temp1 = new PantallaPrincipalGUI();
 							Start.modificarPanelAbajo(temp1);
-							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
+							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario()).getEmail()));
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}
@@ -194,7 +194,7 @@ public class UserRegisterGUI extends JPanel {
 							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 							facade.hacerLogin(email, pass);
-							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
+							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario()).getEmail()));
 							if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
 								JPanel temp1 = new OwnerRegisterGUI();
 								Start.modificarPanelAbajo(temp1);
@@ -265,8 +265,8 @@ public class UserRegisterGUI extends JPanel {
 	private void inicializarCampos(){
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			if (facade.estadoLogin()){
-				UserAplication user = facade.getUsuario();
+			if (Start.estadoLogin()){
+				UserAplication user = facade.getUsuario(Start.getUsuario());
 				textEmail.enable(false);
 				textEmail.setText(user.getEmail());
 				textEdad.setValue(Integer.parseInt(user.getEdad()));

@@ -7,67 +7,64 @@ import java.util.Date;
 import domain.*;
 
 public interface ApplicationFacadeInterface extends Remote {
-	public Vector<RuralHouse> getAllRuralHouses()throws RemoteException,
-	Exception;
+	public Vector<RuralHouse> getAllRuralHouses()throws RemoteException, Exception;
 	
-	public void close() throws RemoteException;
+	//public void close() throws RemoteException;
 
-	public void anadirRuralHouse(String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception;
+	public void anadirRuralHouse(UserAplication usuario, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception;
 	
-	public void modificarRuralHouse( int numero,
+	public void modificarRuralHouse(UserAplication usuario,  int numero,
 			String description, String city, int nRooms, int nKitchen,
 			int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception;
 
-	public void eliminarCasaRural (int numero) throws Exception;
+	public void eliminarCasaRural (UserAplication usuario, int numero) throws Exception;
 	
-	public Vector<RuralHouse>  getCasas(String ciudad,int Banos,int Habita,int Cocina,int Estar,int Park) throws Exception;
+	public Vector<RuralHouse>  getCasas( String ciudad,int Banos,int Habita,int Cocina,int Estar,int Park) throws Exception;
 	
-	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
+	public void nuevoUsuario( String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
 	
-	public void modificarPerfil(String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
+	public void modificarPerfil(UserAplication usuario, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception;
 	
-	public Image getFotoPerfil(String email) throws Exception;
+	public Image getFotoPerfil( String email) throws Exception;
 	
-	public UserAplication getUsuario() throws Exception;
+	public UserAplication getUsuario(UserAplication usuario) throws Exception;
 	
-	public void hacerLogin(String email, String pass) throws Exception;
+	public UserAplication hacerLogin(String email, String pass) throws Exception;
 	
-	public boolean estadoLogin () throws Exception;
+
 	
-	public void logout() throws Exception;
+	public void recuperarContrasena( String email) throws Exception;
 	
-	public void recuperarContrasena(String email) throws Exception;
+	public Owner getOwner(UserAplication usuario) throws Exception;
 	
-	public Owner getOwner() throws Exception;
+	public void modificarOwner(UserAplication usuario, String bA, String t, Vector<String> i, String p, String m) throws Exception;
 	
-	public void modificarOwner(String bA, String t, Vector<String> i, String p, String m) throws Exception;
-	
-	public void modificarContraseña(String pass) throws Exception;
+	public void modificarContraseña(UserAplication usuario, String pass) throws Exception;
 	
 	public int getNumeroCR() throws Exception;
 	
 	public Vector<String> Ultimos10Tweets() throws Exception;
 	
-	public void hacerReserva(int numeroRH, Date inicio, Date fin) throws Exception;
+	public void hacerReserva(UserAplication usuario, int numeroRH, Date inicio, Date fin) throws Exception;
 	
-	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception;
+	public Vector<RuralHouse> casasRuralesDisponibles( Date inicio, Date fin) throws Exception;
 	
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin, String Ciudad) throws Exception;
 	
-	public void anadirOferta(int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception;
+	public void anadirOferta(UserAplication usuario, int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception;
 
-	public Vector<Offer> getOfertas(int numeroRH) throws Exception;
+	public Vector<Offer> getOfertas(UserAplication usuario, int numeroRH) throws Exception;
 	
 	public RuralHouse getCasas(int num) throws Exception;
 	
-	public Vector<Image> getFotosRH(int numeroDeCasa) throws Exception;
+	public Vector<Image> getFotosRH( int numeroDeCasa) throws Exception;
 
-	public Vector<RuralHouse> casasRuralesDisponibles(Date ini, Date fin,
+	public Vector<RuralHouse> casasRuralesDisponibles( Date ini, Date fin,
 			String city, int banos, int habita, int cocina, int estar, int park)throws Exception;
 	
-	public void anadirFechas ( int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception; 
+	public void anadirFechas (UserAplication usuario,  int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception; 
 
-	public Vector<Fechas> getFechas(int numeroRH) throws Exception;
+	public Vector<Fechas> getFechas(UserAplication usuario, int numeroRH) throws Exception;
 
-	public void eliminarOferta(int parseInt, Date ini, Date fin) throws Exception;
+	public void eliminarOferta(UserAplication usuario, int parseInt, Date ini, Date fin) throws Exception;
 }

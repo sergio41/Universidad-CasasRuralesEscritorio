@@ -132,7 +132,7 @@ public class GestionarReservasGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
-			i = facade.getOwner().getRuralHouses().iterator();
+			i = facade.getOwner(Start.getUsuario()).getRuralHouses().iterator();
 			while (i.hasNext()){
 				modeloEC.addElement(Integer.toString(i.next().getHouseNumber()));
 			}
@@ -146,7 +146,7 @@ public class GestionarReservasGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		if(tipo ==0){
 			try {
-				Iterator<Book> iter = facade.getUsuario().getReservas().iterator();
+				Iterator<Book> iter = facade.getUsuario(Start.getUsuario()).getReservas().iterator();
 				while(iter.hasNext()){
 					Book reservaConcreta = iter.next();
 					Vector<Object> vector = new Vector<Object>();

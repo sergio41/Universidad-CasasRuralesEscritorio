@@ -118,7 +118,7 @@ public class CreateOfferGUI extends JPanel {
 				try {
 					System.out.println(calendarFirstday.getDate());
 					System.out.println(calendarLastday.getDate());
-					facade.anadirOferta(Integer.parseInt(comBCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
+					facade.anadirOferta(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()), calendarFirstday.getDate(), calendarLastday.getDate(), Float.parseFloat(textPrecio.getText()), false);
 					table.removeAll();
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
@@ -186,11 +186,11 @@ public class CreateOfferGUI extends JPanel {
 				if (comBCasas.getSelectedIndex() >= 0) {
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					try {						
-						Vector<Offer> aux1 =  facade.getOfertas(Integer.parseInt(comBCasas.getSelectedItem().toString()));
+						Vector<Offer> aux1 =  facade.getOfertas(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()));
 						int x = (int) table.getValueAt(table.getSelectedRow(), 0);
 						Date ini = aux1.get(x).getPrimerDia();
 						Date fin = aux1.get(x).getUltimoDia();
-						facade.eliminarOferta(Integer.parseInt(comBCasas.getSelectedItem().toString()), ini, fin);						
+						facade.eliminarOferta(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()), ini, fin);						
 						JPanel panel = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(panel);
 						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la oferta", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
@@ -234,7 +234,7 @@ public class CreateOfferGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		java.util.Iterator<RuralHouse> i;
 		try {
-			i = facade.getOwner().getRuralHouses().iterator();
+			i = facade.getOwner(Start.getUsuario()).getRuralHouses().iterator();
 			while (i.hasNext())	modeloEC.addElement(i.next().getHouseNumber());
 			comBCasas.setSelectedIndex(-1);
 			enaDis(false);
@@ -257,7 +257,7 @@ public class CreateOfferGUI extends JPanel {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
 			borrarTabla();
-			Vector<Offer> aux =  facade.getOfertas(numeroRH);
+			Vector<Offer> aux =  facade.getOfertas(Start.getUsuario(), numeroRH);
 			Iterator<Offer> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object> vector = new Vector<Object>();

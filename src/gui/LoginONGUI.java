@@ -33,9 +33,8 @@ public class LoginONGUI extends JPanel {
 		btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					facade.logout();
+					Start.logout();
 					Start.setFotoDefecto();
 					JPanel temp1 = new LoginGUI();
 					Start.modificarPanelArriba(temp1);
@@ -106,14 +105,14 @@ public class LoginONGUI extends JPanel {
 			ApplicationFacadeInterface facade = Start.getBusinessLogic();
 			modPerfil.setVisible(true);
 			modOwner.setVisible(true);
-			if(facade.getOwner() != null){
+			if(facade.getOwner(Start.getUsuario()) != null){
 				modOwner.setText("Editar Propietario");
 				txtpnPropietario.setText("Registrado como propietario.");
 			}else{
 				modOwner.setText("Ser Propietario");
 				txtpnPropietario.setText("Registrado como usuario.");
 			}
-			Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario().getEmail()));
+			Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario()).getEmail()));
 		} catch (Exception e) {
 			e.getMessage();
 		}

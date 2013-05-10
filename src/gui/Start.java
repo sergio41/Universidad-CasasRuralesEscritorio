@@ -20,13 +20,13 @@ import businessLogic.FacadeImplementation;
 import configuration.Config;
 import java.awt.Color;
 import javax.swing.JTextPane;
+
+import domain.UserAplication;
+
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 
 public class Start extends JFrame {
 	/**
@@ -42,8 +42,9 @@ public class Start extends JFrame {
 	private static Vector<String> vectorTwitter;
 	private static int intTwitter;
 	private static JTextPane textTwitter;
-	
 	private static ImageIcon logo;
+	
+	private static UserAplication usuario = null;
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
 	}
@@ -207,6 +208,20 @@ public class Start extends JFrame {
 		}
 	}
 	
+	public static UserAplication getUsuario(){
+		return usuario;
+	}
 	
+	public static boolean estadoLogin(){
+		return (usuario!=null);
+	}
 	
+	public static void logout(){
+		usuario=null;
+	}
+	
+	public static void hacerLogin(String email, String pass) throws Exception{
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		usuario = facade.hacerLogin(email, pass);
+	}
 }

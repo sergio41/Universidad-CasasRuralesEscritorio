@@ -37,9 +37,8 @@ public class LoginGUI extends JPanel {
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
-				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					facade.hacerLogin(email, pass);
+					Start.hacerLogin(email, pass);
 					JPanel temp = new LoginONGUI();
 					Start.modificarPanelArriba(temp);
 					JPanel temp1 = new PantallaPrincipalGUI();
