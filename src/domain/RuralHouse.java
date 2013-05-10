@@ -110,7 +110,7 @@ public class RuralHouse implements Serializable {
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
 		Date primero = (Date) primerDia.clone();
-		Date primero1 = (Date) primerDia.clone();
+		//Date primero1 = (Date) primerDia.clone();
 		Date auxp = primerDia;
 		Fechas auxFecha = new Fechas(null, 0, null, 0);
 		while (auxp.compareTo(ultimoDia)<=0){
@@ -308,6 +308,19 @@ public class RuralHouse implements Serializable {
 		auxVectorOffer = vectorOfertas;
 		vectorOfertas = new Vector<Offer>();
 		return auxVectorOffer;
+	}
+	
+	public RuralHouse eliminarReserva(int num) throws Exception{
+		Iterator<Book> iter = vectorReservas.iterator();
+		while(iter.hasNext()){
+			Book reserv = iter.next();
+			if(reserv.getNumeroDeReserva()==num){
+				vectorReservas.remove(reserv);
+				return this;
+		
+			}
+		}	
+		throw new Exception("No existia dicha reserva"); 
 	}
 	
 	public Vector<Book> eliminarTodasReserva(){

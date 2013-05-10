@@ -67,4 +67,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public Vector<Fechas> getFechas(UserAplication usuario, int numeroRH) throws Exception;
 
 	public void eliminarOferta(UserAplication usuario, int parseInt, Date ini, Date fin) throws Exception;
+
+	public void eliminarReserva(int num) throws Exception;
 }

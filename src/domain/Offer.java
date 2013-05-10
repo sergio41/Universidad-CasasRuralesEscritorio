@@ -73,6 +73,11 @@ public class Offer implements Serializable {
 		reserva = reservaBook;
 		reservado = true;
 	}
+
+	public void cancelarReserva(){
+		reserva=null;
+		reservado = false;		
+	}
 	
 	public boolean contiene(Date fecha){
 		Iterator<Fechas> i = vectorFechas.iterator();

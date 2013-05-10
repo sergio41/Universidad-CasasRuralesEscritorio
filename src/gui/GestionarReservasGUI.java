@@ -108,10 +108,25 @@ public class GestionarReservasGUI extends JPanel {
 		add(btnVerReservasPagadas);
 		
 		btnEliminarReserva = new JButton("Eliminar reserva");
+		btnEliminarReserva.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					facade.eliminarReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnEliminarReserva.setBounds(643, 370, 165, 34);
 		add(btnEliminarReserva);
 		
 		btnPagar = new JButton("Pagar");
+		btnPagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnPagar.setEnabled(false);
 		btnPagar.setBounds(437, 370, 165, 34);
 		add(btnPagar);

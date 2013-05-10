@@ -275,8 +275,15 @@ public class BusquedaGUI extends JPanel {
 				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
 					facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+						JPanel temp1 = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(temp1);
+					}else{
+						JPanel temp1 = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(temp1);
+					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}

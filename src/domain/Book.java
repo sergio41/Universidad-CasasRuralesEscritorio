@@ -16,7 +16,7 @@ public class Book implements Serializable {
 	private Offer offer;
 	private Vector<Fechas> vectorFechas;
 	
-	protected Book(int numeroReserva, float cost, UserAplication cliente, Vector<Fechas> fechas) {
+	public Book(int numeroReserva, float cost, UserAplication cliente, Vector<Fechas> fechas) {
 		bookDate = new java.util.Date(System.currentTimeMillis());
 		bookNumber = numeroReserva;
 		isPaid = false;
@@ -27,7 +27,7 @@ public class Book implements Serializable {
 		extenderReserva();
 	}
 	
-	protected Book(int numeroReserva, float cost, UserAplication cliente, Offer oferta, Vector<Fechas> fechas) {
+	public Book(int numeroReserva, float cost, UserAplication cliente, Offer oferta, Vector<Fechas> fechas) {
 		bookDate = new java.util.Date(System.currentTimeMillis());
 		bookNumber = numeroReserva;
 		isPaid = false;

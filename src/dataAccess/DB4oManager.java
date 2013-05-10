@@ -214,7 +214,37 @@ public class DB4oManager {
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
-
+	public static void eliminarReserva(int num) throws Exception{
+		System.out.println(num);
+		ObjectSet<Book> reservasConcretas = db.queryByExample(Book.class);
+		System.out.println("0");
+		if (reservasConcretas.hasNext()){
+			System.out.println("A");
+			Book reserv = reservasConcretas.next();
+			if(reserv.getNumeroDeReserva()==num){
+			reserv.getOffer().getRuralHouse().eliminarReserva(num);
+			System.out.println("B");
+			reserv.getOffer().cancelarReserva();
+			System.out.println("C");
+			db.store(reserv.getOffer());
+			Vector<Fechas> f = reserv.getFechas();
+			for (int i = 0; i< f.size(); i++){
+				System.out.println("D");
+				f.get(i).cancelarReserva();
+				System.out.println("E");
+				db.store(f.get(i));
+			}	
+			reserv.getCliente().eliminarReserva(reserv);
+			System.out.println("F");
+			db.store(reserv.getCliente());
+			db.store(reserv.getOffer().getRuralHouse());
+			db.delete(reserv);
+			db.commit();
+		
+			}		
+		}
+	}
+	
 	public static Vector<RuralHouse> getHouse(String ciudad, int banos,
 			int habita, int cocina, int estar, int park) {
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
