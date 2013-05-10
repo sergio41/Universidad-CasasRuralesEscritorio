@@ -1,7 +1,10 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Vector;
+
+import externalDataSend.EnviarCorreo;
 
 @SuppressWarnings("serial")
 public class Owner implements Serializable {
@@ -44,4 +47,26 @@ public class Owner implements Serializable {
 	public Vector<RuralHouse> getRuralHouses() {return ruralHouses;}
 	
 	public void addRuralHouse(RuralHouse rh) {ruralHouses.add(rh);}
+	
+	public RuralHouse eliminarRH(int numero){
+		Iterator<RuralHouse> i = ruralHouses.iterator();
+		RuralHouse aux = null;
+		while (i.hasNext()){
+			RuralHouse aux1 = i.next();
+			if (aux1.getHouseNumber() == numero) {
+				aux = aux1;
+				ruralHouses.remove(aux1);
+				break;
+			}
+		}
+		if (aux != null)
+			try {
+				EnviarCorreo.enviarCorreos(aux.getUserAplication().getEmail(), "Modificacion de la Casa Rural", "La casa rural con numero " + aux.getHouseNumber() + "se ha eliminado correctamente.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return aux;
+			
+	}
 }

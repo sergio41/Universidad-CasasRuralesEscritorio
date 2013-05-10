@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
+import externalDataSend.EnviarCorreo;
+
 public class RuralHouse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -110,6 +112,7 @@ public class RuralHouse implements Serializable {
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
 		Date primero = (Date) primerDia.clone();
+		Date primero1 = (Date) primerDia.clone();
 		Date auxp = primerDia;
 		Fechas auxFecha = new Fechas(null, 0, null, 0);
 		while (auxp.compareTo(ultimoDia)<=0){
@@ -138,6 +141,9 @@ public class RuralHouse implements Serializable {
 		}
 		Offer oferta = new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio);
 		vectorOfertas.add(oferta);
+		System.out.println("holaaaaaa:   " + primerDia.toString() + ultimoDia.toString());
+		hacerReserva(getUserAplication(), 0, primero1, (Date) ultimoDia.clone());
+		//vectorOfertas.get(0).hacerReserva(new Book(5, 1000, this.getUserAplication(), auxVectorFechas));
 		
 		Iterator<Fechas> i = auxVectorFechasNuevas.iterator();
 		while(obligatorio && i.hasNext()){
@@ -215,10 +221,14 @@ public class RuralHouse implements Serializable {
 	}
 	
 	private Offer disponibleFechaOferta(Date inicio, Date fin){
+		System.out.println("holccccc:   " + inicio.toString() + fin.toString());
 		Iterator<Offer> i = vectorOfertas.iterator();
 		while (i.hasNext()){
 			Offer aux = i.next();
-			if (aux.getPrimerDia().compareTo(inicio) == 0 && aux.getUltimoDia().compareTo(fin) == 0 && !aux.isReservado()) return aux;
+			System.out.println("hola:               " + aux.getPrimerDia().toString() + inicio.toString());
+			System.out.println("hola:               " + aux.getUltimoDia().toString() + fin.toString());
+			System.out.println("hola:               " + aux.isReservado());
+			if (aux.getPrimerDia().equals(inicio) && aux.getUltimoDia().equals(fin) && !aux.isReservado()) return aux;
 		}
 		return null;
 	}
@@ -249,26 +259,27 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
-		System.out.println("A");
+		System.out.println("holbbbbbbb:   " + inicio.toString() + fin.toString());
+		System.out.println("hA");
 		Offer auxOferta = disponibleFechaOferta(inicio, fin);
 		Book reserva = null;
-		System.out.println("B");
+		System.out.println("hB");
 		if (disponibleFechas(inicio, fin) || auxOferta != null){
-			System.out.println("C");
+			System.out.println("hC");
 			Vector<Fechas> auxFechas = getFechas(inicio, fin);
-			System.out.println("D");
+			System.out.println("hD");
 			if (auxOferta != null && auxFechas != null){
-				System.out.println("E");
+				System.out.println("hE");
 				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
 				
 				vectorReservas.add(reserva);
-				System.out.println("F");
+				System.out.println("hF");
 			} else if (auxOferta == null && auxFechas != null){
 				float precio = 0;
 				Iterator<Fechas> i = auxFechas.iterator();
-				System.out.println("G");
+				System.out.println("hG");
 				while (i.hasNext()) precio = precio + i.next().getPrecio();
-				System.out.println("H");
+				System.out.println("hH");
 				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
 				vectorReservas.add(reserva);
 				eliminarOfertaQueContenga(vectorFechas);
@@ -295,7 +306,34 @@ public class RuralHouse implements Serializable {
 		for(int i =0; i<images.size();i++){
 			vectorImage.add(images.get(i));
 		}
-			
+	}
+	
+	public Vector<Fechas> eliminarTodasFechas(){
+		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
+		auxVectorFechas = vectorFechas;
+		vectorFechas = new Vector<Fechas>();
+		return auxVectorFechas;
 	}
 
+	public Vector<Offer> eliminarTodasOfertas(){
+		Vector<Offer> auxVectorOffer = new Vector<Offer>();
+		auxVectorOffer = vectorOfertas;
+		vectorOfertas = new Vector<Offer>();
+		return auxVectorOffer;
+	}
+	
+	public Vector<Book> eliminarTodasReserva(){
+		Vector<Book> auxVectorBook = new Vector<Book>();
+		auxVectorBook = vectorReservas;
+		for (int i = 0; i<vectorReservas.size(); i++){
+			try {
+				EnviarCorreo.enviarCorreos(vectorReservas.get(i).getCliente().getEmail(), "Reserva: " + vectorReservas.get(i).getNumeroDeReserva() , "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+		}
+		vectorReservas = new Vector<Book>();
+		return auxVectorBook;
+	}
 }
