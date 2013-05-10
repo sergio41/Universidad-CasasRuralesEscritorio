@@ -1,45 +1,24 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-
 import businessLogic.ApplicationFacadeInterface;
-
-import com.toedter.calendar.JDateChooser;
-
 import domain.Book;
-import domain.Fechas;
-import domain.Offer;
 import domain.RuralHouse;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
 
 public class GestionarReservasGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -155,7 +134,7 @@ public class GestionarReservasGUI extends JPanel {
 					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
 					vector.add(reservaConcreta.getPrecio());
 					vector.add(reservaConcreta.getFechaDeReserva());
-					modelTb.addColumn(vector);
+					modelTb.addRow(vector);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

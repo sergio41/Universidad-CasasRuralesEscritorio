@@ -193,7 +193,7 @@ public class UserRegisterGUI extends JPanel {
 							JPanel temp = new LoginONGUI();
 							Start.modificarPanelArriba(temp);
 							javax.swing.JOptionPane.showMessageDialog(null, "Nuevo usuario registrado correctamente.\nLogueado.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
-							facade.hacerLogin(email, pass);
+							Start.hacerLogin(email, pass);
 							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario()).getEmail()));
 							if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Eres propietario de una casa rural?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
 								JPanel temp1 = new OwnerRegisterGUI();
