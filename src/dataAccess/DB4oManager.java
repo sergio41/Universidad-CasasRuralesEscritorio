@@ -281,8 +281,9 @@ public class DB4oManager {
 			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext()){
 				RuralHouse rHConcreto = rHConcretos.next();
-				rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
+				Book reserva = rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
 				db.store(rHConcreto);
+				userConcreto.anadirReserva(reserva);				
 				db.store(userConcreto);
 				db.commit();
 				return getUser(user.getEmail());
