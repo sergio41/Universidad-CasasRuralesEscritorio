@@ -276,17 +276,33 @@ public class RuralHouse implements Serializable {
 		return reserva;		
 	}
 	
-	private void eliminarOfertaQueContenga(Vector<Fechas> vectorFe){
+	public void eliminarOfertaQueContenga(Vector<Fechas> vectorFe){
 		Iterator<Fechas> i = vectorFe.iterator();
 		while (i.hasNext()) eliminarOfertaQueContenga(i.next().getFecha());
 	}
 	
-	private void eliminarOfertaQueContenga(Date fecha){
+	public void eliminarOfertaQueContenga(Date fecha){
 		Iterator<Offer> i = vectorOfertas.iterator();
 		while (i.hasNext()){
 			Offer aux = i.next();
 			if (aux.contiene(fecha)) vectorOfertas.remove(aux);
 		}
+	}
+	
+	public Offer eliminarOferta(Date inicio, Date fin) throws Exception{
+		Iterator<Offer> i = vectorOfertas.iterator();
+		while (i.hasNext()){
+			Offer aux = i.next();
+			if (inicio.equals(aux.getPrimerDia())){
+				if (fin.equals(aux.getUltimoDia())){
+					if (aux.isReservado()) EnviarCorreo.enviarCorreos(aux.getReserva().getCliente().getEmail(), "Su reserva numero " + aux.getReserva().getNumeroDeReserva() + " se ha cancelado", "Lamentablemente, su reserva ha sido cancelado debido a que el propìetario de la casa rural ha eliminado la oferta.");
+					vectorOfertas.remove(aux);
+					return aux;
+				}
+				break;
+			}
+		}
+		return null;
 	}
 
 	public void setImages(Vector<String> images) {
@@ -308,6 +324,10 @@ public class RuralHouse implements Serializable {
 		auxVectorOffer = vectorOfertas;
 		vectorOfertas = new Vector<Offer>();
 		return auxVectorOffer;
+	}
+	
+	public void eliminarOferta(Fechas f){
+		vectorFechas.remove(f);
 	}
 	
 	public Book eliminarReserva(int num) throws Exception{

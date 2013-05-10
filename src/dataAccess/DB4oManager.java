@@ -217,25 +217,18 @@ public class DB4oManager {
 	public static void eliminarReserva(int num) throws Exception{
 		System.out.println(num);
 		ObjectSet<Book> reservasConcretas = db.queryByExample(Book.class);
-		System.out.println("0");
 		if (reservasConcretas.hasNext()){
-			System.out.println("A");
 			Book reserv = reservasConcretas.next();
 			if(reserv.getNumeroDeReserva()==num){
 			reserv.getOffer().getRuralHouse().eliminarReserva(num);
-			System.out.println("B");
 			reserv.getOffer().cancelarReserva();
-			System.out.println("C");
 			db.store(reserv.getOffer());
 			Vector<Fechas> f = reserv.getFechas();
 			for (int i = 0; i< f.size(); i++){
-				System.out.println("D");
 				f.get(i).cancelarReserva();
-				System.out.println("E");
 				db.store(f.get(i));
 			}	
 			reserv.getCliente().eliminarReserva(reserv);
-			System.out.println("F");
 			db.store(reserv.getCliente());
 			db.store(reserv.getOffer().getRuralHouse());
 			db.delete(reserv);
@@ -364,148 +357,30 @@ public class DB4oManager {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static UserAplication eliminarOferta(UserAplication usuario,
+	public static void eliminarOferta(UserAplication usuario,
 			int nRH, Date ini, Date fin) throws Exception {
 		ini = new Date(ini.getYear(), ini.getMonth(), ini.getDate());
 		fin = new Date(fin.getYear(), fin.getMonth(), fin.getDate());
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(usuario);	
-		
-		if (userConcretos.hasNext()){
-			UserAplication userConcreto = userConcretos.next();
-			Iterator<RuralHouse> i = userConcreto.getPropietario().getRuralHouses().iterator();
-			while (i.hasNext()){
-				RuralHouse casa = i.next();
-				if(casa.getHouseNumber() == nRH){
-					if(casa.getOfertas().size()==0){
-						throw new Exception("No hay ofertas en esa casa,no se puede borrar.");
-					}else{
-						if(casa.getFechas().size()==0){
-							if(casa.getReservas().size()==0){
-								//no va a entrar nunca pero por si acaso.
-								System.out.println("Hay ofertas.");
-								ObjectSet<Offer> ofertasConcretas = db.queryByExample(Offer.class);
-								Iterator<Offer> j = ofertasConcretas.iterator();
-								while (j.hasNext()){
-									Offer offer = j.next();
-									if(offer.getRuralHouse().getHouseNumber()==nRH && offer.getPrimerDia().compareTo(ini)==0 && offer.getUltimoDia().compareTo(fin)==0){
-										casa.getOfertas().remove(offer);
-										db.delete(offer);
-										db.commit();
-									}
-								}
-							}else{
-								System.out.println("Hay ofertas y reservas.");
-								ObjectSet<Offer> ofertasConcretas = db.queryByExample(Offer.class);
-								Iterator<Offer> j = ofertasConcretas.iterator();
-								while (j.hasNext()){
-									Offer offer = j.next();
-									if(offer.getRuralHouse().getHouseNumber()==nRH && offer.getPrimerDia().compareTo(ini)==0 && offer.getUltimoDia().compareTo(fin)==0){
-										EnviarCorreo.enviarCorreos(offer.getReserva().getCliente().getEmail(), "Su reserva", "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado la oferta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
-										ObjectSet<Book> reservaConcretas = db.queryByExample(Book.class);
-										Iterator<Book> k = reservaConcretas.iterator();
-										while (k.hasNext()){
-											Book reserva = k.next();
-											if(reserva.getNumeroDeReserva()==offer.getReserva().getNumeroDeReserva()){
-												casa.getReservas().remove(reserva);
-												db.delete(reserva);
-												db.commit();
-											}
-										}
-										casa.getOfertas().remove(offer);
-										db.delete(offer);
-										db.commit();
-									}
-								}
-							}
-						}else{
-							if(casa.getReservas().size()==0){
-								System.out.println("Hay ofertas y fechas.");
-								ObjectSet<Offer> ofertasConcretas = db.queryByExample(Offer.class);
-								Iterator<Offer> j = ofertasConcretas.iterator();
-								while (j.hasNext()){
-									Offer offer = j.next();
-									System.out.println(offer.getPrimerDia()+"="+ini);
-									System.out.println(offer.getUltimoDia()+"="+fin);
-									if(offer.getRuralHouse().getHouseNumber()==nRH && offer.getPrimerDia().compareTo(ini)==0 && offer.getUltimoDia().compareTo(fin)==0){
-										System.out.println("1");
-										casa.getOfertas().remove(offer);
-										db.delete(offer);
-										db.commit();
-									}
-								}
-								Date auxDate = new Date(ini.getYear(), ini.getMonth(), ini.getDate());
-								Date auxUltimoDia = new Date(fin.getYear(), fin.getMonth(), fin.getDate());
-								boolean encontrado=false;
-								ObjectSet<Fechas> fechasConcretas = db.queryByExample(Fechas.class);
-								Iterator<Fechas> k = fechasConcretas.iterator();
-								while (k.hasNext()&& !encontrado){
-									Fechas fecha = k.next();
-									if(fecha.getCasaRural().getHouseNumber()==nRH && fecha.getFecha().compareTo(auxDate)==0){
-										casa.getFechas().remove(fecha);
-										db.delete(fecha);
-										db.commit();
-										if(fecha.getFecha().compareTo(auxUltimoDia)==0){
-											encontrado=true;
-										}
-										auxDate.setTime(auxDate.getTime()+1*24*60*60*1000);
-									}
-									
-								}															
-							}else{
-								/*System.out.println("Hay ofertas, fechas y reservas.");
-								ObjectSet<Fechas> fechasConcretas = db.queryByExample(Fechas.class);
-								Iterator<Fechas> j = fechasConcretas.iterator();
-								while (j.hasNext()){
-									Fechas fecha = j.next();
-									if(fecha.getCasaRural().getHouseNumber()==numero){
-										EnviarCorreo.enviarCorreos(fecha.getReserva().getCliente().getEmail(), "Su reserva", "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
-										ObjectSet<Book> reservaConcretas = db.queryByExample(user);
-										Iterator<Book> k = reservaConcretas.iterator();
-										while (k.hasNext()){
-											Book reserva = k.next();
-											if(reserva.getNumeroDeReserva()==fecha.getReserva().getNumeroDeReserva()){
-												casa.getReservas().remove(reserva);
-												db.delete(reserva);
-												db.commit();
-											}
-										}
-										casa.getFechas().remove(fecha);
-										db.delete(fecha);
-										db.commit();
-									}
-								}
-								ObjectSet<Offer> ofertasConcretas = db.queryByExample(Offer.class);
-								Iterator<Offer> l = ofertasConcretas.iterator();
-								while (l.hasNext()){
-									Offer offer = l.next();
-									if(offer.getRuralHouse().getHouseNumber()==numero){
-										EnviarCorreo.enviarCorreos(offer.getReserva().getCliente().getEmail(), "Su reserva", "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
-										ObjectSet<Book> reservaConcretas = db.queryByExample(user);
-										Iterator<Book> m = reservaConcretas.iterator();
-										while (m.hasNext()){
-											Book reserva = m.next();
-											if(reserva.getNumeroDeReserva()==offer.getReserva().getNumeroDeReserva()){
-												casa.getReservas().remove(reserva);
-												db.delete(reserva);
-												db.commit();
-											}
-										}
-										casa.getOfertas().remove(offer);
-										db.delete(offer);
-										db.commit();
-									}
-								}*/
-							}
-						}
-						
+		ObjectSet<UserAplication> usuarioConcreto = db.queryByExample(usuario);
+		if (usuarioConcreto.hasNext()){
+			UserAplication user = usuarioConcreto.next();
+			ObjectSet<RuralHouse> casasConcretas = db.queryByExample(RuralHouse.class);
+			while(casasConcretas.hasNext()){
+				RuralHouse casa = casasConcretas.next();
+				if(casa.getHouseNumber()==nRH){
+					Offer eliminar = casa.eliminarOferta(ini, fin);
+					Vector<Fechas> f = eliminar.getFechas();
+					for(int i=0; i<f.size(); i++){
+						db.delete(f.get(i));
+						casa.getFechas().remove(f.get(i));
 					}
-					db.store(userConcreto);
+					db.store(casa);
+					db.delete(eliminar);
+					db.store(user);
 					db.commit();
-					return getUser(usuario.getEmail());
 				}
 			}
-			throw new Exception("La casa rural no ha podido ser eliminada.");
-		} else throw new Exception("El usuario no se ha encontrado.");
+		}
 	}
 	
 	public static Vector<Book> getTodasLasReservas(){
