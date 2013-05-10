@@ -139,9 +139,7 @@ public class RuralHouse implements Serializable {
 		}
 		Offer oferta = new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio);
 		vectorOfertas.add(oferta);
-		System.out.println("holaaaaaa:   " + primerDia.toString() + ultimoDia.toString());
-		hacerReserva(getUserAplication(), 0, primero1, (Date) ultimoDia.clone());
-		//vectorOfertas.get(0).hacerReserva(new Book(5, 1000, this.getUserAplication(), auxVectorFechas));
+		
 		
 		Iterator<Fechas> i = auxVectorFechasNuevas.iterator();
 		while(obligatorio && i.hasNext()){

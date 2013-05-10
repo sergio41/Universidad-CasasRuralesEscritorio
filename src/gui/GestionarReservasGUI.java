@@ -77,17 +77,33 @@ public class GestionarReservasGUI extends JPanel {
 		btnTodas = new JButton("Ver todas las reservas");
 		btnTodas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				borrarTabla();
 				actualizarTabla(0);
+				btnPagar.setEnabled(true);
 			}
 		});
 		btnTodas.setBounds(62, 68, 365, 80);
 		add(btnTodas);
 		
 		btnPorPagar = new JButton("Ver reservas por pagar");
+		btnPorPagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				borrarTabla();
+				actualizarTabla(1);
+				btnPagar.setEnabled(true);
+			}
+		});
 		btnPorPagar.setBounds(62, 175, 365, 80);
 		add(btnPorPagar);
 		
 		btnVerReservasPagadas = new JButton("Ver reservas pagadas");
+		btnVerReservasPagadas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				borrarTabla();
+				actualizarTabla(2);
+				btnPagar.setEnabled(false);
+			}
+		});
 		btnVerReservasPagadas.setBounds(62, 279, 365, 80);
 		add(btnVerReservasPagadas);
 		
@@ -96,6 +112,7 @@ public class GestionarReservasGUI extends JPanel {
 		add(btnEliminarReserva);
 		
 		btnPagar = new JButton("Pagar");
+		btnPagar.setEnabled(false);
 		btnPagar.setBounds(437, 370, 165, 34);
 		add(btnPagar);
 		
@@ -138,8 +155,47 @@ public class GestionarReservasGUI extends JPanel {
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.getMessage();
 			}
+		}else if(tipo==1){
+			try {
+				Iterator<Book> iter = facade.getUsuario(Start.getUsuario()).getReservas().iterator();
+				while(iter.hasNext()){
+					Book reservaConcreta = iter.next();
+					if(!reservaConcreta.isPaid()){
+						Vector<Object> vector = new Vector<Object>();
+						vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+						vector.add(reservaConcreta.getFechas().get(0));
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+						vector.add(reservaConcreta.getPrecio());
+						vector.add(reservaConcreta.getFechaDeReserva());
+						modelTb.addRow(vector);
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+		}else if(tipo==2){
+			try {
+				Iterator<Book> iter = facade.getUsuario(Start.getUsuario()).getReservas().iterator();
+				while(iter.hasNext()){
+					Book reservaConcreta = iter.next();
+					if(reservaConcreta.isPaid()){
+						Vector<Object> vector = new Vector<Object>();
+						vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+						vector.add(reservaConcreta.getFechas().get(0));
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+						vector.add(reservaConcreta.getPrecio());
+						vector.add(reservaConcreta.getFechaDeReserva());
+						modelTb.addRow(vector);
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.getMessage();
+			}
+			ajustarColumnas();
 		}
 	}
 
