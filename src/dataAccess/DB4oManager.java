@@ -291,6 +291,7 @@ public class DB4oManager {
 		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static UserAplication anadirOferta(UserAplication user, int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
 		if (userConcretos.hasNext()){
