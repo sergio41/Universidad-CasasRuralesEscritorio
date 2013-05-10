@@ -41,6 +41,7 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JButton btnGestionOfertas;
 	private static JButton btnGestionFechas;
 	private static JLabel lblMapa;
+	private JButton btnGestReserv;
 	
 	/**
 	 * Create the panel.
@@ -164,6 +165,16 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblMapa = new JLabel("mapa");
 		lblMapa.setBounds(376, 98, 319, 278);
 		add(lblMapa);
+		
+		btnGestReserv = new JButton("Gestionar Reservas Realizadas");
+		btnGestReserv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel temp = new GestionarReservasGUI();
+				Start.modificarPanelAbajo(temp);
+			}
+		});
+		btnGestReserv.setBounds(269, 427, 223, 28);
+		add(btnGestReserv);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -177,16 +188,23 @@ public class PantallaPrincipalGUI extends JPanel {
 	public void inicializarCampos(){
 		ApplicationFacadeInterface i = Start.getBusinessLogic();
 		boolean login = false;
+		boolean reserv = false;
 		try {
-			if (i.estadoLogin())  
+			if (i.estadoLogin()){  
 				if(i.getOwner()!=null)
 					login = true;
+				if(i.getUsuario().getReservas().size()>0)
+					reserv=true;
+				else
+					reserv=false;
+			}	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		btnGestionCasasRurales.setVisible(login);
 		btnGestionOfertas.setVisible(login);
 		btnGestionFechas.setVisible(login);
+		btnGestReserv.setVisible(reserv);
 	}
 }
 

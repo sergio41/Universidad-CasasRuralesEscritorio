@@ -271,7 +271,6 @@ public class RuralHouse implements Serializable {
 			if (auxOferta != null && auxFechas != null){
 				System.out.println("hE");
 				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
-				
 				vectorReservas.add(reserva);
 				System.out.println("hF");
 			} else if (auxOferta == null && auxFechas != null){
