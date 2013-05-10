@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 
 import configuration.Config;
 import dataAccess.DB4oManager;
+import domain.Book;
 import domain.Fechas;
 import domain.Offer;
 import domain.Owner;
@@ -147,6 +148,18 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		max++;
 		return max;
 	}
+	
+	public int getNumeroReserva() throws Exception{
+		Vector<Book> vector = DB4oManager.getTodasLasReservas();
+		int max = 0;
+		java.util.Iterator<Book> i = vector.iterator();
+		while (i.hasNext()) {
+			int aux = i.next().getNumeroDeReserva();
+			if( max < aux) max = aux;
+		}
+		max++;
+		return max;
+	}
 
 	public Vector<String> Ultimos10Tweets() throws Exception {
 		try {
@@ -167,7 +180,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 
 	public void hacerReserva(UserAplication usuario, int numeroRH, Date inicio, Date fin) throws Exception{
-		DB4oManager.hacerReserva(usuario, numeroRH, inicio, fin);
+		DB4oManager.hacerReserva(usuario, getNumeroReserva(), numeroRH, inicio, fin);
 	}
 	
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception{

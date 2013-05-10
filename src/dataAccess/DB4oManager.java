@@ -274,14 +274,14 @@ public class DB4oManager {
 		return result;	
 	}
 	
-	public static UserAplication hacerReserva(UserAplication cliente, int numero, Date inicio, Date fin) throws Exception{
+	public static UserAplication hacerReserva(UserAplication cliente, int numeroReserva, int numero, Date inicio, Date fin) throws Exception{
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(cliente);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext()){
 				RuralHouse rHConcreto = rHConcretos.next();
-				rHConcreto.hacerReserva(userConcreto, 0, inicio, fin);
+				rHConcreto.hacerReserva(userConcreto, numeroReserva, inicio, fin);
 				db.store(rHConcreto);			
 				db.store(userConcreto);
 				db.commit();
@@ -474,5 +474,12 @@ public class DB4oManager {
 			}
 			throw new Exception("La casa rural no ha podido ser eliminada.");
 		} else throw new Exception("El usuario no se ha encontrado.");
+	}
+	
+	public static Vector<Book> getTodasLasReservas(){
+		Vector<Book> aux = new Vector<Book>();
+		ObjectSet<Book> reservasConcretas = db.queryByExample(Book.class);	
+		while (reservasConcretas.hasNext()) aux.add(reservasConcretas.next());
+		return aux;
 	}
 }	
