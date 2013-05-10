@@ -54,7 +54,7 @@ public class LoginONGUI extends JPanel {
 		modPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JPanel temp1= new UserRegisterGUI();
+					JPanel temp1= new UserRegisterGUI(Start.getUsuario().getEmail());
 					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
 					e.getMessage();

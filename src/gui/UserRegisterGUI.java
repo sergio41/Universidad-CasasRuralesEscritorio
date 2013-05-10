@@ -52,7 +52,7 @@ public class UserRegisterGUI extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UserRegisterGUI(){
+	public UserRegisterGUI(String email){
 		setLayout(null);
 		
 		JLabel label = new JLabel("Email (user)*:");
@@ -76,6 +76,7 @@ public class UserRegisterGUI extends JPanel {
 			}
 		});
 		textEmail.setColumns(10);
+		textEmail.setText(email);
 		textEmail.setBounds(192, 35, 366, 34);
 		add(textEmail);
 		
@@ -281,7 +282,7 @@ public class UserRegisterGUI extends JPanel {
 				perfil = facade.getFotoPerfil(user.getEmail());
 			} else {
 				textEmail.enable(true);
-				textEmail.setText("");
+				//textEmail.setText("");
 				passPass.setText("");
 				modeloSpinner.setValue(0);
 				textNombre.setText("");

@@ -76,7 +76,7 @@ public class LoginGUI extends JPanel {
 		btnSignUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				JPanel temp = new UserRegisterGUI();
+				JPanel temp = new UserRegisterGUI(textEmail.getText());
 				Start.modificarPanelAbajo(temp);
 			}
 		});
