@@ -45,6 +45,7 @@ public class Start extends JFrame {
 	private static ImageIcon logo;
 	
 	private static UserAplication usuario = null;
+	
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
 	}

@@ -161,15 +161,12 @@ public class GestionCasaRuralGUI extends JPanel {
 							
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						File nuevDir = new File("\\imagenes\\"+facade.getUsuario(Start.getUsuario()).getEmail()+"\\"+facade.getNumeroCR());
-						nuevDir.mkdir();
 						facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
 						facade.modificarRuralHouse(Start.getUsuario(), (Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					}
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
-					new File("/localData/"+facade.getUsuario(Start.getUsuario()).getEmail()+"/");
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
