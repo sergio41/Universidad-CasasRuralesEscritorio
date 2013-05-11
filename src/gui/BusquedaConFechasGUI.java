@@ -50,6 +50,7 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JSpinner spinnerCocinas;
 	private JSpinner spinnerBanos;
 	
+	private Vector<RuralHouse> vectorCasa = new Vector<RuralHouse>();
 	private DefaultTableModel modelTb = new DefaultTableModel(
 			new Object[][] {
 			},
@@ -113,6 +114,29 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(label_2);
 		
 		btnSalvar = new JButton("Buscar");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					vectorCasa = new Vector<RuralHouse>();
+					Vector<RuralHouse> aux = facade.casasRuralesDisponibles(dateHasta.getDate(), dateHasta.getDate());
+					Iterator<RuralHouse> i = aux.iterator();
+					while (i.hasNext()){
+						RuralHouse casa = i.next();
+						boolean buscar = true;
+						if (comboCity.getSelectedIndex() > 0 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(casa.getCity())!=0) buscar = false;
+						if (buscar && casa.getPark()>=(int)spinnerAparcamientos.getValue() &&
+								casa.getBaths()>=(int)spinnerBanos.getValue() &&
+								casa.getKitchen()>=(int)spinnerCocinas.getValue() &&
+								casa.getRooms()>=(int)spinnerHabitaciones.getValue() &&
+								casa.getLiving()>=(int)spinnerSalas.getValue())vectorCasa.add(casa);
+						}
+					actualizarTabla();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnSalvar.setEnabled(false);
@@ -138,6 +162,7 @@ public class BusquedaConFechasGUI extends JPanel {
 
 	    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
 	      public void valueChanged(ListSelectionEvent e) {
+	    	  
 	      }
 
 	    });
@@ -283,32 +308,6 @@ public class BusquedaConFechasGUI extends JPanel {
 		
 	}
 
-	private void actualizarTabla(String city, int banos, int habita,
-			int cocina, int estar, int park, Date ini, Date fin) {
-		
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		try {
-			borrarTabla();
-			borrarTablaOferta();
-			Vector<RuralHouse> aux =  facade.casasRuralesDisponibles(ini, fin, city,banos,habita,cocina,estar,park );
-			Iterator<RuralHouse> i = aux.iterator();
-			while (i.hasNext()){
-				Vector<Object>  vector = new Vector<Object>();
-				RuralHouse auxi = i.next();
-				vector.add(auxi.getHouseNumber());
-				vector.add(auxi.getCity());
-				vector.add(auxi.getBaths());
-				vector.add(auxi.getKitchen());
-				vector.add(auxi.getLiving());
-				vector.add(auxi.getRooms());
-				vector.add(auxi.getPark());
-				modelTb.addRow(vector);
-			}
-			ajustarColumnas();
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
 
 	private void inicializarCampos() {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -332,14 +331,10 @@ public class BusquedaConFechasGUI extends JPanel {
 		}
 	}
 	
-	private void actualizarTabla(String city, int banos, int habita, int cocina, int estar, int park ){
-		
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+	private void actualizarTabla(){
 		try {
 			borrarTabla();
-			borrarTablaOferta();
-			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
-			Iterator<RuralHouse> i = aux.iterator();
+			Iterator<RuralHouse> i = vectorCasa.iterator();
 			while (i.hasNext()){
 				Vector<Object>  vector = new Vector<Object>();
 				RuralHouse auxi = i.next();
@@ -359,33 +354,9 @@ public class BusquedaConFechasGUI extends JPanel {
 		}
 	}
 	
-	private void actualizarTablaOferta(int num){
-		
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		try {
-			borrarTablaOferta();
-			RuralHouse aux =  facade.getCasas(num);
-			Vector<Offer> aux2= aux.getOfertas();
-			Iterator<Offer> i = aux2.iterator();
-			while (i.hasNext()){
-				Vector<Object>  vector = new Vector<Object>();
-				Offer auxi = i.next();
-				//vector.add(auxi.getHouseNumber());
-				vector.add(auxi.getPrimerDia());
-				vector.add(auxi.getUltimoDia());
-				vector.add(auxi.getPrice());
-				modelTbOfertas.addRow(vector);
-			}
-			ajustarColumnas();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.getMessage();
-		}
-	}
+	
 	
 	private void borrarTabla(){ while (modelTb.getRowCount() > 0) modelTb.removeRow(modelTb.getRowCount()-1); }
-
-	private void borrarTablaOferta(){ while (modelTbOfertas.getRowCount() > 0) modelTbOfertas.removeRow(modelTbOfertas.getRowCount()-1); }
 
 	
 	private void ajustarColumnas(){
