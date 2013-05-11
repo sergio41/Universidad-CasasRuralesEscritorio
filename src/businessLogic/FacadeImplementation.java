@@ -290,7 +290,6 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			try {
 				Image auxi = i.next();
 				File fDestino = new File("\\imagenes\\"+email+"\\"+numeroCasaRural+"\\"+auxi.toString());
-				if(fDestino.exists())fDestino.delete();
 				BufferedImage bi = toBufferedImage(auxi);
 				ImageIO.write(bi, "png", fDestino);
 				aux.add(fDestino.getPath());
