@@ -34,11 +34,6 @@ public class BusquedaGUI extends JPanel {
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JButton btnSalvar;
 	private DefaultComboBoxModel<String> modeloCity = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloBanos = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloDorm = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloCocin = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloSala = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloParkin = new DefaultComboBoxModel<String>();
 
 	private JSpinner spinnerAparcamientos;
 	private JSpinner spinnerSalas;
@@ -258,6 +253,7 @@ public class BusquedaGUI extends JPanel {
 		
 		comboCity = new JComboBox<String>();
 		comboCity.setSelectedIndex(-1);
+		comboCity.setModel(modeloCity);
 		comboCity.setFont(new Font("Dialog", Font.BOLD, 11));
 		comboCity.setBounds(201, 10, 149, 27);
 		add(comboCity);
@@ -423,45 +419,5 @@ public class BusquedaGUI extends JPanel {
 			}
 		}
 		return false;		
-	}
-
-	public DefaultComboBoxModel<String> getModeloParkin() {
-		return modeloParkin;
-	}
-
-	public void setModeloParkin(DefaultComboBoxModel<String> modeloParkin) {
-		this.modeloParkin = modeloParkin;
-	}
-
-	public DefaultComboBoxModel<String> getModeloSala() {
-		return modeloSala;
-	}
-
-	public void setModeloSala(DefaultComboBoxModel<String> modeloSala) {
-		this.modeloSala = modeloSala;
-	}
-
-	public DefaultComboBoxModel<String> getModeloCocin() {
-		return modeloCocin;
-	}
-
-	public void setModeloCocin(DefaultComboBoxModel<String> modeloCocin) {
-		this.modeloCocin = modeloCocin;
-	}
-
-	public DefaultComboBoxModel<String> getModeloBanos() {
-		return modeloBanos;
-	}
-
-	public void setModeloBanos(DefaultComboBoxModel<String> modeloBanos) {
-		this.modeloBanos = modeloBanos;
-	}
-
-	public DefaultComboBoxModel<String> getModeloDorm() {
-		return modeloDorm;
-	}
-
-	public void setModeloDorm(DefaultComboBoxModel<String> modeloDorm) {
-		this.modeloDorm = modeloDorm;
 	}
 }
