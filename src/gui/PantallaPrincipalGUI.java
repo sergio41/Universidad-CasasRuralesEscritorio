@@ -198,10 +198,10 @@ public class PantallaPrincipalGUI extends JPanel {
 		add(comboCity);
 		
 		JTextPane txtpnLosHabitantesDe = new JTextPane();
-		txtpnLosHabitantesDe.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		txtpnLosHabitantesDe.setForeground(new Color(0, 51, 255));
-		txtpnLosHabitantesDe.setText("Los habitantes de Villatripas de Arriba han mantenido el aspecto de su pueblo y \r\nrestaurado sus viviendas para alquilarlas como casas rurales.\r\n\r\nAqu\u00ED tienes esta aplicacion, donde podras buscar casas, alquilarlas, hacer comentarios sobre ellas, puntuarlas y muchas cosas m\u00E1s.\r\n\r\nTambien podr\u00E1s encontrar una secci\u00F3n con chollos que proponen los propietarios. Todo esto con fotos de las casas, pudiendo ver su localizacion exacta en Google Maps...\r\n\r\n\u00A1\u00A1No olvide entrar en nuestro twitter!! Le invitamos a formar parte de esta magnifica familia, para ello registrese (bot\u00F3n SIGN UP)\r\n\r\n");
-		txtpnLosHabitantesDe.setBounds(268, 23, 453, 431);
+		txtpnLosHabitantesDe.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		txtpnLosHabitantesDe.setForeground(Color.BLACK);
+		txtpnLosHabitantesDe.setText("Los habitantes de Villatripas de Arriba han mantenido el aspecto de su pueblo y \r\nrestaurado sus viviendas para alquilarlas como casas rurales. Aqu\u00ED tienes esta aplicacion, donde podras buscar casas, alquilarlas, hacer comentarios sobre ellas, puntuarlas y muchas cosas m\u00E1s.\r\n\r\nTambien podr\u00E1s encontrar una secci\u00F3n con chollos que proponen los propietarios. Todo esto con fotos de las casas, pudiendo ver su localizacion exacta en Google Maps...\r\n\r\n\u00A1\u00A1No olvide entrar en nuestro twitter!! Le invitamos a formar parte de esta magnifica familia, para ello registrese (bot\u00F3n SIGN UP)\r\n\r\n");
+		txtpnLosHabitantesDe.setBounds(297, 97, 352, 273);
 		txtpnLosHabitantesDe.setOpaque(false);
 		add(txtpnLosHabitantesDe);
 		
@@ -233,6 +233,13 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblTwitter.setIcon(new ImageIcon(aux1));
 		lblTwitter.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(lblTwitter);
+		
+		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setBounds(262, 23, 447, 431);
+		Image aux3 = (new ImageIcon(PantallaPrincipalGUI.class.getResource("/localData/papiro.png"))).getImage();
+		Image aux4 = aux3.getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getWidth(), java.awt.Image.SCALE_SMOOTH);
+		lblNewLabel_1.setIcon(new ImageIcon(aux4));
+		add(lblNewLabel_1);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
