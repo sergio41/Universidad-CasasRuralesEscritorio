@@ -356,14 +356,13 @@ public class DB4oManager {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void eliminarOferta(UserAplication usuario,
-			int nRH, Date ini, Date fin) throws Exception {
+	public static void eliminarOferta(UserAplication usuario, int nRH, Date ini, Date fin) throws Exception {
 		ini = new Date(ini.getYear(), ini.getMonth(), ini.getDate());
 		fin = new Date(fin.getYear(), fin.getMonth(), fin.getDate());
 		ObjectSet<UserAplication> usuarioConcreto = db.queryByExample(usuario);
 		if (usuarioConcreto.hasNext()){
 			UserAplication user = usuarioConcreto.next();
-			ObjectSet<RuralHouse> casasConcretas = db.queryByExample(RuralHouse.class);
+			Iterator<RuralHouse> casasConcretas = user.getPropietario().getRuralHouses().iterator();
 			while(casasConcretas.hasNext()){
 				RuralHouse casa = casasConcretas.next();
 				if(casa.getHouseNumber()==nRH){
@@ -377,9 +376,10 @@ public class DB4oManager {
 					db.delete(eliminar);
 					db.store(user);
 					db.commit();
+					break;
 				}
 			}
-		}
+		}throw new Exception("La oferta no se ha podido eliminar correctamente. Lo sentimos");
 	}
 	
 	public static Vector<Book> getTodasLasReservas(){
