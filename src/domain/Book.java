@@ -42,7 +42,11 @@ public class Book implements Serializable {
 		if(offer !=null) offer.hacerReserva(this);
 		if(vectorFechas!=null){
 			Iterator<Fechas> i = vectorFechas.iterator();
-			while(i.hasNext()) i.next().hacerReserva(this);
+			while(i.hasNext()){
+				Fechas aux = i.next();
+				System.out.println("   " +   aux.getFecha().toString());
+				aux.hacerReserva(this);
+			}
 		}
 	}
 	

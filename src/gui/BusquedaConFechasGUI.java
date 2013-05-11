@@ -121,7 +121,7 @@ public class BusquedaConFechasGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					vectorCasa = new Vector<RuralHouse>();
-					daInicio = dateHasta.getDate();
+					daInicio = dateInicio.getDate();
 					daFin = dateHasta.getDate();
 					Vector<RuralHouse> aux = facade.casasRuralesDisponibles(dateHasta.getDate(), dateHasta.getDate());
 					Iterator<RuralHouse> i = aux.iterator();
@@ -202,6 +202,7 @@ public class BusquedaConFechasGUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
+					System.out.println(daInicio.toString() + "   " + daFin.toString());
 					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), daInicio, daFin);
 					System.out.println("A");
 					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){

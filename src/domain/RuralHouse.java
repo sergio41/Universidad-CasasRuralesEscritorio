@@ -223,7 +223,7 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin) throws Exception{
-		Offer auxOferta = disponibleFechaOferta(inicio, fin);
+		Offer auxOferta = disponibleFechaOferta((Date)inicio.clone(), (Date)fin.clone());
 		Book reserva = null;
 		System.out.print("primer dia: " + inicio.toString());
 		System.out.print("ultimo dia: " + fin.toString());
@@ -238,13 +238,13 @@ public class RuralHouse implements Serializable {
 				Iterator<Fechas> i = auxFechas.iterator();
 				while (i.hasNext()){
 					Fechas aux = i.next();
-					System.out.print("while dia: " + aux.toString());
+					System.out.println("while dia: " + aux.getFecha().toString());
 					precio = precio + aux.getPrecio();
 				}
 				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
 				vectorReservas.add(reserva);
 				cliente.anadirReserva(reserva);
-				eliminarOfertaQueContenga(vectorFechas);
+				//eliminarOfertaQueContenga(vectorFechas);
 			}
 		} 
 		if (reserva==null) throw new Exception("Lamentablemente, no se ha podido reservar");
