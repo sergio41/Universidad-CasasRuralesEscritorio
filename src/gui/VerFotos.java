@@ -27,6 +27,7 @@ public class VerFotos extends JFrame {
 	private JLabel label_2 = new JLabel("");
 	//private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
 	private JLabel lblNewLabel = new JLabel();
+	private JLabel lblNewLabel_1 = new JLabel();
 	private Image aux = (new ImageIcon(VerFotos.class.getResource("/localData/casaDefault.png"))).getImage();
 	/**
 	 * Launch the application.
@@ -49,6 +50,7 @@ public class VerFotos extends JFrame {
 	 * Create the frame.
 	 */
 	public VerFotos(Vector<Image> imagenes) {
+		setResizable(false);
 		setBackground(new Color(0, 206, 209));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VerFotos.class.getResource("/localData/casaDefault.png")));
 		setTitle("Ver fotos Casa Rural");
@@ -69,7 +71,7 @@ public class VerFotos extends JFrame {
 		comboBox.setModel(modeloCombo);
 		comboBox.setSelectedIndex(-1);
 		comboBox.setEnabled(false);
-		comboBox.setBounds(130, 24, 157, 23);
+		comboBox.setBounds(137, 25, 157, 23);
 		contentPane.add(comboBox);
 		
 		label_1 = new JLabel("");
@@ -80,7 +82,7 @@ public class VerFotos extends JFrame {
 			}
 		});
 		label_1.setIcon(new ImageIcon(VerFotos.class.getResource("/localData/flechaDer.png")));
-		label_1.setBounds(327, 13, 50, 50);
+		label_1.setBounds(338, 13, 50, 50);
 		contentPane.add(label_1);
 		
 		label_2 = new JLabel("");
@@ -91,12 +93,17 @@ public class VerFotos extends JFrame {
 			}
 		});
 		label_2.setIcon(new ImageIcon(VerFotos.class.getResource("/localData/flechaIzq.png")));
-		label_2.setBounds(40, 13, 50, 50);
+		label_2.setBounds(43, 13, 50, 50);
 		contentPane.add(label_2);
 		
 		lblNewLabel = new JLabel();
-		lblNewLabel.setBounds(12, 94, 396, 343);
+		lblNewLabel.setBounds(89, 107, 250, 250);
 		contentPane.add(lblNewLabel);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(0, -11, 474, 480);
+		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/localData/verfotos.jpg")));
+		contentPane.add(lblNewLabel_1);
 		
 		images = imagenes;
 		
