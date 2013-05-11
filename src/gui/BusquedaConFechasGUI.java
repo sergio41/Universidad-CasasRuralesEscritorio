@@ -66,7 +66,7 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JDateChooser dateChooserIni;
 	
 	@SuppressWarnings("serial")
-	public BusquedaConFechasGUI() {
+	public BusquedaConFechasGUI(Date inicio, Date fin, String ciudad) {
 		setLayout(null);
 		
 		JLabel lblNMinHabitaciones = new JLabel("N\u00BA min. habitaciones*:");

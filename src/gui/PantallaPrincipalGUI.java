@@ -14,11 +14,11 @@ import businessLogic.ApplicationFacadeInterface;
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
-import javax.swing.JTextField;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 
 
@@ -29,11 +29,10 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static JDateChooser dateDesde;
 	private static JDateChooser dateHasta;
-	private static JTextField textCiudad;
 	private static JButton btnGestionCasasRurales;
 	private static JButton btnGestionOfertas;
 	private static JButton btnGestionFechas;
-	private static JLabel lblMapa;
+	private static JComboBox<String> cmboCiudad ;
 	private JButton btnGestReserv;
 	
 	/**
@@ -43,10 +42,20 @@ public class PantallaPrincipalGUI extends JPanel {
 		setLayout(null);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (cmboCiudad.getSelectedIndex() != -1){
+					JPanel panel = new BusquedaConFechasGUI(dateDesde.getDate(), dateHasta.getDate(), (String)cmboCiudad.getSelectedItem());
+					Start.modificarPanelAbajo(panel);
+				}else{
+					
+				}
+			}
+		});
 		btnBuscar.setBounds(20, 179, 223, 28);
 		add(btnBuscar);
 		
-		JButton btnBusquedaAvanzada = new JButton("Busqueda avanzada");
+		JButton btnBusquedaAvanzada = new JButton("Busqueda de chollos");
 		btnBusquedaAvanzada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JPanel panel = new BusquedaGUI();
@@ -55,11 +64,6 @@ public class PantallaPrincipalGUI extends JPanel {
 		});
 		btnBusquedaAvanzada.setBounds(20, 223, 223, 28);
 		add(btnBusquedaAvanzada);
-		
-		textCiudad = new JTextField();
-		textCiudad.setColumns(10);
-		textCiudad.setBounds(105, 58, 137, 28);
-		add(textCiudad);
 		
 		Date fechaHoy = new Date();
 		long time = fechaHoy.getTime() + 1*(3600*24*1000);
@@ -113,7 +117,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		add(lblDesde);
 		
 		JLabel lblCiudad = new JLabel("Ciudad:");
-		lblCiudad.setBounds(20, 58, 73, 28);
+		lblCiudad.setBounds(20, 57, 73, 28);
 		lblCiudad.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCiudad.setFont(new Font("Trebuchet MS", Font.BOLD, 18));
 		add(lblCiudad);
@@ -132,7 +136,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionCasasRurales.setBounds(20, 427, 223, 28);
+		btnGestionCasasRurales.setBounds(666, 98, 223, 28);
 		add(btnGestionCasasRurales);
 		
 		btnGestionFechas = new JButton("Gestionar Disponibilidad");
@@ -142,7 +146,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionFechas.setBounds(20, 327, 223, 28);
+		btnGestionFechas.setBounds(666, 35, 223, 28);
 		add(btnGestionFechas);
 		
 		btnGestionOfertas = new JButton("Gestionar Ofertas");
@@ -152,12 +156,8 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionOfertas.setBounds(20, 377, 223, 28);
+		btnGestionOfertas.setBounds(666, 161, 223, 28);
 		add(btnGestionOfertas);
-		
-		lblMapa = new JLabel("mapa");
-		lblMapa.setBounds(376, 98, 319, 278);
-		add(lblMapa);
 		
 		btnGestReserv = new JButton("Gestionar Reservas Realizadas");
 		btnGestReserv.addActionListener(new ActionListener() {
@@ -166,8 +166,24 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestReserv.setBounds(269, 427, 223, 28);
+		btnGestReserv.setBounds(666, 224, 223, 28);
 		add(btnGestReserv);
+		
+		JButton button = new JButton("Busqueda avanzada");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JPanel panel = new BusquedaConFechasGUI(null, null, null);
+				Start.modificarPanelAbajo(panel);
+			}
+		});
+		button.setBounds(20, 264, 223, 28);
+		add(button);
+		
+		cmboCiudad = new JComboBox<String>();
+		cmboCiudad.setSelectedIndex(-1);
+		cmboCiudad.setFont(new Font("Dialog", Font.BOLD, 11));
+		cmboCiudad.setBounds(105, 57, 137, 27);
+		add(cmboCiudad);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
