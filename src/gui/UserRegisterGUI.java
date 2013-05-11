@@ -6,31 +6,26 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-
 import java.awt.Color;
 import java.awt.Image;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
-
 import domain.UserAplication;
-
 import businessLogic.ApplicationFacadeInterface;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.regex.Pattern;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserRegisterGUI extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -48,6 +43,7 @@ public class UserRegisterGUI extends JPanel {
 	private Image perfil = null;
 	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/perfilDefault.png"));
 	private JLabel labelFoto;
+	private JLabel lblCargando = null;
 	
 	/**
 	 * Create the panel.
@@ -164,10 +160,14 @@ public class UserRegisterGUI extends JPanel {
 		add(textPais);
 		
 		buttonRegister = new JButton("");
+		buttonRegister.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				lblCargando.setVisible(true);
+			}
+		});
 		buttonRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				anadirCargando();
-				//ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				
 				String email = textEmail.getText();
 				@SuppressWarnings("deprecation")
 				String pass = passPass.getText();
@@ -213,7 +213,7 @@ public class UserRegisterGUI extends JPanel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				eliminarCargando();
+				lblCargando.setVisible(false);
 			}
 		});
 		buttonRegister.setForeground(Color.BLUE);
@@ -260,6 +260,12 @@ public class UserRegisterGUI extends JPanel {
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
 		add(lblNewLabel);
+		
+		lblCargando = new JLabel("Cargando");
+		lblCargando.setIcon(new ImageIcon(UserRegisterGUI.class.getResource("/localData/caragando.gif")));
+		lblCargando.setBounds(376, 98, 220, 220);
+		lblCargando.setVisible(false);
+		add(lblCargando, 1);
 
 		inicializarCampos();
 	}
@@ -324,21 +330,5 @@ public class UserRegisterGUI extends JPanel {
 			}
         }
         cargarImagen();
-	}
-	
-	private JLabel lblCargando = null;
-	private void anadirCargando(){
-		lblCargando = new JLabel("Cargando");
-		lblCargando.setIcon(new ImageIcon(UserRegisterGUI.class.getResource("/localData/caragando.gif")));
-		lblCargando.setBounds(376, 98, 220, 220);
-		add(lblCargando, 1);
-		setVisible(false);
-		setVisible(true);
-	}
-	
-	private void eliminarCargando(){
-		if (lblCargando!= null)remove(lblCargando);
-		setVisible(false);
-		setVisible(true);
 	}
 }
