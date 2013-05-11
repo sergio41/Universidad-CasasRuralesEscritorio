@@ -72,7 +72,7 @@ public class GestionarReservasGUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				borrarTabla();
 				actualizarTabla(0);
-				btnPagar.setEnabled(true);
+				btnPagar.setEnabled(false);
 			}
 		});
 		btnTodas.setBounds(62, 68, 365, 80);
