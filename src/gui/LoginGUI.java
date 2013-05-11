@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.UIManager;
 
 public class LoginGUI extends JPanel {
 	/**
@@ -35,6 +36,7 @@ public class LoginGUI extends JPanel {
 	 * Create the panel.
 	 */
 	public LoginGUI() {
+		setForeground(new Color(240, 255, 255));
 		//setBackground(new Color(0, 255, 0));
 		setLayout(null);
 		setOpaque(false);
@@ -91,6 +93,7 @@ public class LoginGUI extends JPanel {
 		add(btnSignUp);
 		
 		JLabel lblNewLabel_1 = new JLabel("Recuperar Contrase\u00F1a");
+		lblNewLabel_1.setForeground(new Color(240, 255, 240));
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
