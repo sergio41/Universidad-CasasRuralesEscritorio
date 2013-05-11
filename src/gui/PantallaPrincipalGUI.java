@@ -20,6 +20,13 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
+import javax.swing.JTextArea;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 
 
@@ -35,6 +42,7 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JButton btnGestionFechas;
 	private static JComboBox<String> comboCity ;
 	private DefaultComboBoxModel<String> modeloCity = new DefaultComboBoxModel<String>();
+	private JTextPane numeroRH;
 	private JButton btnGestReserv;
 	
 	/**
@@ -132,7 +140,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionCasasRurales.setBounds(666, 98, 223, 28);
+		btnGestionCasasRurales.setBounds(783, 264, 223, 28);
 		add(btnGestionCasasRurales);
 		
 		btnGestionFechas = new JButton("Gestionar Disponibilidad");
@@ -142,7 +150,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionFechas.setBounds(666, 35, 223, 28);
+		btnGestionFechas.setBounds(783, 223, 223, 28);
 		add(btnGestionFechas);
 		
 		btnGestionOfertas = new JButton("Gestionar Ofertas");
@@ -152,7 +160,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionOfertas.setBounds(666, 161, 223, 28);
+		btnGestionOfertas.setBounds(783, 309, 223, 28);
 		add(btnGestionOfertas);
 		
 		btnGestReserv = new JButton("Gestionar Reservas Realizadas");
@@ -162,7 +170,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestReserv.setBounds(666, 224, 223, 28);
+		btnGestReserv.setBounds(783, 361, 223, 28);
 		add(btnGestReserv);
 		
 		JButton button = new JButton("Busqueda avanzada");
@@ -181,6 +189,22 @@ public class PantallaPrincipalGUI extends JPanel {
 		comboCity.setBounds(105, 57, 137, 27);
 		comboCity.setModel(modeloCity);
 		add(comboCity);
+		
+		JTextPane txtpnLosHabitantesDe = new JTextPane();
+		txtpnLosHabitantesDe.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		txtpnLosHabitantesDe.setForeground(new Color(0, 51, 255));
+		txtpnLosHabitantesDe.setText("Los habitantes de Villatripas de Arriba han mantenido el aspecto de su pueblo y \r\nrestaurado sus viviendas para alquilarlas como casas rurales.\r\n\r\nAqu\u00ED tienes esta aplicacion, donde podras buscar casas, alquilarlas, hacer comentarios sobre ellas, puntuarlas y muchas cosas m\u00E1s.\r\n\r\nTambien podr\u00E1s encontrar una secci\u00F3n con chollos que proponen los propietarios. Todo esto con fotos de las casas, pudiendo ver su localizacion exacta en Google Maps...\r\n\r\n\u00A1\u00A1No olvide entrar en nuestro twitter!! Le invitamos a formar parte de esta magnifica familia, para ello registrese (bot\u00F3n SIGN UP)\r\n\r\n");
+		txtpnLosHabitantesDe.setBounds(268, 23, 453, 431);
+		txtpnLosHabitantesDe.setOpaque(false);
+		add(txtpnLosHabitantesDe);
+		
+		numeroRH = new JTextPane();
+		numeroRH.setForeground(new Color(51, 255, 51));
+		numeroRH.setFont(new Font("Viner Hand ITC", Font.BOLD, 17));
+		numeroRH.setText("dasfsdfvdgadfghrbdfh");
+		numeroRH.setBounds(783, 23, 223, 120);
+		numeroRH.setOpaque(false);
+		add(numeroRH);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -197,6 +221,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		boolean reserv = false;
 		try {
 			Vector<RuralHouse> vectorCasas = facade.getAllRuralHouses();
+			numeroRH.setText("Se han registrado un total de " + vectorCasas.size() + " casas rurales");
 			for(int i=0; i<vectorCasas.size();i++){
 				if(!estaCity(vectorCasas.get(i).getCity())){
 					modeloCity.addElement(vectorCasas.get(i).getCity());
@@ -217,6 +242,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		btnGestionOfertas.setVisible(login);
 		btnGestionFechas.setVisible(login);
 		btnGestReserv.setVisible(reserv);
+		
 	}
 	
 	public boolean estaCity(String s){
