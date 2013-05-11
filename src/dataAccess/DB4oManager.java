@@ -237,6 +237,21 @@ public class DB4oManager {
 		}
 	}
 	
+	public static void eliminarFecha(UserAplication usuario, int nRH, Date ini) throws Exception{
+		System.out.println(nRH);
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(usuario);
+		if (userConcretos.hasNext()){
+			UserAplication user = userConcretos.next();
+			Iterator<RuralHouse> iter = user.getPropietario().getRuralHouses().iterator();
+			while(iter.hasNext()){
+				RuralHouse casa = iter.next();
+				if(casa.getHouseNumber()==nRH){
+					
+				}
+			}	
+		}
+	}
+	
 	public static Vector<RuralHouse> getHouse(String ciudad, int banos,
 			int habita, int cocina, int estar, int park) {
 		Vector<RuralHouse> result = new Vector<RuralHouse>();
