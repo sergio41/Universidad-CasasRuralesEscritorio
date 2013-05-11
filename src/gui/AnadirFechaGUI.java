@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
@@ -126,8 +128,17 @@ public class AnadirFechaGUI extends JPanel {
 		
 		textField = new JTextField();
 		textField.setBounds(165, 261, 149, 20);
-		add(textField);
 		textField.setColumns(10);
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char car = evt.getKeyChar();
+				if (car == '.');
+				else if((car<'0' || car>'9')) evt.consume();
+			}
+		});
+		add(textField);
+
 		
 		JButton btnNewButton = new JButton("Guardar");
 		btnNewButton.addActionListener(new ActionListener() {
