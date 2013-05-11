@@ -23,6 +23,9 @@ public class RuralHouse implements Serializable {
 	private Vector<Offer> vectorOfertas;
 	private Vector<Book> vectorReservas;
 	private Vector<String> vectorImage;
+	private Vector<String> comentarios;
+	private Vector<Integer> calificacion;
+	
 	
 	public RuralHouse(int hNumber, UserAplication usuario, String descripcion, String ciudad, int cuartos, int cocina, int banos, int salon, int aparcamiento,  Vector<String> images) {
 		houseNumber = hNumber;
@@ -37,6 +40,8 @@ public class RuralHouse implements Serializable {
 		vectorFechas = new Vector<Fechas>();
 		vectorOfertas = new Vector<Offer>();
 		vectorReservas = new Vector<Book>();
+		comentarios = new Vector<String>();
+		calificacion = new  Vector<Integer>();
 		vectorImage = images;
 	}
 
@@ -346,4 +351,22 @@ public class RuralHouse implements Serializable {
         return (int)Math.ceil((double)ntime / 1000 / 3600 / 24);
     }
 
+	public void anadirCalificacion(String comentario, int puntuacion){
+		if (puntuacion<0) puntuacion = 0;
+		if (puntuacion>10) puntuacion = 10;
+		comentarios.add(comentario);
+		calificacion.add(puntuacion);
+	}
+	
+	public Vector<String> getComentarios(){
+		return comentarios;
+	}
+	
+	public int getNotaMedia(){
+		Iterator<Integer> i = calificacion.iterator();
+		int media = 0;
+		while (i.hasNext()) media += i.next();
+		if (calificacion.size()!=0) media = media / calificacion.size();
+		return media;
+	}
 }
