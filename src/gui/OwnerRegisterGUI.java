@@ -57,7 +57,7 @@ public class OwnerRegisterGUI extends JPanel {
 				String profes= "";
 				String mon="";
 				Vector<String> idiom = new Vector<String>();
-				if(!textCuentaBancaria.isEditValid() || 
+				if(!textCuentaBancaria.isEditValid() || textCuentaBancaria.getText().compareTo("____-____-__-__________")==0 ||
 						(!rdbtnParticular.isSelected()&&!rdbtnProfesional.isSelected())|| 
 						(textIdioma1.getText().compareTo("")==0 && textIdioma2.getText().compareTo("")==0&&
 						 textIdioma3.getText().compareTo("")==0 && textIdioma4.getText().compareTo("")==0)||
