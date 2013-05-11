@@ -128,7 +128,7 @@ public class DB4oManager {
 
 	public static UserAplication nuevoOwner(UserAplication user, String email, String bA, String t, Vector<String> i, String p, String m) throws Exception{
 		Owner owner = new Owner(bA, t, i, p, m);
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			if(userConcreto.getPropietario()==null){
@@ -141,7 +141,7 @@ public class DB4oManager {
 	}
 	
 	public static UserAplication modificarOwner(UserAplication user, String email, String bA, String t, Vector<String> i, String p, String m) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			userConcreto.getPropietario().setBankAccount(bA);
@@ -156,7 +156,7 @@ public class DB4oManager {
 	}
 	
 	public static UserAplication modificarContrasena(UserAplication user, String pass) throws Exception {
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			userConcreto.setPass(pass);
@@ -167,7 +167,7 @@ public class DB4oManager {
 	}
 	
 	public static UserAplication anadirRuralHouse(UserAplication user,int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<String> images) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images));
@@ -179,7 +179,7 @@ public class DB4oManager {
 	
 	public static UserAplication eliminarCasaRural(UserAplication user, int numero) throws Exception {
 		RuralHouse eliminar = null;
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			Iterator<RuralHouse> i = userConcreto.getPropietario().getRuralHouses().iterator();
@@ -239,7 +239,7 @@ public class DB4oManager {
 	
 	public static void eliminarFecha(UserAplication usuario, int nRH, Date ini) throws Exception{
 		System.out.println(nRH);
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(usuario);
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(usuario.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication user = userConcretos.next();
 			Iterator<RuralHouse> iter = user.getPropietario().getRuralHouses().iterator();
@@ -319,18 +319,29 @@ public class DB4oManager {
 	}
 	
 	public static Book hacerReserva(UserAplication cliente, int numeroReserva, int numero, Date inicio, Date fin) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(cliente);	
+		System.out.println("A");
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(cliente.getEmail(), null, null, null, null, null, null, null));
+		System.out.println("B");
 		if (userConcretos.hasNext()){
+			System.out.println("C");
 			UserAplication userConcreto = userConcretos.next();
 			Book reserv = null;
-			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
+			System.out.println("D");
+			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));
+			System.out.println("E");
 			if (rHConcretos.hasNext()){
+				System.out.println("F");
 				RuralHouse rHConcreto = rHConcretos.next();
+				System.out.println("G");
 				reserv = rHConcreto.hacerReserva(userConcreto, numeroReserva, inicio, fin);
-				db.store(rHConcreto);			
+				System.out.println("H");
+				db.store(rHConcreto);	
+				System.out.println("I");
 				db.store(userConcreto);
+				System.out.println("J");
 				db.commit();
 			}
+			System.out.println("K");
 			return reserv;
 		}else
 			throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
@@ -338,7 +349,7 @@ public class DB4oManager {
 	
 	@SuppressWarnings("deprecation")
 	public static UserAplication anadirOferta(UserAplication user, int numero, Date inicio, Date fin, float precio, boolean obligatorio) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			System.out.println("numero: " + numero);
@@ -359,7 +370,7 @@ public class DB4oManager {
 	}
 	
 	public static UserAplication anadirFechas(UserAplication user, int numero, Date inicio, Date fin, float precio, int minimoDeDias) throws Exception{
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			System.out.println("numero: " + numero);
@@ -382,7 +393,7 @@ public class DB4oManager {
 	public static void eliminarOferta(UserAplication usuario, int nRH, Date ini, Date fin) throws Exception {
 		ini = new Date(ini.getYear(), ini.getMonth(), ini.getDate());
 		fin = new Date(fin.getYear(), fin.getMonth(), fin.getDate());
-		ObjectSet<UserAplication> usuarioConcreto = db.queryByExample(usuario);
+		ObjectSet<UserAplication> usuarioConcreto = db.queryByExample(new UserAplication(usuario.getEmail(), null, null, null, null, null, null, null));
 		if (usuarioConcreto.hasNext()){
 			UserAplication user = usuarioConcreto.next();
 			Iterator<RuralHouse> casasConcretas = user.getPropietario().getRuralHouses().iterator();
@@ -415,7 +426,7 @@ public class DB4oManager {
 	}
 
 	public static Book pagar(int num, UserAplication user) throws Exception {
-		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			Iterator<Book> reservasConcretas = userConcreto.getReservas().iterator();

@@ -210,6 +210,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			if( max < aux) max = aux;
 		}
 		max++;
+		System.out.println("FacadeImplementationFin: numero reserva");
 		return max;
 	}
 
@@ -224,9 +225,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 				x++;
 				if(x==10) break;
 			}
+			System.out.println("FacadeImplementationFin: Ultimos 10 tweets");
 			return twitter10;
 		} catch (Exception e) {
-			System.out.println("error");
+			System.out.println("FacadeImplementationFin: Ultimos 10 tweets, error");
 			if (twitter10 == null)throw new Exception();			
 			return twitter10;
 		}		
