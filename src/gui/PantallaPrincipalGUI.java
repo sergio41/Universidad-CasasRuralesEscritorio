@@ -20,18 +20,11 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import domain.RuralHouse;
-
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import javax.swing.JEditorPane;
-import javax.swing.JTextArea;
-import javax.swing.JFormattedTextField;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -147,7 +140,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionCasasRurales.setBounds(783, 264, 223, 28);
+		btnGestionCasasRurales.setBounds(783, 138, 223, 28);
 		add(btnGestionCasasRurales);
 		
 		btnGestionFechas = new JButton("Gestionar Disponibilidad");
@@ -157,7 +150,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionFechas.setBounds(783, 223, 223, 28);
+		btnGestionFechas.setBounds(783, 97, 223, 28);
 		add(btnGestionFechas);
 		
 		btnGestionOfertas = new JButton("Gestionar Ofertas");
@@ -167,7 +160,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestionOfertas.setBounds(783, 309, 223, 28);
+		btnGestionOfertas.setBounds(783, 179, 223, 28);
 		add(btnGestionOfertas);
 		
 		btnGestReserv = new JButton("Gestionar Reservas Realizadas");
@@ -177,7 +170,7 @@ public class PantallaPrincipalGUI extends JPanel {
 				Start.modificarPanelAbajo(temp);
 			}
 		});
-		btnGestReserv.setBounds(783, 361, 223, 28);
+		btnGestReserv.setBounds(783, 223, 223, 28);
 		add(btnGestReserv);
 		
 		JButton button = new JButton("Busqueda avanzada");
@@ -196,14 +189,6 @@ public class PantallaPrincipalGUI extends JPanel {
 		comboCity.setBounds(105, 57, 137, 27);
 		comboCity.setModel(modeloCity);
 		add(comboCity);
-		
-		JTextPane txtpnLosHabitantesDe = new JTextPane();
-		txtpnLosHabitantesDe.setFont(new Font("Times New Roman", Font.BOLD, 15));
-		txtpnLosHabitantesDe.setForeground(Color.BLACK);
-		txtpnLosHabitantesDe.setText("Los habitantes de Villatripas de Arriba han mantenido el aspecto de su pueblo y \r\nrestaurado sus viviendas para alquilarlas como casas rurales. Aqu\u00ED tienes esta aplicacion, donde podras buscar casas, alquilarlas, hacer comentarios sobre ellas, puntuarlas y muchas cosas m\u00E1s.\r\n\r\nTambien podr\u00E1s encontrar una secci\u00F3n con chollos que proponen los propietarios. Todo esto con fotos de las casas, pudiendo ver su localizacion exacta en Google Maps...\r\n\r\n\u00A1\u00A1No olvide entrar en nuestro twitter!! Le invitamos a formar parte de esta magnifica familia, para ello registrese (bot\u00F3n SIGN UP)\r\n\r\n");
-		txtpnLosHabitantesDe.setBounds(297, 97, 352, 273);
-		txtpnLosHabitantesDe.setOpaque(false);
-		add(txtpnLosHabitantesDe);
 		
 		numeroRH = new JTextPane();
 		numeroRH.setForeground(new Color(51, 255, 51));
@@ -234,12 +219,34 @@ public class PantallaPrincipalGUI extends JPanel {
 		lblTwitter.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(lblTwitter);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(262, 23, 447, 431);
-		Image aux3 = (new ImageIcon(PantallaPrincipalGUI.class.getResource("/localData/papiro.png"))).getImage();
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(281, 0, 490, 465);
+		Image aux3 = (new ImageIcon(PantallaPrincipalGUI.class.getResource("/localData/papiro1.png"))).getImage();
 		Image aux4 = aux3.getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getWidth(), java.awt.Image.SCALE_SMOOTH);
 		lblNewLabel_1.setIcon(new ImageIcon(aux4));
+		
 		add(lblNewLabel_1);
+		
+		JLabel label = new JLabel("Twitter");
+		label.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(java.awt.Desktop.isDesktopSupported()){
+					 try{
+					      Desktop dk = Desktop.getDesktop();
+					      dk.browse(new URI("https://twitter.com/CasasVillaArrib"));
+					 }catch(Exception e1){
+						 System.out.println("Error al abrir URL: "+e1.getMessage());
+					 }
+				} 
+			}
+		});
+		label.setBounds(819, 300, 150, 150);
+		Image aux5 = (new ImageIcon(PantallaPrincipalGUI.class.getResource("/localData/twitter.png"))).getImage();
+		Image aux6 = aux5.getScaledInstance(label.getHeight(), label.getWidth(), java.awt.Image.SCALE_SMOOTH);
+		label.setIcon(new ImageIcon(aux6));
+		label.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		add(label);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
