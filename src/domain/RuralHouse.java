@@ -1,5 +1,6 @@
 package domain;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
@@ -107,49 +108,50 @@ public class RuralHouse implements Serializable {
 		}
 	}*/
 	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio) throws Exception{
-		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
-		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
-		Date primero = (Date) primerDia.clone();
-		//Date primero1 = (Date) primerDia.clone();
-		Date auxp = primerDia;
-		Fechas auxFecha = new Fechas(null, 0, null, 0);
+		Fechas auxFecha = null;	
+		//Comprobar si esta reservado:
+		Date auxp = (Date)primerDia.clone();
 		while (auxp.compareTo(ultimoDia)<=0){
 			Iterator<Fechas> i = vectorFechas.iterator();
 			while (i.hasNext()){
 				auxFecha = i.next();				
 				if (auxp.compareTo(auxFecha.getFecha())==0) {
-					vectorFechas.remove(primero);
-					while (primero.compareTo(auxp)!=0){
-						primero.setTime(primero.getTime()+1*24*60*60*1000);
-					}
-					throw new Exception ("Colision de fechas. Reintroduce las fechas de la nueva oferta.");
+					if (auxFecha.isReservado()) throw new Exception ("Hay una reserva en las fechas seleccionadas.");
+					break;
 				}
 			}
-			if(!vectorFechas.contains(auxp)){
-				//if (auxFecha.(null) || auxp.compareTo(auxFecha.getFecha())!=0)
-				//(aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
-				Object aux5 = auxp.clone();
-				Date aux1 = (Date) aux5;
-				auxFecha = new Fechas(aux1, 0, this, 0);
-				auxVectorFechasNuevas.add(auxFecha);
-				vectorFechas.add(auxFecha);
-				auxVectorFechas.add(auxFecha);
+			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
+		}
+		//
+		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
+		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
+		Date primero = (Date) primerDia.clone();
+		float precioPorDia = precio/getDias((Date)primerDia.clone(), (Date)ultimoDia.clone());
+		auxp = (Date)primerDia.clone();
+		auxFecha = null;
+		while (auxp.compareTo(ultimoDia)<=0){
+			Iterator<Fechas> i = vectorFechas.iterator();
+			while (i.hasNext()){
+				auxFecha = i.next();				
+				if (auxp.compareTo(auxFecha.getFecha())==0) break;
 			}
+			if (auxFecha == null || (auxFecha.getFecha().compareTo(auxp)!=0)){
+				auxFecha = new Fechas((Date) auxp.clone(), precioPorDia, this, 0);
+				vectorFechas.add(auxFecha);
+				auxVectorFechasNuevas.add(auxFecha);
+			}
+			auxVectorFechas.add(auxFecha);
 			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
 		}
 		Offer oferta = new Offer(primero, ultimoDia, precio, this, auxVectorFechas, obligatorio);
 		vectorOfertas.add(oferta);
-		
-		
-		Iterator<Fechas> i = auxVectorFechasNuevas.iterator();
-		while(obligatorio && i.hasNext()){
+		Iterator<Fechas> i = auxVectorFechas.iterator();
+		while(i.hasNext()){
 			Fechas auxi = i.next();
 			Iterator<Fechas> j = vectorFechas.iterator();
 			while(j.hasNext()){
 				Fechas auxj = j.next();
-				if (auxj.equals(auxi)){
-					auxj.setOferta(oferta, true);
-				}
+				if (auxj.equals(auxi)) auxj.setOferta(oferta, obligatorio);
 			}
 		}
 	}
@@ -221,9 +223,6 @@ public class RuralHouse implements Serializable {
 		Iterator<Offer> i = vectorOfertas.iterator();
 		while (i.hasNext()){
 			Offer aux = i.next();
-			System.out.println("hola:               " + aux.getPrimerDia().toString() + inicio.toString());
-			System.out.println("hola:               " + aux.getUltimoDia().toString() + fin.toString());
-			System.out.println("hola:               " + aux.isReservado());
 			if (aux.getPrimerDia().equals(inicio) && aux.getUltimoDia().equals(fin) && !aux.isReservado()) return aux;
 		}
 		return null;
@@ -337,7 +336,6 @@ public class RuralHouse implements Serializable {
 			if(reserv.getNumeroDeReserva()==num){
 				vectorReservas.remove(reserv);
 				return reserv;
-		
 			}
 		}	
 		throw new Exception("No existia dicha reserva"); 
@@ -350,12 +348,20 @@ public class RuralHouse implements Serializable {
 			try {
 				EnviarCorreo.enviarCorreos(vectorReservas.get(i).getCliente().getEmail(), "Reserva: " + vectorReservas.get(i).getNumeroDeReserva() , "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.getMessage();
 			}
 		}
 		vectorReservas = new Vector<Book>();
 		return auxVectorBook;
 	}
+	
+	private int getDias(Date fInicial, Date fFinal) {
+        Calendar ci = Calendar.getInstance();
+        ci.setTime(fInicial);
+        Calendar cf = Calendar.getInstance();
+        cf.setTime(fFinal);
+        long ntime = cf.getTimeInMillis() - ci.getTimeInMillis();
+        return (int)Math.ceil((double)ntime / 1000 / 3600 / 24);
+    }
 
 }
