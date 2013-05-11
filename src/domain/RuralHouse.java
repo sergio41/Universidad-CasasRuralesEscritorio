@@ -331,12 +331,16 @@ public class RuralHouse implements Serializable {
 	public Vector<Book> eliminarTodasReserva(){
 		Vector<Book> auxVectorBook = new Vector<Book>();
 		auxVectorBook = vectorReservas;
+		while (vectorReservas.size() == 0){
+			
+		}
 		for (int i = 0; i<vectorReservas.size(); i++){
 			try {
 				EnviarCorreo.enviarCorreos(vectorReservas.get(i).getCliente().getEmail(), "Reserva: " + vectorReservas.get(i).getNumeroDeReserva() , "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
 			} catch (Exception e) {
 				e.getMessage();
 			}
+			auxVectorBook.add(vectorReservas.get(i));
 		}
 		vectorReservas = new Vector<Book>();
 		return auxVectorBook;
