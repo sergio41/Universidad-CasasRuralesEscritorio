@@ -142,6 +142,7 @@ public class GestionarReservasGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					Book x = facade.getReserva((int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0));
+					System.out.println(x.getCasa().getHouseNumber());
 					System.out.println("s");
 					ComentariosGUI temp1 = new ComentariosGUI(Integer.toString(x.getCasa().getHouseNumber()));
 					System.out.println("s");
