@@ -27,6 +27,7 @@ import javax.swing.table.TableColumn;
 import businessLogic.ApplicationFacadeInterface;
 import com.toedter.calendar.JDateChooser;
 import domain.Fechas;
+import domain.Offer;
 import domain.RuralHouse;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
@@ -191,6 +192,26 @@ public class AnadirFechaGUI extends JPanel {
 		comBoxCasas.setBounds(31, 25, 377, 33);
 		add(comBoxCasas);
 		
+		JButton buttonEliminar = new JButton("Eliminar");
+		buttonEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade=Start.getBusinessLogic();
+				try {						
+					Vector<Fechas> aux1 =  facade.getFechas(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()));
+					int x = (int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0);
+					Date ini = aux1.get(x).getFecha();
+					facade.eliminarFecha(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()), ini);						
+					JPanel panel = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(panel);
+					javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la oferta", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
+				}catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,"Error al eliminar: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				} 
+			}
+		});
+		buttonEliminar.setBounds(694, 370, 105, 34);
+		add(buttonEliminar);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -273,5 +294,4 @@ public class AnadirFechaGUI extends JPanel {
 	}
 
 	private void borrarTabla(){ while (modelTb.getRowCount() > 0) modelTb.removeRow(modelTb.getRowCount()-1); }
-
 }
