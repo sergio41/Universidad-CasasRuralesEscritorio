@@ -41,11 +41,11 @@ public class ComentariosGUI extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-	
+	private int num;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(final int[] args) {
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -62,13 +62,13 @@ public class ComentariosGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ComentariosGUI(final int nRH) {
+	public ComentariosGUI(String nRH) {
 		center="";
 		/*Sergio
 			center = direccion.replaceAll(" ", "");
 		 */
 	
-	    
+	    num = Integer.parseInt(nRH);
 		setForeground(Color.YELLOW);
 		setTitle("Mapa de la Casa Rural");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ComentariosGUI.class.getResource("/localData/iconMap.png")));
@@ -107,7 +107,7 @@ public class ComentariosGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					facade.anadirCalificacionACasaRural(nRH, txtpnComentar.getText(), starRater.getSelection());
+					facade.anadirCalificacionACasaRural(num, txtpnComentar.getText(), starRater.getSelection());
 				} catch (Exception e1) {
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -139,4 +139,5 @@ public class ComentariosGUI extends JFrame {
 		textField_2.setBounds(10, 453, 486, 112);
 		contentPane.add(textField_2);
 	}
+
 }
