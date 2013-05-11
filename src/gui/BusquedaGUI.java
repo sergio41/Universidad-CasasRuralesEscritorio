@@ -109,7 +109,6 @@ public class BusquedaGUI extends JPanel {
 	      public void valueChanged(ListSelectionEvent e) {
 	        try {
 		  		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		  		starRater.setEnabled(Start.estadoLogin());
 		  		int selectedRow2 = tableCasas.getSelectedRow();
 				RuralHouse casita = facade.getCasas((int) tableCasas.getValueAt(selectedRow2, 0));
 				lblprop.setText(casita.getUserAplication().getEmail());
