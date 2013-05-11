@@ -413,4 +413,24 @@ public class DB4oManager {
 		while (reservasConcretas.hasNext()) aux.add(reservasConcretas.next());
 		return aux;
 	}
-}	
+
+	public static Book pagar(int num, UserAplication user) throws Exception {
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(user);	
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			Iterator<Book> reservasConcretas = userConcreto.getReservas().iterator();
+			while (reservasConcretas.hasNext()){
+				Book reserva = reservasConcretas.next();
+				if(reserva.getNumeroDeReserva()==num && !reserva.isPaid()){
+					reserva.pagar();
+					db.store(reserva);
+					db.store(user);
+					db.commit();
+					return reserva;
+				}	
+			}
+		}
+		throw new Exception("No se ha podido pagar, intentelo de nuevo.");
+	}	
+}
+	

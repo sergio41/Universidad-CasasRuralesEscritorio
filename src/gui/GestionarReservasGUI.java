@@ -178,7 +178,7 @@ public class GestionarReservasGUI extends JPanel {
 					Book reservaConcreta = iter.next();
 					if(!reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
-						vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+						vector.add(reservaConcreta.getNumeroDeReserva());
 						vector.add(reservaConcreta.getFechas().get(0));
 						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
 						vector.add(reservaConcreta.getPrecio());
@@ -197,7 +197,7 @@ public class GestionarReservasGUI extends JPanel {
 					Book reservaConcreta = iter.next();
 					if(reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
-						vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+						vector.add(reservaConcreta.getNumeroDeReserva());
 						vector.add(reservaConcreta.getFechas().get(0));
 						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
 						vector.add(reservaConcreta.getPrecio());

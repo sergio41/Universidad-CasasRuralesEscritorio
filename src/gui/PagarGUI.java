@@ -12,6 +12,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import businessLogic.ApplicationFacadeInterface;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -177,7 +180,15 @@ public class PagarGUI extends JPanel {
 		btnPagar = new JButton("Pagar");
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
+					JPanel aux = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(aux);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnPagar.setForeground(Color.BLUE);

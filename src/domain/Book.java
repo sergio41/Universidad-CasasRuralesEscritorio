@@ -61,4 +61,6 @@ public class Book implements Serializable {
 	public Offer getOffer() {return offer;}
 	
 	public Vector<Fechas> getFechas(){return vectorFechas;}
+	
+	public void pagar(){isPaid=true;}
 }
