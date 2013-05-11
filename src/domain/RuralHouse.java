@@ -205,9 +205,8 @@ public class RuralHouse implements Serializable {
 	
 	private Vector<Fechas> getFechas(Date inicio, Date fin){
 		Vector<Fechas> aux = new Vector<Fechas>();
-		Date auxInicio = inicio;
-		auxInicio.setTime(auxInicio.getTime()+1*24*60*60*1000);
-		Date auxFin = fin;
+		Date auxInicio = (Date) inicio.clone();
+		Date auxFin = (Date) fin.clone();
 		auxFin.setTime(auxFin.getTime()+1*24*60*60*1000);
 		while (auxInicio.compareTo(auxFin) !=0){
 			Fechas auxFecha = getFechaConcreta(auxInicio);

@@ -113,6 +113,8 @@ public class GestionarReservasGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					facade.eliminarReserva((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0));
+					JPanel aux = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(aux);
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);

@@ -273,7 +273,10 @@ public class BusquedaGUI extends JPanel {
 				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
 					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+					System.out.println("A");
 					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+						System.out.println("B");
+						System.out.println(reserv.getNumeroDeReserva()+ " " + " " + Float.toString(reserv.getPrecio()));
 						JPanel temp1 = new PagarGUI(reserv.getNumeroDeReserva(),reserv.getPrecio());
 						Start.modificarPanelAbajo(temp1);
 					}else{

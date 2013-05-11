@@ -322,17 +322,18 @@ public class DB4oManager {
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(cliente);	
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
+			Book reserv = null;
 			ObjectSet<RuralHouse> rHConcretos = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));	
 			if (rHConcretos.hasNext()){
 				RuralHouse rHConcreto = rHConcretos.next();
-				Book reserv = rHConcreto.hacerReserva(userConcreto, numeroReserva, inicio, fin);
+				reserv = rHConcreto.hacerReserva(userConcreto, numeroReserva, inicio, fin);
 				db.store(rHConcreto);			
 				db.store(userConcreto);
 				db.commit();
-				return reserv;
 			}
-		}
-		throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
+			return reserv;
+		}else
+			throw new Exception("La reserva no se ha podido realizar. Lo sentimos");
 	}
 	
 	@SuppressWarnings("deprecation")

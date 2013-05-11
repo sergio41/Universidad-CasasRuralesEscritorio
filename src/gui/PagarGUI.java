@@ -177,6 +177,7 @@ public class PagarGUI extends JPanel {
 		btnPagar = new JButton("Pagar");
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnPagar.setForeground(Color.BLUE);
