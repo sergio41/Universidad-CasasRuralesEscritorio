@@ -41,6 +41,8 @@ public class BusquedaGUI extends JPanel {
 	private JSpinner spinnerCocinas;
 	private JSpinner spinnerBanos;
 	
+	private StarRater starRater;
+	
 	private JTable tableCasas;
 	private JComboBox<String> comboCity;
 	private DefaultTableModel modelTb = new DefaultTableModel(
@@ -137,7 +139,7 @@ public class BusquedaGUI extends JPanel {
 		
 		JLabel label_3 = new JLabel("Descripci\u00F3n:");
 		label_3.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_3.setBounds(33, 310, 114, 34);
+		label_3.setBounds(33, 310, 83, 34);
 		add(label_3);
 		
 		btnNewButton = new JButton("Reservar\r\n");
@@ -194,6 +196,15 @@ public class BusquedaGUI extends JPanel {
 		lblTelef.setForeground(new Color(0, 128, 0));
 		lblTelef.setBounds(463, 278, 104, 21);
 		add(lblTelef);
+		
+		starRater = new StarRater(5, 2, 1);
+		starRater.addStarListener(new StarRater.StarListener(){
+			public void handleSelection(int selection) {
+				System.out.println(selection);
+			}});
+	    starRater.setBounds(246, 319, 88, 21);
+	    starRater.setEnabled(false);
+	    add(starRater);
 		
 		JLabel label = new JLabel("N\u00BA min. aparcamientos*:");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -300,6 +311,11 @@ public class BusquedaGUI extends JPanel {
 		button_1.setFont(new Font("Dialog", Font.BOLD, 19));
 		button_1.setBounds(835, 370, 163, 34);
 		add(button_1);
+		
+		JLabel lblCalificacin = new JLabel("Calificaci\u00F3n:");
+		lblCalificacin.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCalificacin.setBounds(151, 310, 83, 34);
+		add(lblCalificacin);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));

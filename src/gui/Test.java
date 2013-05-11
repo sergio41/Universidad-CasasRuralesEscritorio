@@ -7,7 +7,7 @@ public class Test {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         JPanel panel = new JPanel();
-        StarRater starRater = new StarRater(5, 2, 1);
+        StarRater starRater = new StarRater(10, 0, 0);
         starRater.addStarListener(
             new StarRater.StarListener()   {
 
