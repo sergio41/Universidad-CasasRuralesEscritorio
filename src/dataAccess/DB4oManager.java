@@ -183,17 +183,17 @@ public class DB4oManager {
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
 			Iterator<RuralHouse> i = userConcreto.getPropietario().getRuralHouses().iterator();
-			System.out.println("A");
+			System.out.println("eliminarCasaRural: A");
 			while (i.hasNext()){
-				System.out.println("B");
+				System.out.println("eliminarCasaRural: B");
 				RuralHouse casa = i.next();
-				System.out.println("C");
+				System.out.println("eliminarCasaRural: C");
 				if(casa.getHouseNumber() == numero){
-					System.out.println("D");
+					System.out.println("vD");
 					eliminar = userConcreto.getPropietario().eliminarRH(numero);
-					System.out.println("E");
+					System.out.println("eliminarCasaRural: E");
 					if ( eliminar != null) {
-						System.out.println("F");
+						System.out.println("eliminarCasaRural: F");
 						Vector<Fechas> aux1 = eliminar.eliminarTodasFechas();
 						for (int i1 = 0; i1<aux1.size(); i1++) db.delete(aux1.get(i1));
 						Vector<Book> aux2 = eliminar.eliminarTodasReserva();
@@ -203,7 +203,7 @@ public class DB4oManager {
 						db.store(userConcreto);
 						db.delete(eliminar);
 						db.commit();
-						System.out.println("G");
+						System.out.println("eliminarCasaRural: G");
 						return getUser(user.getEmail());
 					}
 					break;
