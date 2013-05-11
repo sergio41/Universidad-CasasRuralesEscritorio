@@ -121,7 +121,7 @@ public class GestionarReservasGUI extends JPanel {
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Vector<Book> reservas = Start.getUsuario().getReservas();
-				Book reserva = reservas.get(tableCasas.getSelectedRow());
+				Book reserva = reservas.get((int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)-1);
 				JPanel aux = new PagarGUI(reserva.getNumeroDeReserva(), reserva.getPrecio());
 				Start.modificarPanelAbajo(aux);
 			}
