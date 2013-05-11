@@ -149,7 +149,6 @@ public class RuralHouse implements Serializable {
 		if(auxDate.equals(auxUltimoDia))
 			if (!anadirFecha(auxDate, precio, minimoDias)) auxB = false;
 		while (!auxDate.equals(auxUltimoDia)){
-			System.out.println("22");
 			if (!anadirFecha(auxDate, precio, minimoDias)) auxB = false;
 			
 			auxDate.setTime(auxDate.getTime()+1*24*60*60*1000);
