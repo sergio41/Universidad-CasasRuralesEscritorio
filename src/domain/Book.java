@@ -37,6 +37,7 @@ public class Book implements Serializable {
 		reservante = cliente;
 		offer = oferta;
 		vectorFechas = fechas;
+		casa = ruralHouse;
 		extenderReserva();
 	}
 	
