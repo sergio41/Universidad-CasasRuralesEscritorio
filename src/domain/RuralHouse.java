@@ -72,41 +72,6 @@ public class RuralHouse implements Serializable {
 	public Vector<Book> getReservas(){return vectorReservas;}
 	
 	public Vector<Offer> getOfertas(){ return vectorOfertas;}
-	/*public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio){
-		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
-		Fechas auxFecha = new Fechas(primerDia, precio, this, houseNumber);
-		Date aux = primerDia;
-		try{
-		while (aux.getDay() != ultimoDia.getDay()+1 || aux.getMonth() != ultimoDia.getMonth() || aux.getYear() != ultimoDia.getYear() ){			
-			Fechas auxFecha = new Fechas(null, 0, null, 0);
-			Iterator<Fechas> i = vectorFechas.iterator();
-			while (i.hasNext()){
-				auxFecha = i.next();
-				if (aux.getDay() == auxFecha.getFecha().getDay() && aux.getMonth() == auxFecha.getFecha().getMonth() && aux.getYear() == auxFecha.getFecha().getYear() ) break;
-			}
-			if (auxFecha == null || (aux.getDay() != auxFecha.getFecha().getDay() || aux.getMonth() != auxFecha.getFecha().getMonth() || aux.getYear() != auxFecha.getFecha().getYear())){
-				Date aux1 = aux;
-				auxFecha = new Fechas(aux1, 0, this, 0);
-				vectorFechas.add(auxFecha);
-				auxVectorFechas.add(auxFecha);
-			}
-			System.out.println("Vector: " + auxFecha.getFecha().toString());
-			//auxVectorFechas.add(auxVectorFechas.size(),auxFecha);//add(auxFecha);
-			//Iterator<Fechas> j = auxVectorFechas.iterator();
-			//while(j.hasNext()){ System.out.println("Vectorjjjj: " + j.next().getFecha().toString());}
-			
-			aux.setTime(aux.getTime()+1*24*60*60*1000);
-		}
-		Iterator<Fechas> i = auxVectorFechas.iterator();
-		while(i.hasNext()){
-			System.out.println("Vector1: " + i.next().getFecha().toString());
-		}
-		vectorOfertas.add(new Offer(primerDia, ultimoDia, precio, this, auxVectorFechas, obligatorio));}
-		catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}*/
 	public void anadirOferta(Date primerDia, Date ultimoDia, float precio, boolean obligatorio) throws Exception{
 		Fechas auxFecha = null;	
 		//Comprobar si esta reservado:
@@ -123,7 +88,7 @@ public class RuralHouse implements Serializable {
 			}
 			auxp.setTime(auxp.getTime()+1*24*60*60*1000);
 		}
-		//
+		//Hacer lo demas:
 		Vector<Fechas> auxVectorFechas = new Vector<Fechas>();
 		Vector<Fechas> auxVectorFechasNuevas = new Vector<Fechas>();
 		Date primero = (Date) primerDia.clone();
