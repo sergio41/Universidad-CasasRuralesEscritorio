@@ -7,7 +7,6 @@ import com.db4o.*;
 
 import configuration.Config;
 import domain.*;
-import externalDataSend.EnviarCorreo;
 
 public class DB4oManager { 
 	private static ObjectContainer  db;

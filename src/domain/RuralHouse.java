@@ -357,4 +357,5 @@ public class RuralHouse implements Serializable {
 		vectorReservas = new Vector<Book>();
 		return auxVectorBook;
 	}
+
 }

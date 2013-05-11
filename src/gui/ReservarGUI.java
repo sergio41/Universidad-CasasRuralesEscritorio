@@ -1,49 +1,20 @@
 		package gui;
 
-		import javax.swing.DefaultComboBoxModel;
 		import javax.swing.ImageIcon;
 		import javax.swing.JPanel;
-		import javax.swing.JTextField;
 		import java.awt.Color;
 		import javax.swing.JButton;
 		import javax.swing.JLabel;
-		import java.awt.Font;
-		import javax.swing.SwingConstants;
-		import javax.swing.JComboBox;
 
-		import businessLogic.ApplicationFacadeInterface;
-
-		import java.awt.event.ActionListener;
-		import java.awt.event.ActionEvent;
-		import java.io.File;
-		import java.text.ParseException;
-		import java.util.Vector;
-
-		import javax.swing.JRadioButton;
-		import javax.swing.text.MaskFormatter;
-
-		import domain.Owner;
-		import javax.swing.JFormattedTextField;
-		import javax.swing.JSlider;
-		import javax.swing.JToggleButton;
-		import javax.swing.JCheckBox;
 
 public class ReservarGUI extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private static JRadioButton rdbtnProfesional = new JRadioButton("Profesional");
-	private static JRadioButton rdbtnParticular = new JRadioButton("Particular");
-	private static DefaultComboBoxModel<String> modeloMon = new DefaultComboBoxModel<String>();
 	
 	
 	public ReservarGUI() {
 
-			setLayout(null);
-			modeloMon.removeAllElements();
-			modeloMon.addElement("");
-			modeloMon.addElement("€");
-			modeloMon.addElement("$");
-			
+			setLayout(null);			
 			
 			JButton btnNewButton = new JButton("Terminar");
 			btnNewButton.setBounds(782, 388, 194, 37);
@@ -98,9 +69,7 @@ public class ReservarGUI extends JPanel {
 
 		}
 		
-		@SuppressWarnings("deprecation")
 		private void inicializarCampos(){
-			ApplicationFacadeInterface facade = Start.getBusinessLogic();
 			
 		}
 }
