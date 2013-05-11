@@ -13,6 +13,10 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import domain.Book;
+
+import externalDataSend.EnviarCorreo;
+
 import businessLogic.ApplicationFacadeInterface;
 
 import java.awt.event.ActionListener;
@@ -185,9 +189,11 @@ public class PagarGUI extends JPanel {
 				try {
 					if(rdbtnTransferencia.isSelected()){
 						javax.swing.JOptionPane.showMessageDialog(null,"Se le ha enviado un email con el numero de cuenta a la que deberá reslizar la transferencia.", "Bien bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-						facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
+						Book reserva= facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
+						EnviarCorreo.enviarCorreos(Start.getUsuario().getEmail(), "Numero de cuenta para transferencia", "Hola "+ Start.getUsuario().getName()+"! Aqui le enviamos el nº de Cuenta del propietario de la casa rural en la que usted esta pagando la reserva.<br/> El numero de cuenta es: "+ reserva.getOffer().getRuralHouse().getUserAplication().getPropietario().getBankAccount());
 						JPanel aux = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(aux);
+						
 					}else{ 
 						if(textTitular.getText()!="" && (textNumeroTarjeta.isEditValid() && textNumeroTarjeta.getText().compareTo("____-____-____-____")!=0)
 								&& !textAno.getText().isEmpty() && !textMes.getText().isEmpty()){
