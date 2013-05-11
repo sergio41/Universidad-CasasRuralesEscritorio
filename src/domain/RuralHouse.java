@@ -240,7 +240,7 @@ public class RuralHouse implements Serializable {
 					System.out.println("while dia: " + aux.getFecha().toString());
 					precio = precio + aux.getPrecio();
 				}
-				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
+				reserva = new Book(this, numeroDeReserva, precio, cliente, auxFechas);
 				vectorReservas.add(reserva);
 				cliente.anadirReserva(reserva);
 				//eliminarOfertaQueContenga(vectorFechas);

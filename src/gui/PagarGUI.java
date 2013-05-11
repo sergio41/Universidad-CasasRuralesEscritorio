@@ -188,19 +188,11 @@ public class PagarGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					if(rdbtnTransferencia.isSelected()){
-						System.out.println("A");
 						javax.swing.JOptionPane.showMessageDialog(null,"Se le ha enviado un email con el numero de cuenta a la que deberá reslizar la transferencia.", "Bien bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
-						System.out.println("B");
 						Book reserva= facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
-						System.out.println("C");
-						System.out.println(Start.getUsuario().getEmail());
-						System.out.println(Start.getUsuario().getName());
-						System.out.println(reserva.getOffer().getRuralHouse().getUserAplication().getPropietario().getBankAccount());
-						EnviarCorreo.enviarCorreos(Start.getUsuario().getEmail(), "Numero de cuenta para transferencia", "Hola "+ Start.getUsuario().getName()+"! Aqui le enviamos el nº de Cuenta del propietario de la casa rural en la que usted esta pagando la reserva.<br/> El numero de cuenta es: "+ reserva.getOffer().getRuralHouse().getUserAplication().getPropietario().getBankAccount());
-						System.out.println("D");
+						EnviarCorreo.enviarCorreos(Start.getUsuario().getEmail(), "Numero de cuenta para transferencia", "Hola "+ Start.getUsuario().getName()+"! Aqui le enviamos el nº de Cuenta del propietario de la casa rural en la que usted esta pagando la reserva.<br/> El numero de cuenta es: "+ reserva.getCasa().getUserAplication().getPropietario().getBankAccount());
 						JPanel aux = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(aux);
-						
 					}else{ 
 						if(textTitular.getText()!="" && (textNumeroTarjeta.isEditValid() && textNumeroTarjeta.getText().compareTo("____-____-____-____")!=0)
 								&& !textAno.getText().isEmpty() && !textMes.getText().isEmpty()){
@@ -212,6 +204,7 @@ public class PagarGUI extends JPanel {
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
+					e1.printStackTrace();
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 			}

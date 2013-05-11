@@ -15,8 +15,9 @@ public class Book implements Serializable {
 	private UserAplication reservante;
 	private Offer offer;
 	private Vector<Fechas> vectorFechas;
+	private RuralHouse casa;
 	
-	public Book(int numeroReserva, float cost, UserAplication cliente, Vector<Fechas> fechas) {
+	public Book(RuralHouse ruralHouse, int numeroReserva, float cost, UserAplication cliente, Vector<Fechas> fechas) {
 		bookDate = new java.util.Date(System.currentTimeMillis());
 		bookNumber = numeroReserva;
 		isPaid = false;
@@ -24,6 +25,7 @@ public class Book implements Serializable {
 		reservante = cliente;
 		offer = null;
 		vectorFechas = fechas;
+		casa = ruralHouse;
 		extenderReserva();
 	}
 	
@@ -67,4 +69,8 @@ public class Book implements Serializable {
 	public Vector<Fechas> getFechas(){return vectorFechas;}
 	
 	public void pagar(){isPaid=true;}
+
+	public RuralHouse getCasa() {
+		return casa;
+	}
 }
