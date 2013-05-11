@@ -51,13 +51,6 @@ public class GestionarReservasGUI extends JPanel {
 		tableCasas.setBounds(434, 38, 551, 229);
 		ListSelectionModel cellSelectionModel = tableCasas.getSelectionModel();
 	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-	    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
-	      public void valueChanged(ListSelectionEvent e) {
-
-	      }
-
-	    });
 		add(tableCasas);
 		
 		scrollPane = new JScrollPane(tableCasas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -127,6 +120,10 @@ public class GestionarReservasGUI extends JPanel {
 		btnPagar = new JButton("Pagar");
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Vector<Book> reservas = Start.getUsuario().getReservas();
+				Book reserva = reservas.get(tableCasas.getSelectedRow());
+				JPanel aux = new PagarGUI(reserva.getNumeroDeReserva(), reserva.getPrecio());
+				Start.modificarPanelAbajo(aux);
 			}
 		});
 		btnPagar.setEnabled(false);
@@ -163,7 +160,7 @@ public class GestionarReservasGUI extends JPanel {
 				while(iter.hasNext()){
 					Book reservaConcreta = iter.next();
 					Vector<Object> vector = new Vector<Object>();
-					vector.add(/*reservaConcreta.getNumeroDeReserva()*/1);
+					vector.add(reservaConcreta.getNumeroDeReserva());
 					vector.add(reservaConcreta.getFechas().get(0));
 					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
 					vector.add(reservaConcreta.getPrecio());
