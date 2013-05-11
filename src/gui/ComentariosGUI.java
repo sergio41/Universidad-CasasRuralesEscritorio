@@ -42,7 +42,6 @@ public class ComentariosGUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private int num;
-	private static ComentariosGUI frame;
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +49,7 @@ public class ComentariosGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new ComentariosGUI(args[0]);
+					ComentariosGUI frame = new ComentariosGUI(args[0]);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -92,15 +91,17 @@ public class ComentariosGUI extends JFrame {
 				System.out.println(selection);
 			}});
 		starRater.setBounds(247, 200, 80, 16);
-	    starRater.setEnabled(true);
+	    starRater.setEnabled(false);
 	    contentPane.add(starRater);
 		
 		txtpnComentar = new JTextPane();
-		txtpnComentar.setForeground(new Color(255, 0, 0));
-		txtpnComentar.setBackground(new Color(0, 206, 209));
+		txtpnComentar.setForeground(new Color(50, 205, 50));
+		txtpnComentar.setOpaque(false);
+		//txtpnComentar.setForeground(new Color(255, 0, 0));
+		//txtpnComentar.setBackground(new Color(0, 206, 209));
 		txtpnComentar.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
-		txtpnComentar.setText("Comentar\r\n");
-		txtpnComentar.setBounds(187, 0, 96, 31);
+		txtpnComentar.setText("Comentarios:");
+		txtpnComentar.setBounds(187, 0, 140, 31);
 		contentPane.add(txtpnComentar);
 		
 		btnNewButton = new JButton("Enviar");
@@ -109,9 +110,7 @@ public class ComentariosGUI extends JFrame {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					facade.anadirCalificacionACasaRural(num, txtpnComentar.getText(), starRater.getSelection());
-					JPanel aux = new PantallaPrincipalGUI();
-					Start.modificarPanelAbajo(aux);
-					frame.setVisible(false);
+					dispose();
 				} catch (Exception e1) {
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -128,9 +127,10 @@ public class ComentariosGUI extends JFrame {
 		JTextPane txtpnOtrosHanComentado = new JTextPane();
 		txtpnOtrosHanComentado.setText("Otros han comentado:");
 		txtpnOtrosHanComentado.setForeground(Color.RED);
+		txtpnOtrosHanComentado.setOpaque(false);
 		txtpnOtrosHanComentado.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
-		txtpnOtrosHanComentado.setBackground(new Color(0, 206, 209));
-		txtpnOtrosHanComentado.setBounds(10, 291, 273, 31);
+		//txtpnOtrosHanComentado.setBackground(new Color(0, 206, 209));
+		//txtpnOtrosHanComentado.setBounds(10, 291, 273, 31);
 		contentPane.add(txtpnOtrosHanComentado);
 		
 		textField_1 = new JTextField();
@@ -142,6 +142,10 @@ public class ComentariosGUI extends JFrame {
 		textField_2.setColumns(10);
 		textField_2.setBounds(10, 453, 486, 112);
 		contentPane.add(textField_2);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 527, 600);
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/verfotos.jpg")));
+		contentPane.add(lblNewLabel);
 	}
-
 }

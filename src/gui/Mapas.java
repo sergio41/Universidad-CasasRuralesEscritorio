@@ -34,6 +34,7 @@ public class Mapas extends JFrame {
 	private String sensor = "false";
 	private String marker = "icon:http://montesinos.wikispaces.com/file/view/kfm_home(2).png/73196529/43x43/kfm_home(2).png%7csize:mid%7Ccolor:0xFFFF00%7Clabel:C%7C";
 	private JLabel lblMapa;
+	private JLabel lblNewLabel;
 	
 	/**
 	 * Launch the application.
@@ -56,6 +57,7 @@ public class Mapas extends JFrame {
 	 * Create the frame.
 	 */
 	public Mapas(String direccion) {
+		setResizable(false);
 		center="";
 		/*Sergio
 			center = direccion.replaceAll(" ", "");
@@ -74,7 +76,7 @@ public class Mapas extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblMapa = new JLabel("New label");
-		lblMapa.setBounds(0, 81, 500, 500);
+		lblMapa.setBounds(12, 81, 494, 500);
 		contentPane.add(lblMapa);
 		
 		comboBox = new JComboBox<String>();
@@ -95,8 +97,9 @@ public class Mapas extends JFrame {
 		contentPane.add(comboBox);
 		
 		slider = new JSlider();
-		slider.setBackground(new Color(0, 206, 209));
-		slider.setForeground(new Color(0, 0, 0));
+		slider.setOpaque(false);
+		//slider.setBackground(new Color(0, 206, 209));
+		//slider.setForeground(new Color(0, 0, 0));
 		slider.setPaintLabels(true);
 		slider.setSnapToTicks(true);
 		slider.setPaintTicks(true);
@@ -112,12 +115,19 @@ public class Mapas extends JFrame {
 		contentPane.add(slider);
 		
 		JTextPane txtpnEligeTipoDe = new JTextPane();
-		txtpnEligeTipoDe.setForeground(new Color(255, 0, 0));
-		txtpnEligeTipoDe.setBackground(new Color(0, 206, 209));
+		txtpnEligeTipoDe.setForeground(new Color(0, 255, 0));
+		txtpnEligeTipoDe.setOpaque(false);
+		//txtpnEligeTipoDe.setForeground(new Color(255, 0, 0));
+		//txtpnEligeTipoDe.setBackground(new Color(0, 206, 209));
 		txtpnEligeTipoDe.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
 		txtpnEligeTipoDe.setText("Elige tipo de mapa y el zoom:");
 		txtpnEligeTipoDe.setBounds(89, 0, 344, 31);
 		contentPane.add(txtpnEligeTipoDe);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(0, 0, 527, 600);
+		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/verfotos.jpg")));
+		contentPane.add(lblNewLabel);
 	}
 	
 	private void crearMapa(){
