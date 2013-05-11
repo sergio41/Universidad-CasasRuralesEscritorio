@@ -229,7 +229,7 @@ public class RuralHouse implements Serializable {
 		if (disponibleFechas((Date)inicio.clone(), (Date)fin.clone()) || (auxOferta != null && !auxOferta.isReservado())){
 			Vector<Fechas> auxFechas = getFechas((Date)inicio.clone(), (Date)fin.clone());
 			if (auxOferta != null && auxFechas != null){
-				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
+				reserva = new Book(this, numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
 				cliente.anadirReserva(reserva);
 				vectorReservas.add(reserva);
 			} else if (auxOferta == null && auxFechas != null){

@@ -46,11 +46,11 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			System.out.println("No se han eliminado guay las fotos");
 	}
 	
+	@SuppressWarnings("unused")
 	public boolean eliminarCarpetaConfotos(File directory) {
 		System.out.println("FacadeImplementation: Se elimina la carpeta con fotos: " + directory.toPath());
 		// System.out.println("removeDirectory " + directory);
-		if (directory == null)
-			return false;
+		if (directory == null) return false;
 		if (!directory.exists())
 			return true;
 		if (!directory.isDirectory())

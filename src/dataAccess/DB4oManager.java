@@ -197,9 +197,18 @@ public class DB4oManager {
 						Vector<Fechas> aux1 = eliminar.eliminarTodasFechas();
 						for (int i1 = 0; i1<aux1.size(); i1++) db.delete(aux1.get(i1));
 						Vector<Book> aux2 = eliminar.eliminarTodasReserva();
-						for (int i1 = 0; i1<aux2.size(); i1++) db.delete(aux2.get(i1));
+						for (int i1 = 0; i1<aux2.size(); i1++){
+							ObjectSet<Book> bookConcretos = db.queryByExample(aux2.get(i1));
+							if (bookConcretos.hasNext()){
+								System.out.println("entro");
+								db.delete(bookConcretos.next());
+							}
+							
+						}
 						Vector<Offer> aux3 = eliminar.eliminarTodasOfertas();
-						for (int i1 = 0; i1<aux3.size(); i1++) db.delete(aux3.get(i1));
+						for (int i1 = 0; i1<aux3.size(); i1++){
+							db.delete(aux3.get(i1));
+						}
 						db.store(userConcreto);
 						db.delete(eliminar);
 						db.commit();
