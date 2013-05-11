@@ -214,8 +214,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}		
 	}
 
-	public void hacerReserva(UserAplication usuario, int numeroRH, Date inicio, Date fin) throws Exception{
-		DB4oManager.hacerReserva(usuario, getNumeroReserva(), numeroRH, inicio, fin);
+	public Book hacerReserva(UserAplication usuario, int numeroRH, Date inicio, Date fin) throws Exception{
+		return DB4oManager.hacerReserva(usuario, getNumeroReserva(), numeroRH, inicio, fin);
 	}
 	
 	public Vector<RuralHouse> casasRuralesDisponibles(Date inicio, Date fin) throws Exception{

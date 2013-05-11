@@ -203,6 +203,7 @@ public class CreateOfferGUI extends JPanel {
 						Date ini = aux1.get(x).getPrimerDia();
 						Date fin = aux1.get(x).getUltimoDia();
 						facade.eliminarOferta(Start.getUsuario(), Integer.parseInt(comBCasas.getSelectedItem().toString()), ini, fin);						
+						System.out.print("1");
 						JPanel panel = new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(panel);
 						javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la oferta", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	

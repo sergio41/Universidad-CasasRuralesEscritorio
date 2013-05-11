@@ -32,7 +32,7 @@ public class PagarGUI extends JPanel {
 	private JButton btnPagar;
 	private JTextPane textNumero;
 	private JTextPane textImporte;
-	public PagarGUI() {
+	public PagarGUI(int num, float precio) {
 		setLayout(null);
 		
 		JTextPane txtpnPasarelaDePago = new JTextPane();
@@ -67,7 +67,7 @@ public class PagarGUI extends JPanel {
 		txtpnComoDeseaPagar.setBounds(51, 195, 211, 38);
 		add(txtpnComoDeseaPagar);
 		
-		rdbtnTransferencia = new JRadioButton((String) null);
+		rdbtnTransferencia = new JRadioButton("Transferencia");
 		rdbtnTransferencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTarjetaDeCredito.setSelected(!rdbtnTransferencia.isSelected());
@@ -185,7 +185,7 @@ public class PagarGUI extends JPanel {
 		add(btnPagar);
 		
 		textNumero = new JTextPane();
-		textNumero.setText("_");
+		textNumero.setText(Integer.toString(num));
 		textNumero.setOpaque(false);
 		textNumero.setForeground(Color.BLUE);
 		textNumero.setFont(new Font("Times New Roman", Font.BOLD, 25));
@@ -193,7 +193,7 @@ public class PagarGUI extends JPanel {
 		add(textNumero);
 		
 		textImporte = new JTextPane();
-		textImporte.setText("_");
+		textImporte.setText(Float.toString(precio));
 		textImporte.setOpaque(false);
 		textImporte.setForeground(Color.BLUE);
 		textImporte.setFont(new Font("Times New Roman", Font.BOLD, 25));

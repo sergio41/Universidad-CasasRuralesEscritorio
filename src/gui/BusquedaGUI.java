@@ -18,6 +18,7 @@ import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import businessLogic.ApplicationFacadeInterface;
+import domain.Book;
 import domain.Offer;
 import domain.RuralHouse;
 import javax.swing.JTable;
@@ -271,9 +272,9 @@ public class BusquedaGUI extends JPanel {
 				//Date ahora = new Date();				
 				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
-					facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
+					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
 					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
-						JPanel temp1 = new PantallaPrincipalGUI();
+						JPanel temp1 = new PagarGUI(reserv.getNumeroDeReserva(),reserv.getPrecio());
 						Start.modificarPanelAbajo(temp1);
 					}else{
 						JPanel temp1 = new PantallaPrincipalGUI();
