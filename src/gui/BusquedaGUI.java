@@ -356,15 +356,16 @@ public class BusquedaGUI extends JPanel {
 			while (i.hasNext()){
 				Vector<Object>  vector = new Vector<Object>();
 				Offer auxi = i.next();
-				//vector.add(auxi.getHouseNumber());
-				vector.add(auxi.getPrimerDia());
-				vector.add(auxi.getUltimoDia());
-				vector.add(auxi.getPrice());
-				modelTbOfertas.addRow(vector);
+				if (!auxi.isReservado()){
+					vector.add(auxi.getPrimerDia());
+					vector.add(auxi.getUltimoDia());
+					vector.add(auxi.getPrice());
+					modelTbOfertas.addRow(vector);
+				}
+				
 			}
 			ajustarColumnas();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.getMessage();
 		}
 	}

@@ -217,11 +217,12 @@ public class RuralHouse implements Serializable {
 		return aux;
 	}
 	
-	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin){
+	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin) throws Exception{
 		Offer auxOferta = disponibleFechaOferta(inicio, fin);
 		Book reserva = null;
-		if (disponibleFechas(inicio, fin) || auxOferta != null){
+		if (disponibleFechas(inicio, fin) || (auxOferta != null && !auxOferta.isReservado())){
 			Vector<Fechas> auxFechas = getFechas(inicio, fin);
+			disponibleFechas(inicio, fin);
 			if (auxOferta != null && auxFechas != null){
 				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
 				cliente.anadirReserva(reserva);
@@ -236,6 +237,7 @@ public class RuralHouse implements Serializable {
 				eliminarOfertaQueContenga(vectorFechas);
 			}
 		} 
+		if (reserva==null) throw new Exception("Lamentablemente, no se ha podido reservar");
 		return reserva;		
 	}
 	
