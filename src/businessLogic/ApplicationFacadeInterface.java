@@ -73,5 +73,7 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void eliminarFecha(UserAplication usuario, int parseInt, Date ini) throws Exception;
 
 	public Book pagar(int num, UserAplication user) throws Exception;
+	
+	public  void anadirCalificacionACasaRural(int numero, String comentario, int puntuacion) throws Exception;
 
 }

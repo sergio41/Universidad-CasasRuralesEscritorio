@@ -29,9 +29,6 @@ import externalDataSend.GestionTwitter;
 
 public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface {
 	private static final long serialVersionUID = 1L;
-	//private static boolean estado = false; //SinLogin = 0; //Login = 1
-	//private static UserAplication usuario;
-	//private static String emailUser;
 	private static Vector<String> twitter10;
 	
 	public FacadeImplementation() throws RemoteException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -392,6 +389,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Book pagar(int num, UserAplication user) throws Exception{
 		System.out.println("FacadeImplementation: pagar");
 		return DB4oManager.pagar(num, user);
+	}
+
+	@Override
+	public void anadirCalificacionACasaRural(int numero, String comentario, int puntuacion) throws Exception {
+		System.out.println("FacadeImplementation: añadir calificacion a casa rural");
+		DB4oManager.anadirCalificacionACasaRural(numero, comentario, puntuacion);
+		
 	}
 }
 

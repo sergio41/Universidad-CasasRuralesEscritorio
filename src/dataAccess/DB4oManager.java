@@ -443,5 +443,15 @@ public class DB4oManager {
 		}
 		throw new Exception("No se ha podido pagar, intentelo de nuevo.");
 	}	
+	
+	public static void anadirCalificacionACasaRural(int numero, String comentario, int puntuacion) throws Exception {
+		ObjectSet<RuralHouse> RHConcreto = db.queryByExample(new RuralHouse(numero, null, null, null, 0, 0, 0, 0, 0, null));
+		if (RHConcreto.hasNext()){
+			RuralHouse casa = RHConcreto.next();
+			casa.anadirCalificacion(comentario, puntuacion);
+			db.store(casa);
+			db.commit();
+		} else throw new Exception("La casa rural no se ha modificado. El propietario ha podido borrar la Casa Rural.");
+	}
 }
 	
