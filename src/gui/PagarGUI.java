@@ -183,9 +183,20 @@ public class PagarGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
-					facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
-					JPanel aux = new PantallaPrincipalGUI();
-					Start.modificarPanelAbajo(aux);
+					if(rdbtnTransferencia.isSelected()){
+						javax.swing.JOptionPane.showMessageDialog(null,"Se le ha enviado un email con el numero de cuenta a la que deberá reslizar la transferencia.", "Bien bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+						facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
+						JPanel aux = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(aux);
+					}else{ 
+						if(textTitular.getText()!="" && (textNumeroTarjeta.isEditValid() && textNumeroTarjeta.getText().compareTo("____-____-____-____")!=0)
+								&& !textAno.getText().isEmpty() && !textMes.getText().isEmpty()){
+							facade.pagar(Integer.parseInt(textNumero.getText()), Start.getUsuario());
+							javax.swing.JOptionPane.showMessageDialog(null,"Pago realizado", "Bien bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);					
+							JPanel aux = new PantallaPrincipalGUI();
+							Start.modificarPanelAbajo(aux);
+						}else javax.swing.JOptionPane.showMessageDialog(null,"Faltan campos por rellenar", "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
