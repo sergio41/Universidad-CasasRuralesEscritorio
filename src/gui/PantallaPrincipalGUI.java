@@ -4,21 +4,16 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import businessLogic.ApplicationFacadeInterface;
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-
 import domain.RuralHouse;
 
 import java.awt.Color;
@@ -89,12 +84,6 @@ public class PantallaPrincipalGUI extends JPanel {
 		dateDesde.setDate(fechaHoy);
 		dateDesde.setDateFormatString("yyyy-MM-dd");
 		dateDesde.setMinSelectableDate(fechaHoy);
-		try {
-			UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
-		} catch (UnsupportedLookAndFeelException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} 
 		dateDesde.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 	        @Override
 	        public void propertyChange(PropertyChangeEvent e) {

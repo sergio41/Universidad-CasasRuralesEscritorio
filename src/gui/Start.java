@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
@@ -20,6 +21,9 @@ import businessLogic.FacadeImplementation;
 import configuration.Config;
 import java.awt.Color;
 import javax.swing.JTextPane;
+
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+
 import domain.UserAplication;
 
 import java.awt.Font;
@@ -81,6 +85,12 @@ public class Start extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					try {
+						UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+					} catch (UnsupportedLookAndFeelException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} 
 					Start frame = new Start();
 					frame.setVisible(true);
 					panelPrincipal = new PantallaPrincipalGUI();
