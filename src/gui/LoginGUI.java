@@ -6,12 +6,21 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
+import businessLogic.ApplicationFacadeInterface;
+
+import externalDataSend.EnviarCorreo;
+
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.regex.Pattern;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginGUI extends JPanel {
 	/**
@@ -80,6 +89,25 @@ public class LoginGUI extends JPanel {
 		});
 		btnSignUp.setBounds(275, 16, 97, 25);
 		add(btnSignUp);
+		
+		JLabel lblNewLabel_1 = new JLabel("Recuperar Contrase\u00F1a");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					facade.recuperarContrasena(textEmail.getText());
+					javax.swing.JOptionPane.showMessageDialog(null,"Recibirás un email con la contraseña.", "Bien",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		lblNewLabel_1.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(120, 86, 127, 14);
+		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 400, 100);
