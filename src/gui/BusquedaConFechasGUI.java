@@ -141,6 +141,7 @@ public class BusquedaConFechasGUI extends JPanel {
 				}
 			}
 		});
+
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnSalvar.setEnabled(false);
@@ -164,13 +165,26 @@ public class BusquedaConFechasGUI extends JPanel {
 		ListSelectionModel cellSelectionModel = tableCasas.getSelectionModel();
 	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 	    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
 	      public void valueChanged(ListSelectionEvent e) {
-	    	  
+	        try {
+		  		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		  		int selectedRow2 = tableCasas.getSelectedRow();
+				RuralHouse casita = facade.getCasas((int) tableCasas.getValueAt(selectedRow2, 0));
+				lblprop.setText(casita.getUserAplication().getEmail());
+				lblTelef.setText(casita.getUserAplication().getTelefono());
+				textDescrp.setText(casita.getDescription());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.getMessage();
+			}
 	      }
 
 	    });
 		add(tableCasas);
+		
 		
 		scrollPane = new JScrollPane(tableCasas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setBounds(373, 9, 600, 250);
