@@ -74,6 +74,7 @@ public class PagarGUI extends JPanel {
 		rdbtnTransferencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTarjetaDeCredito.setSelected(!rdbtnTransferencia.isSelected());
+				enaDis(!rdbtnTransferencia.isSelected());
 			}
 		});
 		rdbtnTransferencia.setOpaque(false);
@@ -219,6 +220,7 @@ public class PagarGUI extends JPanel {
 		add(lblNewLabel);
 		
 		rdbtnTransferencia.setSelected(true);
+		enaDis(false);
 	}
 	
 	private void enaDis(boolean b){
@@ -231,6 +233,6 @@ public class PagarGUI extends JPanel {
 		textNumeroTarjeta.setVisible(b);
 		txtpnNumeroDeTarjeta.setVisible(b);
 		textTitular.setVisible(b);
-		btnPagar.setVisible(b);
+		//btnPagar.setVisible(b);
 	}
 }
