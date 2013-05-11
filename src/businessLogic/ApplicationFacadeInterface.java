@@ -69,4 +69,6 @@ public interface ApplicationFacadeInterface extends Remote {
 	public void eliminarOferta(UserAplication usuario, int parseInt, Date ini, Date fin) throws Exception;
 
 	public void eliminarReserva(int num) throws Exception;
+
+	public void eliminarFecha(UserAplication usuario, int parseInt, Date ini) throws Exception;
 }

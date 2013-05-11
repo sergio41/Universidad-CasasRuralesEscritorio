@@ -198,12 +198,12 @@ public class AnadirFechaGUI extends JPanel {
 				ApplicationFacadeInterface facade=Start.getBusinessLogic();
 				try {						
 					Vector<Fechas> aux1 =  facade.getFechas(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()));
-					int x = (int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0);
+					int x = (int) tableCasas.getSelectedRow();
 					Date ini = aux1.get(x).getFecha();
-					//facade.eliminarFecha(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()), ini);						
+					facade.eliminarFecha(Start.getUsuario(), Integer.parseInt(comBoxCasas.getSelectedItem().toString()), ini);						
 					JPanel panel = new PantallaPrincipalGUI();
 					Start.modificarPanelAbajo(panel);
-					javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la oferta", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
+					javax.swing.JOptionPane.showMessageDialog(null,"Se ha eliminado la Disponibilidad de la Fecha", "Bien....",javax.swing.JOptionPane.INFORMATION_MESSAGE);	
 				}catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,"Error al eliminar: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 				} 

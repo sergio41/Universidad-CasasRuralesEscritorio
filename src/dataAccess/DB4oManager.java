@@ -253,6 +253,7 @@ public class DB4oManager {
 					db.delete(eliminar);
 					db.store(casa);
 					db.store(user);
+					db.commit();
 				}
 			}	
 		}

@@ -344,8 +344,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		DB4oManager.eliminarOferta(usuario, nRH, ini, fin);
 	}
 	
-	public void eliminarFecha(UserAplication usuario, int nRH, Date ini, Date fin) throws Exception{
-		//DB4oManager.eliminarFecha(usuario, nRH, ini);
+	public void eliminarFecha(UserAplication usuario, int nRH, Date ini) throws Exception{
+		DB4oManager.eliminarFecha(usuario, nRH, ini);
 	}
 
 	public void eliminarReserva(int num) throws Exception{
