@@ -42,6 +42,7 @@ public class ComentariosGUI extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private int num;
+	private static ComentariosGUI frame;
 	/**
 	 * Launch the application.
 	 */
@@ -49,7 +50,7 @@ public class ComentariosGUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ComentariosGUI frame = new ComentariosGUI(args[0]);
+					frame = new ComentariosGUI(args[0]);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,7 +92,7 @@ public class ComentariosGUI extends JFrame {
 				System.out.println(selection);
 			}});
 		starRater.setBounds(247, 200, 80, 16);
-	    starRater.setEnabled(false);
+	    starRater.setEnabled(true);
 	    contentPane.add(starRater);
 		
 		txtpnComentar = new JTextPane();
@@ -108,6 +109,9 @@ public class ComentariosGUI extends JFrame {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					facade.anadirCalificacionACasaRural(num, txtpnComentar.getText(), starRater.getSelection());
+					JPanel aux = new PantallaPrincipalGUI();
+					Start.modificarPanelAbajo(aux);
+					frame.setVisible(false);
 				} catch (Exception e1) {
 					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
