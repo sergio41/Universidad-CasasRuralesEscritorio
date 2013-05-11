@@ -73,4 +73,5 @@ public class Book implements Serializable {
 	public RuralHouse getCasa() {
 		return casa;
 	}
+
 }

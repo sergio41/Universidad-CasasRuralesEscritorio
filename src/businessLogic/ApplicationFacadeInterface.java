@@ -74,6 +74,7 @@ public interface ApplicationFacadeInterface extends Remote {
 
 	public Book pagar(int num, UserAplication user) throws Exception;
 	
-	public  void anadirCalificacionACasaRural(int numero, String comentario, int puntuacion) throws Exception;
+	public void anadirCalificacionACasaRural(int numero, String comentario, int puntuacion) throws Exception;
 
+	public Book getReserva(int num) throws Exception;
 }

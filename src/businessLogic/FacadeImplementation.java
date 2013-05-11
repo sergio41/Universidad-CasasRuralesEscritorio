@@ -396,5 +396,9 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		DB4oManager.anadirCalificacionACasaRural(numero, comentario, puntuacion);
 		
 	}
+	
+	public Book getReserva(int num) throws Exception{
+		return DB4oManager.getReserva(num);
+	}
 }
 

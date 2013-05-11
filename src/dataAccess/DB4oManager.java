@@ -464,5 +464,15 @@ public class DB4oManager {
 			db.commit();
 		} else throw new Exception("La casa rural no se ha modificado. El propietario ha podido borrar la Casa Rural.");
 	}
+	
+	public static Book getReserva(int num) throws Exception{
+		ObjectSet<Book> reservConcretas = db.queryByExample(Book.class);
+		while (reservConcretas.hasNext()){
+			Book reserva = reservConcretas.next();
+			if(reserva.getNumeroDeReserva()==num)
+				return reserva;
+		}
+		throw new Exception("No existe la reserva");
+	}
 }
 	

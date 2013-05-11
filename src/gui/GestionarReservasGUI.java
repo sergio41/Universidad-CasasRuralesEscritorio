@@ -37,6 +37,7 @@ public class GestionarReservasGUI extends JPanel {
 	private JButton btnVerReservasPagadas;
 	private JButton btnEliminarReserva;
 	private JButton btnPagar;
+	private JButton btnNewButton_1;
 	
 	@SuppressWarnings("serial")
 	public GestionarReservasGUI() {
@@ -51,6 +52,11 @@ public class GestionarReservasGUI extends JPanel {
 		tableCasas.setBounds(434, 38, 551, 229);
 		ListSelectionModel cellSelectionModel = tableCasas.getSelectionModel();
 	    cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+	      public void valueChanged(ListSelectionEvent e) {
+	    	  btnNewButton_1.setEnabled(true);
+	      }
+	    });
 		add(tableCasas);
 		
 		scrollPane = new JScrollPane(tableCasas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -129,6 +135,22 @@ public class GestionarReservasGUI extends JPanel {
 		btnPagar.setEnabled(false);
 		btnPagar.setBounds(437, 370, 165, 34);
 		add(btnPagar);
+		
+		btnNewButton_1 = new JButton("Puntuar y comentar Casa");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					Book x = facade.getReserva((int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0));
+					ComentariosGUI temp1 = new ComentariosGUI(x.getCasa().getHouseNumber());
+					temp1.setVisible(true);
+				} catch (Exception e1) {
+					javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnNewButton_1.setBounds(62, 370, 365, 34);
+		add(btnNewButton_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
