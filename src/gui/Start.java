@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.rmi.Naming;
@@ -142,6 +143,7 @@ public class Start extends JFrame {
 				modificarPanelAbajo(panel);
 			}
 		});
+		lblNewLabel_2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lblNewLabel_2.setBounds(0, 0, 50, 50);
 		contentPane.add(lblNewLabel_2);
 		
