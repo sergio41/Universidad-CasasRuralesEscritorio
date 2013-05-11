@@ -194,23 +194,25 @@ public class DB4oManager {
 					System.out.println("eliminarCasaRural: E");
 					if ( eliminar != null) {
 						System.out.println("eliminarCasaRural: F");
-						Vector<Fechas> aux1 = eliminar.eliminarTodasFechas();
-						for (int i1 = 0; i1<aux1.size(); i1++) db.delete(aux1.get(i1));
-						Vector<Book> aux2 = eliminar.eliminarTodasReserva();
-						for (int i1 = 0; i1<aux2.size(); i1++){
-							ObjectSet<Book> bookConcretos = db.queryByExample(aux2.get(i1));
-							if (bookConcretos.hasNext()){
-								System.out.println("entro");
-								db.delete(bookConcretos.next());
-							}
-							
+						Iterator<Fechas> aux1 = eliminar.eliminarTodasFechas().iterator();
+						while (aux1.hasNext()){
+							Fechas fechita = aux1.next();
+
+							db.delete(fechita);
 						}
-						Vector<Offer> aux3 = eliminar.eliminarTodasOfertas();
-						for (int i1 = 0; i1<aux3.size(); i1++){
-							db.delete(aux3.get(i1));
+						Iterator<Book> aux2 = eliminar.eliminarTodasReserva().iterator();
+						while(aux2.hasNext()){
+							Book reservita= aux2.next();
+							userConcreto.eliminarReserva(reservita);
+							db.delete(reservita);							
 						}
-						db.store(userConcreto);
+						Iterator<Offer> aux3 = eliminar.eliminarTodasOfertas().iterator();
+						while (aux3.hasNext()){
+							Offer ofertita= aux3.next();
+							db.delete(ofertita);
+						}
 						db.delete(eliminar);
+						db.store(userConcreto);
 						db.commit();
 						System.out.println("eliminarCasaRural: G");
 						return getUser(user.getEmail());
