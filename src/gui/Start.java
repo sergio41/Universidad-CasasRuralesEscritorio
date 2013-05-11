@@ -7,7 +7,6 @@ import java.rmi.Naming;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +20,6 @@ import businessLogic.FacadeImplementation;
 import configuration.Config;
 import java.awt.Color;
 import javax.swing.JTextPane;
-
 import domain.UserAplication;
 
 import java.awt.Font;
@@ -227,4 +225,7 @@ public class Start extends JFrame {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		usuario = facade.hacerLogin(email, pass);
 	}
+	
+	
+	
 }

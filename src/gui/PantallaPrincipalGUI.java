@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -9,12 +10,17 @@ import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
+import java.util.Vector;
+
 import javax.swing.JButton;
 import businessLogic.ApplicationFacadeInterface;
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.SwingConstants;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+
+import domain.RuralHouse;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,7 +38,8 @@ public class PantallaPrincipalGUI extends JPanel {
 	private static JButton btnGestionCasasRurales;
 	private static JButton btnGestionOfertas;
 	private static JButton btnGestionFechas;
-	private static JComboBox<String> cmboCiudad ;
+	private static JComboBox<String> comboCity ;
+	private DefaultComboBoxModel<String> modeloCity = new DefaultComboBoxModel<String>();
 	private JButton btnGestReserv;
 	
 	/**
@@ -44,8 +51,8 @@ public class PantallaPrincipalGUI extends JPanel {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (cmboCiudad.getSelectedIndex() != -1){
-					JPanel panel = new BusquedaConFechasGUI(dateDesde.getDate(), dateHasta.getDate(), (String)cmboCiudad.getSelectedItem());
+				if (comboCity.getSelectedIndex() != -1){
+					JPanel panel = new BusquedaConFechasGUI(dateDesde.getDate(), dateHasta.getDate(), (String)comboCity.getSelectedItem());
 					Start.modificarPanelAbajo(panel);
 				}else{
 					
@@ -179,11 +186,12 @@ public class PantallaPrincipalGUI extends JPanel {
 		button.setBounds(20, 264, 223, 28);
 		add(button);
 		
-		cmboCiudad = new JComboBox<String>();
-		cmboCiudad.setSelectedIndex(-1);
-		cmboCiudad.setFont(new Font("Dialog", Font.BOLD, 11));
-		cmboCiudad.setBounds(105, 57, 137, 27);
-		add(cmboCiudad);
+		comboCity = new JComboBox<String>();
+		comboCity.setSelectedIndex(-1);
+		comboCity.setFont(new Font("Dialog", Font.BOLD, 11));
+		comboCity.setBounds(105, 57, 137, 27);
+		comboCity.setModel(modeloCity);
+		add(comboCity);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -195,17 +203,23 @@ public class PantallaPrincipalGUI extends JPanel {
 	}
 	
 	public void inicializarCampos(){
-		ApplicationFacadeInterface i = Start.getBusinessLogic();
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		boolean login = false;
 		boolean reserv = false;
 		try {
+			Vector<RuralHouse> vectorCasas = facade.getAllRuralHouses();
+			for(int i=0; i<vectorCasas.size();i++){
+				if(!estaCity(vectorCasas.get(i).getCity())){
+					modeloCity.addElement(vectorCasas.get(i).getCity());
+				}
+				
+			}
+			comboCity.setSelectedIndex(-1);
 			if (Start.estadoLogin()){  
-				if(i.getOwner(Start.getUsuario())!=null)
+				if(facade.getOwner(Start.getUsuario())!=null)
 					login = true;
-				if(i.getUsuario(Start.getUsuario()).getReservas().size()>0)
-					reserv=true;
-				else
-					reserv=false;
+				if(facade.getUsuario(Start.getUsuario()).getReservas().size()>0) reserv=true;
+				else reserv=false;
 			}	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -214,6 +228,15 @@ public class PantallaPrincipalGUI extends JPanel {
 		btnGestionOfertas.setVisible(login);
 		btnGestionFechas.setVisible(login);
 		btnGestReserv.setVisible(reserv);
+	}
+	
+	public boolean estaCity(String s){
+		for (int j = 0; j<modeloCity.getSize();j++){
+			if(modeloCity.getElementAt(j).compareTo(s)==0){
+				return true;
+			}
+		}
+		return false;		
 	}
 }
 

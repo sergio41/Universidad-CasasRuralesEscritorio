@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import businessLogic.ApplicationFacadeInterface;
 import domain.Offer;
@@ -26,9 +29,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JCheckBox;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import javax.swing.JSpinner;
 
 public class BusquedaConFechasGUI extends JPanel {
@@ -36,13 +36,20 @@ public class BusquedaConFechasGUI extends JPanel {
 	private DefaultComboBoxModel<String> modeloEC = new DefaultComboBoxModel<String>();
 	private JButton btnSalvar;
 	private DefaultComboBoxModel<String> modeloCity = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloBanos = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloDorm = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloCocin = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloSala = new DefaultComboBoxModel<String>();
-	private DefaultComboBoxModel<String> modeloParkin = new DefaultComboBoxModel<String>();
+	private SpinnerNumberModel modeloSpinnerBanos = new SpinnerNumberModel(2, 2, 40, 1);
+	private SpinnerNumberModel modeloSpinnerCocinas = new SpinnerNumberModel(1, 1, 40, 1);
+	private SpinnerNumberModel modeloSpinnerHabitaciones = new SpinnerNumberModel(3, 3, 40, 1);
+	private SpinnerNumberModel modeloSpinnerSala = new SpinnerNumberModel(0, 0, 40, 1);
+	private SpinnerNumberModel modeloSpinnerAparcamiento = new SpinnerNumberModel(0, 0, 40, 1);
 	private JComboBox<String> comboCity;
 	private JTable tableCasas;
+	
+	private JSpinner spinnerAparcamientos;
+	private JSpinner spinnerSalas;
+	private JSpinner spinnerHabitaciones;
+	private JSpinner spinnerCocinas;
+	private JSpinner spinnerBanos;
+	
 	private DefaultTableModel modelTb = new DefaultTableModel(
 			new Object[][] {
 			},
@@ -62,8 +69,8 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JTextPane textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
-	private JDateChooser dateChooserFin;
-	private JDateChooser dateChooserIni;
+	private JDateChooser dateHasta;
+	private JDateChooser dateInicio;
 	
 	@SuppressWarnings("serial")
 	public BusquedaConFechasGUI(Date inicio, Date fin, String ciudad) {
@@ -106,11 +113,6 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(label_2);
 		
 		btnSalvar = new JButton("Buscar");
-		btnSalvar.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnSalvar.setEnabled(false);
@@ -187,22 +189,44 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(lblTelef);
 		
 		JButton btnImg = new JButton("Ver imagenes");
+		btnImg.setEnabled(false);
 		btnImg.setForeground(Color.BLUE);
 		btnImg.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnImg.setBounds(309, 419, 163, 34);
 		add(btnImg);
 		
-		dateChooserIni = new JDateChooser();
-		dateChooserIni.setEnabled(true);
-		dateChooserIni.setDateFormatString("yyyy-MM-dd");
-		dateChooserIni.setBounds(191, 267, 149, 27);
-		add(dateChooserIni);
+		Date fechaHoy = new Date();
+		long time = fechaHoy.getTime() + 1*(3600*24*1000);
+		Date fechaManana = new Date();
+		fechaManana.setTime(time);
 		
-		dateChooserFin = new JDateChooser();
-		dateChooserFin.setEnabled(true);
-		dateChooserFin.setDateFormatString("yyyy-MM-dd");
-		dateChooserFin.setBounds(191, 303, 149, 27);
-		add(dateChooserFin);
+		dateInicio = new JDateChooser();
+		dateInicio.setEnabled(true);
+		dateInicio.setDate(fechaHoy);
+		dateInicio.setMinSelectableDate(fechaHoy);
+		dateInicio.setDateFormatString("yyyy-MM-dd");
+		dateInicio.setBounds(191, 267, 149, 27);
+		dateInicio.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+	        @Override
+	        public void propertyChange(PropertyChangeEvent e) {
+	            if ("date".equals(e.getPropertyName())) {
+	                System.out.println(e.getPropertyName()+ ": " + (Date) e.getNewValue());
+					long time = dateInicio.getDate().getTime() + 1*(3600*24*1000);
+					Date fechaSiguiente = new Date();
+					fechaSiguiente.setTime(time);
+					dateHasta.setMinSelectableDate(fechaSiguiente);
+					dateHasta.setDate(fechaSiguiente);
+	            }
+	        }
+	    });
+		add(dateInicio);
+		
+		dateHasta = new JDateChooser();
+		dateHasta.setMinSelectableDate(fechaManana);
+		dateHasta.setEnabled(true);
+		dateHasta.setDateFormatString("yyyy-MM-dd");
+		dateHasta.setBounds(191, 303, 149, 27);
+		add(dateHasta);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
 		lblFechaInicio.setFont(new Font("Times New Roman", Font.BOLD, 15));
@@ -215,30 +239,36 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(lblFechaFin);
 		
 		JButton buttonMapa = new JButton("Ver mapa");
+		buttonMapa.setEnabled(false);
 		buttonMapa.setForeground(Color.BLUE);
 		buttonMapa.setFont(new Font("Dialog", Font.BOLD, 19));
 		buttonMapa.setBounds(545, 419, 163, 34);
 		add(buttonMapa);
 		
-		JSpinner spinner = new JSpinner();
-		spinner.setBounds(191, 54, 67, 27);
-		add(spinner);
+		 spinnerBanos = new JSpinner();
+		spinnerBanos.setModel(modeloSpinnerBanos);
+		spinnerBanos.setBounds(191, 54, 67, 27);
+		add(spinnerBanos);
 		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setBounds(191, 95, 67, 27);
-		add(spinner_1);
+		spinnerCocinas = new JSpinner();
+		spinnerCocinas.setModel(modeloSpinnerCocinas);
+		spinnerCocinas.setBounds(191, 95, 67, 27);
+		add(spinnerCocinas);
 		
-		JSpinner spinner_2 = new JSpinner();
-		spinner_2.setBounds(191, 138, 67, 27);
-		add(spinner_2);
+		spinnerHabitaciones = new JSpinner();
+		spinnerHabitaciones.setBounds(191, 138, 67, 27);
+		spinnerHabitaciones.setModel(modeloSpinnerHabitaciones);
+		add(spinnerHabitaciones);
 		
-		JSpinner spinner_3 = new JSpinner();
-		spinner_3.setBounds(191, 181, 67, 27);
-		add(spinner_3);
+		spinnerSalas = new JSpinner();
+		spinnerSalas.setModel(modeloSpinnerSala);
+		spinnerSalas.setBounds(191, 181, 67, 27);
+		add(spinnerSalas);
 		
-		JSpinner spinner_4 = new JSpinner();
-		spinner_4.setBounds(191, 224, 67, 27);
-		add(spinner_4);
+		spinnerAparcamientos = new JSpinner();
+		spinnerAparcamientos.setModel(modeloSpinnerAparcamiento);
+		spinnerAparcamientos.setBounds(191, 224, 67, 27);
+		add(spinnerAparcamientos);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
@@ -246,6 +276,11 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(lblNewLabel);
 		
 		inicializarCampos();
+		
+		if (ciudad != null)	comboCity.setSelectedItem(ciudad);
+		if (inicio != null) dateInicio.setDate(inicio);
+		if (fin != null) dateHasta.setDate(fin);
+		
 	}
 
 	private void actualizarTabla(String city, int banos, int habita,
@@ -283,22 +318,8 @@ public class BusquedaConFechasGUI extends JPanel {
 				if(!estaCity(vectorCasas.get(i).getCity())){
 					modeloCity.addElement(vectorCasas.get(i).getCity());
 				}
-				if(!estaCocina(Integer.toString(vectorCasas.get(i).getKitchen()))){
-					modeloCocin.addElement(Integer.toString(vectorCasas.get(i).getKitchen()));
-				}
-				if(!estaBanos(Integer.toString(vectorCasas.get(i).getBaths()))){
-					modeloBanos.addElement(Integer.toString(vectorCasas.get(i).getBaths()));
-				}
-				if(!estaSala(Integer.toString(vectorCasas.get(i).getLiving()))){
-					modeloSala.addElement(Integer.toString(vectorCasas.get(i).getLiving()));
-				}
-				if(!estaDorm(Integer.toString(vectorCasas.get(i).getRooms()))){
-					modeloDorm.addElement(Integer.toString(vectorCasas.get(i).getRooms()));
-				}
-				if(!estaPark(Integer.toString(vectorCasas.get(i).getPark()))){
-					modeloParkin.addElement(Integer.toString(vectorCasas.get(i).getPark()));
-				}
 			}
+			
 			if(Start.estadoLogin())
 				btnNewButton.setEnabled(true);
 			else
@@ -420,51 +441,6 @@ public class BusquedaConFechasGUI extends JPanel {
 	public boolean estaCity(String s){
 		for (int j = 0; j<modeloCity.getSize();j++){
 			if(modeloCity.getElementAt(j).compareTo(s)==0){
-				return true;
-			}
-		}
-		return false;		
-	}
-	
-	public boolean estaBanos(String s){
-		for (int j = 0; j<modeloBanos.getSize();j++){
-			if(modeloBanos.getElementAt(j).compareTo(s)==0){
-				return true;
-			}
-		}
-		return false;		
-	}
-	
-	public boolean estaCocina(String s){
-		for (int j = 0; j<modeloCocin.getSize();j++){
-			if(modeloCocin.getElementAt(j).compareTo(s)==0){
-				return true;
-			}
-		}
-		return false;		
-	}
-	
-	public boolean estaSala(String s){
-		for (int j = 0; j<modeloSala.getSize();j++){
-			if(modeloSala.getElementAt(j).compareTo(s)==0){
-				return true;
-			}
-		}
-		return false;		
-	}
-	
-	public boolean estaDorm(String s){
-		for (int j = 0; j<modeloDorm.getSize();j++){
-			if(modeloDorm.getElementAt(j).compareTo(s)==0){
-				return true;
-			}
-		}
-		return false;		
-	}
-	
-	public boolean estaPark(String s){
-		for (int j = 0; j<modeloParkin.getSize();j++){
-			if(modeloParkin.getElementAt(j).compareTo(s)==0){
 				return true;
 			}
 		}
