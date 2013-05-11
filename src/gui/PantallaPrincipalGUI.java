@@ -4,9 +4,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
+import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Font;
+import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URI;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -27,6 +32,8 @@ import javax.swing.JTextArea;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -205,6 +212,27 @@ public class PantallaPrincipalGUI extends JPanel {
 		numeroRH.setBounds(783, 23, 223, 120);
 		numeroRH.setOpaque(false);
 		add(numeroRH);
+		
+		JLabel lblTwitter = new JLabel("Twitter");
+		lblTwitter.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(java.awt.Desktop.isDesktopSupported()){
+					 try{
+					      Desktop dk = Desktop.getDesktop();
+					      dk.browse(new URI("https://twitter.com/CasasVillaArrib"));
+					 }catch(Exception e){
+						 System.out.println("Error al abrir URL: "+e.getMessage());
+					 }
+				}  
+			}
+		});
+		lblTwitter.setBounds(58, 300, 150, 150);
+		Image aux2 = (new ImageIcon(PantallaPrincipalGUI.class.getResource("/localData/twitter.png"))).getImage();
+		Image aux1 = aux2.getScaledInstance(lblTwitter.getHeight(), lblTwitter.getWidth(), java.awt.Image.SCALE_SMOOTH);
+		lblTwitter.setIcon(new ImageIcon(aux1));
+		lblTwitter.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		add(lblTwitter);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 1018, 465);
