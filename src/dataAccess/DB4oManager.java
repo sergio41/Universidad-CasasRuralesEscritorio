@@ -246,7 +246,13 @@ public class DB4oManager {
 			while(iter.hasNext()){
 				RuralHouse casa = iter.next();
 				if(casa.getHouseNumber()==nRH){
-					
+					Fechas eliminar = casa.eliminarFecha(ini);
+					if(eliminar.isReservado()){
+						db.delete(eliminar.getReserva());
+					}
+					db.delete(eliminar);
+					db.store(casa);
+					db.store(user);
 				}
 			}	
 		}
@@ -389,6 +395,7 @@ public class DB4oManager {
 					}
 					db.store(casa);
 					db.delete(eliminar);
+					db.delete(eliminar.getReserva());
 					db.store(user);
 					db.commit();
 					break;

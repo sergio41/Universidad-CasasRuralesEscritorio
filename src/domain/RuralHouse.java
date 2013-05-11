@@ -295,6 +295,22 @@ public class RuralHouse implements Serializable {
 		vectorFechas.remove(f);
 	}
 	
+	public Fechas eliminarFecha(Date f) throws Exception{
+		Iterator<Fechas> fechas = vectorFechas.iterator();
+		while(fechas.hasNext()){
+			Fechas fecha= fechas.next();
+			if(fecha.getFecha().equals(f)){
+				if (fecha.isReservado()) EnviarCorreo.enviarCorreos(fecha.getReserva().getCliente().getEmail(), "Su reserva numero " + fecha.getReserva().getNumeroDeReserva() + " se ha cancelado", "Lamentablemente, su reserva ha sido cancelado debido a que el propìetario de la casa rural ha eliminado la disponibilidad de la fecha.");
+				if(fecha.getOfer()==null){
+					vectorFechas.remove(fecha);
+					return fecha;
+				}else{
+					throw new Exception("La fecha no se puede eliminar porque forma parte de una oferta.");}
+			}	
+		}
+		return null;
+	}
+	
 	public Book eliminarReserva(int num) throws Exception{
 		Iterator<Book> iter = vectorReservas.iterator();
 		while(iter.hasNext()){
