@@ -49,7 +49,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JComboBox<Integer> comBoxImg = new JComboBox<Integer>();
 	private JButton btnanadirImg = new JButton();
 	private Vector<Image> images = new Vector<Image>();
-	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
+	private ImageIcon imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/casaDefault.png"));
 	private JButton btnVerMapa;
 	private JSpinner textLiving;
 	private JSpinner textRooms;
@@ -359,7 +359,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		//images.clear();
 		btnVerMapa.setEnabled(b);
 		
-		imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/casaDefault.png"));
+		imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/casaDefault.png"));
 		rellenarComboBox();
 		cargarImagen(0);
 	}

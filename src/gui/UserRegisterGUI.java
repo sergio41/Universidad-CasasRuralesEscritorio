@@ -41,7 +41,7 @@ public class UserRegisterGUI extends JPanel {
 	private JSpinner textEdad;
 	private SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(0, 0, 150, 1);
 	private Image perfil = null;
-	private ImageIcon imagenDefecto = new ImageIcon(verFotos.class.getResource("/localData/perfilDefault.png"));
+	private ImageIcon imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/perfilDefault.png"));
 	private JLabel labelFoto;
 	private JLabel lblCargando = null;
 	
