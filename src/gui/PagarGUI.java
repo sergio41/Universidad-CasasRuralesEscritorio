@@ -67,7 +67,7 @@ public class PagarGUI extends JPanel {
 		txtpnComoDeseaPagar.setBounds(51, 195, 211, 38);
 		add(txtpnComoDeseaPagar);
 		
-		rdbtnTransferencia = new JRadioButton("Transferencia ");
+		rdbtnTransferencia = new JRadioButton((String) null);
 		rdbtnTransferencia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTarjetaDeCredito.setSelected(!rdbtnTransferencia.isSelected());

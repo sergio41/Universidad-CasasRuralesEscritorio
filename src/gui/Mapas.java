@@ -56,7 +56,11 @@ public class Mapas extends JFrame {
 	 * Create the frame.
 	 */
 	public Mapas(String direccion) {
-		center = direccion;
+		center="";
+		/*Sergio
+			center = direccion.replaceAll(" ", "");
+		 */
+		for (int x=0; x < direccion.length(); x++) if (direccion.charAt(x) != ' ') center += direccion.charAt(x);
 		setForeground(Color.YELLOW);
 		setTitle("Mapa de la Casa Rural");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Mapas.class.getResource("/localData/iconMap.png")));
