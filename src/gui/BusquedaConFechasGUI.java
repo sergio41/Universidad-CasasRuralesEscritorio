@@ -21,6 +21,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import businessLogic.ApplicationFacadeInterface;
+import domain.Book;
 import domain.Offer;
 import domain.RuralHouse;
 import javax.swing.JTable;
@@ -51,6 +52,7 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JSpinner spinnerBanos;
 	
 	private Vector<RuralHouse> vectorCasa = new Vector<RuralHouse>();
+	private Date daInicio = new Date(), daFin = new Date();
 	private DefaultTableModel modelTb = new DefaultTableModel(
 			new Object[][] {
 			},
@@ -119,6 +121,8 @@ public class BusquedaConFechasGUI extends JPanel {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				try {
 					vectorCasa = new Vector<RuralHouse>();
+					daInicio = dateHasta.getDate();
+					daFin = dateHasta.getDate();
 					Vector<RuralHouse> aux = facade.casasRuralesDisponibles(dateHasta.getDate(), dateHasta.getDate());
 					Iterator<RuralHouse> i = aux.iterator();
 					while (i.hasNext()){
@@ -181,7 +185,23 @@ public class BusquedaConFechasGUI extends JPanel {
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), daInicio, daFin);
+					System.out.println("A");
+					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
+						System.out.println("B");
+						System.out.println(reserv.getNumeroDeReserva()+ " " + " " + Float.toString(reserv.getPrecio()));
+						JPanel temp1 = new PagarGUI(reserv.getNumeroDeReserva(),reserv.getPrecio());
+						Start.modificarPanelAbajo(temp1);
+					}else{
+						JPanel temp1 = new PantallaPrincipalGUI();
+						Start.modificarPanelAbajo(temp1);
+					}
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});	
 		btnNewButton.setBounds(781, 419, 163, 34);
