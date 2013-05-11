@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -113,6 +114,11 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 	
 	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception {
+		String exp = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; 
+		CharSequence seq = email;
+		Pattern pattern = Pattern.compile(exp,Pattern.CASE_INSENSITIVE); 
+		java.util.regex.Matcher m = pattern.matcher(seq);
+		if (!m.matches()) throw new Exception("Algunos datos obligatorios faltan.");
 		if (email.compareTo("")==0 || pass.compareTo("")==0 || nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {
 			if (edad.compareTo("")==0) edad = null;
