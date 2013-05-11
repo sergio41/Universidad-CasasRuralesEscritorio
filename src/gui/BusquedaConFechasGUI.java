@@ -22,7 +22,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import businessLogic.ApplicationFacadeInterface;
 import domain.Book;
-import domain.Offer;
 import domain.RuralHouse;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
@@ -58,13 +57,6 @@ public class BusquedaConFechasGUI extends JPanel {
 			},
 			new Object[] {
 				"nº", "Ciudad", "Baños", "Cocinas", "Salas", "Dormitorios", "Parkings"
-			}
-		);
-	private DefaultTableModel modelTbOfertas = new DefaultTableModel(
-			new Object[][] {
-			},
-			new Object[] {
-				/*"nº",*/ "FechaInicio", "FechaFin", "Precio"
 			}
 		);
 	private JScrollPane scrollPane;
@@ -249,6 +241,19 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(lblTelef);
 		
 		JButton btnImg = new JButton("Ver imagenes");
+		btnImg.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					VerFotos temp1 = new VerFotos(facade.getFotosRH((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)));
+					temp1.setVisible(true);
+				} catch (Exception e2) {
+					javax.swing.JOptionPane.showMessageDialog(null,e2.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		btnImg.setEnabled(false);
 		btnImg.setForeground(Color.BLUE);
 		btnImg.setFont(new Font("Dialog", Font.BOLD, 19));
@@ -299,6 +304,19 @@ public class BusquedaConFechasGUI extends JPanel {
 		add(lblFechaFin);
 		
 		JButton buttonMapa = new JButton("Ver mapa");
+		buttonMapa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					Mapas temp1 = new Mapas(facade.getCasas((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)).getCity());
+					temp1.setVisible(true);
+				} catch (Exception e2) {
+					javax.swing.JOptionPane.showMessageDialog(null,e2.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		buttonMapa.setEnabled(false);
 		buttonMapa.setForeground(Color.BLUE);
 		buttonMapa.setFont(new Font("Dialog", Font.BOLD, 19));

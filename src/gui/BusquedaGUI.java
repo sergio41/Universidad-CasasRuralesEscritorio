@@ -146,10 +146,9 @@ public class BusquedaGUI extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
-				//boolean pagado;
-				//Date ahora = new Date();				
-				//int precio = (int) tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 2);
 				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione un día");
 					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
 					System.out.println("A");
 					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
@@ -265,16 +264,40 @@ public class BusquedaGUI extends JPanel {
 		add(label_6);
 		
 		JButton button = new JButton("Ver imagenes");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					VerFotos temp1 = new VerFotos(facade.getFotosRH((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)));
+					temp1.setVisible(true);
+				} catch (Exception e2) {
+					javax.swing.JOptionPane.showMessageDialog(null,e2.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		button.setForeground(Color.BLUE);
 		button.setFont(new Font("Dialog", Font.BOLD, 19));
-		button.setEnabled(false);
 		button.setBounds(835, 319, 163, 34);
 		add(button);
 		
 		JButton button_1 = new JButton("Ver mapa");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ApplicationFacadeInterface facade = Start.getBusinessLogic();
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					Mapas temp1 = new Mapas(facade.getCasas((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)).getCity());
+					temp1.setVisible(true);
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		button_1.setForeground(Color.BLUE);
 		button_1.setFont(new Font("Dialog", Font.BOLD, 19));
-		button_1.setEnabled(false);
 		button_1.setBounds(835, 370, 163, 34);
 		add(button_1);
 		
