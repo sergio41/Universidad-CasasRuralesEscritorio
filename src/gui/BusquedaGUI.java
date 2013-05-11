@@ -312,19 +312,31 @@ public class BusquedaGUI extends JPanel {
 		try {
 			borrarTabla();
 			borrarTablaOferta();
-			Vector<RuralHouse> aux =  facade.getCasas(city,banos,habita,cocina,estar,park );
+			Vector<RuralHouse> aux =  facade.getAllRuralHouses();
 			Iterator<RuralHouse> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object>  vector = new Vector<Object>();
 				RuralHouse auxi = i.next();
-				vector.add(auxi.getHouseNumber());
-				vector.add(auxi.getCity());
-				vector.add(auxi.getBaths());
-				vector.add(auxi.getKitchen());
-				vector.add(auxi.getLiving());
-				vector.add(auxi.getRooms());
-				vector.add(auxi.getPark());
-				modelTb.addRow(vector);
+				
+				boolean buscar = true;
+				if (comboCity.getSelectedIndex() > 0 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(auxi.getCity())!=0) buscar = false;
+				if (buscar && auxi.getPark()>=(int)spinnerAparcamientos.getValue() &&
+						auxi.getBaths()>=(int)spinnerBanos.getValue() &&
+								auxi.getKitchen()>=(int)spinnerCocinas.getValue() &&
+										auxi.getRooms()>=(int)spinnerHabitaciones.getValue() &&
+												auxi.getLiving()>=(int)spinnerSalas.getValue()){
+					vector.add(auxi.getHouseNumber());
+					vector.add(auxi.getCity());
+					vector.add(auxi.getBaths());
+					vector.add(auxi.getKitchen());
+					vector.add(auxi.getLiving());
+					vector.add(auxi.getRooms());
+					vector.add(auxi.getPark());
+					modelTb.addRow(vector);
+				}
+				
+				
+				
 			}
 			ajustarColumnas();
 		} catch (Exception e) {
