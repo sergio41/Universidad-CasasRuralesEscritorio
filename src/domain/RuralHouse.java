@@ -225,9 +225,10 @@ public class RuralHouse implements Serializable {
 	public Book hacerReserva(UserAplication cliente, int numeroDeReserva, Date inicio, Date fin) throws Exception{
 		Offer auxOferta = disponibleFechaOferta(inicio, fin);
 		Book reserva = null;
-		if (disponibleFechas(inicio, fin) || (auxOferta != null && !auxOferta.isReservado())){
-			Vector<Fechas> auxFechas = getFechas(inicio, fin);
-			disponibleFechas(inicio, fin);
+		System.out.print("primer dia: " + inicio.toString());
+		System.out.print("ultimo dia: " + fin.toString());
+		if (disponibleFechas((Date)inicio.clone(), (Date)fin.clone()) || (auxOferta != null && !auxOferta.isReservado())){
+			Vector<Fechas> auxFechas = getFechas((Date)inicio.clone(), (Date)fin.clone());
 			if (auxOferta != null && auxFechas != null){
 				reserva = new Book(numeroDeReserva, auxOferta.getPrice(), cliente, auxOferta, auxFechas);
 				cliente.anadirReserva(reserva);
@@ -235,7 +236,11 @@ public class RuralHouse implements Serializable {
 			} else if (auxOferta == null && auxFechas != null){
 				float precio = 0;
 				Iterator<Fechas> i = auxFechas.iterator();
-				while (i.hasNext()) precio = precio + i.next().getPrecio();
+				while (i.hasNext()){
+					Fechas aux = i.next();
+					System.out.print("while dia: " + aux.toString());
+					precio = precio + aux.getPrecio();
+				}
 				reserva = new Book(numeroDeReserva, precio, cliente, auxFechas);
 				vectorReservas.add(reserva);
 				cliente.anadirReserva(reserva);
@@ -329,8 +334,7 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Vector<Book> eliminarTodasReserva(){
-		Vector<Book> auxVectorBook = new Vector<Book>();
-		auxVectorBook = vectorReservas;
+		Vector<Book> auxVectorBook = (Vector<Book>) vectorReservas.clone();
 		for (int i = 0; i<vectorReservas.size(); i++){
 			try {
 				EnviarCorreo.enviarCorreos(vectorReservas.get(i).getCliente().getEmail(), "Reserva: " + vectorReservas.get(i).getNumeroDeReserva() , "Lamentablemente, su reserva ha sido cancelada debido a que el propietario de la casa rural ha eliminado ésta. En caso de haber desembolsado el pago de la reserva, se le devolverá en muy poco tiempo.");
