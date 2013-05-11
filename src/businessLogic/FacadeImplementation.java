@@ -352,8 +352,8 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		DB4oManager.eliminarReserva(num);
 	}
 	
-	public void pagar(int num, UserAplication user) throws Exception{
-		DB4oManager.pagar(num, user);
+	public Book pagar(int num, UserAplication user) throws Exception{
+		return DB4oManager.pagar(num, user);
 	}
 }
 
