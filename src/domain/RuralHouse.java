@@ -117,6 +117,7 @@ public class RuralHouse implements Serializable {
 				auxFecha = i.next();				
 				if (auxp.compareTo(auxFecha.getFecha())==0) {
 					if (auxFecha.isReservado()) throw new Exception ("Hay una reserva en las fechas seleccionadas.");
+					if (auxFecha.getOfer()!=null) throw new Exception ("Hay otra fecha para las fechas solicitadas. Eliminela antes.");
 					break;
 				}
 			}
