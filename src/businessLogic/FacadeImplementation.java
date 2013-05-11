@@ -311,14 +311,13 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		System.out.println("FacadeImplementation: guardar imagenes");
 		File fCarpeta = new File("\\imagenes\\"+email+"\\"+numeroCasaRural);
 		if (fCarpeta.exists()) fCarpeta.delete();
-		else fCarpeta.mkdirs();
+		fCarpeta.mkdirs();
 		Vector<String> aux = new Vector<String>();
 		Iterator<Image> i = imagenes.iterator();
 		while (i.hasNext()){
 			try {
 				Image auxi = i.next();
 				File fDestino = new File("\\imagenes\\"+email+"\\"+numeroCasaRural+"\\"+auxi.toString());
-
 				BufferedImage bi = toBufferedImage(auxi);
 				ImageIO.write(bi, "png", fDestino);
 				aux.add(fDestino.getPath());
@@ -335,7 +334,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		try { 
 			File fCarpeta = new File("\\imagenes\\"+email+"\\Perfil");
 			if (fCarpeta.exists()) fCarpeta.delete();
-			else fCarpeta.mkdirs();
+			fCarpeta.mkdirs();
 			File fDestino = new File("\\imagenes\\"+email+"\\Perfil\\perfil");
 			BufferedImage bi = toBufferedImage(imagen);
 			ImageIO.write(bi, "png", fDestino);

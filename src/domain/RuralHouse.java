@@ -333,6 +333,7 @@ public class RuralHouse implements Serializable {
 	}
 	
 	public Vector<Book> eliminarTodasReserva(){
+		@SuppressWarnings("unchecked")
 		Vector<Book> auxVectorBook = (Vector<Book>) vectorReservas.clone();
 		for (int i = 0; i<vectorReservas.size(); i++){
 			try {
