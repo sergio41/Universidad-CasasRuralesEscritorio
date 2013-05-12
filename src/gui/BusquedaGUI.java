@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -62,7 +64,7 @@ public class BusquedaGUI extends JPanel {
 		);
 	private JScrollPane scrollPane;
 	private JButton btnNewButton;
-	private JTextPane textDescrp;
+	private JLabel textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
 	private JScrollPane scrollPaneOfer;
@@ -184,9 +186,9 @@ public class BusquedaGUI extends JPanel {
 		btnNewButton.setBounds(835, 417, 163, 34);
 		add(btnNewButton);
 		
-		textDescrp = new JTextPane();
+		textDescrp = new JLabel();
 		textDescrp.setBounds(33, 346, 301, 105);
-		textDescrp.setEditable(false);
+		textDescrp.setBorder(BorderFactory.createLoweredBevelBorder());
 		add(textDescrp);
 		
 		JLabel lblNewLabel_1 = new JLabel("Propietario:");

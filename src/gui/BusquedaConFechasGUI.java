@@ -9,6 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -61,7 +63,7 @@ public class BusquedaConFechasGUI extends JPanel {
 		);
 	private JScrollPane scrollPane;
 	private JButton btnNewButton;
-	private JTextPane textDescrp;
+	private JLabel textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
 	private JDateChooser dateHasta;
@@ -226,9 +228,9 @@ public class BusquedaConFechasGUI extends JPanel {
 		btnNewButton.setEnabled(false);
 		add(btnNewButton);
 		
-		textDescrp = new JTextPane();
+		textDescrp = new JLabel();
 		textDescrp.setBounds(377, 312, 301, 94);
-		textDescrp.setEditable(false);
+		textDescrp.setBorder(BorderFactory.createLoweredBevelBorder());
 		add(textDescrp);
 		
 		JLabel lblNewLabel_1 = new JLabel("Propietario:");
