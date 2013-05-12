@@ -187,8 +187,8 @@ public class GestionarReservasGUI extends JPanel {
 					Book reservaConcreta = iter.next();
 					Vector<Object> vector = new Vector<Object>();
 					vector.add(reservaConcreta.getNumeroDeReserva());
-					vector.add(reservaConcreta.getFechas().get(0).toString());
-					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
+					vector.add(reservaConcreta.getFechas().get(0).getFecha());
+					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).getFecha());
 					vector.add(reservaConcreta.getPrecio());
 					vector.add(reservaConcreta.getFechaDeReserva());
 					modelTb.addRow(vector);
@@ -205,8 +205,8 @@ public class GestionarReservasGUI extends JPanel {
 					if(!reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
 						vector.add(reservaConcreta.getNumeroDeReserva());
-						vector.add(reservaConcreta.getFechas().get(0).toString());
-						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
+						vector.add(reservaConcreta.getFechas().get(0).getFecha());
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).getFecha());
 						vector.add(reservaConcreta.getPrecio());
 						vector.add(reservaConcreta.getFechaDeReserva());
 						modelTb.addRow(vector);
@@ -224,8 +224,8 @@ public class GestionarReservasGUI extends JPanel {
 					if(reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
 						vector.add(reservaConcreta.getNumeroDeReserva());
-						vector.add(reservaConcreta.getFechas().get(0).toString());
-						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
+						vector.add(reservaConcreta.getFechas().get(0).getFecha());
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).getFecha());
 						vector.add(reservaConcreta.getPrecio());
 						vector.add(reservaConcreta.getFechaDeReserva());
 						modelTb.addRow(vector);
