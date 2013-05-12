@@ -61,7 +61,7 @@ public class OwnerRegisterGUI extends JPanel {
 						(!rdbtnParticular.isSelected()&&!rdbtnProfesional.isSelected())|| 
 						(textIdioma1.getText().compareTo("")==0 && textIdioma2.getText().compareTo("")==0&&
 						 textIdioma3.getText().compareTo("")==0 && textIdioma4.getText().compareTo("")==0)||
-						 textProfesion.getText().compareTo("")==0 || comboMoneda.getSelectedIndex()==-1){
+						 textProfesion.getText().compareTo("")==0 || comboMoneda.getSelectedIndex()<1){
 					javax.swing.JOptionPane.showMessageDialog(null, "Algunos datos obligatorios faltan!", "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 				}else{
 					cuenta= textCuentaBancaria.getText();
