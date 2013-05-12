@@ -69,7 +69,7 @@ public class VerComentariosGUI extends JFrame {
 		setTitle("Mapa de la Casa Rural");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VerComentariosGUI.class.getResource("/localData/iconMap.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 522, 628);
+		setBounds(100, 100, 522, 309);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 206, 209));
 		contentPane.setForeground(new Color(0, 206, 209));
