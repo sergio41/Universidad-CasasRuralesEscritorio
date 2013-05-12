@@ -139,7 +139,10 @@ public class BusquedaGUI extends JPanel {
 		scrollPane.setBounds(379, 13, 621, 239);
 		add(scrollPane);
 		
-		tableOfertas = new JTable();
+		tableOfertas = new JTable(){
+			public boolean isCellEditable(int rowIndex, int vColIndex) {
+            return false;
+        }};
 		tableOfertas.setModel(modelTbOfertas);
 		tableOfertas.setBounds(626, 282, 318, 66);
 		add(tableOfertas);

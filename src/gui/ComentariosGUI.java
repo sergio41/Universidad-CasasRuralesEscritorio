@@ -102,10 +102,9 @@ public class ComentariosGUI extends JFrame {
 	    contentPane.add(starRater);
 		
 		txtpnComentar = new JTextPane();
+		txtpnComentar.setEditable(false);
 		txtpnComentar.setForeground(new Color(50, 205, 50));
 		txtpnComentar.setOpaque(false);
-		//txtpnComentar.setForeground(new Color(255, 0, 0));
-		//txtpnComentar.setBackground(new Color(0, 206, 209));
 		txtpnComentar.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
 		txtpnComentar.setText("Comentarios:");
 		txtpnComentar.setBounds(187, 0, 140, 31);
@@ -133,6 +132,7 @@ public class ComentariosGUI extends JFrame {
 		
 		JTextPane txtpnOtrosHanComentado = new JTextPane();
 		txtpnOtrosHanComentado.setText("Otros han comentado:");
+		txtpnOtrosHanComentado.setEditable(false);
 		txtpnOtrosHanComentado.setForeground(Color.RED);
 		txtpnOtrosHanComentado.setOpaque(false);
 		txtpnOtrosHanComentado.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));

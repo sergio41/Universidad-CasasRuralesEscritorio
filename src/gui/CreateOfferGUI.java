@@ -230,6 +230,7 @@ public class CreateOfferGUI extends JPanel {
 		
 		JTextPane txtpnLasOfertasPueden = new JTextPane();
 		txtpnLasOfertasPueden.setForeground(new Color(255, 0, 0));
+		txtpnLasOfertasPueden.setEditable(false);
 		txtpnLasOfertasPueden.setFont(new Font("Vani", Font.BOLD, 14));
 		txtpnLasOfertasPueden.setText("Las ofertas pueden ser de dos tipos: La oferta puede ser completa, es decir, no se puede reservar por dias. El otro tipo es lo contrario. Se puede reservar por dias (fracciones de la oferta).");
 		txtpnLasOfertasPueden.setBounds(30, 376, 762, 44);

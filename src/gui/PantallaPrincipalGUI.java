@@ -191,6 +191,7 @@ public class PantallaPrincipalGUI extends JPanel {
 		add(comboCity);
 		
 		numeroRH = new JTextPane();
+		numeroRH.setEditable(false);
 		numeroRH.setForeground(new Color(51, 255, 51));
 		numeroRH.setFont(new Font("Viner Hand ITC", Font.BOLD, 17));
 		numeroRH.setText("dasfsdfvdgadfghrbdfh");
