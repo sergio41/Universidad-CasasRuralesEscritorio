@@ -400,5 +400,10 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	public Book getReserva(int num) throws Exception{
 		return DB4oManager.getReserva(num);
 	}
+
+	@Override
+	public void cambiarContra(UserAplication usuario, String text)throws Exception {
+			DB4oManager.cambiarContraseña(usuario,text);
+	}
 }
 

@@ -474,5 +474,15 @@ public class DB4oManager {
 		}
 		throw new Exception("No existe la reserva");
 	}
+
+	public static void cambiarContraseña(UserAplication user, String text) throws Exception {
+		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
+		if (userConcretos.hasNext()){
+			UserAplication userConcreto = userConcretos.next();
+			userConcreto.setPass(text);
+			db.store(userConcreto);
+		}else{
+			throw new Exception("No se ha podido cambiar la contraseña");}
+	}
 }
 	

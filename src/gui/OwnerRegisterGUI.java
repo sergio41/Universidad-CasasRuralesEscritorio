@@ -211,7 +211,6 @@ public class OwnerRegisterGUI extends JPanel {
 	
 	@SuppressWarnings("deprecation")
 	private void inicializarCampos(){
-		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		Owner ow;
 		try {
 			

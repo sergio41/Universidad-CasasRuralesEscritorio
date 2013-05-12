@@ -44,6 +44,7 @@ public class UserRegisterGUI extends JPanel {
 	private ImageIcon imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/perfilDefault.png"));
 	private JLabel labelFoto;
 	private JLabel lblCargando = null;
+	private JButton btnNewButton;
 	
 	/**
 	 * Create the panel.
@@ -257,6 +258,18 @@ public class UserRegisterGUI extends JPanel {
 		button_1.setBounds(794, 84, 109, 23);
 		add(button_1);
 		
+		btnNewButton = new JButton("Cambiar Contrase\u00F1a");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CambiarContraseñaGUI temp1 = new CambiarContraseñaGUI();
+				temp1.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(192, 104, 192, 34);
+		btnNewButton.setVisible(false);
+		
+		add(btnNewButton);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
 		lblNewLabel.setBounds(0, 0, 1018, 465);
@@ -287,6 +300,8 @@ public class UserRegisterGUI extends JPanel {
 				comboEC.setSelectedItem(user.getEstadoCivil());
 				buttonRegister.setText("Guardar");
 				perfil = facade.getFotoPerfil(user.getEmail());
+				btnNewButton.setVisible(true);
+				passPass.setVisible(false);
 			} else {
 				textEmail.enable(true);
 				//textEmail.setText("");
@@ -299,6 +314,8 @@ public class UserRegisterGUI extends JPanel {
 				comboEC.setSelectedIndex(0);
 				buttonRegister.setText("Registrar");
 				perfil = null;
+				btnNewButton.setVisible(false);
+				passPass.setVisible(true);
 			}
 			cargarImagen();
 		} catch (Exception e) {

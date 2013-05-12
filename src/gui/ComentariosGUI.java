@@ -1,10 +1,6 @@
 package gui;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.List;
-import java.util.Vector;
 
-import javax.imageio.ImageIO;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -17,10 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JSlider;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import java.awt.Toolkit;
 import javax.swing.JTextPane;
 import java.awt.Color;
@@ -36,12 +28,6 @@ import businessLogic.ApplicationFacadeInterface;
 public class ComentariosGUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;	
-	private String center = "SanchoElSabio19,Gasteiz";
-	private int zoomI = 15;
-	private String size = "500x500";
-	private String maptype = "roadmap";
-	private String sensor = "false";
-	private String marker = "icon:http://montesinos.wikispaces.com/file/view/kfm_home(2).png/73196529/43x43/kfm_home(2).png%7csize:mid%7Ccolor:0xFFFF00%7Clabel:C%7C";
 	private DefaultComboBoxModel<Integer> modeloImg = new DefaultComboBoxModel<Integer>();
 	private StarRater starRater;
 	private JButton btnNewButton;
@@ -73,10 +59,6 @@ public class ComentariosGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ComentariosGUI(String nRH) {
-		center="";
-		/*Sergio
-			center = direccion.replaceAll(" ", "");
-		 */
 	
 	    num = Integer.parseInt(nRH);
 		setForeground(Color.YELLOW);

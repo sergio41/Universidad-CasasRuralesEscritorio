@@ -1,10 +1,5 @@
 package gui;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import java.util.List;
 import java.util.Vector;
-
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -17,18 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JSlider;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 import java.awt.Toolkit;
 import javax.swing.JTextPane;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-
 import domain.RuralHouse;
 
 import businessLogic.ApplicationFacadeInterface;

@@ -16,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -130,7 +129,7 @@ public class BusquedaGUI extends JPanel {
 				btnNewButton_1.setEnabled(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e1.getMessage();
+				javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 			}
 	      }
 
