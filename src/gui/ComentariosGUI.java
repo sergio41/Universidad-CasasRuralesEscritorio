@@ -35,7 +35,7 @@ public class ComentariosGUI extends JFrame {
 	private JTextField textField;
 	private JLabel textField_2;
 	private int num;
-	private JComboBox comboBox;
+	private JComboBox<Integer> comboBox;
 	private JLabel label_2;
 	private JLabel label_1;
 	/**
@@ -128,7 +128,7 @@ public class ComentariosGUI extends JFrame {
 		textField_2.setBorder(BorderFactory.createRaisedBevelBorder());
 		contentPane.add(textField_2);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<Integer>();
 		comboBox.setBounds(187, 378, 140, 20);
 		comboBox.setModel(modeloImg);
 		comboBox.addActionListener(new ActionListener() {
