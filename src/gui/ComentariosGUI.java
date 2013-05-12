@@ -143,7 +143,7 @@ public class ComentariosGUI extends JFrame {
 		textField_2 = new JLabel();
 		textField_2.setBounds(62, 422, 385, 68);
 		textField_2.setOpaque(false);
-		textField_2.setBorder(BorderFactory.createLineBorder(Color.black));
+		textField_2.setBorder(BorderFactory.createRaisedBevelBorder());
 		contentPane.add(textField_2);
 		
 		comboBox = new JComboBox();
