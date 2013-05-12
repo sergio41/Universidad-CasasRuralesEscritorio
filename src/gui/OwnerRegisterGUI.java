@@ -215,17 +215,21 @@ public class OwnerRegisterGUI extends JPanel {
 		Owner ow;
 		try {
 			
-			ow = facade.getOwner(Start.getUsuario());
+			ow = (Start.getUsuario().getPropietario());
 			if (ow!=null){
 				textCuentaBancaria.enable(false);
 				textCuentaBancaria.setText(ow.getBankAccount());
-				if(ow.getTipo()=="Particular"){
+				System.out.println(ow.getTipo());
+				if(ow.getTipo().compareTo("Particular")==0){
+					System.out.println(ow.getTipo());
 					rdbtnProfesional.setSelected(false);
 					rdbtnParticular.setSelected(true);
-				}else if(ow.getTipo()=="Profesional"){
+				}else if(ow.getTipo().compareTo("Profesional")==0){
+					System.out.println(ow.getTipo());
 					rdbtnProfesional.setSelected(true);
 					rdbtnParticular.setSelected(false);
 				}
+				System.out.println(ow.getTipo());
 				textIdioma1.setText(ow.getIdiomas().elementAt(0));
 				textIdioma2.setText(ow.getIdiomas().elementAt(1));
 				textIdioma3.setText(ow.getIdiomas().elementAt(2));
