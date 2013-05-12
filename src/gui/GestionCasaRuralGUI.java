@@ -434,6 +434,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			}
         }
         rellenarComboBox();
+        comBoxImg.setSelectedIndex(images.size()-1);
         cargarImagen(images.size()-1);
 	}
 }
