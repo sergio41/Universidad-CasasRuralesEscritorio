@@ -57,6 +57,7 @@ public class GestionarReservasGUI extends JPanel {
 	    	  btnNewButton_1.setEnabled(true);
 	      }
 	    });
+	    
 		add(tableCasas);
 		
 		scrollPane = new JScrollPane(tableCasas, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -186,8 +187,8 @@ public class GestionarReservasGUI extends JPanel {
 					Book reservaConcreta = iter.next();
 					Vector<Object> vector = new Vector<Object>();
 					vector.add(reservaConcreta.getNumeroDeReserva());
-					vector.add(reservaConcreta.getFechas().get(0));
-					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+					vector.add(reservaConcreta.getFechas().get(0).toString());
+					vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
 					vector.add(reservaConcreta.getPrecio());
 					vector.add(reservaConcreta.getFechaDeReserva());
 					modelTb.addRow(vector);
@@ -204,8 +205,8 @@ public class GestionarReservasGUI extends JPanel {
 					if(!reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
 						vector.add(reservaConcreta.getNumeroDeReserva());
-						vector.add(reservaConcreta.getFechas().get(0));
-						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+						vector.add(reservaConcreta.getFechas().get(0).toString());
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
 						vector.add(reservaConcreta.getPrecio());
 						vector.add(reservaConcreta.getFechaDeReserva());
 						modelTb.addRow(vector);
@@ -223,8 +224,8 @@ public class GestionarReservasGUI extends JPanel {
 					if(reservaConcreta.isPaid()){
 						Vector<Object> vector = new Vector<Object>();
 						vector.add(reservaConcreta.getNumeroDeReserva());
-						vector.add(reservaConcreta.getFechas().get(0));
-						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1));
+						vector.add(reservaConcreta.getFechas().get(0).toString());
+						vector.add(reservaConcreta.getFechas().get(reservaConcreta.getFechas().size()-1).toString());
 						vector.add(reservaConcreta.getPrecio());
 						vector.add(reservaConcreta.getFechaDeReserva());
 						modelTb.addRow(vector);
