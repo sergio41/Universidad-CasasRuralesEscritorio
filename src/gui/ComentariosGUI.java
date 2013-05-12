@@ -91,7 +91,7 @@ public class ComentariosGUI extends JFrame {
 				System.out.println(selection);
 			}});
 		starRater.setBounds(247, 200, 80, 16);
-	    starRater.setEnabled(false);
+	    starRater.setEnabled(true);
 	    contentPane.add(starRater);
 		
 		txtpnComentar = new JTextPane();

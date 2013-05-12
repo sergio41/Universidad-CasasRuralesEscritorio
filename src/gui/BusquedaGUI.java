@@ -66,7 +66,8 @@ public class BusquedaGUI extends JPanel {
 	private JLabel lblprop;
 	private JLabel lblTelef;
 	private JScrollPane scrollPaneOfer;
-	
+	private JButton button;
+	private JButton button_1;
 
 	private SpinnerNumberModel modeloSpinnerBanos = new SpinnerNumberModel(2, 2, 40, 1);
 	private SpinnerNumberModel modeloSpinnerCocinas = new SpinnerNumberModel(1, 1, 40, 1);
@@ -84,6 +85,9 @@ public class BusquedaGUI extends JPanel {
 				try {
 					String ciudad =(String) comboCity.getSelectedItem();
 					actualizarTabla(ciudad,(int)spinnerBanos.getValue(),(int)spinnerHabitaciones.getValue(),(int)spinnerCocinas.getValue(),(int)spinnerSalas.getValue(),(int)spinnerAparcamientos.getValue());
+					button.setEnabled(false);
+					button_1.setEnabled(false);
+					btnNewButton.setEnabled(false);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -115,6 +119,10 @@ public class BusquedaGUI extends JPanel {
 				lblTelef.setText(casita.getUserAplication().getTelefono());
 				textDescrp.setText(casita.getDescription());
 				actualizarTablaOferta((int) tableCasas.getValueAt(selectedRow2, 0));
+				starRater.setRating(casita.getNotaMedia());
+				button.setEnabled(true);
+				button_1.setEnabled(true);
+				btnNewButton.setEnabled(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.getMessage();
@@ -152,9 +160,7 @@ public class BusquedaGUI extends JPanel {
 					int x = (int) tableCasas.getSelectedRow();
 					if (x ==-1) throw new Exception("Seleccione un día");
 					Book reserv = facade.hacerReserva(Start.getUsuario(), (int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 0), (Date)tableOfertas.getValueAt(tableOfertas.getSelectedRow(), 1));
-					System.out.println("A");
 					if (javax.swing.JOptionPane.showConfirmDialog(null, "¿Quiere pagar ahora?", "Bien....", javax.swing.JOptionPane.YES_NO_OPTION) == 0){
-						System.out.println("B");
 						System.out.println(reserv.getNumeroDeReserva()+ " " + " " + Float.toString(reserv.getPrecio()));
 						JPanel temp1 = new PagarGUI(reserv.getNumeroDeReserva(),reserv.getPrecio());
 						Start.modificarPanelAbajo(temp1);
@@ -274,7 +280,7 @@ public class BusquedaGUI extends JPanel {
 		label_6.setBounds(104, 10, 83, 27);
 		add(label_6);
 		
-		JButton button = new JButton("Ver imagenes");
+		button = new JButton("Ver imagenes");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -290,10 +296,11 @@ public class BusquedaGUI extends JPanel {
 		});
 		button.setForeground(Color.BLUE);
 		button.setFont(new Font("Dialog", Font.BOLD, 19));
+		button.setEnabled(false);
 		button.setBounds(835, 319, 163, 34);
 		add(button);
 		
-		JButton button_1 = new JButton("Ver mapa");
+		button_1 = new JButton("Ver mapa");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -309,6 +316,7 @@ public class BusquedaGUI extends JPanel {
 		});
 		button_1.setForeground(Color.BLUE);
 		button_1.setFont(new Font("Dialog", Font.BOLD, 19));
+		button_1.setEnabled(false);
 		button_1.setBounds(835, 370, 163, 34);
 		add(button_1);
 		
