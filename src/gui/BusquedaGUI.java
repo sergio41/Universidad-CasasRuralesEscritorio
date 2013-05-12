@@ -68,7 +68,8 @@ public class BusquedaGUI extends JPanel {
 	private JScrollPane scrollPaneOfer;
 	private JButton button;
 	private JButton button_1;
-
+	private JButton btnNewButton_1;
+	
 	private SpinnerNumberModel modeloSpinnerBanos = new SpinnerNumberModel(2, 2, 40, 1);
 	private SpinnerNumberModel modeloSpinnerCocinas = new SpinnerNumberModel(1, 1, 40, 1);
 	private SpinnerNumberModel modeloSpinnerHabitaciones = new SpinnerNumberModel(3, 3, 40, 1);
@@ -88,6 +89,7 @@ public class BusquedaGUI extends JPanel {
 					button.setEnabled(false);
 					button_1.setEnabled(false);
 					btnNewButton.setEnabled(false);
+					btnNewButton_1.setEnabled(false);
 				} catch (Exception e) {
 					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
@@ -123,6 +125,7 @@ public class BusquedaGUI extends JPanel {
 				button.setEnabled(true);
 				button_1.setEnabled(true);
 				btnNewButton.setEnabled(true);
+				btnNewButton_1.setEnabled(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.getMessage();
@@ -185,13 +188,13 @@ public class BusquedaGUI extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("Propietario:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(623, 278, 74, 21);
+		lblNewLabel_1.setBounds(558, 278, 244, 21);
 		add(lblNewLabel_1);
 		
 		lblprop = new JLabel("");
 		lblprop.setForeground(new Color(0, 128, 0));
 		lblprop.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblprop.setBounds(709, 278, 273, 21);
+		lblprop.setBounds(644, 278, 158, 21);
 		add(lblprop);
 		
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono:");
@@ -318,13 +321,32 @@ public class BusquedaGUI extends JPanel {
 		button_1.setForeground(Color.BLUE);
 		button_1.setFont(new Font("Dialog", Font.BOLD, 19));
 		button_1.setEnabled(false);
-		button_1.setBounds(835, 370, 163, 34);
+		button_1.setBounds(835, 368, 163, 34);
 		add(button_1);
 		
 		JLabel lblCalificacin = new JLabel("Calificaci\u00F3n:");
 		lblCalificacin.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCalificacin.setBounds(151, 310, 83, 34);
 		add(lblCalificacin);
+		
+		btnNewButton_1 = new JButton("Ver comentarios");
+		btnNewButton_1.setBounds(835, 270, 163, 34);
+		btnNewButton_1.setForeground(Color.BLUE);
+		btnNewButton_1.setFont(new Font("Dialog", Font.BOLD, 17));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					VerComentariosGUI temp1 = new VerComentariosGUI(Integer.toString((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)));
+					temp1.setVisible(true);
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}	
+			}			
+		});
+		btnNewButton_1.setEnabled(false);
+		add(btnNewButton_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));

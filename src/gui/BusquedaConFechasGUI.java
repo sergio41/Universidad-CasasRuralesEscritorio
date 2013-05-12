@@ -68,6 +68,7 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JDateChooser dateInicio;
 	private JButton btnImg;
 	private JButton buttonMapa;
+	private JButton btnNewButton_1;
 	
 	@SuppressWarnings("serial")
 	public BusquedaConFechasGUI(Date inicio, Date fin, String ciudad) {
@@ -133,6 +134,7 @@ public class BusquedaConFechasGUI extends JPanel {
 					btnImg.setEnabled(false);
 					btnNewButton.setEnabled(false);
 					buttonMapa.setEnabled(false);
+					btnNewButton_1.setEnabled(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -142,7 +144,7 @@ public class BusquedaConFechasGUI extends JPanel {
 		btnSalvar.setForeground(Color.BLUE);
 		btnSalvar.setFont(new Font("Dialog", Font.BOLD, 19));
 		btnSalvar.setEnabled(false);
-		btnSalvar.setBounds(73, 419, 163, 34);
+		btnSalvar.setBounds(191, 353, 149, 34);
 		add(btnSalvar);
 		
 		
@@ -176,6 +178,7 @@ public class BusquedaConFechasGUI extends JPanel {
 				btnImg.setEnabled(true);
 				btnNewButton.setEnabled(true);
 				buttonMapa.setEnabled(true);
+				btnNewButton_1.setEnabled(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.getMessage();
@@ -356,6 +359,25 @@ public class BusquedaConFechasGUI extends JPanel {
 		spinnerAparcamientos.setModel(modeloSpinnerAparcamiento);
 		spinnerAparcamientos.setBounds(191, 224, 67, 27);
 		add(spinnerAparcamientos);
+		
+		btnNewButton_1 = new JButton("Ver comentarios");
+		btnNewButton_1.setBounds(65, 419, 163, 34);
+		btnNewButton_1.setForeground(Color.BLUE);
+		btnNewButton_1.setFont(new Font("Dialog", Font.BOLD, 17));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					int x = (int) tableCasas.getSelectedRow();
+					if (x ==-1) throw new Exception("Seleccione una fila de la tabla");
+					VerComentariosGUI temp1 = new VerComentariosGUI(Integer.toString((int)tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)));
+					temp1.setVisible(true);
+				} catch (Exception e) {
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+				}	
+			}			
+		});
+		btnNewButton_1.setEnabled(false);
+		add(btnNewButton_1);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(getClass().getResource("/localData/fondoAbajo.jpg")));
