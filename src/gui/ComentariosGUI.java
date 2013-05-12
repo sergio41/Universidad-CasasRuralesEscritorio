@@ -157,7 +157,6 @@ public class ComentariosGUI extends JFrame {
 					Vector<String> comentarios = casita.getComentarios();
 					textField_2.setText(comentarios.get(comboBox.getSelectedIndex()));
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
