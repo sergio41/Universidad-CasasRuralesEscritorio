@@ -193,12 +193,13 @@ public class BusquedaGUI extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("Propietario:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(558, 278, 244, 21);
+		lblNewLabel_1.setBounds(558, 278, 83, 21);
 		add(lblNewLabel_1);
 		
 		lblprop = new JLabel("");
 		lblprop.setForeground(new Color(0, 128, 0));
 		lblprop.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblprop.setBorder(BorderFactory.createLoweredBevelBorder());
 		lblprop.setBounds(644, 278, 158, 21);
 		add(lblprop);
 		
@@ -209,7 +210,9 @@ public class BusquedaGUI extends JPanel {
 		
 		lblTelef = new JLabel("");
 		lblTelef.setForeground(new Color(0, 128, 0));
-		lblTelef.setBounds(463, 278, 104, 21);
+		lblTelef.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTelef.setBounds(463, 278, 85, 21);
+		lblTelef.setBorder(BorderFactory.createLoweredBevelBorder());
 		add(lblTelef);
 		
 		starRater = new StarRater(5, 2, 1);

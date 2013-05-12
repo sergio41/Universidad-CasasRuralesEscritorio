@@ -241,7 +241,8 @@ public class BusquedaConFechasGUI extends JPanel {
 		lblprop = new JLabel("");
 		lblprop.setForeground(new Color(0, 128, 0));
 		lblprop.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblprop.setBounds(775, 312, 234, 27);
+		lblprop.setBorder(BorderFactory.createLoweredBevelBorder());
+		lblprop.setBounds(775, 312, 169, 27);
 		add(lblprop);
 		
 		JLabel lblTelefono = new JLabel("Tel\u00E9fono:");
@@ -251,7 +252,9 @@ public class BusquedaConFechasGUI extends JPanel {
 		
 		lblTelef = new JLabel("");
 		lblTelef.setForeground(new Color(0, 128, 0));
-		lblTelef.setBounds(775, 379, 239, 27);
+		lblTelef.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblTelef.setBorder(BorderFactory.createLoweredBevelBorder());
+		lblTelef.setBounds(775, 379, 169, 27);
 		add(lblTelef);
 		
 		btnImg = new JButton("Ver imagenes");
