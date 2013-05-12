@@ -66,6 +66,8 @@ public class BusquedaConFechasGUI extends JPanel {
 	private JLabel lblTelef;
 	private JDateChooser dateHasta;
 	private JDateChooser dateInicio;
+	private JButton btnImg;
+	private JButton buttonMapa;
 	
 	@SuppressWarnings("serial")
 	public BusquedaConFechasGUI(Date inicio, Date fin, String ciudad) {
@@ -128,6 +130,9 @@ public class BusquedaConFechasGUI extends JPanel {
 								casa.getLiving()>=(int)spinnerSalas.getValue())vectorCasa.add(casa);
 						}
 					actualizarTabla();
+					btnImg.setEnabled(false);
+					btnNewButton.setEnabled(false);
+					buttonMapa.setEnabled(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -168,6 +173,9 @@ public class BusquedaConFechasGUI extends JPanel {
 				lblprop.setText(casita.getUserAplication().getEmail());
 				lblTelef.setText(casita.getUserAplication().getTelefono());
 				textDescrp.setText(casita.getDescription());
+				btnImg.setEnabled(true);
+				btnNewButton.setEnabled(true);
+				buttonMapa.setEnabled(true);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.getMessage();
@@ -212,6 +220,7 @@ public class BusquedaConFechasGUI extends JPanel {
 			}
 		});	
 		btnNewButton.setBounds(781, 419, 163, 34);
+		btnNewButton.setEnabled(false);
 		add(btnNewButton);
 		
 		textDescrp = new JTextPane();
@@ -240,7 +249,7 @@ public class BusquedaConFechasGUI extends JPanel {
 		lblTelef.setBounds(775, 379, 239, 27);
 		add(lblTelef);
 		
-		JButton btnImg = new JButton("Ver imagenes");
+		btnImg = new JButton("Ver imagenes");
 		btnImg.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
@@ -303,7 +312,7 @@ public class BusquedaConFechasGUI extends JPanel {
 		lblFechaFin.setBounds(107, 303, 83, 27);
 		add(lblFechaFin);
 		
-		JButton buttonMapa = new JButton("Ver mapa");
+		buttonMapa = new JButton("Ver mapa");
 		buttonMapa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();

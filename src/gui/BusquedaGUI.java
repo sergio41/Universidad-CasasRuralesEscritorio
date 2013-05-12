@@ -174,6 +174,7 @@ public class BusquedaGUI extends JPanel {
 				
 			}
 		});	
+		btnNewButton.setEnabled(false);
 		btnNewButton.setBounds(835, 417, 163, 34);
 		add(btnNewButton);
 		
