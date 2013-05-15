@@ -123,9 +123,9 @@ public class ComentariosGUI extends JFrame {
 		contentPane.add(txtpnOtrosHanComentado);
 		
 		textField_2 = new JLabel();
-		textField_2.setBounds(62, 422, 385, 68);
+		textField_2.setBounds(62, 422, 385, 112);
 		textField_2.setOpaque(false);
-		textField_2.setBorder(BorderFactory.createRaisedBevelBorder());
+		textField_2.setBorder(BorderFactory.createLoweredBevelBorder());
 		contentPane.add(textField_2);
 		
 		comboBox = new JComboBox<Integer>();

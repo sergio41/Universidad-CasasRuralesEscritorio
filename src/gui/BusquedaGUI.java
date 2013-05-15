@@ -85,14 +85,17 @@ public class BusquedaGUI extends JPanel {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					tableCasas.setEnabled(false);
 					String ciudad =(String) comboCity.getSelectedItem();
 					actualizarTabla(ciudad,(int)spinnerBanos.getValue(),(int)spinnerHabitaciones.getValue(),(int)spinnerCocinas.getValue(),(int)spinnerSalas.getValue(),(int)spinnerAparcamientos.getValue());
 					button.setEnabled(false);
 					button_1.setEnabled(false);
 					btnNewButton.setEnabled(false);
 					btnNewButton_1.setEnabled(false);
+					tableCasas.setEnabled(true);
 				} catch (Exception e) {
-					javax.swing.JOptionPane.showMessageDialog(null,e.toString(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+					System.out.println(e.getStackTrace());
 				}
 			}
 		});
@@ -116,17 +119,20 @@ public class BusquedaGUI extends JPanel {
 	      public void valueChanged(ListSelectionEvent e) {
 	        try {
 		  		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		  		int selectedRow2 = tableCasas.getSelectedRow();
-				RuralHouse casita = facade.getCasas((int) tableCasas.getValueAt(selectedRow2, 0));
-				lblprop.setText(casita.getUserAplication().getEmail());
-				lblTelef.setText(casita.getUserAplication().getTelefono());
-				textDescrp.setText(casita.getDescription());
-				actualizarTablaOferta((int) tableCasas.getValueAt(selectedRow2, 0));
-				starRater.setRating(casita.getNotaMedia());
-				button.setEnabled(true);
-				button_1.setEnabled(true);
-				btnNewButton.setEnabled(true);
-				btnNewButton_1.setEnabled(true);
+		  		int selectedRow2 = tableCasas.getSelectedRow();				
+		  		if(selectedRow2>=0){
+			  		RuralHouse casita = facade.getCasas((int) tableCasas.getValueAt(selectedRow2, 0));
+					lblprop.setText(casita.getUserAplication().getEmail());
+					lblTelef.setText(casita.getUserAplication().getTelefono());
+					textDescrp.setText(casita.getDescription());
+					actualizarTablaOferta((int) tableCasas.getValueAt(selectedRow2, 0));
+					starRater.setRating(casita.getNotaMedia());
+					button.setEnabled(true);
+					button_1.setEnabled(true);
+					if(Start.estadoLogin())
+						btnNewButton.setEnabled(true);
+					btnNewButton_1.setEnabled(true);
+				}
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				javax.swing.JOptionPane.showMessageDialog(null,e1.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -176,7 +182,7 @@ public class BusquedaGUI extends JPanel {
 						Start.modificarPanelAbajo(temp1);
 					}
 				} catch (Exception e) {
-					javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
+					javax.swing.JOptionPane.showMessageDialog(null,"Selecciona una oferta", "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
@@ -383,20 +389,19 @@ public class BusquedaGUI extends JPanel {
 		}
 	}
 	
-	private void actualizarTabla(String city, int banos, int habita, int cocina, int estar, int park ){
+	private void actualizarTabla(String city, int banos, int habita, int cocina, int estar, int park ) throws Exception{
 		
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			borrarTabla();
 			borrarTablaOferta();
+			borrarTabla();
 			Vector<RuralHouse> aux =  facade.getAllRuralHouses();
 			Iterator<RuralHouse> i = aux.iterator();
 			while (i.hasNext()){
 				Vector<Object>  vector = new Vector<Object>();
-				RuralHouse auxi = i.next();
-				
+				RuralHouse auxi = i.next();				
 				boolean buscar = true;
-				if (comboCity.getSelectedIndex() > 0 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(auxi.getCity())!=0) buscar = false;
+				if (comboCity.getSelectedIndex() > -1 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(auxi.getCity())!=0) buscar = false;
 				if (buscar && auxi.getPark()>=(int)spinnerAparcamientos.getValue() &&
 						auxi.getBaths()>=(int)spinnerBanos.getValue() &&
 								auxi.getKitchen()>=(int)spinnerCocinas.getValue() &&
@@ -410,19 +415,16 @@ public class BusquedaGUI extends JPanel {
 					vector.add(auxi.getRooms());
 					vector.add(auxi.getPark());
 					modelTb.addRow(vector);
-				}
-				
-				
-				
+				}			
 			}
 			ajustarColumnas();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.getMessage();
+			throw new Exception(e.getMessage());
 		}
 	}
 	
-	private void actualizarTablaOferta(int num){
+	private void actualizarTablaOferta(int num) throws Exception{
 		
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
@@ -443,11 +445,11 @@ public class BusquedaGUI extends JPanel {
 			}
 			ajustarColumnas();
 		} catch (Exception e) {
-			e.getMessage();
+			throw new Exception(e.getMessage());
 		}
 	}
 	
-	private void borrarTabla(){ while (modelTb.getRowCount() > 0) modelTb.removeRow(modelTb.getRowCount()-1); }
+	private void borrarTabla(){ while (modelTb.getRowCount() > 0){ System.out.println(modelTb.getRowCount());modelTb.removeRow(modelTb.getRowCount()-1);} }
 
 	private void borrarTablaOferta(){ while (modelTbOfertas.getRowCount() > 0) modelTbOfertas.removeRow(modelTbOfertas.getRowCount()-1); }
 

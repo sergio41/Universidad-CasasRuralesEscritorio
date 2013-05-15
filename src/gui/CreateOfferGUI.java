@@ -35,7 +35,7 @@ public class CreateOfferGUI extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Numero", "Inicio", "Fin", "Precio", "Obligatorio"
+				"Nº", "Inicio", "Fin", "Precio", "Oblig.", "Reser."
 			}
 		);
 	private JScrollPane scrollPane;
@@ -231,6 +231,7 @@ public class CreateOfferGUI extends JPanel {
 		JTextPane txtpnLasOfertasPueden = new JTextPane();
 		txtpnLasOfertasPueden.setForeground(new Color(255, 0, 0));
 		txtpnLasOfertasPueden.setEditable(false);
+		txtpnLasOfertasPueden.setBorder(BorderFactory.createLoweredBevelBorder());
 		txtpnLasOfertasPueden.setFont(new Font("Vani", Font.BOLD, 14));
 		txtpnLasOfertasPueden.setText("Las ofertas pueden ser de dos tipos: La oferta puede ser completa, es decir, no se puede reservar por dias. El otro tipo es lo contrario. Se puede reservar por dias (fracciones de la oferta).");
 		txtpnLasOfertasPueden.setBounds(30, 376, 762, 44);
@@ -280,7 +281,14 @@ public class CreateOfferGUI extends JPanel {
 				vector.add(auxi.getPrimerDia());
 				vector.add(auxi.getUltimoDia());
 				vector.add(auxi.getPrice());
-				vector.add(auxi.isUnidoAFechas());
+				if(auxi.isUnidoAFechas())
+					vector.add("Si");
+				else	
+					vector.add("No");
+				if(auxi.isReservado())
+					vector.add("Si");
+				else
+					vector.add("No");
 				modelTb.addRow(vector);
 			}
 			ajustarColumnas();
@@ -303,19 +311,23 @@ public class CreateOfferGUI extends JPanel {
 				anchoColumnaMin = (5*anchoTabla)/100;
 				anchoColumnaMax = (5*anchoTabla)/100;
 				break;
-				case 1: anchoColumna = (35*anchoTabla)/100;
-				anchoColumnaMin = (35*anchoTabla)/100;
-				anchoColumnaMax = (35*anchoTabla)/100;
+				case 1: anchoColumna = (32*anchoTabla)/100;
+				anchoColumnaMin = (32*anchoTabla)/100;
+				anchoColumnaMax = (32*anchoTabla)/100;
 				break;
-				case 2: anchoColumna = (35*anchoTabla)/100;
-				anchoColumnaMin = (35*anchoTabla)/100;
-				anchoColumnaMax = (35*anchoTabla)/100;
+				case 2: anchoColumna = (32*anchoTabla)/100;
+				anchoColumnaMin = (32*anchoTabla)/100;
+				anchoColumnaMax = (32*anchoTabla)/100;
 				break;
-				case 3: anchoColumna = (15*anchoTabla)/100;
-				anchoColumnaMin = (15*anchoTabla)/100;
-				anchoColumnaMax = (15*anchoTabla)/100;
+				case 3: anchoColumna = (11*anchoTabla)/100;
+				anchoColumnaMin = (11*anchoTabla)/100;
+				anchoColumnaMax = (11*anchoTabla)/100;
 				break;
 				case 4: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
+				break;
+				case 5: anchoColumna = (10*anchoTabla)/100;
 				anchoColumnaMin = (10*anchoTabla)/100;
 				anchoColumnaMax = (10*anchoTabla)/100;
 				break;

@@ -78,7 +78,7 @@ public class VerComentariosGUI extends JFrame {
 		textField_2 = new JLabel();
 		textField_2.setBounds(60, 116, 385, 107);
 		textField_2.setOpaque(false);
-		textField_2.setBorder(BorderFactory.createRaisedBevelBorder());
+		textField_2.setBorder(BorderFactory.createLoweredBevelBorder());
 		contentPane.add(textField_2);
 		
 		comboBox = new JComboBox<Integer>();

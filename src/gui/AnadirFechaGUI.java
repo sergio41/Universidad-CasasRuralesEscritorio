@@ -55,7 +55,7 @@ public class AnadirFechaGUI extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Fecha", "Precio", "MinimoDias", "Oferta", "Obligatoria Oferta" 
+				"Fecha", "Precio", "MinDias", "Oferta", "Obli.Oferta" , "Reservado"
 			}
 		);
 	
@@ -193,7 +193,7 @@ public class AnadirFechaGUI extends JPanel {
 					Start.modificarPanelAbajo(temp1);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					javax.swing.JOptionPane.showMessageDialog(null,"Error al crear: " + e.getMessage(), "No....",javax.swing.JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -293,9 +293,16 @@ public class AnadirFechaGUI extends JPanel {
 				vector.add(auxi.getFecha());
 				vector.add(auxi.getPrecio());
 				vector.add(auxi.getMinimoDias());
-				if(auxi.getOfer()==null) vector.add(false);
-				else vector.add(true);
-				vector.add(auxi.isUnidoOferta());
+				if(auxi.getOfer()==null) vector.add("No");
+				else vector.add("Si");
+				if(auxi.isUnidoOferta())
+					vector.add("Si");
+				else
+					vector.add("No");
+				if(auxi.isReservado())
+					vector.add("Si");
+				else
+					vector.add("No");
 				modelTb.addRow(vector);
 			}
 			ajustarColumnas();
@@ -324,13 +331,17 @@ public class AnadirFechaGUI extends JPanel {
 				anchoColumnaMin = (10*anchoTabla)/100;
 				anchoColumnaMax = (10*anchoTabla)/100;
 				break;
-				case 3: anchoColumna = (20*anchoTabla)/100;
-				anchoColumnaMin = (20*anchoTabla)/100;
-				anchoColumnaMax = (20*anchoTabla)/100;
+				case 3: anchoColumna = (10*anchoTabla)/100;
+				anchoColumnaMin = (10*anchoTabla)/100;
+				anchoColumnaMax = (10*anchoTabla)/100;
 				break;
-				case 4: anchoColumna = (20*anchoTabla)/100;
-				anchoColumnaMin = (20*anchoTabla)/100;
-				anchoColumnaMax = (20*anchoTabla)/100;
+				case 4: anchoColumna = (15*anchoTabla)/100;
+				anchoColumnaMin = (15*anchoTabla)/100;
+				anchoColumnaMax = (15*anchoTabla)/100;
+				break;
+				case 5: anchoColumna = (15*anchoTabla)/100;
+				anchoColumnaMin = (15*anchoTabla)/100;
+				anchoColumnaMax = (15*anchoTabla)/100;
 				break;
 			}
 			columnaTabla.setPreferredWidth(anchoColumna);
