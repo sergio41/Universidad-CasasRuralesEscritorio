@@ -129,8 +129,7 @@ public class BusquedaGUI extends JPanel {
 					starRater.setRating(casita.getNotaMedia());
 					button.setEnabled(true);
 					button_1.setEnabled(true);
-					if(Start.estadoLogin())
-						btnNewButton.setEnabled(true);
+					btnNewButton.setEnabled(false);
 					btnNewButton_1.setEnabled(true);
 				}
 			} catch (Exception e1) {
@@ -150,6 +149,15 @@ public class BusquedaGUI extends JPanel {
 			public boolean isCellEditable(int rowIndex, int vColIndex) {
             return false;
         }};
+        
+        ListSelectionModel cellSelectionModel2 = tableOfertas.getSelectionModel();
+	    cellSelectionModel2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+	    cellSelectionModel2.addListSelectionListener(new ListSelectionListener() {
+	      public void valueChanged(ListSelectionEvent e) {
+		  		btnNewButton.setEnabled(true);
+	      }
+	    });
 		tableOfertas.setModel(modelTbOfertas);
 		tableOfertas.setBounds(626, 282, 318, 66);
 		add(tableOfertas);
@@ -378,10 +386,6 @@ public class BusquedaGUI extends JPanel {
 					modeloCity.addElement(vectorCasas.get(i).getCity());
 				}
 			}
-			if(Start.estadoLogin())
-				btnNewButton.setEnabled(true);
-			else
-				btnNewButton.setEnabled(false);
 			btnSalvar.setEnabled(true);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
