@@ -4,6 +4,7 @@ package gui;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -230,6 +231,7 @@ public class GestionCasaRuralGUI extends JPanel {
 
 		image1label = new JLabel("");
 		image1label.setBounds(674, 95, 250, 250);
+		image1label.setBorder(BorderFactory.createLoweredBevelBorder());
 		ImageIcon imagen = new ImageIcon(getClass().getResource("/localData/casaDefault.png"));
         Image aux = imagen.getImage();
         Image aux1= aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);

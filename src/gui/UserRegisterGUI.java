@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -246,6 +247,7 @@ public class UserRegisterGUI extends JPanel {
 		
 		labelFoto = new JLabel("");
 		labelFoto.setBounds(653, 120, 250, 250);
+		labelFoto.setBorder(BorderFactory.createLoweredBevelBorder());
 		add(labelFoto);
 		
 		JButton button_1 = new JButton("Eliminar");

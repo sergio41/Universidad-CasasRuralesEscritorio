@@ -6,6 +6,7 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -97,6 +98,7 @@ public class VerFotos extends JFrame {
 		contentPane.add(label_2);
 		
 		lblNewLabel = new JLabel();
+		lblNewLabel.setBorder(BorderFactory.createLoweredBevelBorder());
 		lblNewLabel.setBounds(89, 107, 250, 250);
 		contentPane.add(lblNewLabel);
 		

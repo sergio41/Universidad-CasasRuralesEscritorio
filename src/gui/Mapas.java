@@ -2,6 +2,7 @@ package gui;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -76,6 +77,7 @@ public class Mapas extends JFrame {
 		contentPane.setLayout(null);
 		
 		lblMapa = new JLabel("New label");
+		lblMapa.setBorder(BorderFactory.createLoweredBevelBorder());
 		lblMapa.setBounds(12, 81, 494, 500);
 		contentPane.add(lblMapa);
 		
@@ -98,8 +100,6 @@ public class Mapas extends JFrame {
 		
 		slider = new JSlider();
 		slider.setOpaque(false);
-		//slider.setBackground(new Color(0, 206, 209));
-		//slider.setForeground(new Color(0, 0, 0));
 		slider.setPaintLabels(true);
 		slider.setSnapToTicks(true);
 		slider.setPaintTicks(true);
@@ -117,8 +117,6 @@ public class Mapas extends JFrame {
 		JTextPane txtpnEligeTipoDe = new JTextPane();
 		txtpnEligeTipoDe.setForeground(new Color(0, 255, 0));
 		txtpnEligeTipoDe.setOpaque(false);
-		//txtpnEligeTipoDe.setForeground(new Color(255, 0, 0));
-		//txtpnEligeTipoDe.setBackground(new Color(0, 206, 209));
 		txtpnEligeTipoDe.setFont(new Font("Viner Hand ITC", Font.BOLD, 20));
 		txtpnEligeTipoDe.setText("Elige tipo de mapa y el zoom:");
 		txtpnEligeTipoDe.setBounds(89, 0, 344, 31);
