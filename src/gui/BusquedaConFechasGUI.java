@@ -123,7 +123,7 @@ public class BusquedaConFechasGUI extends JPanel {
 					while (i.hasNext()){
 						RuralHouse casa = i.next();
 						boolean buscar = true;
-						if (comboCity.getSelectedIndex() > 0 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(casa.getCity())!=0) buscar = false;
+						if (comboCity.getSelectedIndex() > -1 && ((String)comboCity.getSelectedItem()).compareToIgnoreCase(casa.getCity())!=0) buscar = false;
 						if (buscar && casa.getPark()>=(int)spinnerAparcamientos.getValue() &&
 								casa.getBaths()>=(int)spinnerBanos.getValue() &&
 								casa.getKitchen()>=(int)spinnerCocinas.getValue() &&
