@@ -117,7 +117,7 @@ public class DB4oManager {
 			use.setPais(pais);
 			use.setEdad(edad);
 			use.setPerfil(perfil);
-			db.store(user);
+			db.store(use);
 			db.commit();
 			return user;
 		}else throw new Exception("El usuario no existe");
