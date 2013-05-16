@@ -18,42 +18,38 @@ public class GestionTwitter {
 		twitter = new TwitterFactory(cb.build()).getInstance();
 	}
 	
-	public static void enviarTweet(String s){
+	public static void enviarTweet(String s) throws Exception{
 		if (twitter == null) inicializarTwitter();
 		Status status;
 		try {
 			status = twitter.updateStatus(s);
 			System.out.println("Successfully updated the status to [" + status.getText() + "].");
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Exception("Twitter: No se ha podido enviar");
 		}
 	}
 	
-	public static Vector<String> getTodosTweets(){
+	public static Vector<String> getTodosTweets() throws Exception {
 		if (twitter == null) inicializarTwitter();
 		Vector<String> vectorTweets = new Vector<String>();
 		try {
 			List<Status> statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) vectorTweets.add(status.getText());
+			System.out.println("Showing home timeline.");
+			return vectorTweets;
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error Twitter: " + e.getMessage());
+			throw new Exception("Twitter: No se ha podido recibir los tweets");
 		}
-	    //System.out.println("Showing home timeline.");
-	    //for (Status status1 : statuses) {System.out.println(status1.getUser().getName() + ":" + status1.getText());
-		return vectorTweets;
 	}
 	
-	public static String getUltimoTweet(){
+	public static String getUltimoTweet() throws Exception{
 		if (twitter == null) inicializarTwitter();
 		try {
 			List<Status> statuses = twitter.getHomeTimeline();
 			return statuses.get(0).getText();
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Exception("Twitter: No se ha podido recibir los tweets");
 		}
-		return "Error";
 	}
 }

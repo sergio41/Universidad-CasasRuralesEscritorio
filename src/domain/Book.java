@@ -2,143 +2,77 @@ package domain;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Vector;
 
-import businessLogic.BookManager;
-
-@SuppressWarnings("serial")
 public class Book implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private Date bookDate;
 	private int bookNumber;
 	private boolean isPaid;
-	private Date bookDate;
-	private String telephone;
+	private float precio;
+	private UserAplication reservante;
 	private Offer offer;
+	private Vector<Fechas> vectorFechas;
+	private RuralHouse casa;
 	
-	public Book() {
-	}
-
-	public Book(String telephone, Offer offer) {
-		
-		this.bookNumber = BookManager.getNumber();
-		this.telephone=telephone;
-		this.offer = offer;
-		//this.price = price;
-		//Booking date is assigned to actual date
-		this.bookDate= new java.util.Date(System.currentTimeMillis());
-		this.isPaid=false;
-
-	}
-	
-	public void imprimete(){
-		System.out.println(bookNumber);
-		System.out.println(isPaid);
-		System.out.println(bookDate);
-		System.out.println(telephone);
-		System.out.println(offer);
-		
-	}
-
-	
-
-	/**
-	 * Get the book number
-	 * 
-	 * @return book number
-	 */
-	public int getBookNumber() {
-		return this.bookNumber;
-	}
-
-	/**
-	 * Set a offer object 
-	 * 
-	 * @param Offer object
-	 * 
-	 */
-	public void setOffer(Offer offer) {
-		this.offer = offer;
-	}
-
-	/**
-	 * Get the offer object
-	 * 
-	 * @return Offer object
-	 */
-	public Offer getOffer() {
-		return this.offer;
-	}
-
-	
-
-	/**
-	 * This method returns a price
-	 * 
-	 * @return price
-	 */
-	public float getPrice() {
-		return this.offer.getPrice();
+	public Book(RuralHouse ruralHouse, int numeroReserva, float cost, UserAplication cliente, Vector<Fechas> fechas) {
+		bookDate = new java.util.Date(System.currentTimeMillis());
+		bookNumber = numeroReserva;
+		isPaid = false;
+		precio = cost;
+		reservante = cliente;
+		offer = null;
+		vectorFechas = fechas;
+		casa = ruralHouse;
+		extenderReserva();
 	}
 	
-	/**
-	 * This method sets a book date
-	 * 
-	 * @param bookDate
-	 */
-	public void setBookDate(Date bookDate) {
-		this.bookDate = bookDate;
+	public Book(RuralHouse ruralHouse, int numeroReserva, float cost, UserAplication cliente, Offer oferta, Vector<Fechas> fechas) {
+		bookDate = new java.util.Date(System.currentTimeMillis());
+		bookNumber = numeroReserva;
+		isPaid = false;
+		precio = cost;
+		reservante = cliente;
+		offer = oferta;
+		vectorFechas = fechas;
+		casa = ruralHouse;
+		extenderReserva();
+	}
+	
+	private void extenderReserva(){
+		if(offer !=null) offer.hacerReserva(this);
+		if(vectorFechas!=null){
+			Iterator<Fechas> i = vectorFechas.iterator();
+			while(i.hasNext()){
+				Fechas aux = i.next();
+				System.out.println("   " +   aux.getFecha().toString());
+				aux.hacerReserva(this);
+			}
+		}
+	}
+	
+	public Date getFechaDeReserva(){return bookDate;}
+	
+	public int getNumeroDeReserva() {return bookNumber;}
+	
+	public void setPagado(boolean pagar) {isPaid = pagar;}
+	public boolean isPaid() {return isPaid;}
+	
+	public float getPrecio(){return precio;}
+	public void setPrecio(float cost){precio = cost;}
+	
+	public UserAplication getCliente(){return reservante;}
+	
+	public Offer getOffer() {return offer;}
+	
+	public Vector<Fechas> getFechas(){return vectorFechas;}
+	
+	public void pagar(){isPaid=true;}
+
+	public RuralHouse getCasa() {
+		return casa;
 	}
 
-	/**
-	 * This method returns a book date
-	 * 
-	 * @return book date
-	 */
-	public Date getBookDate() {
-		return this.bookDate;
-	}
-	
-	/**
-	 * This method sets a telephone number
-	 * 
-	 * @param telephone
-	 */
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-
-	/**
-	 * This method returns a telephone number
-	 * 
-	 * @return telephone number
-	 */
-	public String getTelephone() {
-		return this.telephone;
-	}
-	
-	/**
-	 * This method puts the reserve as paid 
-	 * 
-	 * @param none
-	 */
-	public void paid() {
-		this.isPaid = true;
-	}
-
-	/**
-	 * This method puts the reserve as not paid
-	 * 
-	 * @return none
-	 */
-	public void notPaid() {
-		this.isPaid=false;
-	}
-	
-	/**
-	 * This method returns the status of a book 
-	 * 
-	 * @param none
-	 */
-	public boolean isPaid() {
-		return isPaid;
-	}
-	
 }
