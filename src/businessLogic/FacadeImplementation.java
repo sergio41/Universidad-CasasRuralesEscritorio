@@ -169,6 +169,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 	public UserAplication  hacerLogin(String email, String pass) throws Exception {
 		System.out.println("FacadeImplementation: hacer login");
+		if (email ==null || pass == null) throw new Exception("Algunos datos obligatorios faltan.");
 		if (email.compareTo("")==0 || pass.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		UserAplication usuario = DB4oManager.getUser(email, pass);
 		if (usuario == null){
