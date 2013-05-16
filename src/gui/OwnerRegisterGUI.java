@@ -76,10 +76,6 @@ public class OwnerRegisterGUI extends JPanel {
 	
 					try {
 						facade.modificarOwner(Start.getUsuario(), cuenta, tipo, idiom, profes, mon);
-						String ruta = new String("\\imagenes\\"+facade.getUsuario(Start.getUsuario()).getEmail());
-						System.out.println(ruta);
-						File carpet =new File(ruta);
-						carpet.mkdirs();
 						JPanel temp1= new PantallaPrincipalGUI();
 						Start.modificarPanelAbajo(temp1);
 						JPanel temp2 = new LoginONGUI();

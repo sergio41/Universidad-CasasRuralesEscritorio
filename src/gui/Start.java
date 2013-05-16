@@ -222,7 +222,7 @@ public class Start extends JFrame {
 	public static UserAplication getUsuario(){
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			usuario = facade.getUsuario(usuario);
+			usuario = facade.hacerLogin(usuario.getEmail(), usuario.getPass());
 			return usuario;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -244,7 +244,4 @@ public class Start extends JFrame {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		usuario = facade.hacerLogin(email, pass);
 	}
-	
-	
-	
 }
