@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -61,7 +62,7 @@ public class BusquedaConFechasGUI extends JPanel {
 		);
 	private JScrollPane scrollPane;
 	private JButton btnNewButton;
-	private JLabel textDescrp;
+	private JTextPane textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
 	private JDateChooser dateHasta;
@@ -226,9 +227,11 @@ public class BusquedaConFechasGUI extends JPanel {
 		btnNewButton.setEnabled(false);
 		add(btnNewButton);
 		
-		textDescrp = new JLabel();
+		textDescrp = new JTextPane();
 		textDescrp.setBounds(377, 312, 301, 94);
 		textDescrp.setBorder(BorderFactory.createLoweredBevelBorder());
+		textDescrp.setOpaque(false);
+		textDescrp.setEditable(false);
 		add(textDescrp);
 		
 		JLabel lblNewLabel_1 = new JLabel("Propietario:");

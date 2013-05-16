@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
@@ -63,7 +64,7 @@ public class BusquedaGUI extends JPanel {
 		);
 	private JScrollPane scrollPane;
 	private JButton btnNewButton;
-	private JLabel textDescrp;
+	private JTextPane textDescrp;
 	private JLabel lblprop;
 	private JLabel lblTelef;
 	private JScrollPane scrollPaneOfer;
@@ -199,7 +200,9 @@ public class BusquedaGUI extends JPanel {
 		btnNewButton.setBounds(835, 417, 163, 34);
 		add(btnNewButton);
 		
-		textDescrp = new JLabel();
+		textDescrp = new JTextPane();
+		textDescrp.setOpaque(false);
+		textDescrp.setEditable(false);
 		textDescrp.setBounds(33, 346, 301, 105);
 		textDescrp.setBorder(BorderFactory.createLoweredBevelBorder());
 		add(textDescrp);
