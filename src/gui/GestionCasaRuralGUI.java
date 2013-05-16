@@ -162,7 +162,7 @@ public class GestionCasaRuralGUI extends JPanel {
 							
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						//facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, new ImageIcon(images));
+						facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
 						facade.modificarRuralHouse(Start.getUsuario(), (Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					}

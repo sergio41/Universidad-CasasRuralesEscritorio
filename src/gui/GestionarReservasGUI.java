@@ -127,10 +127,16 @@ public class GestionarReservasGUI extends JPanel {
 		btnPagar = new JButton("Pagar");
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Vector<Book> reservas = Start.getUsuario().getReservas();
-				Book reserva = reservas.get((int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)-1);
-				JPanel aux = new PagarGUI(reserva.getNumeroDeReserva(), reserva.getPrecio());
-				Start.modificarPanelAbajo(aux);
+				Vector<Book> reservas;
+				try {
+					reservas = Start.getUsuario().getReservas();
+					Book reserva = reservas.get((int) tableCasas.getValueAt(tableCasas.getSelectedRow(), 0)-1);
+					JPanel aux = new PagarGUI(reserva.getNumeroDeReserva(), reserva.getPrecio());
+					Start.modificarPanelAbajo(aux);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnPagar.setEnabled(false);

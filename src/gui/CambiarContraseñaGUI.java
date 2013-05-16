@@ -87,13 +87,13 @@ public class CambiarContraseñaGUI extends JFrame {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent arg0) {
 		  		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-				if(passwordField.getText().compareTo(Start.getUsuario().getPass())==0 && passwordField_1.getText().compareTo(passwordField_2.getText())==0){
-					try {
+				try {
+					if(passwordField.getText().compareTo(Start.getUsuario().getPass())==0 && passwordField_1.getText().compareTo(passwordField_2.getText())==0){
 						facade.cambiarContra(Start.getUsuario(), passwordField_2.getText());
 						dispose();
-					} catch (Exception e) {
-						javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 					}
+				} catch (Exception e) {
+						javax.swing.JOptionPane.showMessageDialog(null,e.getMessage(), "Mal....",javax.swing.JOptionPane.ERROR_MESSAGE);
 				}					
 			}
 		});

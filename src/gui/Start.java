@@ -220,17 +220,11 @@ public class Start extends JFrame {
 		}
 	}
 	
-	public static UserAplication getUsuario(){
+	public static UserAplication getUsuario() throws Exception{
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
-		try {
-			usuario = facade.hacerLogin(user, passw);
-			return usuario;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logout();
-		}
-		return null;
+		usuario = facade.hacerLogin(user, passw);
+		return usuario;
+		
 	}
 	
 	public static boolean estadoLogin(){
@@ -244,7 +238,7 @@ public class Start extends JFrame {
 	public static void hacerLogin(String email, String pass) throws Exception{
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		usuario = facade.hacerLogin(email, pass);
-		user = email;
+		if (pass != null || pass.compareTo("")!=0) user = email;
 		if (pass != null || pass.compareTo("")!=0) passw = pass; 
 	}
 }
