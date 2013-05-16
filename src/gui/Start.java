@@ -48,7 +48,8 @@ public class Start extends JFrame {
 	private static ImageIcon logo;
 	
 	private static UserAplication usuario = null;
-	
+	private static String user = "";
+	private static String passw = "";
 	public static ApplicationFacadeInterface getBusinessLogic(){
 		return facadeInterface;
 	}
@@ -222,7 +223,7 @@ public class Start extends JFrame {
 	public static UserAplication getUsuario(){
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		try {
-			usuario = facade.hacerLogin(usuario.getEmail(), usuario.getPass());
+			usuario = facade.hacerLogin(user, passw);
 			return usuario;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -243,5 +244,7 @@ public class Start extends JFrame {
 	public static void hacerLogin(String email, String pass) throws Exception{
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		usuario = facade.hacerLogin(email, pass);
+		user = email;
+		passw = pass; 
 	}
 }
