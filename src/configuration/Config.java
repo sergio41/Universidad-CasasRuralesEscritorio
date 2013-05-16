@@ -4,8 +4,8 @@ package configuration;
 public class Config {
 
 
-	private final String serverRMI = "localhost";
-
+	//private final String serverRMI = "localhost";
+	private final String serverRMI = "172.18.0.156";
 	private final String portRMI = "10099";
 
 	private final String serviceRMI = "RuralHouses";

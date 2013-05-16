@@ -49,7 +49,7 @@ public class GestionCasaRuralGUI extends JPanel {
 	private JButton btnEliminarimg;
 	private JComboBox<Integer> comBoxImg = new JComboBox<Integer>();
 	private JButton btnanadirImg = new JButton();
-	private Vector<Image> images = new Vector<Image>();
+	private Vector<ImageIcon> images = new Vector<ImageIcon>();
 	private ImageIcon imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/casaDefault.png"));
 	private JButton btnVerMapa;
 	private JSpinner textLiving;
@@ -162,7 +162,7 @@ public class GestionCasaRuralGUI extends JPanel {
 							
 					ApplicationFacadeInterface facade=Start.getBusinessLogic();
 					if (comBoxCasas.getSelectedIndex() == 0){
-						facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
+						//facade.anadirRuralHouse(Start.getUsuario(), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, new ImageIcon(images));
 					} else if (comBoxCasas.getSelectedIndex() > 0) {
 						facade.modificarRuralHouse(Start.getUsuario(), (Integer.parseInt((String) comBoxCasas.getSelectedItem())), description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 					}
@@ -191,7 +191,7 @@ public class GestionCasaRuralGUI extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				ApplicationFacadeInterface facade = Start.getBusinessLogic();
 				if (comBoxCasas.getSelectedIndex() != -1){
-					images = new Vector<Image>();
+					images = new Vector<ImageIcon>();
 					enaDis(true);
 					btnEliminar.setEnabled(false);
 					if (comBoxCasas.getSelectedIndex() != 0){
@@ -400,7 +400,7 @@ public class GestionCasaRuralGUI extends JPanel {
 		Image aux = imagenDefecto.getImage();
 		if (images != null) {
 			if (images != null && numero >= images.size()) numero = images.size();
-			if (images != null && images.size() > 0 && numero >= 0) aux = images.elementAt(numero);
+			if (images != null && images.size() > 0 && numero >= 0) aux = images.elementAt(numero).getImage();
 		}
         Image aux1 = aux.getScaledInstance(image1label.getHeight(), image1label.getWidth(), java.awt.Image.SCALE_SMOOTH);
         image1label.setIcon(new ImageIcon(aux1));
@@ -429,7 +429,7 @@ public class GestionCasaRuralGUI extends JPanel {
        		try {
        			File imagenElegida = fc.getSelectedFile();
        	        ImageIcon imagen = new ImageIcon(imagenElegida.getPath());
-       	        images.add(imagen.getImage());
+       	        images.add(imagen);
        		} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

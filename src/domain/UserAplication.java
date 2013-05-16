@@ -1,7 +1,8 @@
 package domain;
+import java.io.Serializable;
 import java.util.Vector;
 
-public class UserAplication {
+public class UserAplication implements Serializable{
 	private String email;
 	private String pass;
 	private String estadoCivil;

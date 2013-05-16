@@ -11,6 +11,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 import java.util.Vector;
@@ -30,7 +31,7 @@ import java.awt.event.MouseEvent;
 
 
 
-public class PantallaPrincipalGUI extends JPanel {
+public class PantallaPrincipalGUI extends JPanel implements Serializable {
 	/**
 	 * 
 	 */

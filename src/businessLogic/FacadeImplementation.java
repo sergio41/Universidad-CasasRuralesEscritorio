@@ -1,8 +1,10 @@
 package businessLogic;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Calendar;
@@ -27,9 +29,8 @@ import externalDataSend.EnviarCorreo;
 import externalDataSend.GestionTwitter;
 
 
-public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface {
-	private static final long serialVersionUID = 1L;
-	private static Vector<String> twitter10;
+public class FacadeImplementation extends UnicastRemoteObject implements ApplicationFacadeInterface, Serializable {
+	private Vector<String> twitter10;
 	
 	public FacadeImplementation() throws RemoteException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		System.out.println("FacadeImplementation: Se crea la instancia");
@@ -73,7 +74,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 		
 
-	public void anadirRuralHouse(UserAplication usuario, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception{
+	public void anadirRuralHouse(UserAplication usuario, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<ImageIcon> imagenes) throws Exception{
 		System.out.println("FacadeImplementation: Añadir nueva casa Rural");
 		if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {			
@@ -108,7 +109,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			usuario= DB4oManager.nuevoOwner(usuario, usuario.getEmail(), bA, t, i, p, m);
 	}
 	
-	public void modificarRuralHouse(UserAplication usuario, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<Image> imagenes) throws Exception {
+	public void modificarRuralHouse(UserAplication usuario, int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<ImageIcon> imagenes) throws Exception {
 		System.out.println("FacadeImplementation: modificar casa rural");
 		if (city.compareTo("") == 0) throw new Exception("Algunos datos obligatorios faltan.");
 		else {					
@@ -119,7 +120,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 	}
 	
-	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception {
+	public void nuevoUsuario(String email, String pass, String estadoCivil, String nombre, String apellidos, String telefono, String pais, String edad, ImageIcon perfil) throws Exception {
 		System.out.println("FacadeImplementation: crear usuario");
 		String exp = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"; 
 		CharSequence seq = email;
@@ -178,7 +179,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	}
 
 
-	public void modificarPerfil(UserAplication usuario, String estadoCivil, String nombre,String apellidos, String telefono, String pais, String edad, Image perfil) throws Exception {
+	public void modificarPerfil(UserAplication usuario, String estadoCivil, String nombre,String apellidos, String telefono, String pais, String edad, ImageIcon perfil) throws Exception {
 		System.out.println("FacadeImplementation: modificar perfil");
 		if (nombre.compareTo("")==0 || pais.compareTo("")==0 || estadoCivil.compareTo("")==0) throw new Exception("Algunos datos obligatorios faltan.");
 		else usuario = DB4oManager.modificarUsuario(usuario, estadoCivil, nombre, apellidos, telefono, pais, edad, setGuardarPerfil(usuario.getEmail(), perfil));		
@@ -291,32 +292,32 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return vector;
 	}
 
-	public Vector<Image> getFotosRH(int numeroDeCasa) throws Exception {
+	public Vector<ImageIcon> getFotosRH(int numeroDeCasa) throws Exception {
 		System.out.println("FacadeImplementation: get fotos casa rural");
-		Vector<Image> aux = new Vector<Image>();
+		Vector<ImageIcon> aux = new Vector<ImageIcon>();
 		RuralHouse casa = DB4oManager.getRuralHouse(numeroDeCasa);
 		Iterator<String> i = casa.getImages().iterator();
-		while (i.hasNext()) aux.add((new ImageIcon(i.next())).getImage());
+		while (i.hasNext()) aux.add(new ImageIcon(i.next()));
 		return aux;
 	}
 
 
-	public Image getFotoPerfil(String email) throws Exception {
+	public ImageIcon getFotoPerfil(String email) throws Exception {
 		System.out.println("FacadeImplementation: get foto perfil");
 		if (DB4oManager.getUser(email).getPerfil() == null) return null;
-		return new ImageIcon(DB4oManager.getUser(email).getPerfil()).getImage();
+		return new ImageIcon(DB4oManager.getUser(email).getPerfil());
 	}
 	
-	private Vector<String> setGuardarImagenes(String email, Vector<Image> imagenes, int numeroCasaRural) throws Exception {
+	private Vector<String> setGuardarImagenes(String email, Vector<ImageIcon> imagenes, int numeroCasaRural) throws Exception {
 		System.out.println("FacadeImplementation: guardar imagenes");
 		File fCarpeta = new File("\\imagenes\\"+email+"\\"+numeroCasaRural);
 		if (fCarpeta.exists()) fCarpeta.delete();
 		fCarpeta.mkdirs();
 		Vector<String> aux = new Vector<String>();
-		Iterator<Image> i = imagenes.iterator();
+		Iterator<ImageIcon> i = imagenes.iterator();
 		while (i.hasNext()){
 			try {
-				Image auxi = i.next();
+				Image auxi = i.next().getImage();
 				File fDestino = new File("\\imagenes\\"+email+"\\"+numeroCasaRural+"\\"+auxi.toString());
 				BufferedImage bi = toBufferedImage(auxi);
 				ImageIO.write(bi, "png", fDestino);
@@ -328,7 +329,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		return aux;
 	}
 	
-	private String setGuardarPerfil(String email, Image imagen) throws Exception {
+	private String setGuardarPerfil(String email, ImageIcon imagen) throws Exception {
 		System.out.println("FacadeImplementation:  guardar imagen perfil");
 		if (imagen == null) return null;
 		try { 
@@ -336,7 +337,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 			if (fCarpeta.exists()) fCarpeta.delete();
 			fCarpeta.mkdirs();
 			File fDestino = new File("\\imagenes\\"+email+"\\Perfil\\perfil");
-			BufferedImage bi = toBufferedImage(imagen);
+			BufferedImage bi = toBufferedImage(imagen.getImage());
 			ImageIO.write(bi, "png", fDestino);
 			return fDestino.getPath();
 		} catch (Exception ex) {
@@ -344,7 +345,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 		}
 		return null;
 	}
-	private static BufferedImage toBufferedImage(Image src) {
+	private BufferedImage toBufferedImage(Image src) {
 		int w = src.getWidth(null);
 		int h = src.getHeight(null);
 		int type = BufferedImage.TYPE_INT_RGB;  // other options

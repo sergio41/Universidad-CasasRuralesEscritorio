@@ -41,7 +41,7 @@ public class UserRegisterGUI extends JPanel {
 	private JButton buttonRegister;
 	private JSpinner textEdad;
 	private SpinnerNumberModel modeloSpinner = new SpinnerNumberModel(0, 0, 150, 1);
-	private Image perfil = null;
+	private ImageIcon perfil = null;
 	private ImageIcon imagenDefecto = new ImageIcon(VerFotos.class.getResource("/localData/perfilDefault.png"));
 	private JLabel labelFoto;
 	private JLabel lblCargando = null;
@@ -328,7 +328,7 @@ public class UserRegisterGUI extends JPanel {
 	private  void cargarImagen(){
 		Image aux = imagenDefecto.getImage();
 		if (perfil != null) {
-			aux = perfil;
+			aux = perfil.getImage();
 		}
         Image aux1 = aux.getScaledInstance(labelFoto.getHeight(), labelFoto.getWidth(), java.awt.Image.SCALE_SMOOTH);
         labelFoto.setIcon(new ImageIcon(aux1));
@@ -343,7 +343,7 @@ public class UserRegisterGUI extends JPanel {
        		try {
        			File imagenElegida = fc.getSelectedFile();
        	        ImageIcon imagen = new ImageIcon(imagenElegida.getPath());
-       	        perfil = imagen.getImage();
+       	        perfil = imagen;
        		} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -37,7 +37,7 @@ public class Start extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static JPanel contentPane;
-	public static boolean isLocal=true;
+	public static boolean isLocal=false;
 	public static ApplicationFacadeInterface facadeInterface;
 	public static JPanel panelArriba;
 	public static JPanel panelPrincipal;
@@ -211,10 +211,10 @@ public class Start extends JFrame {
 		lblNewLabel_1.setIcon(logo);
 	}
 	
-	public static void setFotoPerfil(Image perfil){
+	public static void setFotoPerfil(ImageIcon perfil){
 		if (perfil == null) setFotoDefecto();
 		else {
-	        Image aux1 = perfil.getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getWidth(), java.awt.Image.SCALE_SMOOTH);
+	        Image aux1 = perfil.getImage().getScaledInstance(lblNewLabel_1.getHeight(), lblNewLabel_1.getWidth(), java.awt.Image.SCALE_SMOOTH);
 	        lblNewLabel_1.setIcon(new ImageIcon(aux1));
 		}
 	}

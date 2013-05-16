@@ -50,7 +50,7 @@ public class VerFotos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VerFotos(Vector<Image> imagenes) {
+	public VerFotos(Vector<ImageIcon> imagenes) {
 		setResizable(false);
 		setBackground(new Color(0, 206, 209));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(VerFotos.class.getResource("/localData/casaDefault.png")));
@@ -106,9 +106,9 @@ public class VerFotos extends JFrame {
 		lblNewLabel_1.setBounds(0, -11, 474, 480);
 		lblNewLabel_1.setIcon(new ImageIcon(getClass().getResource("/localData/verfotos.jpg")));
 		contentPane.add(lblNewLabel_1);
-		
-		images = imagenes;
-		
+
+		images = new Vector<Image>();
+		for (int i = 0; i <imagenes.size(); i++) images.add(imagenes.get(i).getImage());
 		cargarImagen(0);
 		rellenarComboBox();
 	}

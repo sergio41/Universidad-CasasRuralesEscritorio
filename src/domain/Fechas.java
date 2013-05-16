@@ -1,8 +1,9 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Fechas {
+public class Fechas implements Serializable {
 
 	private Date fecha;
 	private float precio;
