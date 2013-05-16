@@ -245,6 +245,6 @@ public class Start extends JFrame {
 		ApplicationFacadeInterface facade = Start.getBusinessLogic();
 		usuario = facade.hacerLogin(email, pass);
 		user = email;
-		passw = pass; 
+		if (pass != null || pass.compareTo("")!=0) passw = pass; 
 	}
 }
