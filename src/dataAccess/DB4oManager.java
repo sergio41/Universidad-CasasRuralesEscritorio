@@ -32,9 +32,6 @@ public class DB4oManager {
 		System.out.println("DataBase closed");
 	}
 	
-	public static ObjectContainer getContainer(){
-		return db;
-	}
 	
 	public static boolean comprobarEmail(String email){	
 		UserAplication u = new UserAplication(email, null, null, null, null, null, null, null);

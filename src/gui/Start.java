@@ -220,7 +220,16 @@ public class Start extends JFrame {
 	}
 	
 	public static UserAplication getUsuario(){
-		return usuario;
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		try {
+			usuario = facade.getUsuario(usuario);
+			return usuario;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logout();
+		}
+		return null;
 	}
 	
 	public static boolean estadoLogin(){
