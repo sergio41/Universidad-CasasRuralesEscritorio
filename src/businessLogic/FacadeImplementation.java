@@ -145,7 +145,7 @@ public class FacadeImplementation extends UnicastRemoteObject implements Applica
 	
 	public UserAplication getUsuario(UserAplication usuario) throws Exception {
 		System.out.println("FacadeImplementation: devolver usuario");
-		return usuario;
+		return DB4oManager.getUser(usuario.getEmail());
 	}
 
 	public Owner getOwner(UserAplication usuario) throws Exception {

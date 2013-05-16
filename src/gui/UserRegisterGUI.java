@@ -183,11 +183,12 @@ public class UserRegisterGUI extends JPanel {
 				try {
 					if(Start.estadoLogin()){
 						try {
-							facade.modificarPerfil(Start.getUsuario(), estadoCivil, nombre, apellidos, telefono, pais, edad, perfil);
+							facade.modificarPerfil(Start.getUsuario1(), estadoCivil, nombre, apellidos, telefono, pais, edad, perfil);
+							Start.hacerLogin(Start.getUsuario1().getEmail(), Start.getUsuario1().getPass());
 							javax.swing.JOptionPane.showMessageDialog(null, "Perfil modificado correctamente.", "Bien....", javax.swing.JOptionPane.NO_OPTION);
 							JPanel temp1 = new PantallaPrincipalGUI();
 							Start.modificarPanelAbajo(temp1);
-							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario()).getEmail()));
+							Start.setFotoPerfil(facade.getFotoPerfil(facade.getUsuario(Start.getUsuario1()).getEmail()));
 						} catch (Exception e) {
 							javax.swing.JOptionPane.showMessageDialog(null, e.getMessage(), "Mal....", javax.swing.JOptionPane.ERROR_MESSAGE);
 						}

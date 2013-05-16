@@ -227,6 +227,17 @@ public class Start extends JFrame {
 		
 	}
 	
+	public static UserAplication getUsuario1() throws Exception{
+		ApplicationFacadeInterface facade = Start.getBusinessLogic();
+		usuario = facade.getUsuario(usuario);
+		return usuario;
+		
+	}
+	
+	public static void setpasswd(String pass){
+		passw=pass;
+	}
+	
 	public static boolean estadoLogin(){
 		return (usuario!=null);
 	}
