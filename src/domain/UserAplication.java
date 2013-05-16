@@ -1,5 +1,6 @@
 package domain;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class UserAplication implements Serializable{
@@ -63,4 +64,18 @@ public class UserAplication implements Serializable{
 	
 	public String getPerfil(){return perfil;}
 	public void setPerfil(String imagenPerfil){ perfil = imagenPerfil;}
+	
+	public void addRuralHouse(int numero, String description, String city, int nRooms, int nKitchen, int nBaths, int nLiving, int nPark, Vector<String> images){
+		getPropietario().addRuralHouse(new RuralHouse(numero, this, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images));
+	}
+		
+	public void pagar(int num){
+		Iterator<Book> reservasConcretas =  getReservas().iterator();
+		while (reservasConcretas.hasNext()){
+			Book reserva = reservasConcretas.next();
+			if(reserva.getNumeroDeReserva()==num && !reserva.isPaid()){
+				reserva.pagar();
+			}
+		}
+	}	
 }

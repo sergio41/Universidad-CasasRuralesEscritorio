@@ -119,7 +119,7 @@ public class DB4oManager {
 			use.setPerfil(perfil);
 			db.store(use);
 			db.commit();
-			return user;
+			return use;
 		}else throw new Exception("El usuario no existe");
 	}
 
@@ -132,7 +132,7 @@ public class DB4oManager {
 			userConcreto.setPropietario(owner);
 			db.store(userConcreto);
 			db.commit();
-			return getUser(email);
+			return userConcreto;
 			}else throw new Exception("El usuario ya es propietario");				
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
@@ -148,7 +148,7 @@ public class DB4oManager {
 			userConcreto.getPropietario().setTipo(t);
 			db.store(userConcreto);
 			db.commit();
-			return getUser(email);
+			return userConcreto;
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
@@ -159,7 +159,7 @@ public class DB4oManager {
 			userConcreto.setPass(pass);
 			db.store(userConcreto);
 			db.commit();
-			return getUser(user.getEmail());
+			return userConcreto;
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
@@ -167,10 +167,10 @@ public class DB4oManager {
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
-			userConcreto.getPropietario().addRuralHouse(new RuralHouse(numero, user, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images));
+			userConcreto.addRuralHouse(numero, description, city, nRooms, nKitchen, nBaths, nLiving, nPark, images);
 			db.store(userConcreto);
 			db.commit();
-			return getUser(user.getEmail());
+			return userConcreto;
 		} else throw new Exception("El usuario no se ha encontrado.");
 	}
 	
@@ -212,7 +212,7 @@ public class DB4oManager {
 						db.store(userConcreto);
 						db.commit();
 						System.out.println("eliminarCasaRural: G");
-						return getUser(user.getEmail());
+						return userConcreto;
 					}
 					break;
 				}
@@ -369,9 +369,9 @@ public class DB4oManager {
 				System.out.println("Fin: " + fin2.toString());
 				rHConcreto.anadirOferta(inicio, fin2, precio, obligatorio);
 				db.store(rHConcreto);
-				db.store(userConcreto);
+				//db.store(userConcreto);
 				db.commit();
-				return getUser(user.getEmail());
+				return userConcreto;
 			}
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
@@ -389,9 +389,9 @@ public class DB4oManager {
 				System.out.println("Fin: " + fin.toString());
 				if (!rHConcreto.anadirFechas(inicio, fin, precio, minimoDeDias)) throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
 				db.store(rHConcreto);
-				db.store(userConcreto);
+				//db.store(userConcreto);
 				db.commit();
-				return getUser(user.getEmail());
+				return userConcreto;
 			}
 		}
 		throw new Exception("La oferta no se ha podido añadir correctamente. Lo sentimos");
@@ -437,17 +437,10 @@ public class DB4oManager {
 		ObjectSet<UserAplication> userConcretos = db.queryByExample(new UserAplication(user.getEmail(), null, null, null, null, null, null, null));
 		if (userConcretos.hasNext()){
 			UserAplication userConcreto = userConcretos.next();
-			Iterator<Book> reservasConcretas = userConcreto.getReservas().iterator();
-			while (reservasConcretas.hasNext()){
-				Book reserva = reservasConcretas.next();
-				if(reserva.getNumeroDeReserva()==num && !reserva.isPaid()){
-					reserva.pagar();
-					db.store(reserva);
-					db.store(user);
-					db.commit();
-					return reserva;
-				}	
-			}
+			userConcreto.pagar(num);					
+			db.store(userConcreto);
+			db.commit();
+			return getReserva(num);
 		}
 		throw new Exception("No se ha podido pagar, intentelo de nuevo.");
 	}	
