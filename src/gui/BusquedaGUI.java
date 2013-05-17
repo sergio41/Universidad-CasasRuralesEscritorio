@@ -156,7 +156,10 @@ public class BusquedaGUI extends JPanel {
 
 	    cellSelectionModel2.addListSelectionListener(new ListSelectionListener() {
 	      public void valueChanged(ListSelectionEvent e) {
-		  		btnNewButton.setEnabled(true);
+		  		if(Start.estadoLogin())
+		  			btnNewButton.setEnabled(true);
+		  		else
+		  			btnNewButton.setEnabled(false);
 	      }
 	    });
 		tableOfertas.setModel(modelTbOfertas);

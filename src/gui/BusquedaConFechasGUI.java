@@ -177,7 +177,10 @@ public class BusquedaConFechasGUI extends JPanel {
 				lblTelef.setText(casita.getUserAplication().getTelefono());
 				textDescrp.setText(casita.getDescription());
 				btnImg.setEnabled(true);
-				btnNewButton.setEnabled(true);
+				if(Start.estadoLogin())
+					btnNewButton.setEnabled(true);
+				else
+		  			btnNewButton.setEnabled(false);
 				buttonMapa.setEnabled(true);
 				btnNewButton_1.setEnabled(true);
 			} catch (Exception e1) {
